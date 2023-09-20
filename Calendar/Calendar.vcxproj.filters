@@ -40,7 +40,7 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="51RiCheng.rc">
+    <ResourceCompile Include="Calendar.rc">
       <Filter>资源文件</Filter>
     </ResourceCompile>
   </ItemGroup>

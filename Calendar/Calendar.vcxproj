@@ -22,7 +22,7 @@
     <VCProjectVersion>17.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
     <ProjectGuid>{d0fe0c6d-93f6-44ff-9489-2108731a0523}</ProjectGuid>
-    <RootNamespace>My51RiCheng</RootNamespace>
+    <RootNamespace>MyCalendar</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -153,7 +153,7 @@
     <ClInclude Include="WindowBase.h" />
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="51RiCheng.rc" />
+    <ResourceCompile Include="Calendar.rc" />
   </ItemGroup>
   <ItemGroup>
     <None Include="icon_fon.bin" />
