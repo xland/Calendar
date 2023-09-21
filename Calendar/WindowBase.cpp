@@ -9,10 +9,9 @@
 WindowBase::WindowBase() {
 }
 WindowBase::~WindowBase() {
+    DeleteObject(bitmap);
     delete PaintCtx;
     delete CanvasImage;
-    DeleteDC(compatibleDC);
-    DeleteObject(bitmap);
 }
 
 
@@ -33,7 +32,7 @@ void WindowBase::InitWindow(const int& x, const int& y, const long& w, const lon
     wcx.cbWndExtra = sizeof(WindowBase*);
     wcx.hInstance = hinstance;
     //wcx.hIcon = LoadIcon(hinstance, MAKEINTRESOURCE(IDI_ICON));
-    wcx.hCursor = LoadCursor(NULL, IDC_ARROW);
+    //wcx.hCursor = LoadCursor(NULL, IDC_ARROW);
     wcx.hbrBackground = (HBRUSH)(COLOR_WINDOW + 1);
     wcx.lpszClassName = className.c_str();
     if (!RegisterClassEx(&wcx))
@@ -47,7 +46,7 @@ void WindowBase::InitWindow(const int& x, const int& y, const long& w, const lon
     const MARGINS shadowState{ 1,1,1,1 };
     DwmExtendFrameIntoClientArea(hwnd, &shadowState);
     InitCanvas();
-    ChangeCursor(IDC_ARROW);
+    //ChangeCursor(IDC_ARROW);
 }
 void WindowBase::Show() {
     ShowWindow(hwnd, SW_SHOW);
@@ -59,41 +58,27 @@ void WindowBase::InitCanvas() {
     auto stride = w * 4;
     pixelDataSize = stride * h;
     pixelData = new unsigned char[pixelDataSize];
+    static BITMAPINFO info = { sizeof(BITMAPINFOHEADER), w, 0 - h, 1, 32, BI_RGB, pixelDataSize, 0, 0, 0, 0 };
+    HDC hdc = GetDC(hwnd);
+    bitmap = CreateDIBSection(hdc, &info, DIB_RGB_COLORS, reinterpret_cast<void**>(&pixelData), NULL, NULL);
+    ReleaseDC(hwnd, hdc);
+
     PaintCtx = new BLContext();
     CanvasImage = new BLImage();
-    CanvasImage->createFromData(w, h, BL_FORMAT_PRGB32, pixelData, stride, BL_DATA_ACCESS_RW, [](void* impl, void* externalData, void* userData) {
-        delete[] externalData;
-        });
-    HDC hdc = GetDC(hwnd);
-    compatibleDC = CreateCompatibleDC(NULL);
-    bitmap = CreateCompatibleBitmap(hdc, w, h); //创建一副与当前DC兼容的位图
-    DeleteObject(SelectObject(compatibleDC, bitmap));
-    ReleaseDC(hwnd, hdc);
+    CanvasImage->createFromData(w, h, BL_FORMAT_PRGB32, pixelData, stride, BL_DATA_ACCESS_RW);
 }
 void WindowBase::Repaint()
 {
     PaintCtx->begin(*CanvasImage);
     PaintCtx->clearAll();
-    BLGradient linear(BLLinearGradientValues(0, 0, 0, 460));
-    linear.addStop(0.0, BLRgba32(0xFF6cbef8));
-    linear.addStop(1.0, BLRgba32(0xFF047af4));
-    PaintCtx->fillBox(16, 16, w - 16, 460, linear);
-    PaintCtx->fillBox(16, 460, w - 16, h - 16, BLRgba32(0xFFf1f1f1));
-    PaintCtx->setFillStyle(BLRgba32(0xFFffffff));
+    PaintCtx->fillBox(0, 0, w, h, BLRgba32(0xFFFFFFFF));
+    OnPaint();    
     auto str = ConvertToUTF8(this->title);
     auto font = Font::Get()->fontText;
     font->setSize(19);
     PaintCtx->fillUtf8Text(BLPoint(32, 44), *font, str.c_str());
-    OnPaint();
     PaintCtx->end();
-    HDC hdc = GetDC(hwnd);
-    BITMAPINFO info = { sizeof(BITMAPINFOHEADER), w, 0 - h, 1, 32, BI_RGB, pixelDataSize, 0, 0, 0, 0 };
-    SetDIBits(hdc, bitmap, 0, h, pixelData, &info, DIB_RGB_COLORS); //使用指定的DIB颜色数据来设置位图中的像素
-    BLENDFUNCTION blend = { .BlendOp{AC_SRC_OVER},.SourceConstantAlpha{255},.AlphaFormat{AC_SRC_ALPHA} };//按通道混合
-    POINT pSrc = { 0, 0 };
-    SIZE sizeWnd = { w, h };
-    UpdateLayeredWindow(hwnd, hdc, NULL, &sizeWnd, compatibleDC, &pSrc, NULL, &blend, ULW_ALPHA);//更新分层窗口
-    ReleaseDC(hwnd, hdc);
+    InvalidateRect(hwnd, nullptr, false);
 }
 LRESULT CALLBACK WindowBase::RouteWindowMessage(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) {
     if (msg == WM_NCCREATE)
@@ -123,9 +108,89 @@ LRESULT CALLBACK WindowBase::WindowProc(HWND hWnd, UINT msg, WPARAM wParam, LPAR
         }
         break;
     }
-    case WM_SETCURSOR: {
+    case WM_PAINT: {
+        PAINTSTRUCT ps;
+        HDC hdc = BeginPaint(hwnd, &ps);
+        HDC hdcBmp = CreateCompatibleDC(hdc);
+        DeleteObject(SelectObject(hdcBmp, bitmap));
+        BitBlt(hdc, 0, 0, (int)w, (int)h, hdcBmp, 0, 0, SRCCOPY);
+        DeleteDC(hdcBmp);
+        EndPaint(hwnd, &ps);
+        ValidateRect(hwnd, NULL);
+        break;
+    }
+    case WM_NCHITTEST:
+    {
+        int x{ GET_X_LPARAM(lParam) };
+        int y{ GET_Y_LPARAM(lParam) };
+        RECT rect;
+        GetWindowRect(hWnd, &rect);
+        int span = 5;
+        if (x >= rect.left && x < (rect.left + span)) {
+            if (y >= rect.top && y < (rect.top + span)) {
+                //ChangeCursor(IDC_SIZENWSE);
+                return HTTOPLEFT;
+            }
+            else if (y > rect.bottom-span && y <= rect.bottom) {
+                //ChangeCursor(IDC_SIZENESW);
+                return HTBOTTOMLEFT;
+            }
+            else {
+                //ChangeCursor(IDC_SIZEWE);
+                return HTLEFT;
+            }            
+        }
+        else if (x > rect.right - span && x < rect.right) {
+            if (y >= rect.top && y < (rect.top + span)) {
+                //ChangeCursor(IDC_SIZENWSE);
+                return HTTOPRIGHT;
+            }
+            else if (y > rect.bottom - span && y <= rect.bottom) {
+                //ChangeCursor(IDC_SIZENESW);
+                return HTBOTTOMRIGHT;
+            }
+            else {
+                //ChangeCursor(IDC_SIZEWE);
+                return HTRIGHT;
+            }
+        }
+        else
+        {
+            if (y >= rect.top && y < (rect.top + span)) {
+                //ChangeCursor(IDC_SIZENWSE);
+                return HTTOP;
+            }
+            else if (y > rect.bottom - span && y <= rect.bottom) {
+                //ChangeCursor(IDC_SIZENESW);
+                return HTBOTTOM;
+            }
+        }
+        //else if (p.x > w - span && p.x < w && p.y > h - span && p.y < h) {
+        //    ChangeCursor(IDC_SIZENWSE);
+        //    return HTBOTTOMRIGHT;
+        //}
+        //else if (p.x > 0 && p.x < 6 && p.y > h - span && p.y < h) {
+        //    ChangeCursor(IDC_SIZENESW);
+        //    return HTBOTTOMLEFT;
+        //}
+        //else if (p.x > w - span && p.x < w && p.y>0 && p.y < span) {
+        //    ChangeCursor(IDC_SIZENESW);
+        //    return HTTOPRIGHT;
+        //}
+        return HTCLIENT;
+        //auto flag = OnHitTest(p.x, p.y);
+        //if (flag == HTCAPTION) {
+        //    ChangeCursor(IDC_ARROW);
+        //}
+        //return flag;
+    }
+    case WM_CLOSE: {
+        PostQuitMessage(0);
         return true;
     }
+    //case WM_SETCURSOR: {
+    //    return true;
+    //}
     case WM_RBUTTONDOWN: {
         auto x = GET_X_LPARAM(lParam);
         auto y = GET_Y_LPARAM(lParam);
@@ -167,19 +232,6 @@ LRESULT CALLBACK WindowBase::WindowProc(HWND hWnd, UINT msg, WPARAM wParam, LPAR
         this->x = rect.left;
         this->y = rect.top;
         return true;
-    }
-    case WM_NCHITTEST:
-    {
-        auto x = GET_X_LPARAM(lParam) - this->x;
-        auto y = GET_Y_LPARAM(lParam) - this->y;
-        if (x < 16 || y < 16 || x>w - 16 || y>h - 16) {
-            return HTNOWHERE;
-        }
-        auto flag = OnHitTest(x, y);
-        if (flag == HTCAPTION) {
-            ChangeCursor(IDC_ARROW);
-        }
-        return flag;
     }
     }
     return DefWindowProcW(hWnd, msg, wParam, lParam);
