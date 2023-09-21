@@ -32,7 +32,7 @@ void WindowBase::InitWindow(const int& x, const int& y, const long& w, const lon
     wcx.cbWndExtra = sizeof(WindowBase*);
     wcx.hInstance = hinstance;
     //wcx.hIcon = LoadIcon(hinstance, MAKEINTRESOURCE(IDI_ICON));
-    //wcx.hCursor = LoadCursor(NULL, IDC_ARROW);
+    wcx.hCursor = LoadCursor(NULL, IDC_ARROW);
     wcx.hbrBackground = (HBRUSH)(COLOR_WINDOW + 1);
     wcx.lpszClassName = className.c_str();
     if (!RegisterClassEx(&wcx))
@@ -76,7 +76,7 @@ void WindowBase::Repaint()
     auto str = ConvertToUTF8(this->title);
     auto font = Font::Get()->fontText;
     font->setSize(19);
-    PaintCtx->fillUtf8Text(BLPoint(32, 44), *font, str.c_str());
+    PaintCtx->fillUtf8Text(BLPoint(16, 28), *font, str.c_str());
     PaintCtx->end();
     InvalidateRect(hwnd, nullptr, false);
 }
@@ -125,64 +125,42 @@ LRESULT CALLBACK WindowBase::WindowProc(HWND hWnd, UINT msg, WPARAM wParam, LPAR
         int y{ GET_Y_LPARAM(lParam) };
         RECT rect;
         GetWindowRect(hWnd, &rect);
-        int span = 5;
+        int span = 4;
         if (x >= rect.left && x < (rect.left + span)) {
             if (y >= rect.top && y < (rect.top + span)) {
-                //ChangeCursor(IDC_SIZENWSE);
                 return HTTOPLEFT;
             }
             else if (y > rect.bottom-span && y <= rect.bottom) {
-                //ChangeCursor(IDC_SIZENESW);
                 return HTBOTTOMLEFT;
             }
             else {
-                //ChangeCursor(IDC_SIZEWE);
                 return HTLEFT;
             }            
         }
-        else if (x > rect.right - span && x < rect.right) {
+        else if (x > rect.right - span && x <= rect.right) {
             if (y >= rect.top && y < (rect.top + span)) {
-                //ChangeCursor(IDC_SIZENWSE);
                 return HTTOPRIGHT;
             }
             else if (y > rect.bottom - span && y <= rect.bottom) {
-                //ChangeCursor(IDC_SIZENESW);
                 return HTBOTTOMRIGHT;
             }
             else {
-                //ChangeCursor(IDC_SIZEWE);
                 return HTRIGHT;
             }
         }
         else
         {
             if (y >= rect.top && y < (rect.top + span)) {
-                //ChangeCursor(IDC_SIZENWSE);
                 return HTTOP;
             }
             else if (y > rect.bottom - span && y <= rect.bottom) {
-                //ChangeCursor(IDC_SIZENESW);
                 return HTBOTTOM;
             }
+            else if(CaptionTest(x-rect.left,y-rect.top)) {
+                return HTCAPTION;
+            }
         }
-        //else if (p.x > w - span && p.x < w && p.y > h - span && p.y < h) {
-        //    ChangeCursor(IDC_SIZENWSE);
-        //    return HTBOTTOMRIGHT;
-        //}
-        //else if (p.x > 0 && p.x < 6 && p.y > h - span && p.y < h) {
-        //    ChangeCursor(IDC_SIZENESW);
-        //    return HTBOTTOMLEFT;
-        //}
-        //else if (p.x > w - span && p.x < w && p.y>0 && p.y < span) {
-        //    ChangeCursor(IDC_SIZENESW);
-        //    return HTTOPRIGHT;
-        //}
         return HTCLIENT;
-        //auto flag = OnHitTest(p.x, p.y);
-        //if (flag == HTCAPTION) {
-        //    ChangeCursor(IDC_ARROW);
-        //}
-        //return flag;
     }
     case WM_CLOSE: {
         PostQuitMessage(0);

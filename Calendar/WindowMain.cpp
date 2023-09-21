@@ -16,14 +16,15 @@ void WindowMain::OnPaint() {
     //PaintCtx->fillBox(0, 0, 400, h, BLRgba32(253, 233, 235));
 }
 
-//int WindowMain::OnHitTest(const int& x, const int& y) {    
-//    //if (x > 0 && x < w - 104 && y>0 && y < 56) {
-//    //    return HTCAPTION;
-//    //}
-//    //else
-//    //{
-//    //    return HTCLIENT;
-//    //}
-//}
+bool WindowMain::CaptionTest(const int& x, const int& y) {
+    if (x > 0 && x < w - 104 && y>0 && y < 56) {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
 void WindowMain::ProcessWindowMsg(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam) {
+
 }

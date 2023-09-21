@@ -15,7 +15,7 @@ public:
 protected:
 	void InitWindow(const int& x, const int& y, const long& w, const long& h, const std::wstring& title);
 	virtual void OnPaint() {};
-	virtual int OnHitTest(const int& x, const int& y) { return HTCAPTION; };
+	virtual bool CaptionTest(const int& x, const int& y) { return false; };
 	virtual bool OnLeftButtonDown(const int& x, const int& y) { return false; };
 	virtual bool OnRightButtonDown(const int& x, const int& y) { return false; };
 	virtual bool OnMouseMove(const int& x, const int& y) { return false; };

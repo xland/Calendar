@@ -30,6 +30,15 @@
     <ClCompile Include="Font.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="WidgetBase.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="WidgetCaptionTool.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="WidgetCalendar.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Font Include="Res\iconfont.ttf" />
@@ -48,6 +57,15 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="Font.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="WidgetBase.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="WidgetCaptionTool.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="WidgetCalendar.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

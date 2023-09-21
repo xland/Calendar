@@ -7,7 +7,7 @@ public:
 	~WindowMain();
 private:
 	void OnPaint() override;
-	//int OnHitTest(const int& x, const int& y) override;
+	bool CaptionTest(const int& x, const int& y) override;
 	void ProcessWindowMsg(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam) override;
 };
 
