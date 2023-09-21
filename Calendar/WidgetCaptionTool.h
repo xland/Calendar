@@ -3,9 +3,9 @@
 class WidgetCaptionTool : public WidgetBase
 {
 public:
-	WidgetCaptionTool();
+	WidgetCaptionTool(WindowBase* parent);
 	~WidgetCaptionTool();
-private:
 	void Paint(BLContext* PaintCtx) override;
+private:
 };
 

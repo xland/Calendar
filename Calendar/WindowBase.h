@@ -2,6 +2,9 @@
 #include <Windows.h>
 #include <blend2d.h>
 #include <string>
+#include <vector>
+#include <memory>
+#include "WidgetBase.h"
 class WindowBase
 {
 public:
@@ -12,6 +15,7 @@ public:
 	HWND hwnd;
 	long w, h;
 	int x, y;
+	std::vector<std::shared_ptr<WidgetBase>> widgets;
 protected:
 	void InitWindow(const int& x, const int& y, const long& w, const long& h, const std::wstring& title);
 	virtual void OnPaint() {};

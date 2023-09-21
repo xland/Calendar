@@ -3,9 +3,9 @@
 class WidgetCalendar : public WidgetBase
 {
 public:
-	WidgetCalendar();
+	WidgetCalendar(WindowBase* parent);
 	~WidgetCalendar();
-private:
 	void Paint(BLContext* PaintCtx) override;
+private:
 };
 

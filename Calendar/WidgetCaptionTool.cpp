@@ -1,6 +1,6 @@
 #include "WidgetCaptionTool.h"
 
-WidgetCaptionTool::WidgetCaptionTool() {
+WidgetCaptionTool::WidgetCaptionTool(WindowBase* parent):WidgetBase(parent) {
 
 }
 WidgetCaptionTool::~WidgetCaptionTool() {

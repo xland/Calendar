@@ -1,6 +1,12 @@
 #include "WindowMain.h"
+#include "WidgetCaptionTool.h"
+#include <memory>
 
 WindowMain::WindowMain() {
+    auto captionTool = std::make_shared<WidgetCaptionTool>();
+    widgets.push_back(captionTool);
+
+
     long w{ 1200 }, h{ 800 };
     RECT rect;
     SystemParametersInfo(SPI_GETWORKAREA, 0, &rect, 0);

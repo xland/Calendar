@@ -1,5 +1,5 @@
 #include "WidgetBase.h"
-WidgetBase::WidgetBase() {
+WidgetBase::WidgetBase(WindowBase* parent) :parent{ parent } {
 
 }
 WidgetBase::~WidgetBase() {

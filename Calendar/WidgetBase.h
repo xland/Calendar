@@ -1,12 +1,15 @@
 #pragma once
 #include <blend2d.h>
+
+class WindowBase;
 class WidgetBase
 {
 public:
-	WidgetBase();
+	WidgetBase(WindowBase* parent);
 	~WidgetBase();
-protected:
 	virtual void Paint(BLContext* PaintCtx) {};
+	WindowBase* parent;
+protected:
 private:
 };
 

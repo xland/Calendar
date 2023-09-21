@@ -72,7 +72,10 @@ void WindowBase::Repaint()
     PaintCtx->begin(*CanvasImage);
     PaintCtx->clearAll();
     PaintCtx->fillBox(0, 0, w, h, BLRgba32(0xFFFFFFFF));
-    OnPaint();    
+    OnPaint();
+    for (const auto& item : widgets) {
+        item->Paint(PaintCtx);
+    }
     auto str = ConvertToUTF8(this->title);
     auto font = Font::Get()->fontText;
     font->setSize(19);

@@ -1,6 +1,6 @@
 #include "WidgetCalendar.h"
 
-WidgetCalendar::WidgetCalendar() {
+WidgetCalendar::WidgetCalendar(WindowBase* parent) :WidgetBase(parent) {
 
 }
 WidgetCalendar::~WidgetCalendar() {
