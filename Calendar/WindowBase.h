@@ -21,11 +21,13 @@ protected:
 	virtual bool OnMouseMove(const int& x, const int& y) { return false; };
 	virtual bool OnLeftButtonUp(const int& x, const int& y) { return false; };
 	virtual void ProcessWindowMsg(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam) {};
+	BLContext* PaintCtx;
+	BLImage* CanvasImage;
+	bool IsLeftBtnDown;
 private:
 	void InitCanvas();
 	static LRESULT CALLBACK RouteWindowMessage(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 	LRESULT CALLBACK WindowProc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam);
-	void DrawShadow();
 	void* pixelData;
 	unsigned long pixelDataSize;
 	HBITMAP bitmap;

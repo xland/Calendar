@@ -140,17 +140,21 @@
     </Manifest>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Font.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Util.cpp" />
     <ClCompile Include="WindowBase.cpp" />
+    <ClCompile Include="WindowMain.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Font Include="Res\iconfont.ttf" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Font.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="Util.h" />
     <ClInclude Include="WindowBase.h" />
+    <ClInclude Include="WindowMain.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Calendar.rc" />

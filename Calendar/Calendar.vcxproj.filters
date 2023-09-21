@@ -24,6 +24,12 @@
     <ClCompile Include="Util.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="WindowMain.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Font.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Font Include="Res\iconfont.ttf" />
@@ -36,6 +42,12 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="Util.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="WindowMain.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Font.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
