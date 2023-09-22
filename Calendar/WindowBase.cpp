@@ -1,4 +1,4 @@
-#include "WindowBase.h"
+﻿#include "WindowBase.h"
 #include <format>
 #include <windowsx.h>
 #include <dwmapi.h>
@@ -10,6 +10,7 @@ WindowBase::WindowBase() {
 }
 WindowBase::~WindowBase() {
     DeleteObject(bitmap);
+    DeleteDC(compatibleDC);
     delete paintCtx;
     delete canvasImage;
 }
@@ -36,15 +37,15 @@ void WindowBase::initWindow(const int& x, const int& y, const long& w, const lon
     wcx.lpszClassName = className.c_str();
     if (!RegisterClassEx(&wcx))
     {
-        MessageBox(NULL, L"ע�ᴰ����ʧ��", L"ϵͳ��ʾ", NULL);
+        MessageBox(NULL, L"注册窗口类失败", L"系统提示", NULL);
         return;
     }
-    hwnd = CreateWindowEx(NULL, wcx.lpszClassName, title.c_str(),
-        WS_OVERLAPPEDWINDOW, x, y, w, h, NULL, NULL, hinstance, static_cast<LPVOID>(this));
+    hwnd = CreateWindowEx(WS_EX_LAYERED, wcx.lpszClassName, title.c_str(),
+        WS_CLIPCHILDREN | WS_CLIPSIBLINGS | WS_POPUP, x, y, w, h, NULL, NULL, hinstance, static_cast<LPVOID>(this));
     SetWindowPos(hwnd, nullptr, 0, 0, 0, 0, SWP_NOZORDER | SWP_NOOWNERZORDER | SWP_NOMOVE | SWP_NOSIZE | SWP_FRAMECHANGED);
-    const MARGINS shadowState{ 1,1,1,1 };
-    DwmExtendFrameIntoClientArea(hwnd, &shadowState);
+
     paintCtx = new BLContext();
+    compatibleDC = CreateCompatibleDC(NULL);
     initCanvas();
     //ChangeCursor(IDC_ARROW);
 }
@@ -58,16 +59,39 @@ void WindowBase::initCanvas() {
     auto stride = w * 4;
     pixelDataSize = stride * h;
     pixelData = new unsigned char[pixelDataSize];
-    static BITMAPINFO info = { sizeof(BITMAPINFOHEADER), w, 0 - h, 1, 32, BI_RGB, pixelDataSize, 0, 0, 0, 0 };
-    HDC hdc = GetDC(hwnd);
-    bitmap = CreateDIBSection(hdc, &info, DIB_RGB_COLORS, reinterpret_cast<void**>(&pixelData), NULL, NULL);
-    ReleaseDC(hwnd, hdc);
     canvasImage = new BLImage();
-    canvasImage->createFromData(w, h, BL_FORMAT_PRGB32, pixelData, stride, BL_DATA_ACCESS_RW);
+    canvasImage->createFromData(w, h, BL_FORMAT_PRGB32, pixelData, stride, BL_DATA_ACCESS_RW, [](void* impl, void* externalData, void* userData) {
+        delete[] externalData;
+        });
+    HDC hdc = GetDC(hwnd);
+    bitmap = CreateCompatibleBitmap(hdc, w, h); //创建一副与当前DC兼容的位图
+    DeleteObject(SelectObject(compatibleDC, bitmap));
+    ReleaseDC(hwnd, hdc);
 }
 void WindowBase::repaint()
 {
-    InvalidateRect(hwnd, nullptr, false);
+    paintCtx->begin(*canvasImage);
+    paintCtx->clearAll();
+    paintCtx->fillBox(0, 0, w, h, BLRgba32(0xFFFFFFFF));
+    onPaint();
+    for (const auto& item : views) {
+        item->paint(paintCtx);
+    }
+    auto str = ConvertToUTF8(this->title);
+    auto font = Font::Get()->fontText;
+    font->setSize(18.0);
+    paintCtx->setFillStyle(BLRgba32(0XFF666666));
+    paintCtx->fillUtf8Text(BLPoint(16, 28), *font, str.c_str());
+    paintCtx->end();
+
+    HDC hdc = GetDC(hwnd);
+    BITMAPINFO info = { sizeof(BITMAPINFOHEADER), w, 0 - h, 1, 32, BI_RGB, pixelDataSize, 0, 0, 0, 0 };
+    SetDIBits(hdc, bitmap, 0, h, pixelData, &info, DIB_RGB_COLORS); //使用指定的DIB颜色数据来设置位图中的像素
+    BLENDFUNCTION blend = { .BlendOp{AC_SRC_OVER},.SourceConstantAlpha{255},.AlphaFormat{AC_SRC_ALPHA} };//按通道混合
+    POINT pSrc = { 0, 0 };
+    SIZE sizeWnd = { w, h };
+    UpdateLayeredWindow(hwnd, hdc, NULL, &sizeWnd, compatibleDC, &pSrc, NULL, &blend, ULW_ALPHA);//更新分层窗口
+    ReleaseDC(hwnd, hdc);
 }
 LRESULT CALLBACK WindowBase::routeWindowMessage(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) {
     if (msg == WM_NCCREATE)
@@ -131,7 +155,6 @@ POINT WindowBase::pointToClient(LPARAM lParam) {
     return p;
 }
 void WindowBase::paintToClient() {
-
     paintCtx->begin(*canvasImage);
     paintCtx->clearAll();
     paintCtx->fillBox(0, 0, w, h, BLRgba32(0xFFFFFFFF));
@@ -167,10 +190,6 @@ LRESULT CALLBACK WindowBase::windowProc(HWND hWnd, UINT msg, WPARAM wParam, LPAR
         {
             return false;
         }
-        break;
-    }
-    case WM_PAINT: {
-        paintToClient();
         break;
     }
     case WM_NCHITTEST:
@@ -238,7 +257,7 @@ LRESULT CALLBACK WindowBase::windowProc(HWND hWnd, UINT msg, WPARAM wParam, LPAR
     }
     case WM_SIZING: {
         DeleteObject(bitmap);
-        delete canvasImage;        
+        delete canvasImage;
         int width = this->w;
         int height = this->h;
         RECT* rect = (RECT*)lParam;
@@ -250,6 +269,7 @@ LRESULT CALLBACK WindowBase::windowProc(HWND hWnd, UINT msg, WPARAM wParam, LPAR
             item->changeSize(width,height);
         }
         initCanvas();
+        repaint();
         break;
     }
     }

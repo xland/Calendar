@@ -33,6 +33,7 @@ private:
 	void* pixelData;
 	unsigned long pixelDataSize;
 	HBITMAP bitmap;
+	HDC compatibleDC = NULL;
 	BLImage* canvasImage;
 };
 
