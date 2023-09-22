@@ -44,6 +44,7 @@ void WindowBase::initWindow(const int& x, const int& y, const long& w, const lon
     SetWindowPos(hwnd, nullptr, 0, 0, 0, 0, SWP_NOZORDER | SWP_NOOWNERZORDER | SWP_NOMOVE | SWP_NOSIZE | SWP_FRAMECHANGED);
     const MARGINS shadowState{ 1,1,1,1 };
     DwmExtendFrameIntoClientArea(hwnd, &shadowState);
+    paintCtx = new BLContext();
     initCanvas();
     //ChangeCursor(IDC_ARROW);
 }
@@ -61,25 +62,11 @@ void WindowBase::initCanvas() {
     HDC hdc = GetDC(hwnd);
     bitmap = CreateDIBSection(hdc, &info, DIB_RGB_COLORS, reinterpret_cast<void**>(&pixelData), NULL, NULL);
     ReleaseDC(hwnd, hdc);
-
-    paintCtx = new BLContext();
     canvasImage = new BLImage();
     canvasImage->createFromData(w, h, BL_FORMAT_PRGB32, pixelData, stride, BL_DATA_ACCESS_RW);
 }
 void WindowBase::repaint()
 {
-    paintCtx->begin(*canvasImage);
-    paintCtx->clearAll();
-    paintCtx->fillBox(0, 0, w, h, BLRgba32(0xFFFFFFFF));
-    onPaint();
-    for (const auto& item : views) {
-        item->paint(paintCtx);
-    }
-    auto str = ConvertToUTF8(this->title);
-    auto font = Font::Get()->fontText;
-    font->setSize(19);
-    paintCtx->fillUtf8Text(BLPoint(16, 28), *font, str.c_str());
-    paintCtx->end();
     InvalidateRect(hwnd, nullptr, false);
 }
 LRESULT CALLBACK WindowBase::routeWindowMessage(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) {
@@ -144,6 +131,21 @@ POINT WindowBase::pointToClient(LPARAM lParam) {
     return p;
 }
 void WindowBase::paintToClient() {
+
+    paintCtx->begin(*canvasImage);
+    paintCtx->clearAll();
+    paintCtx->fillBox(0, 0, w, h, BLRgba32(0xFFFFFFFF));
+    onPaint();
+    for (const auto& item : views) {
+        item->paint(paintCtx);
+    }
+    auto str = ConvertToUTF8(this->title);
+    auto font = Font::Get()->fontText;
+    font->setSize(18.0);
+    paintCtx->setFillStyle(BLRgba32(0XFF666666));
+    paintCtx->fillUtf8Text(BLPoint(16, 28), *font, str.c_str());
+    paintCtx->end();
+
     PAINTSTRUCT ps;
     HDC hdc = BeginPaint(hwnd, &ps);
     HDC hdcBmp = CreateCompatibleDC(hdc);
@@ -227,17 +229,27 @@ LRESULT CALLBACK WindowBase::windowProc(HWND hWnd, UINT msg, WPARAM wParam, LPAR
             tme.hwndTrack = hWnd;
             mouseTracing = TrackMouseEvent(&tme);
         }
-        auto p = pointToClient(lParam);
+        int x{ GET_X_LPARAM(lParam) };
+        int y{ GET_Y_LPARAM(lParam) };
         for (const auto& item : views) {
-            item->mouseMove(p.x, p.y);
+            item->mouseMove(x, y);
         }
         break;
     }
-    case WM_EXITSIZEMOVE: {
-        RECT rect;
-        GetWindowRect(hWnd, &rect);
-        this->x = rect.left;
-        this->y = rect.top;
+    case WM_SIZING: {
+        DeleteObject(bitmap);
+        delete canvasImage;        
+        int width = this->w;
+        int height = this->h;
+        RECT* rect = (RECT*)lParam;
+        this->x = rect->left;
+        this->y = rect->top;
+        this->w = rect->right - rect->left;
+        this->h = rect->bottom - rect->top;        
+        for (const auto& item : views) {
+            item->changeSize(width,height);
+        }
+        initCanvas();
         break;
     }
     }

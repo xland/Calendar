@@ -28,17 +28,18 @@ void ViewButtonIcon::paint(BLContext* paintCtx) {
 
 std::shared_ptr<ViewButtonIcon> ViewButtonIcon::createMinimizeBtn(WindowBase* parent) {
     auto btn = std::make_shared<ViewButtonIcon>(parent);
-    btn->box = BLBoxI(parent->w - 104, 16, parent->w - 60, 56);
-    btn->text = reinterpret_cast<const char*>(u8"\ue6e7");
-    btn->foregroundColor = BLRgba32(0xffffffff);
+    btn->dockType = 1;
+    btn->box = BLBoxI(parent->w - 80, 0, parent->w - 40, 36);
+    btn->text = reinterpret_cast<const char*>(u8"\ue6e8");
+    btn->fontSize = 16.0;
+    btn->foregroundColor = BLRgba32(0xff888888);
     btn->backgroundColor = BLRgba32(0x00ffffff);
     btn->onMouseOut = [](ViewBase* sender) {
         sender->backgroundColor = BLRgba32(0x00ffffff);
         sender->parent->repaint();
         };
     btn->onMouseEnter = [](ViewBase* sender) {
-        ChangeCursor(IDC_HAND);
-        sender->backgroundColor = BLRgba32(0x33ffffff);
+        sender->backgroundColor = BLRgba32(0xffEEEEEE);
         sender->parent->repaint();
         };
     btn->onMouseUp = [](ViewBase* sender) {
@@ -50,19 +51,20 @@ std::shared_ptr<ViewButtonIcon> ViewButtonIcon::createMinimizeBtn(WindowBase* pa
 
 std::shared_ptr<ViewButtonIcon> ViewButtonIcon::createCloseBtn(WindowBase* parent) {
     auto btn = std::make_shared<ViewButtonIcon>(parent);
-    btn->box = BLBoxI(parent->w - 60, 16, parent->w - 16, 56);
-    btn->text = reinterpret_cast<const char*>(u8"\ue6e6");
-    btn->foregroundColor = BLRgba32(0xffffffff);
+    btn->dockType = 1;
+    btn->box = BLBoxI(parent->w - 40, 0, parent->w, 36);
+    btn->text = reinterpret_cast<const char*>(u8"\ue6e7");
+    btn->fontSize = 16.0;
+    btn->foregroundColor = BLRgba32(0xff888888);
     btn->backgroundColor = BLRgba32(0x00ffffff);
     btn->onMouseOut = [](ViewBase* sender) {
-        sender->foregroundColor = BLRgba32(0xffffffff);
+        sender->foregroundColor = BLRgba32(0xff888888);
         sender->backgroundColor = BLRgba32(0x00ffffff);
         sender->parent->repaint();
         };
     btn->onMouseEnter = [](ViewBase* sender) {
-        ChangeCursor(IDC_HAND);
-        sender->foregroundColor = BLRgba32(0xffb83c4b);
-        sender->backgroundColor = BLRgba32(0x33ffffff);
+        sender->foregroundColor = BLRgba32(0xffffffff);
+        sender->backgroundColor = BLRgba32(0xffe81123);
         sender->parent->repaint();
         };
     btn->onMouseUp = [](ViewBase* sender) {

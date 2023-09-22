@@ -1,4 +1,6 @@
 #include "ViewBase.h"
+#include "WindowBase.h"
+
 ViewBase::ViewBase(WindowBase* parent) :parent{ parent } {
 
 }
@@ -30,5 +32,14 @@ void ViewBase::mouseUp(const int& x, const int& y) {
         if (onMouseUp) {
             onMouseUp(this);
         }
+    }
+}
+void ViewBase::mouseDown(const int& x, const int& y) {
+
+}
+void ViewBase::changeSize(const int& w, const int& h) {
+    if (dockType == 1) {
+        box.x0 = parent->w - (w - box.x0);
+        box.x1 = parent->w - (w - box.x1);
     }
 }

@@ -30,13 +30,13 @@
     <ClCompile Include="Font.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="WidgetBase.cpp">
+    <ClCompile Include="ViewBase.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="WidgetCaptionTool.cpp">
+    <ClCompile Include="ViewButtonIcon.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="WidgetCalendar.cpp">
+    <ClCompile Include="ViewCalendar.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
@@ -59,13 +59,13 @@
     <ClInclude Include="Font.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="WidgetBase.h">
+    <ClInclude Include="ViewBase.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="WidgetCaptionTool.h">
+    <ClInclude Include="ViewButtonIcon.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="WidgetCalendar.h">
+    <ClInclude Include="ViewCalendar.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

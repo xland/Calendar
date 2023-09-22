@@ -143,9 +143,9 @@
     <ClCompile Include="Font.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Util.cpp" />
-    <ClCompile Include="WidgetBase.cpp" />
-    <ClCompile Include="WidgetCalendar.cpp" />
-    <ClCompile Include="WidgetCaptionTool.cpp" />
+    <ClCompile Include="ViewBase.cpp" />
+    <ClCompile Include="ViewCalendar.cpp" />
+    <ClCompile Include="ViewButtonIcon.cpp" />
     <ClCompile Include="WindowBase.cpp" />
     <ClCompile Include="WindowMain.cpp" />
   </ItemGroup>
@@ -156,9 +156,9 @@
     <ClInclude Include="Font.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="Util.h" />
-    <ClInclude Include="WidgetBase.h" />
-    <ClInclude Include="WidgetCalendar.h" />
-    <ClInclude Include="WidgetCaptionTool.h" />
+    <ClInclude Include="ViewBase.h" />
+    <ClInclude Include="ViewCalendar.h" />
+    <ClInclude Include="ViewButtonIcon.h" />
     <ClInclude Include="WindowBase.h" />
     <ClInclude Include="WindowMain.h" />
   </ItemGroup>

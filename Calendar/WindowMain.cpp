@@ -1,16 +1,16 @@
 #include "WindowMain.h"
-#include "WidgetCaptionTool.h"
+#include "ViewButtonIcon.h"
 #include <memory>
 
 WindowMain::WindowMain() {
-    auto captionTool = std::make_shared<WidgetCaptionTool>();
-    widgets.push_back(captionTool);
     long w{ 1200 }, h{ 800 };
     RECT rect;
     SystemParametersInfo(SPI_GETWORKAREA, 0, &rect, 0);
     int x = (rect.right - w) / 2;
     int y = (rect.bottom - h) / 2;
     initWindow(x, y, w, h, L"°²×°³ÌÐò");
+    views.push_back(ViewButtonIcon::createMinimizeBtn(this));
+    views.push_back(ViewButtonIcon::createCloseBtn(this));
 }
 WindowMain::~WindowMain() {
 
@@ -28,7 +28,4 @@ bool WindowMain::isPosInCaption(const int& x, const int& y) {
     {
         return false;
     }
-}
-void WindowMain::ProcessWindowMsg(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam) {
-
 }
