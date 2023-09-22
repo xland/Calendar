@@ -14,7 +14,6 @@ WindowBase::~WindowBase() {
     delete canvasImage;
 }
 
-
 void WindowBase::initWindow(const int& x, const int& y, const long& w, const long& h, const std::wstring& title)
 {
     this->x = x;
@@ -73,7 +72,7 @@ void WindowBase::repaint()
     paintCtx->clearAll();
     paintCtx->fillBox(0, 0, w, h, BLRgba32(0xFFFFFFFF));
     onPaint();
-    for (const auto& item : widgets) {
+    for (const auto& item : views) {
         item->paint(paintCtx);
     }
     auto str = ConvertToUTF8(this->title);
@@ -192,9 +191,9 @@ LRESULT CALLBACK WindowBase::windowProc(HWND hWnd, UINT msg, WPARAM wParam, LPAR
     case WM_LBUTTONDOWN: {
         isLeftBtnDown = true;
         auto p = pointToClient(lParam);
-        for (const auto& item : widgets) {
+        for (const auto& item : views) {
             if (item->isMouseEnter) {
-                item->MouseDown(p.x, p.y);
+                item->mouseDown(p.x, p.y);
                 break;
             }            
         }
@@ -203,9 +202,9 @@ LRESULT CALLBACK WindowBase::windowProc(HWND hWnd, UINT msg, WPARAM wParam, LPAR
     case WM_LBUTTONUP: {
         isLeftBtnDown = true;
         auto p = pointToClient(lParam);
-        for (const auto& item : widgets) {
+        for (const auto& item : views) {
             if (item->isMouseEnter) {
-                item->MouseUp(p.x, p.y);
+                item->mouseUp(p.x, p.y);
                 break;
             }
         }
@@ -214,8 +213,8 @@ LRESULT CALLBACK WindowBase::windowProc(HWND hWnd, UINT msg, WPARAM wParam, LPAR
     case WM_MOUSELEAVE:
     {
         mouseTracing = false;
-        for (const auto& item : widgets) {
-            item->MouseMove(INT_MIN, INT_MIN);
+        for (const auto& item : views) {
+            item->mouseMove(INT_MIN, INT_MIN);
         }
         break;
     }
@@ -229,8 +228,8 @@ LRESULT CALLBACK WindowBase::windowProc(HWND hWnd, UINT msg, WPARAM wParam, LPAR
             mouseTracing = TrackMouseEvent(&tme);
         }
         auto p = pointToClient(lParam);
-        for (const auto& item : widgets) {
-            item->MouseMove(p.x, p.y);
+        for (const auto& item : views) {
+            item->mouseMove(p.x, p.y);
         }
         break;
     }

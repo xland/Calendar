@@ -1,23 +1,18 @@
-#include "WidgetBase.h"
-WidgetBase::WidgetBase(WindowBase* parent) :parent{ parent } {
+#include "ViewBase.h"
+ViewBase::ViewBase(WindowBase* parent) :parent{ parent } {
 
 }
-WidgetBase::~WidgetBase() {
-
-}
-void WidgetBase::paint(BLContext* paintCtx) {
+ViewBase::~ViewBase() {
 
 }
 
-
-bool WidgetBase::MouseMove(const int& x, const int& y) {
+void ViewBase::mouseMove(const int& x, const int& y) {
     if (box.contains(x, y)) {
         if (!isMouseEnter) {
             isMouseEnter = true;
             if (onMouseEnter) {
                 onMouseEnter(this);
             }
-            return true;
         }
     }
     else
@@ -27,17 +22,13 @@ bool WidgetBase::MouseMove(const int& x, const int& y) {
             if (onMouseOut) {
                 onMouseOut(this);
             }
-            return true;
         }
     }
-    return false;
 }
-bool WidgetBase::MouseUp(const int& x, const int& y) {
+void ViewBase::mouseUp(const int& x, const int& y) {
     if (isMouseEnter) {
         if (onMouseUp) {
             onMouseUp(this);
         }
-        return true;
     }
-    return false;
 }

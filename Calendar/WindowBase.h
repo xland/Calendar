@@ -4,7 +4,7 @@
 #include <string>
 #include <vector>
 #include <memory>
-#include "WidgetBase.h"
+#include "ViewBase.h"
 class WindowBase
 {
 public:
@@ -15,7 +15,7 @@ public:
 	HWND hwnd;
 	long w, h;
 	int x, y;
-	std::vector<std::shared_ptr<WidgetBase>> widgets;
+	std::vector<std::shared_ptr<ViewBase>> views;
 protected:
 	void initWindow(const int& x, const int& y, const long& w, const long& h, const std::wstring& title);
 	virtual void onPaint() {};
