@@ -10,31 +10,29 @@ class WindowBase
 public:
 	WindowBase();
 	~WindowBase();
-	void Repaint();
-	void Show();
+	void repaint();
+	void show();
 	HWND hwnd;
 	long w, h;
 	int x, y;
 	std::vector<std::shared_ptr<WidgetBase>> widgets;
 protected:
-	void InitWindow(const int& x, const int& y, const long& w, const long& h, const std::wstring& title);
-	virtual void OnPaint() {};
-	virtual bool CaptionTest(const int& x, const int& y) { return false; };
-	virtual bool OnLeftButtonDown(const int& x, const int& y) { return false; };
-	virtual bool OnRightButtonDown(const int& x, const int& y) { return false; };
-	virtual bool OnMouseMove(const int& x, const int& y) { return false; };
-	virtual bool OnLeftButtonUp(const int& x, const int& y) { return false; };
-	virtual void ProcessWindowMsg(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam) {};
-	BLContext* PaintCtx;
-	BLImage* CanvasImage;
-	bool IsLeftBtnDown;
+	void initWindow(const int& x, const int& y, const long& w, const long& h, const std::wstring& title);
+	virtual void onPaint() {};
+	virtual bool isPosInCaption(const int& x, const int& y) { return false; };
+	BLContext* paintCtx;
+	bool isLeftBtnDown;
 private:
-	void InitCanvas();
-	static LRESULT CALLBACK RouteWindowMessage(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
-	LRESULT CALLBACK WindowProc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam);
+	void paintToClient();
+	void initCanvas();
+	int hitTest(LPARAM lParam);
+	POINT pointToClient(LPARAM lParam);
+	static LRESULT CALLBACK routeWindowMessage(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
+	LRESULT CALLBACK windowProc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam);
+	std::wstring title;
 	void* pixelData;
 	unsigned long pixelDataSize;
 	HBITMAP bitmap;
-	std::wstring title;
+	BLImage* canvasImage;
 };
 

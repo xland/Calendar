@@ -7,7 +7,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance
 {
     Font::Init();
     WindowBase* win = new WindowMain();
-    win->Show();
+    win->show();
     MSG msg;
     while (GetMessage(&msg, NULL, 0, 0))
     {
