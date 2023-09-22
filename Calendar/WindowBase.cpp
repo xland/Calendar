@@ -72,7 +72,8 @@ void WindowBase::repaint()
 {
     paintCtx->begin(*canvasImage);
     paintCtx->clearAll();
-    paintCtx->fillBox(0, 0, w, h, BLRgba32(0xFFFFFFFF));
+    drawShadow();
+    paintCtx->fillBox(16, 16, w-16, h-16, BLRgba32(0xFFFFFFFF));
     onPaint();
     for (const auto& item : views) {
         item->paint(paintCtx);
@@ -81,9 +82,8 @@ void WindowBase::repaint()
     auto font = Font::Get()->fontText;
     font->setSize(18.0);
     paintCtx->setFillStyle(BLRgba32(0XFF666666));
-    paintCtx->fillUtf8Text(BLPoint(16, 28), *font, str.c_str());
+    paintCtx->fillUtf8Text(BLPoint(32, 44), *font, str.c_str());
     paintCtx->end();
-
     HDC hdc = GetDC(hwnd);
     BITMAPINFO info = { sizeof(BITMAPINFOHEADER), w, 0 - h, 1, 32, BI_RGB, pixelDataSize, 0, 0, 0, 0 };
     SetDIBits(hdc, bitmap, 0, h, pixelData, &info, DIB_RGB_COLORS); //使用指定的DIB颜色数据来设置位图中的像素
@@ -112,6 +112,10 @@ int WindowBase::hitTest(LPARAM lParam) {
     int y{ GET_Y_LPARAM(lParam) };
     RECT rect;
     GetWindowRect(hwnd, &rect);
+    rect.left += 14;
+    rect.top += 14;
+    rect.right -= 14;
+    rect.bottom -= 14;
     int span = 4;
     if (x >= rect.left && x < (rect.left + span)) {
         if (y >= rect.top && y < (rect.top + span)) {
@@ -135,48 +139,23 @@ int WindowBase::hitTest(LPARAM lParam) {
             return HTRIGHT;
         }
     }
+    else if(y >= rect.top && y < (rect.top + span)) {
+        return HTTOP;
+    }
+    else if (y > rect.bottom - span && y <= rect.bottom) {
+        return HTBOTTOM;
+    }
+    else if (isPosInCaption(x - rect.left, y - rect.top)) {
+        return HTCAPTION;
+    }
+    else if(x >= (rect.left + span) && y >= (rect.top + span) && y <= (rect.bottom - span) && x <= (rect.right - span))
+    {
+        return HTCLIENT;
+    }
     else
     {
-        if (y >= rect.top && y < (rect.top + span)) {
-            return HTTOP;
-        }
-        else if (y > rect.bottom - span && y <= rect.bottom) {
-            return HTBOTTOM;
-        }
-        else if (isPosInCaption(x - rect.left, y - rect.top)) {
-            return HTCAPTION;
-        }
+        return HTNOWHERE;
     }
-    return HTCLIENT;
-}
-POINT WindowBase::pointToClient(LPARAM lParam) {
-    POINT p{ GET_X_LPARAM(lParam) ,GET_Y_LPARAM(lParam) };
-    ScreenToClient(hwnd, &p);
-    return p;
-}
-void WindowBase::paintToClient() {
-    paintCtx->begin(*canvasImage);
-    paintCtx->clearAll();
-    paintCtx->fillBox(0, 0, w, h, BLRgba32(0xFFFFFFFF));
-    onPaint();
-    for (const auto& item : views) {
-        item->paint(paintCtx);
-    }
-    auto str = ConvertToUTF8(this->title);
-    auto font = Font::Get()->fontText;
-    font->setSize(18.0);
-    paintCtx->setFillStyle(BLRgba32(0XFF666666));
-    paintCtx->fillUtf8Text(BLPoint(16, 28), *font, str.c_str());
-    paintCtx->end();
-
-    PAINTSTRUCT ps;
-    HDC hdc = BeginPaint(hwnd, &ps);
-    HDC hdcBmp = CreateCompatibleDC(hdc);
-    DeleteObject(SelectObject(hdcBmp, bitmap));
-    BitBlt(hdc, 0, 0, (int)w, (int)h, hdcBmp, 0, 0, SRCCOPY);
-    DeleteDC(hdcBmp);
-    EndPaint(hwnd, &ps);
-    ValidateRect(hwnd, NULL);
 }
 
 LRESULT CALLBACK WindowBase::windowProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
@@ -211,10 +190,11 @@ LRESULT CALLBACK WindowBase::windowProc(HWND hWnd, UINT msg, WPARAM wParam, LPAR
     }
     case WM_LBUTTONDOWN: {
         isLeftBtnDown = true;
-        auto p = pointToClient(lParam);
+        int x{ GET_X_LPARAM(lParam) };
+        int y{ GET_Y_LPARAM(lParam) };
         for (const auto& item : views) {
             if (item->isMouseEnter) {
-                item->mouseDown(p.x, p.y);
+                item->mouseDown(x, y);
                 break;
             }            
         }
@@ -222,10 +202,11 @@ LRESULT CALLBACK WindowBase::windowProc(HWND hWnd, UINT msg, WPARAM wParam, LPAR
     }
     case WM_LBUTTONUP: {
         isLeftBtnDown = true;
-        auto p = pointToClient(lParam);
+        int x{ GET_X_LPARAM(lParam) };
+        int y{ GET_Y_LPARAM(lParam) };
         for (const auto& item : views) {
             if (item->isMouseEnter) {
-                item->mouseUp(p.x, p.y);
+                item->mouseUp(x, y);
                 break;
             }
         }
@@ -274,4 +255,78 @@ LRESULT CALLBACK WindowBase::windowProc(HWND hWnd, UINT msg, WPARAM wParam, LPAR
     }
     }
     return DefWindowProcW(hWnd, msg, wParam, lParam);
+}
+
+void WindowBase::drawShadow()
+{
+    {//左上
+        BLGradient radial(BLRadialGradientValues(16, 16, 16, 16, 16));
+        radial.addStop(0.0, BLRgba32(0x22000000));
+        radial.addStop(1.0, BLRgba32(0x00000000));
+        paintCtx->fillCircle(16, 16, 16, radial);
+        paintCtx->setCompOp(BL_COMP_OP_CLEAR);
+        paintCtx->setFillStyle(BLRgba32(0xFF000000));
+        paintCtx->fillBox(16, 0, 32, 16);
+        paintCtx->fillBox(0, 16, 16, 32);
+        paintCtx->setCompOp(BL_COMP_OP_SRC_OVER);
+    }
+    {//右上
+        BLGradient radial(BLRadialGradientValues(w - 16, 16, w - 16, 16, 16));
+        radial.addStop(0.0, BLRgba32(0x22000000));
+        radial.addStop(1.0, BLRgba32(0x00000000));
+        paintCtx->fillCircle(w - 16, 16, 16, radial);
+        paintCtx->setCompOp(BL_COMP_OP_CLEAR);
+        paintCtx->setFillStyle(BLRgba32(0xFF000000));
+        paintCtx->fillBox(w - 32, 0, w - 16, 16);
+        paintCtx->fillBox(w - 16, 16, w, 32);
+        paintCtx->setCompOp(BL_COMP_OP_SRC_OVER);
+    }
+    { //右下
+        BLGradient radial(BLRadialGradientValues(w - 16, h - 16, w - 16, h - 16, 16));
+        radial.addStop(0.0, BLRgba32(0x22000000));
+        radial.addStop(1.0, BLRgba32(0x00000000));
+        paintCtx->fillCircle(w - 16, h - 16, 16, radial);
+        paintCtx->setCompOp(BL_COMP_OP_CLEAR);
+        paintCtx->setFillStyle(BLRgba32(0xFF000000));
+        paintCtx->fillBox(w - 16, h - 32, w, h - 16);
+        paintCtx->fillBox(w - 32, h - 16, w - 16, h);
+        paintCtx->setCompOp(BL_COMP_OP_SRC_OVER);
+    }
+    { //左下
+        BLGradient radial(BLRadialGradientValues(16, h - 16, 16, h - 16, 16));
+        radial.addStop(0.0, BLRgba32(0x22000000));
+        radial.addStop(1.0, BLRgba32(0x00000000));
+        paintCtx->fillCircle(16, h - 16, 16, radial);
+        paintCtx->setCompOp(BL_COMP_OP_CLEAR);
+        paintCtx->setFillStyle(BLRgba32(0xFF000000));
+        paintCtx->fillBox(16, h - 16, 32, h);
+        paintCtx->fillBox(0, h - 32, 16, h - 16);
+        paintCtx->setCompOp(BL_COMP_OP_SRC_OVER);
+    }
+    { //上
+        BLGradient linear(BLLinearGradientValues(0, 0, 0, 16));
+        linear.addStop(0.0, BLRgba32(0x00000000));
+        linear.addStop(1.0, BLRgba32(0x22000000));
+        paintCtx->fillBox(16, 0, w - 16, 16, linear);
+    }
+    { //右
+        BLGradient linear(BLLinearGradientValues(w - 16, 16, w, 16));
+        linear.addStop(0.0, BLRgba32(0x22000000));
+        linear.addStop(1.0, BLRgba32(0x00000000));
+        paintCtx->fillBox(w - 16, 16, w, h - 16, linear);
+    }
+    { //下
+        BLGradient linear(BLLinearGradientValues(0, h - 16, 0, h));
+        linear.addStop(0.0, BLRgba32(0x22000000));
+        linear.addStop(1.0, BLRgba32(0x00000000));
+        paintCtx->fillBox(16, h - 16, w - 16, h, linear);
+    }
+    { //左
+        BLGradient linear(BLLinearGradientValues(0, 0, 16, 0));
+        linear.addStop(0.0, BLRgba32(0x00000000));
+        linear.addStop(1.0, BLRgba32(0x22000000));
+        paintCtx->fillBox(0, 16, 16, h - 16, linear);
+    }
+    //PaintCtx->setStrokeWidth(0.8);
+    //PaintCtx->strokeBox(16, 16, w - 16, h - 16, BLRgba32(0, 128, 0));
 }

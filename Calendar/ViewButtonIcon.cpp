@@ -29,7 +29,7 @@ void ViewButtonIcon::paint(BLContext* paintCtx) {
 std::shared_ptr<ViewButtonIcon> ViewButtonIcon::createMinimizeBtn(WindowBase* parent) {
     auto btn = std::make_shared<ViewButtonIcon>(parent);
     btn->dockType = 1;
-    btn->box = BLBoxI(parent->w - 80, 0, parent->w - 40, 36);
+    btn->box = BLBoxI(parent->w - 96, 16, parent->w - 56, 52);
     btn->text = reinterpret_cast<const char*>(u8"\ue6e8");
     btn->fontSize = 16.0;
     btn->foregroundColor = BLRgba32(0xff888888);
@@ -52,7 +52,7 @@ std::shared_ptr<ViewButtonIcon> ViewButtonIcon::createMinimizeBtn(WindowBase* pa
 std::shared_ptr<ViewButtonIcon> ViewButtonIcon::createCloseBtn(WindowBase* parent) {
     auto btn = std::make_shared<ViewButtonIcon>(parent);
     btn->dockType = 1;
-    btn->box = BLBoxI(parent->w - 40, 0, parent->w, 36);
+    btn->box = BLBoxI(parent->w - 56, 16, parent->w-16, 52);
     btn->text = reinterpret_cast<const char*>(u8"\ue6e7");
     btn->fontSize = 16.0;
     btn->foregroundColor = BLRgba32(0xff888888);

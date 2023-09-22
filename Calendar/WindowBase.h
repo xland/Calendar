@@ -25,6 +25,7 @@ protected:
 private:
 	void paintToClient();
 	void initCanvas();
+	void drawShadow();
 	int hitTest(LPARAM lParam);
 	POINT pointToClient(LPARAM lParam);
 	static LRESULT CALLBACK routeWindowMessage(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
