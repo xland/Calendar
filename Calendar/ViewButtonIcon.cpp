@@ -29,9 +29,9 @@ void ViewButtonIcon::paint(BLContext* paintCtx) {
 std::shared_ptr<ViewButtonIcon> ViewButtonIcon::createMinimizeBtn(WindowBase* parent) {
     auto btn = std::make_shared<ViewButtonIcon>(parent);
     btn->dockType = 1;
-    btn->box = BLBoxI(parent->w - 96, 16, parent->w - 56, 52);
+    btn->box = BLBoxI(parent->w - 148, 16, parent->w - 104, 58);
     btn->text = reinterpret_cast<const char*>(u8"\ue6e8");
-    btn->fontSize = 16.0;
+    btn->fontSize = 18.0;
     btn->foregroundColor = BLRgba32(0xff888888);
     btn->backgroundColor = BLRgba32(0x00ffffff);
     btn->onMouseOut = [](ViewBase* sender) {
@@ -49,12 +49,35 @@ std::shared_ptr<ViewButtonIcon> ViewButtonIcon::createMinimizeBtn(WindowBase* pa
     return btn;
 }
 
+std::shared_ptr<ViewButtonIcon> ViewButtonIcon::createMaximizeRestoreBtn(WindowBase* parent) {
+    auto btn = std::make_shared<ViewButtonIcon>(parent);
+    btn->dockType = 1;
+    btn->box = BLBoxI(parent->w - 104, 16, parent->w - 60, 58);
+    btn->text = reinterpret_cast<const char*>(u8"\ue6e5");
+    btn->fontSize = 18.0;
+    btn->foregroundColor = BLRgba32(0xff888888);
+    btn->backgroundColor = BLRgba32(0x00ffffff);
+    btn->onMouseOut = [](ViewBase* sender) {
+        sender->backgroundColor = BLRgba32(0x00ffffff);
+        sender->parent->repaint();
+        };
+    btn->onMouseEnter = [](ViewBase* sender) {
+        sender->backgroundColor = BLRgba32(0xffEEEEEE);
+        sender->parent->repaint();
+        };
+    btn->onMouseUp = [](ViewBase* sender) {
+        sender->mouseMove(INT_MIN, INT_MIN);
+        ShowWindow(sender->parent->hwnd, SW_SHOWMAXIMIZED);
+        };
+    return btn;
+}
+
 std::shared_ptr<ViewButtonIcon> ViewButtonIcon::createCloseBtn(WindowBase* parent) {
     auto btn = std::make_shared<ViewButtonIcon>(parent);
     btn->dockType = 1;
-    btn->box = BLBoxI(parent->w - 56, 16, parent->w-16, 52);
+    btn->box = BLBoxI(parent->w - 60, 16, parent->w-16, 58);
     btn->text = reinterpret_cast<const char*>(u8"\ue6e7");
-    btn->fontSize = 16.0;
+    btn->fontSize = 18.0;
     btn->foregroundColor = BLRgba32(0xff888888);
     btn->backgroundColor = BLRgba32(0x00ffffff);
     btn->onMouseOut = [](ViewBase* sender) {

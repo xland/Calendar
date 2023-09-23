@@ -80,8 +80,8 @@ void WindowBase::repaint()
     }
     auto str = ConvertToUTF8(this->title);
     auto font = Font::Get()->fontText;
-    font->setSize(18.0);
-    paintCtx->setFillStyle(BLRgba32(0XFF666666));
+    font->setSize(20.0);
+    paintCtx->setFillStyle(BLRgba32(0XFF333333));
     paintCtx->fillUtf8Text(BLPoint(32, 44), *font, str.c_str());
     paintCtx->end();
     HDC hdc = GetDC(hwnd);
