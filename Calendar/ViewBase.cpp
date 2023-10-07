@@ -10,6 +10,9 @@ ViewBase::~ViewBase() {
 
 void ViewBase::mouseMove(const int& x, const int& y) {
     if (box.contains(x, y)) {
+        if (isCursorHand) {
+            SetCursor(LoadCursor(NULL, IDC_HAND));
+        }
         if (!isMouseEnter) {
             isMouseEnter = true;
             if (onMouseEnter) {

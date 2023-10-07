@@ -28,6 +28,7 @@ public:
 	/// 1 right
 	/// </summary>
 	unsigned dockType{ 0 };
+	bool isCursorHand;
 protected:
 private:
 };

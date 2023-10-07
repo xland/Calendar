@@ -4,7 +4,7 @@
 #include "WindowBase.h"
 
 ViewButtonIcon::ViewButtonIcon(WindowBase* parent):ViewBase(parent) {
-
+    this->isCursorHand = true;
 }
 ViewButtonIcon::~ViewButtonIcon() {
 
@@ -37,10 +37,12 @@ std::shared_ptr<ViewButtonIcon> ViewButtonIcon::createMinimizeBtn(WindowBase* pa
     btn->onMouseOut = [](ViewBase* sender) {
         sender->backgroundColor = BLRgba32(0x00ffffff);
         sender->parent->repaint();
+        sender->isMouseEnter = false;
         };
     btn->onMouseEnter = [](ViewBase* sender) {
         sender->backgroundColor = BLRgba32(0xffEEEEEE);
         sender->parent->repaint();
+        sender->isMouseEnter = true;
         };
     btn->onMouseUp = [](ViewBase* sender) {
         sender->mouseMove(INT_MIN, INT_MIN);

@@ -53,6 +53,7 @@ void WindowBase::show() {
     ShowWindow(hwnd, SW_SHOW);
     UpdateWindow(hwnd);
     repaint();
+    SetCursor(LoadCursor(NULL, IDC_ARROW));
 }
 
 void WindowBase::initCanvas() {
@@ -81,7 +82,7 @@ void WindowBase::repaint()
     auto str = ConvertToUTF8(this->title);
     auto font = Font::Get()->fontText;
     font->setSize(20.0);
-    paintCtx->setFillStyle(BLRgba32(0XFF333333));
+    paintCtx->setFillStyle(BLRgba32(0XFF666666));
     paintCtx->fillUtf8Text(BLPoint(32, 44), *font, str.c_str());
     paintCtx->end();
     HDC hdc = GetDC(hwnd);
@@ -119,37 +120,47 @@ int WindowBase::hitTest(LPARAM lParam) {
     int span = 4;
     if (x >= rect.left && x < (rect.left + span)) {
         if (y >= rect.top && y < (rect.top + span)) {
+            SetCursor(LoadCursor(NULL, IDC_SIZENWSE));
             return HTTOPLEFT;
         }
         else if (y > rect.bottom - span && y <= rect.bottom) {
+            SetCursor(LoadCursor(NULL, IDC_SIZENESW));
             return HTBOTTOMLEFT;
         }
         else {
+            SetCursor(LoadCursor(NULL, IDC_SIZEWE));
             return HTLEFT;
         }
     }
     else if (x > rect.right - span && x <= rect.right) {
         if (y >= rect.top && y < (rect.top + span)) {
+            SetCursor(LoadCursor(NULL, IDC_SIZENESW));
             return HTTOPRIGHT;
         }
         else if (y > rect.bottom - span && y <= rect.bottom) {
+            SetCursor(LoadCursor(NULL, IDC_SIZENWSE));
             return HTBOTTOMRIGHT;
         }
         else {
+            SetCursor(LoadCursor(NULL, IDC_SIZEWE));
             return HTRIGHT;
         }
     }
     else if(y >= rect.top && y < (rect.top + span)) {
+        SetCursor(LoadCursor(NULL, IDC_SIZENS));
         return HTTOP;
     }
     else if (y > rect.bottom - span && y <= rect.bottom) {
+        SetCursor(LoadCursor(NULL, IDC_SIZENS));
         return HTBOTTOM;
     }
     else if (isPosInCaption(x - rect.left, y - rect.top)) {
+        SetCursor(LoadCursor(NULL, IDC_ARROW));
         return HTCAPTION;
     }
     else if(x >= (rect.left + span) && y >= (rect.top + span) && y <= (rect.bottom - span) && x <= (rect.right - span))
     {
+        SetCursor(LoadCursor(NULL, IDC_ARROW));
         return HTCLIENT;
     }
     else
@@ -179,9 +190,10 @@ LRESULT CALLBACK WindowBase::windowProc(HWND hWnd, UINT msg, WPARAM wParam, LPAR
         PostQuitMessage(0);
         break;
     }
-    //case WM_SETCURSOR: {
-    //    return true;
-    //}
+    case WM_SETCURSOR:
+    {
+        return FALSE;
+    }
     case WM_RBUTTONDOWN: {
         break;
     }
