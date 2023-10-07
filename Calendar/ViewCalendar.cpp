@@ -8,4 +8,5 @@ ViewCalendar::~ViewCalendar() {
 
 }
 void ViewCalendar::paint(BLContext* paintCtx) {
+
 }
