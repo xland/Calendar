@@ -1,5 +1,6 @@
 #include "WindowMain.h"
 #include "ViewButtonIcon.h"
+#include "ViewCalendar.h"
 #include <memory>
 
 WindowMain::WindowMain() {
@@ -12,6 +13,7 @@ WindowMain::WindowMain() {
     views.push_back(ViewButtonIcon::createMinimizeBtn(this));
     views.push_back(ViewButtonIcon::createMaximizeRestoreBtn(this));
     views.push_back(ViewButtonIcon::createCloseBtn(this));
+    views.push_back(ViewCalendar::createCalendar(this));
 }
 WindowMain::~WindowMain() {
 
