@@ -102,6 +102,9 @@ void WindowMain::initCalendarDate() {
     auto renderer = btn->getRenderer();
     renderer->setBorders(tgui::Borders(0, 0, 0, 0));
     renderer->setTextSize(17);
+    renderer->setBackgroundColor(tgui::Color(0, 0, 0, 0));
+    renderer->setBackgroundColorHover(tgui::Color(240, 44, 56));
+    btn->setSize("14.286%", "14.286%");
     btn->setText("12");
     calendarGrid->addWidget(btn, 1, 0);
     for (size_t y = 1; y < 7; y++)
