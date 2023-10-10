@@ -64,14 +64,25 @@ WindowMain::WindowMain() {
     grid->setSize(356,300);
     
 
-    auto labelCalendar = tgui::Label::create();
-    labelCalendar->setText(L"一");
-    labelCalendar->getRenderer()->setTextSize(20);
-    auto lr = labelCalendar->getRenderer();
+    auto labelCalendar1 = tgui::Label::create();
+    labelCalendar1->setText(L"一");
+    labelCalendar1->getRenderer()->setTextSize(20);
+    auto lr = labelCalendar1->getRenderer();
     lr->setTextColor(tgui::Color(120, 120, 120));
-    gui->add(labelCalendar);
-    grid->setWidgetCell(labelCalendar, 0, 0);
-    
+    grid->addWidget(labelCalendar1, 0, 0);
+
+    auto labelCalendar2 = tgui::Label::copy(labelCalendar1);
+    labelCalendar2->setText(L"二");
+    grid->addWidget(labelCalendar2, 0, 1);
+
+    auto labelCalendar3 = tgui::Label::copy(labelCalendar1);
+    labelCalendar3->setText(L"三");
+    grid->addWidget(labelCalendar3, 0, 2);
+
+    auto labelCalendar4 = tgui::Label::copy(labelCalendar1);
+    labelCalendar4->setText(L"四");
+    grid->addWidget(labelCalendar4, 0, 3);
+
     gui->add(grid);
     gui->mainLoop();
 }
