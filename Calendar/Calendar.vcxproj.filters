@@ -30,15 +30,6 @@
     <ClCompile Include="Font.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="ViewBase.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="ViewButtonIcon.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="ViewCalendar.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Font Include="Res\iconfont.ttf" />
@@ -57,15 +48,6 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="Font.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="ViewBase.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="ViewButtonIcon.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="ViewCalendar.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
