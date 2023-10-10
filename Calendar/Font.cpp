@@ -1,73 +1,30 @@
-//#include "Font.h"
-//#include <Windows.h>
-//#include "resource.h"
-//
-//static Font* font;
-//
-//Font::Font()
-//{
-//    initFontIcon();
-//    initFontText();
-//}
-//Font::~Font()
-//{
-//    delete fontText;
-//    delete fontIcon;
-//
-//}
-//void Font::Dispose()
-//{
-//    delete font;
-//}
-//void Font::Init() {
-//    font = new Font();
-//}
-//
-//Font* Font::Get()
-//{
-//    return font;
-//}
-//
-//void Font::initFontText()
-//{
-//    BLFontFace face;
-//    BLResult err = face.createFromFile("C:\\Windows\\Fonts\\simhei.ttf"); //ºÚÌå
-//    if (err) {
-//        MessageBox(NULL, L"ÏµÍ³×ÖÌå¼ÓÔØÊ§°Ü", L"ÏµÍ³ÌáÊ¾", NULL);
-//        return;
-//    }
-//    fontText = new BLFont();
-//    fontText->createFromFace(face, 16.0f);
-//}
-//
-//void Font::initFontIcon()
-//{
-//    HMODULE instance = GetModuleHandle(NULL);
-//    HRSRC resID = FindResource(instance, MAKEINTRESOURCE(IDR_ICON_FONT), L"ICON_FONT");
-//    if (resID == 0) {
-//        MessageBox(NULL, L"²éÕÒ×ÖÌåÍ¼±ê×ÊÔ´Ê§°Ü", L"ÏµÍ³ÌáÊ¾", NULL);
-//        return;
-//    }
-//    size_t resSize = SizeofResource(instance, resID);
-//    HGLOBAL res = LoadResource(instance, resID);
-//    if (res == 0) {
-//        MessageBox(NULL, L"¼ÓÔØ×ÖÌåÍ¼±ê×ÊÔ´Ê§°Ü", L"ÏµÍ³ÌáÊ¾", NULL);
-//        return;
-//    }
-//    LPVOID resData = LockResource(res);
-//    BLFontData fontData;
-//    BLResult result = fontData.createFromData(resData, resSize);
-//    //BOOL flag = VirtualFree(resData, resSize, MEM_RELEASE);
-//    if (result != BL_SUCCESS) {
-//        MessageBox(NULL, L"Éú³É×ÖÌåÍ¼±êÊ§°Ü", L"ÏµÍ³ÌáÊ¾", NULL);
-//        return;
-//    }
-//    BLFontFace face;
-//    face.createFromData(fontData, 0);
-//    fontIcon = new BLFont();
-//    result = fontIcon->createFromFace(face, 28.0f);
-//    if (result != BL_SUCCESS) {
-//        MessageBox(NULL, L"´´½¨×ÖÌåÍ¼±êÊ§°Ü", L"ÏµÍ³ÌáÊ¾", NULL);
-//        return;
-//    }
-//}
+ï»¿#include "Font.h"
+#include <Windows.h>
+#include "resource.h" 
+
+tgui::Font* Font::text;
+tgui::Font* Font::icon;
+
+void Font::Dispose()
+{
+    delete Font::text;
+    delete Font::icon;
+}
+void Font::Init() {
+    Font::text = new tgui::Font("C:\\Windows\\Fonts\\simhei.ttf");
+
+    HMODULE instance = GetModuleHandle(NULL);
+    HRSRC resID = FindResource(instance, MAKEINTRESOURCE(IDR_ICON_FONT), L"ICON_FONT");
+    if (resID == 0) {
+        MessageBox(NULL, L"æŸ¥æ‰¾å­—ä½“å›¾æ ‡èµ„æºå¤±è´¥", L"ç³»ç»Ÿæç¤º", NULL);
+        return;
+    }
+    size_t resSize = SizeofResource(instance, resID);
+    HGLOBAL res = LoadResource(instance, resID);
+    if (res == 0) {
+        MessageBox(NULL, L"åŠ è½½å­—ä½“å›¾æ ‡èµ„æºå¤±è´¥", L"ç³»ç»Ÿæç¤º", NULL);
+        return;
+    }
+    LPVOID resData = LockResource(res);
+    Font::icon = new tgui::Font(resData, resSize);
+}

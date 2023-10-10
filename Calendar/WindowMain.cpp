@@ -1,38 +1,22 @@
-#include "WindowMain.h"
+ï»¿#include "WindowMain.h"
 #include <memory>
+#include <array>
+#include "Font.h"
 
 WindowMain::WindowMain() {
 	initWindow();
 	WindowBase::wndMap[hwnd] = this;
     gui = new tgui::Gui{ *sfWin };
-    tgui::Font font("C:\\Windows\\Fonts\\simhei.ttf");
-    tgui::Font icon("D:\\project\\Calendar\\Calendar\\Res\\iconfont.ttf");
-    tgui::Font::setGlobalFont(font);
-    
+    Font::Init();
+    tgui::Font::setGlobalFont(*Font::text);    
 
     auto panel = tgui::Panel::create();
     panel->setPosition(0, 0);
     panel->setSize(380, "100%");
     panel->getRenderer()->setBackgroundColor(tgui::Color(253, 233, 235));
     gui->add(panel);
-    {
-        auto labelIcon = tgui::Label::create();
-        labelIcon->setText(u8"\ue685");
-        labelIcon->setPosition(12, 6);
-        labelIcon->getRenderer()->setTextSize(22);
-        auto renderer = labelIcon->getRenderer();
-        renderer->setFont(icon);
-        renderer->setTextColor(tgui::Color(240, 44, 56));
-        gui->add(labelIcon);
 
-        auto labelTitle = tgui::Label::create();    
-        labelTitle->setText(L"ÈÕÀú");
-        labelTitle->setPosition(36, 8);
-        labelTitle->getRenderer()->setTextSize(20);
-        renderer = labelTitle->getRenderer();
-        renderer->setTextColor(tgui::Color(120, 120, 120));
-        gui->add(labelTitle);
-    }
+    initWinTitle();
 
     tgui::Button::Ptr buttonClose = tgui::Button::create();
     buttonClose->setPosition("100%", 0);
@@ -40,7 +24,7 @@ WindowMain::WindowMain() {
     buttonClose->setSize(50, 40);
     auto renderer = buttonClose->getRenderer();
     renderer->setBorders(tgui::Borders( 0,0,0,0 ));
-    renderer->setFont(icon);
+    renderer->setFont(*Font::icon);
     renderer->setTextSize(17);
     buttonClose->setText(u8"\ue6e7");
     buttonClose->onClick.connect(&WindowMain::close, this);
@@ -60,34 +44,55 @@ WindowMain::WindowMain() {
     gui->add(buttonMinimize);
 
     auto grid = tgui::Grid::create();
-    grid->setPosition(12, 66);
-    grid->setSize(356,300);
-    
-
+    grid->setPosition(28, 60);
+    grid->setSize(320,260);    
+    std::array<tgui::String,7> headerLableArr[]{L"ä¸€",L"äºŒ",L"ä¸‰",L"å››",L"äº”",L"å…­",L"æ—¥"};
     auto labelCalendar1 = tgui::Label::create();
-    labelCalendar1->setText(L"Ò»");
+    labelCalendar1->setText(headerLableArr->at(0));
     labelCalendar1->getRenderer()->setTextSize(20);
     auto lr = labelCalendar1->getRenderer();
     lr->setTextColor(tgui::Color(120, 120, 120));
     grid->addWidget(labelCalendar1, 0, 0);
-
-    auto labelCalendar2 = tgui::Label::copy(labelCalendar1);
-    labelCalendar2->setText(L"¶þ");
-    grid->addWidget(labelCalendar2, 0, 1);
-
-    auto labelCalendar3 = tgui::Label::copy(labelCalendar1);
-    labelCalendar3->setText(L"Èý");
-    grid->addWidget(labelCalendar3, 0, 2);
-
-    auto labelCalendar4 = tgui::Label::copy(labelCalendar1);
-    labelCalendar4->setText(L"ËÄ");
-    grid->addWidget(labelCalendar4, 0, 3);
-
+    for (size_t i = 1; i < 7; i++)
+    {
+        auto label = tgui::Label::copy(labelCalendar1);
+        label->setText(headerLableArr->at(i));
+        grid->addWidget(label, 0, i);
+    }
+    for (size_t y = 1; y < 7; y++)
+    {
+        for (size_t x = 0; x < 7; x++)
+        {
+            auto label = tgui::Label::copy(labelCalendar1);
+            label->setText(L"12");
+            grid->addWidget(label, y, x);
+        }
+    }
     gui->add(grid);
+
     gui->mainLoop();
 }
 WindowMain::~WindowMain() {
 
+}
+
+void WindowMain::initWinTitle() {
+    auto labelIcon = tgui::Label::create();
+    labelIcon->setText(u8"\ue685");
+    labelIcon->setPosition(12, 6);
+    labelIcon->getRenderer()->setTextSize(22);
+    auto renderer = labelIcon->getRenderer();
+    renderer->setFont(*Font::icon);
+    renderer->setTextColor(tgui::Color(240, 44, 56));
+    gui->add(labelIcon);
+
+    auto labelTitle = tgui::Label::create();
+    labelTitle->setText(L"æ—¥åŽ†");
+    labelTitle->setPosition(36, 8);
+    labelTitle->getRenderer()->setTextSize(20);
+    renderer = labelTitle->getRenderer();
+    renderer->setTextColor(tgui::Color(120, 120, 120));
+    gui->add(labelTitle);
 }
 
 bool WindowMain::isPosInCaption(const POINT& mousePos, const RECT& winRect) {
