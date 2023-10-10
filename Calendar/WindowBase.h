@@ -13,6 +13,7 @@ public:
 	~WindowBase();
 	void initWindow();
 	virtual bool isPosInCaption(const POINT& mousePos, const RECT& winRect) { return false; };
+	void close();
 	static std::map<HWND, WindowBase*> wndMap;
 	HWND hwnd;
 	tgui::Gui* gui;

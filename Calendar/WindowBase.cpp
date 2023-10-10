@@ -12,7 +12,7 @@ namespace {
         if (!GetWindowRect(hwnd, &winRect)) {
             return HTNOWHERE;
         }
-        static const unsigned borderWidth{ 6 };
+        static const int borderWidth{ 6 };
         if (mousePos.x < winRect.left + borderWidth && mousePos.y < winRect.top + borderWidth) {
             return HTTOPLEFT;
         }
@@ -74,12 +74,15 @@ WindowBase::WindowBase() {
 WindowBase::~WindowBase() {
 }
 void WindowBase::initWindow() {
-    sfWin = new sf::RenderWindow(sf::VideoMode(sf::Vector2u(800, 600)), "MyWin");
+    sfWin = new sf::RenderWindow(sf::VideoMode(sf::Vector2u(1000, 800)), L"日历");
     hwnd = sfWin->getNativeHandle();
     SFMLWndProc = (WNDPROC)SetWindowLongPtr(hwnd, GWLP_WNDPROC, (LONG_PTR)WndProc);
     SetWindowPos(hwnd, nullptr, 0, 0, 0, 0,
         SWP_NOZORDER | SWP_NOOWNERZORDER | SWP_NOMOVE | SWP_NOSIZE | SWP_FRAMECHANGED);
     const MARGINS shadowState{ 0,0,0,1 };
     DwmExtendFrameIntoClientArea(hwnd, &shadowState);
-    
+}
+void WindowBase::close() {
+    SendMessage(hwnd, WM_CLOSE, NULL, NULL);
+    PostQuitMessage(0);
 }
