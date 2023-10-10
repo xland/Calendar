@@ -14,6 +14,9 @@ public:
 	void initWindow();
 	virtual bool isPosInCaption(const POINT& mousePos, const RECT& winRect) { return false; };
 	void close();
+	void maximize();
+	void minimize();
+	void restore();
 	static std::map<HWND, WindowBase*> wndMap;
 	HWND hwnd;
 	tgui::Gui* gui;

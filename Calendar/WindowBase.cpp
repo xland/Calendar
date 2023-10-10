@@ -86,3 +86,13 @@ void WindowBase::close() {
     SendMessage(hwnd, WM_CLOSE, NULL, NULL);
     PostQuitMessage(0);
 }
+
+void WindowBase::maximize() {
+    ShowWindow(hwnd, SW_SHOWMAXIMIZED);
+}
+void WindowBase::minimize() {
+    ShowWindow(hwnd, SW_SHOWMINIMIZED);
+}
+void WindowBase::restore() {
+    ShowWindow(hwnd, SW_SHOWNORMAL);
+}
