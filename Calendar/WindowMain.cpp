@@ -32,8 +32,6 @@ WindowMain::WindowMain() {
         renderer = labelTitle->getRenderer();
         renderer->setTextColor(tgui::Color(120, 120, 120));
         gui->add(labelTitle);
-
-
     }
 
     tgui::Button::Ptr buttonClose = tgui::Button::create();
@@ -60,7 +58,21 @@ WindowMain::WindowMain() {
     buttonMinimize->setPosition({ tgui::bindLeft(buttonMaximize), tgui::bindTop(buttonMaximize) });
     buttonMinimize->setText(u8"\ue6e8");
     gui->add(buttonMinimize);
+
+    auto grid = tgui::Grid::create();
+    grid->setPosition(12, 66);
+    grid->setSize(356,300);
     
+
+    auto labelCalendar = tgui::Label::create();
+    labelCalendar->setText(L"һ");
+    labelCalendar->getRenderer()->setTextSize(20);
+    auto lr = labelCalendar->getRenderer();
+    lr->setTextColor(tgui::Color(120, 120, 120));
+    gui->add(labelCalendar);
+    grid->setWidgetCell(labelCalendar, 0, 0);
+    
+    gui->add(grid);
     gui->mainLoop();
 }
 WindowMain::~WindowMain() {
