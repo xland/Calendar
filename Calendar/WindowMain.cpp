@@ -1,34 +1,33 @@
-//#include "WindowMain.h"
-//#include "ViewButtonIcon.h"
-//#include "ViewCalendar.h"
-//#include <memory>
-//
-//WindowMain::WindowMain() {
-//    long w{ 1200 }, h{ 800 };
-//    RECT rect;
-//    SystemParametersInfo(SPI_GETWORKAREA, 0, &rect, 0);
-//    int x = (rect.right - w) / 2;
-//    int y = (rect.bottom - h) / 2;
-//    initWindow(x, y, w, h, L"×ÀÃæÈÕÀú");
-//    views.push_back(ViewButtonIcon::createMinimizeBtn(this));
-//    views.push_back(ViewButtonIcon::createMaximizeRestoreBtn(this));
-//    views.push_back(ViewButtonIcon::createCloseBtn(this));
-//    views.push_back(ViewCalendar::createCalendar(this));
-//}
-//WindowMain::~WindowMain() {
-//
-//}
-//
-//void WindowMain::onPaint() {
-//    paintCtx->fillBox(16, 16, 480, h-16, BLRgba32(253, 233, 235));
-//}
-//
-//bool WindowMain::isPosInCaption(const int& x, const int& y) {
-//    if (x > 0 && x < w - 164 && y>0 && y < 56) {
-//        return true;
-//    }
-//    else
-//    {
-//        return false;
-//    }
-//}
+#include "WindowMain.h"
+#include <memory>
+
+WindowMain::WindowMain() {
+	initWindow();
+	WindowBase::wndMap[hwnd] = this;
+    gui = new tgui::Gui{ *sfWin };
+    tgui::Button::Ptr button = tgui::Button::create();
+    button->onClick.connect([]() {
+        auto func = []() {
+            auto a = new WindowMain();
+            };
+        std::thread t(func);
+        t.detach();
+        });
+    button->setPosition(100, 50);
+    auto editBox = tgui::EditBox::create();
+    editBox->setPosition(100, 400);
+    tgui::Font::setGlobalFont("C:\\Windows\\Fonts\\simhei.ttf");
+    gui->add(button);
+    gui->add(editBox, "MyWidgetName");
+    gui->mainLoop();
+}
+WindowMain::~WindowMain() {
+
+}
+
+bool WindowMain::isPosInCaption(const POINT& mousePos, const RECT& winRect) {
+	if (mousePos.y < winRect.top+50) {
+		return true;
+	}
+	return false;
+}
