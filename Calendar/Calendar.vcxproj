@@ -143,8 +143,12 @@
     </Manifest>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="CalendarModel.cpp" />
+    <ClCompile Include="CalendarSmall.cpp" />
+    <ClCompile Include="EventBus.cpp" />
     <ClCompile Include="Font.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="TitleBarBtns.cpp" />
     <ClCompile Include="Util.cpp" />
     <ClCompile Include="WindowBase.cpp" />
     <ClCompile Include="WindowMain.cpp" />
@@ -153,8 +157,13 @@
     <Font Include="Res\iconfont.ttf" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="CalendarItem.h" />
+    <ClInclude Include="CalendarModel.h" />
+    <ClInclude Include="CalendarSmall.h" />
+    <ClInclude Include="EventBus.h" />
     <ClInclude Include="Font.h" />
     <ClInclude Include="resource.h" />
+    <ClInclude Include="TitleBarBtns.h" />
     <ClInclude Include="Util.h" />
     <ClInclude Include="WindowBase.h" />
     <ClInclude Include="WindowMain.h" />

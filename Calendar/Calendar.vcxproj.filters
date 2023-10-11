@@ -30,6 +30,18 @@
     <ClCompile Include="Font.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="CalendarModel.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="CalendarSmall.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="TitleBarBtns.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="EventBus.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Font Include="Res\iconfont.ttf" />
@@ -48,6 +60,21 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="Font.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="CalendarItem.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="CalendarModel.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="CalendarSmall.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="TitleBarBtns.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="EventBus.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

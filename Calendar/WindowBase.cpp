@@ -3,6 +3,8 @@
 #include <dwmapi.h>
 #include <thread>
 #include <map>
+#include "EventBus.h"
+
 std::map<HWND, WindowBase*> WindowBase::wndMap;
 
 namespace {     
@@ -48,19 +50,37 @@ namespace {
     }
     static LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam) {
         switch (msg) {
-        case WM_NCCALCSIZE:
-        {
-            if (wparam == TRUE)
+            case WM_NCCALCSIZE:
             {
-                return false;
+                if (wparam == TRUE)
+                {                    
+                    WINDOWPLACEMENT placement;
+                    GetWindowPlacement(hwnd, &placement);
+                    if (placement.showCmd == SW_MAXIMIZE) {                        
+                        auto monitor = MonitorFromWindow(hwnd, MONITOR_DEFAULTTONULL);
+                        MONITORINFO monitor_info{};
+                        monitor_info.cbSize = sizeof(monitor_info);
+                        GetMonitorInfo(monitor, &monitor_info);
+                        auto& params = *reinterpret_cast<NCCALCSIZE_PARAMS*>(lparam);
+                        params.rgrc[0] = monitor_info.rcWork;
+                    }
+                    return false;
+                }
+                break;
             }
-            break;
-        }
-        case WM_NCHITTEST: {
-            POINT cursor{ GET_X_LPARAM(lparam), GET_Y_LPARAM(lparam) };
-            return HitTest(cursor, hwnd);
-            break;
-        }
+            case WM_NCHITTEST: {
+                POINT cursor{ GET_X_LPARAM(lparam), GET_Y_LPARAM(lparam) };
+                return HitTest(cursor, hwnd);
+                break;
+            }
+            case WM_SIZE: {
+                if (wparam == SIZE_MAXIMIZED) {
+                    EventBus::emit("maximized");
+                }
+                else if (wparam == SIZE_RESTORED) {
+                    EventBus::emit("restored");
+                }
+            }
         }
         return CallWindowProc(SFMLWndProc, hwnd, msg, wparam, lparam);
     }
@@ -74,25 +94,13 @@ WindowBase::WindowBase() {
 WindowBase::~WindowBase() {
 }
 void WindowBase::initWindow() {
-    sfWin = new sf::RenderWindow(sf::VideoMode(sf::Vector2u(1000, 800)), L"日历");
+    sf::ContextSettings setting;
+    setting.antialiasingLevel = 12;
+    sfWin = new sf::RenderWindow(sf::VideoMode(sf::Vector2u(1000, 800)), L"日历",sf::Style::Default,setting);
     hwnd = sfWin->getNativeHandle();
     SFMLWndProc = (WNDPROC)SetWindowLongPtr(hwnd, GWLP_WNDPROC, (LONG_PTR)WndProc);
     SetWindowPos(hwnd, nullptr, 0, 0, 0, 0,
         SWP_NOZORDER | SWP_NOOWNERZORDER | SWP_NOMOVE | SWP_NOSIZE | SWP_FRAMECHANGED);
     const MARGINS shadowState{ 0,0,0,1 };
     DwmExtendFrameIntoClientArea(hwnd, &shadowState);
-}
-void WindowBase::close() {
-    SendMessage(hwnd, WM_CLOSE, NULL, NULL);
-    PostQuitMessage(0);
-}
-
-void WindowBase::maximize() {
-    ShowWindow(hwnd, SW_SHOWMAXIMIZED);
-}
-void WindowBase::minimize() {
-    ShowWindow(hwnd, SW_SHOWMINIMIZED);
-}
-void WindowBase::restore() {
-    ShowWindow(hwnd, SW_SHOWNORMAL);
 }
