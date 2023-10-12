@@ -19,11 +19,7 @@ namespace {
         }
         else
         {
-            if (target->getWidgetName() == "closeBtn") {
-                auto a = 1;
-            }
             target->mouseNoLongerOnWidget();
-            target->updateTime(0);
         }
     }
     static void mouseOutWindow(const HWND& hwnd) {
