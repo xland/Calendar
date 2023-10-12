@@ -87,6 +87,7 @@ namespace {
                 if (wparam == TRUE)
                 {                    
                     WINDOWPLACEMENT placement;
+                    placement.length = sizeof(WINDOWPLACEMENT);
                     GetWindowPlacement(hwnd, &placement);
                     if (placement.showCmd == SW_MAXIMIZE) {                        
                         auto monitor = MonitorFromWindow(hwnd, MONITOR_DEFAULTTONULL);
@@ -128,6 +129,7 @@ namespace {
             case WM_MOUSELEAVE: {
                 mouseTracing = false;
                 mouseOutWindow(hwnd);
+                tgui::Timer::scheduleCallback([] {});
                 break;
             }
         }
