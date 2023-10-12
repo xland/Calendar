@@ -13,11 +13,6 @@ static App* app;
 
 App::App(const HINSTANCE& hInstance) :hinstance{ hInstance }
 {
-	auto win = new WinCalendar();
-	windows.push_back(win);
-	//PageEnvironment::Init([&win]() {
-	//	win->CreatePageController();
-	//	});
 }
 App::~App()
 {
@@ -28,6 +23,8 @@ void App::init(const HINSTANCE& hInstance) {
 	app = new App(hInstance);
     app->checkRuntime();
     app->ensureAppFolder();
+    auto win = new WinCalendar();
+    app->windows.push_back(win);
     //auto options = Microsoft::WRL::Make<CoreWebView2EnvironmentOptions>();
     //options->put_AdditionalBrowserArguments(L"--allow-file-access-from-files");
     //Microsoft::WRL::ComPtr<ICoreWebView2EnvironmentOptions4> options4;
@@ -62,7 +59,7 @@ void App::dispose()
 HRESULT App::envReady(HRESULT result, ICoreWebView2Environment* env)
 {
 	this->webEnv = env;
-
+    windows[0]->createPageCtrl(env);
 	return S_OK;
 }
 

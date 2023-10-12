@@ -6,5 +6,6 @@ public:
 	WinCalendar();
 	~WinCalendar();
 private:
+	void ctrlReady() override;
 };
 
