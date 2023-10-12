@@ -1,5 +1,6 @@
 #include "TitleBarBtns.h"
 #include <TGUI/Backend/SFML-Graphics.hpp>
+#include <TGUI/SignalManager.hpp>
 #include "Font.h"
 #include "EventBus.h"
 #include <dwmapi.h>
@@ -22,6 +23,7 @@ TitleBarBtns::TitleBarBtns() {
     this->add(btnMaxRestore);
 
     auto btnClose = tgui::Button::copy(btnMinimize);
+    btnClose->setWidgetName("closeBtn");
     btnClose->setSize(bindSize(btnMinimize));
     btnClose->setText(u8"\ue6e7");
     btnClose->onClick.connect(&TitleBarBtns::close, this);
@@ -30,6 +32,10 @@ TitleBarBtns::TitleBarBtns() {
     setPosition("100%", 0);
     setOrigin(1.0f, 0.f);
     setSize(150, 40);
+
+    //tgui::SignalManager::getSignalManager()->
+    //tgui::Signal onMyEvent = { "MyEvent" };
+    //onMyEvent.emit()
 
     EventBus::on("maximized", [this]() {
         auto btn = (tgui::Button*)this->get(1).get();

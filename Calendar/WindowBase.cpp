@@ -9,6 +9,29 @@ std::map<HWND, WindowBase*> WindowBase::wndMap;
 
 namespace {     
     static WNDPROC SFMLWndProc;
+    static bool mouseTracing{false};
+    static void mouseOutWindowCasecade(tgui::Widget* target) {
+        if (target->isContainer()) {
+            auto container = (tgui::Container*)target;
+            for (auto& child : container->getWidgets()) {
+                mouseOutWindowCasecade(child.get());
+            }
+        }
+        else
+        {
+            if (target->getWidgetName() == "closeBtn") {
+                auto a = 1;
+            }
+            target->mouseNoLongerOnWidget();
+            target->updateTime(0);
+        }
+    }
+    static void mouseOutWindow(const HWND& hwnd) {
+        auto obj = WindowBase::wndMap[hwnd];        
+        for (auto& child : obj->gui->getWidgets()) {
+            mouseOutWindowCasecade(child.get());
+        }
+    }
     static int HitTest(const POINT& mousePos,const HWND& hwnd) {
         RECT winRect;
         if (!GetWindowRect(hwnd, &winRect)) {
@@ -16,33 +39,42 @@ namespace {
         }
         static const int borderWidth{ 6 };
         if (mousePos.x < winRect.left + borderWidth && mousePos.y < winRect.top + borderWidth) {
+            //mouseOutWindow(hwnd);
             return HTTOPLEFT;
         }
         else if (mousePos.x > winRect.right - borderWidth && mousePos.y < winRect.top + borderWidth) {
+            //mouseOutWindow(hwnd);
             return HTTOPRIGHT;
         }
         else if (mousePos.x > winRect.right - borderWidth && mousePos.y > winRect.bottom - borderWidth) {
+            //mouseOutWindow(hwnd);
             return HTBOTTOMRIGHT;
         }
         else if (mousePos.x < winRect.left + borderWidth && mousePos.y > winRect.bottom - borderWidth) {
+            //mouseOutWindow(hwnd);
             return HTBOTTOMLEFT;
         }
         else if (mousePos.x < winRect.left + borderWidth) {
+            //mouseOutWindow(hwnd);
             return HTLEFT;
         }
         else if (mousePos.y < winRect.top + borderWidth) {
+            //mouseOutWindow(hwnd);
             return HTTOP;
         }
         else if (mousePos.x > winRect.right - borderWidth) {
+            //mouseOutWindow(hwnd);
             return HTRIGHT;
         }
         else if (mousePos.y > winRect.bottom - borderWidth) {
+            //mouseOutWindow(hwnd);
             return HTBOTTOM;
         }
         else {
             tgui::Vector2<int> pos{ mousePos.x - winRect.left,mousePos.y - winRect.top };
             auto obj = WindowBase::wndMap[hwnd];
             if (obj->isPosInCaption(mousePos, winRect)) {
+                //mouseOutWindow(hwnd);
                 return HTCAPTION;
             }
             return HTCLIENT;
@@ -80,6 +112,23 @@ namespace {
                 else if (wparam == SIZE_RESTORED) {
                     EventBus::emit("restored");
                 }
+                break;
+            }
+            case WM_MOUSEMOVE: {
+                if (!mouseTracing)
+                {
+                    TRACKMOUSEEVENT tme = {};
+                    tme.cbSize = sizeof(TRACKMOUSEEVENT);
+                    tme.dwFlags = TME_LEAVE;
+                    tme.hwndTrack = hwnd;
+                    mouseTracing = TrackMouseEvent(&tme);
+                }
+                break;
+            }
+            case WM_MOUSELEAVE: {
+                mouseTracing = false;
+                mouseOutWindow(hwnd);
+                break;
             }
         }
         return CallWindowProc(SFMLWndProc, hwnd, msg, wparam, lparam);

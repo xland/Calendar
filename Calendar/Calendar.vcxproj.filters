@@ -42,6 +42,9 @@
     <ClCompile Include="EventBus.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="SwitchBtns.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Font Include="Res\iconfont.ttf" />
@@ -75,6 +78,9 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="EventBus.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="SwitchBtns.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

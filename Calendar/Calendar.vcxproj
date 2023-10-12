@@ -148,6 +148,7 @@
     <ClCompile Include="EventBus.cpp" />
     <ClCompile Include="Font.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="SwitchBtns.cpp" />
     <ClCompile Include="TitleBarBtns.cpp" />
     <ClCompile Include="Util.cpp" />
     <ClCompile Include="WindowBase.cpp" />
@@ -163,6 +164,7 @@
     <ClInclude Include="EventBus.h" />
     <ClInclude Include="Font.h" />
     <ClInclude Include="resource.h" />
+    <ClInclude Include="SwitchBtns.h" />
     <ClInclude Include="TitleBarBtns.h" />
     <ClInclude Include="Util.h" />
     <ClInclude Include="WindowBase.h" />
