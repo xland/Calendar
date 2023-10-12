@@ -7,14 +7,14 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance
     if (result != S_OK) {
         return 0;
     }
-    App::Init(hInstance);
+    App::init(hInstance);
     MSG msg;
     while (GetMessage(&msg, NULL, 0, 0))
     {
         TranslateMessage(&msg);
         DispatchMessage(&msg);
     }
-    App::Dispose();
+    App::dispose();
     CoUninitialize();
     return (int)msg.wParam;
     return 0;

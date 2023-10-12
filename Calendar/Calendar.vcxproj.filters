@@ -48,9 +48,6 @@
     </ResourceCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="icon_fon.bin">
-      <Filter>资源文件</Filter>
-    </None>
     <None Include="packages.config" />
     <None Include="Doc\ToDo.md" />
   </ItemGroup>
