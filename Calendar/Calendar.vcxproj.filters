@@ -18,69 +18,27 @@
     <ClCompile Include="main.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="WindowBase.cpp">
+    <ClCompile Include="App.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="Util.cpp">
+    <ClCompile Include="WinBase.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="WindowMain.cpp">
+    <ClCompile Include="WinCalendar.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="Font.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="CalendarModel.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="CalendarSmall.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="TitleBarBtns.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="EventBus.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="SwitchBtns.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <Font Include="Res\iconfont.ttf" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="resource.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="WindowBase.h">
+    <ClInclude Include="App.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="Util.h">
+    <ClInclude Include="WinBase.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="WindowMain.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="Font.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="CalendarItem.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="CalendarModel.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="CalendarSmall.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="TitleBarBtns.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="EventBus.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="SwitchBtns.h">
+    <ClInclude Include="WinCalendar.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
@@ -93,5 +51,7 @@
     <None Include="icon_fon.bin">
       <Filter>资源文件</Filter>
     </None>
+    <None Include="packages.config" />
+    <None Include="Doc\ToDo.md" />
   </ItemGroup>
 </Project>

@@ -1,15 +1,21 @@
 #include <Windows.h>
-#include "WindowMain.h"
-#include "Font.h"
-#include "CalendarModel.h"
-
+#include "App.h"
 
 int APIENTRY wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ LPTSTR lpCmdLine, _In_ int nCmdShow)
 {
-    CalendarModel::init();
-    auto win = new WindowMain();
-    delete win;
-    CalendarModel::dispose();
-    
+    auto result = CoInitializeEx(nullptr, COINIT_APARTMENTTHREADED);
+    if (result != S_OK) {
+        return 0;
+    }
+    App::Init(hInstance);
+    MSG msg;
+    while (GetMessage(&msg, NULL, 0, 0))
+    {
+        TranslateMessage(&msg);
+        DispatchMessage(&msg);
+    }
+    App::Dispose();
+    CoUninitialize();
+    return (int)msg.wParam;
     return 0;
 }
