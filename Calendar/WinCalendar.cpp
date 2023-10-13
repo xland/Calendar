@@ -2,7 +2,7 @@
 #include <Windows.h>
 
 WinCalendar::WinCalendar() {
-    long w{ 2000 }, h{ 1700 };
+    long w{ 1000 }, h{ 700 };
     RECT rect;
     SystemParametersInfo(SPI_GETWORKAREA, 0, &rect, 0);
     int x = (rect.right - w) / 2;
