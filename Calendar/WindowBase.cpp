@@ -35,35 +35,27 @@ namespace {
         }
         static const int borderWidth{ 6 };
         if (mousePos.x < winRect.left + borderWidth && mousePos.y < winRect.top + borderWidth) {
-            //mouseOutWindow(hwnd);
             return HTTOPLEFT;
         }
         else if (mousePos.x > winRect.right - borderWidth && mousePos.y < winRect.top + borderWidth) {
-            //mouseOutWindow(hwnd);
             return HTTOPRIGHT;
         }
         else if (mousePos.x > winRect.right - borderWidth && mousePos.y > winRect.bottom - borderWidth) {
-            //mouseOutWindow(hwnd);
             return HTBOTTOMRIGHT;
         }
         else if (mousePos.x < winRect.left + borderWidth && mousePos.y > winRect.bottom - borderWidth) {
-            //mouseOutWindow(hwnd);
             return HTBOTTOMLEFT;
         }
         else if (mousePos.x < winRect.left + borderWidth) {
-            //mouseOutWindow(hwnd);
             return HTLEFT;
         }
         else if (mousePos.y < winRect.top + borderWidth) {
-            //mouseOutWindow(hwnd);
             return HTTOP;
         }
         else if (mousePos.x > winRect.right - borderWidth) {
-            //mouseOutWindow(hwnd);
             return HTRIGHT;
         }
         else if (mousePos.y > winRect.bottom - borderWidth) {
-            //mouseOutWindow(hwnd);
             return HTBOTTOM;
         }
         else {
@@ -109,6 +101,20 @@ namespace {
                 else if (wparam == SIZE_RESTORED) {
                     EventBus::emit("restored");
                 }
+/*                RECT winRect;
+                if (GetWindowRect(hwnd, &winRect)) {
+                    auto obj = WindowBase::wndMap[hwnd];
+                    if (obj) {
+                        sf::FloatRect fr;
+                        fr.left = 0.f;
+                        fr.top = 0.f;
+                        fr.width = winRect.right - winRect.left;
+                        fr.height = winRect.bottom - winRect.top;
+                        auto view = sf::View(fr);
+                        obj->sfWin->setView(view);
+                        obj->sfWin->set
+                    }                    
+                } */               
                 break;
             }
             case WM_MOUSEMOVE: {
@@ -125,7 +131,6 @@ namespace {
             case WM_MOUSELEAVE: {
                 mouseTracing = false;
                 mouseOutWindow(hwnd);
-                tgui::Timer::scheduleCallback([] {});
                 break;
             }
         }
@@ -144,6 +149,7 @@ void WindowBase::initWindow() {
     sf::ContextSettings setting;
     setting.antialiasingLevel = 12;
     sfWin = new sf::RenderWindow(sf::VideoMode(sf::Vector2u(1000, 800)), L"日历",sf::Style::Default,setting);
+    
     hwnd = sfWin->getNativeHandle();
     SFMLWndProc = (WNDPROC)SetWindowLongPtr(hwnd, GWLP_WNDPROC, (LONG_PTR)WndProc);
     SetWindowPos(hwnd, nullptr, 0, 0, 0, 0,
