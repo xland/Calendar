@@ -18,10 +18,16 @@
             <ColumnDefinition Width="1*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="40"></RowDefinition>
+            <RowDefinition Height="38"></RowDefinition>
             <RowDefinition Height="1*"></RowDefinition>
         </Grid.RowDefinitions>
-        <StackPanel Grid.RowSpan="2" Background="Aqua"></StackPanel>
-        <StackPanel Grid.ColumnSpan="2" Background="Beige"></StackPanel>
+        <StackPanel Grid.RowSpan="2" Background="#fde9eb" Orientation="Vertical">
+            <StackPanel Orientation="Horizontal" Height="38">
+                <Label Padding="16 0 0 0" VerticalAlignment="Center" FontFamily="./#iconfont" Content="&#xe685;" 
+                       Foreground="#f02c38" FontSize="16" HorizontalContentAlignment="Center"></Label>
+                <Label Foreground="#f02c38" VerticalAlignment="Center">日志</Label>
+            </StackPanel>            
+        </StackPanel>
+        <local:WinTitleBtns x:Name="winTitleBtns" Grid.Column="1"></local:WinTitleBtns>
     </Grid>
 </Window>
