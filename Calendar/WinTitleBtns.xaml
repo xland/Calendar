@@ -45,8 +45,8 @@
         </Style>
     </UserControl.Resources>
     <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right">
-        <Button Width="42" x:Name="minimizeBtn" Click="minimizeBtn_Click" Style="{StaticResource normalBtn}" FontFamily="./#iconfont" Content="&#xe6e8;"></Button>
-        <Button Width="42" x:Name="maximizeRestoreBtn" Click="maximizeRestoreBtn_Click" Style="{StaticResource normalBtn}" FontFamily="./#iconfont" Content="&#xe6e5;"></Button>
-        <Button Width="42" x:Name="closeBtn" Click="closeBtn_Click" Style="{StaticResource closeBtn}" FontFamily="./#iconfont" Content="&#xe6e7;"></Button>
+        <Button Focusable="False" Width="42" x:Name="minimizeBtn" Click="minimizeBtn_Click" Style="{StaticResource normalBtn}" FontFamily="./#iconfont" Content="&#xe6e8;"></Button>
+        <Button Focusable="False" Width="42" x:Name="maximizeRestoreBtn" Click="maximizeRestoreBtn_Click" Style="{StaticResource normalBtn}" FontFamily="./#iconfont" Content="&#xe6e5;"></Button>
+        <Button Focusable="False" Width="42" x:Name="closeBtn" Click="closeBtn_Click" Style="{StaticResource closeBtn}" FontFamily="./#iconfont" Content="&#xe6e7;"></Button>
     </StackPanel>
 </UserControl>

@@ -30,17 +30,29 @@ namespace Calendar
             Window.GetWindow(this).WindowState = WindowState.Minimized;
         }
 
+        public void changeMaximizeRestoreBtn(WindowState state)
+        {
+
+            if (state == WindowState.Maximized)
+            {
+                maximizeRestoreBtn.Content = "\ue6e9";
+            }
+            else if(state == WindowState.Normal)
+            {
+                maximizeRestoreBtn.Content = "\ue6e5";
+            }
+        }
+
         private void maximizeRestoreBtn_Click(object sender, RoutedEventArgs e)
         {
             if (maximizeRestoreBtn.Content.ToString() == "\ue6e5")
             {
-                Window.GetWindow(this).WindowState = WindowState.Maximized;
-                maximizeRestoreBtn.Content = "\ue6e9";
+                Window.GetWindow(this).WindowState = WindowState.Maximized;                
             }
             else
             {
                 Window.GetWindow(this).WindowState = WindowState.Normal;
-                maximizeRestoreBtn.Content = "\ue6e5";
+                
             }
         }
 

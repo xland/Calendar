@@ -26,6 +26,8 @@ namespace Calendar
         public MainWindow()
         {
             InitializeComponent();
+            //this.MaxHeight = SystemParameters.WorkArea.Height;
+            //this.MaxWidth = SystemParameters.WorkArea.Width;
         }
 
         protected override void OnSourceInitialized(EventArgs e)
@@ -54,30 +56,31 @@ namespace Calendar
             {
                 if(PresentationSource.FromVisual(this) != null)
                 {
-                    var p1 = this.PointToScreen(new Point());
-                    var p2 = this.PointToScreen(new Point(this.Width - 126, 0)); //126 winTitleBtns Width
-                    captionArea[0].X = p1.X;
-                    captionArea[0].Y = p1.Y;
-                    captionArea[0].Width = p2.X - p1.X;
-                    captionArea[0].Height = 38;
+                    refreshCaptionArea();
                 }
             }
-            else if(msg == 0x0024)  // WM_GETMINMAXINFO
+            else if (msg == 0x0024)  // WM_GETMINMAXINFO
             {
                 Native.WmGetMinMaxInfo(hwnd, lParam, (int)MinWidth, (int)MinHeight);
                 handled = true;
             }
             return IntPtr.Zero;
         }
-
-        private void Window_StateChanged(object sender, EventArgs e)
+        private void refreshCaptionArea(bool flag=false)
         {
             var p1 = this.PointToScreen(new Point());
-            var p2 = this.PointToScreen(new Point(this.Width - 126, 0)); //126 winTitleBtns Width
+            var w = flag ? SystemParameters.WorkArea.Width : this.Width;
+            var p2 = this.PointToScreen(new Point(w - 126, 0)); //126 winTitleBtns Width
             captionArea[0].X = p1.X;
             captionArea[0].Y = p1.Y;
             captionArea[0].Width = p2.X - p1.X;
             captionArea[0].Height = 38;
+        }
+
+        private void Window_StateChanged(object sender, EventArgs e)
+        {   
+            winTitleBtns.changeMaximizeRestoreBtn(this.WindowState);
+            refreshCaptionArea(WindowState == WindowState.Maximized);
         }
     }
 }
