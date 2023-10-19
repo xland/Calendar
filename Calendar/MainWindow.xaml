@@ -8,7 +8,24 @@
         WindowStyle="None"
         WindowState="Normal" 
         ResizeMode="CanResize"
+        StateChanged="Window_StateChanged"
         Title="MainWindow" Height="450" Width="800">
+    <Window.Template>
+        <ControlTemplate TargetType="{x:Type Window}">
+            <Border BorderBrush="{TemplateBinding BorderBrush}" 
+                BorderThickness="{TemplateBinding BorderThickness}" 
+                Background="{TemplateBinding Background}">
+                <AdornerDecorator >
+                    <ContentPresenter x:Name="win_content" />
+                </AdornerDecorator>
+            </Border>
+            <ControlTemplate.Triggers>
+                <Trigger Property="WindowState" Value="Maximized">
+                    <Setter Property="Margin" TargetName="win_content" Value="6"/>
+                </Trigger>
+            </ControlTemplate.Triggers>
+        </ControlTemplate>
+    </Window.Template>
     <WindowChrome.WindowChrome>
         <WindowChrome  CaptionHeight="0" ResizeBorderThickness="5" />
     </WindowChrome.WindowChrome>

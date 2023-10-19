@@ -34,7 +34,13 @@ namespace Calendar
         {
             if (maximizeRestoreBtn.Content.ToString() == "\ue6e5")
             {
-                var a1 = 1;
+                Window.GetWindow(this).WindowState = WindowState.Maximized;
+                maximizeRestoreBtn.Content = "\ue6e9";
+            }
+            else
+            {
+                Window.GetWindow(this).WindowState = WindowState.Normal;
+                maximizeRestoreBtn.Content = "\ue6e5";
             }
         }
 
