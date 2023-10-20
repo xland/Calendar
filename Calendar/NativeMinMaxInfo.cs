@@ -8,7 +8,7 @@ using System.Windows;
 
 namespace Calendar
 {
-    public static class Native
+    public static class NativeMinMaxInfo
     {
         [DllImport("user32")]
         internal static extern bool GetMonitorInfo(IntPtr hMonitor, MONITORINFO lpmi);
@@ -20,13 +20,13 @@ namespace Calendar
         {
             MINMAXINFO mmi = (MINMAXINFO)Marshal.PtrToStructure(lParam, typeof(MINMAXINFO));
             int MONITOR_DEFAULTTONEAREST = 0x00000002;
-            IntPtr monitor = Native.MonitorFromWindow(hwnd, MONITOR_DEFAULTTONEAREST);
+            IntPtr monitor = NativeMinMaxInfo.MonitorFromWindow(hwnd, MONITOR_DEFAULTTONEAREST);
             if (monitor != IntPtr.Zero)
             {
-                Native.MONITORINFO monitorInfo = new Native.MONITORINFO();
-                Native.GetMonitorInfo(monitor, monitorInfo);
-                Native.RECT rcWorkArea = monitorInfo.rcWork;
-                Native.RECT rcMonitorArea = monitorInfo.rcMonitor;
+                NativeMinMaxInfo.MONITORINFO monitorInfo = new NativeMinMaxInfo.MONITORINFO();
+                NativeMinMaxInfo.GetMonitorInfo(monitor, monitorInfo);
+                NativeMinMaxInfo.RECT rcWorkArea = monitorInfo.rcWork;
+                NativeMinMaxInfo.RECT rcMonitorArea = monitorInfo.rcMonitor;
                 mmi.ptMaxPosition.x = Math.Abs(rcWorkArea.left - rcMonitorArea.left);
                 mmi.ptMaxPosition.y = Math.Abs(rcWorkArea.top - rcMonitorArea.top);
                 mmi.ptMaxSize.x = Math.Abs(rcWorkArea.right - rcWorkArea.left);

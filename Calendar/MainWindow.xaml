@@ -20,9 +20,10 @@
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="38"></RowDefinition>
+            <RowDefinition Height="290"></RowDefinition>
             <RowDefinition Height="1*"></RowDefinition>
         </Grid.RowDefinitions>
-        <StackPanel Grid.RowSpan="2" Background="#fde9eb" Orientation="Vertical">
+        <StackPanel Grid.RowSpan="3" Background="#fde9eb" Orientation="Vertical">
             <StackPanel Orientation="Horizontal" Height="38">
                 <Label Padding="16 0 0 0" VerticalAlignment="Center" FontFamily="./#iconfont" Content="&#xe685;" 
                        Foreground="#f02c38" FontSize="16" HorizontalContentAlignment="Center"></Label>
@@ -30,5 +31,6 @@
             </StackPanel>            
         </StackPanel>
         <local:WinTitleBtns x:Name="winTitleBtns" Grid.Column="1"></local:WinTitleBtns>
+        <local:SmallCalendar x:Name="smallCalendar" Grid.Row="1" Grid.Column="0"></local:SmallCalendar>
     </Grid>
 </Window>

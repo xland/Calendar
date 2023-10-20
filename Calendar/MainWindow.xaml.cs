@@ -61,7 +61,7 @@ namespace Calendar
             }
             else if (msg == 0x0024)  // WM_GETMINMAXINFO
             {
-                Native.WmGetMinMaxInfo(hwnd, lParam, (int)MinWidth, (int)MinHeight);
+                NativeMinMaxInfo.WmGetMinMaxInfo(hwnd, lParam, (int)MinWidth, (int)MinHeight);
                 handled = true;
             }
             return IntPtr.Zero;
