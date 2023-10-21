@@ -1,4 +1,5 @@
 let esbuild = require("esbuild")
+let {sassPlugin} = require("esbuild-sass-plugin")
 let devServerAddr = "";
 /**
  * 编译主进程代码
@@ -18,10 +19,11 @@ let buildMain = async ()=>{
  */
 let startDevServer = async ()=>{
     let ctx = await esbuild.context({
-      entryPoints: ['./render/index.jsx'],
+      entryPoints: ['./render/Index.tsx'],
       bundle: true,
       outdir: 'dist',
       external:["electron"],
+      plugins: [sassPlugin()],
       sourcemap:true
     })  
     await ctx.watch()  

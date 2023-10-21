@@ -1,8 +1,6 @@
 import React from "jsx-dom";
-import "./index.css";
+import "./Index.scss";
 import TitleBar from "./TitleBar";
-import CenterBox from "./CenterBox";
-import StatusBar from "./StatusBar";
 function App() {
   document.body.ondragstart = () => false;
   document.body.ondragend = () => false;
@@ -10,8 +8,6 @@ function App() {
   return (
     <>
       <TitleBar></TitleBar>
-      <CenterBox></CenterBox>
-      <StatusBar></StatusBar>
     </>
   );
 }
