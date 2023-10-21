@@ -1,0 +1,20 @@
+{
+  "name": "calendar",
+  "version": "1.0.0",
+  "description": "A easy to use calendar desktop software",
+  "main": "index.js",
+  "scripts": {
+    "dev": "node ./script/dev.js",
+    "release": "node ./script/prod.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "electron": "^27.0.1",
+    "esbuild": "^0.19.5",
+    "esbuild-sass-plugin": "^2.16.0",
+    "fs-extra": "^11.1.1",
+    "html-minifier-terser": "^7.2.0",
+    "jsx-dom": "^8.0.7"
+  }
+}
