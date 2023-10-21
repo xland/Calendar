@@ -1,13 +1,16 @@
 import React from "jsx-dom";
 import "./Index.scss";
-import TitleBar from "./TitleBar";
+import LeftPanel from "./LeftPanel";
+import MainPanel from "./MainPanel";
 function App() {
   document.body.ondragstart = () => false;
   document.body.ondragend = () => false;
   document.body.ondrop = () => false;
+  
   return (
     <>
-      <TitleBar></TitleBar>
+      <LeftPanel></LeftPanel>
+      <MainPanel></MainPanel>
     </>
   );
 }
