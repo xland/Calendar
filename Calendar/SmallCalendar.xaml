@@ -40,5 +40,6 @@
         <Label Grid.Column="5">六</Label>
         <Label Grid.Column="6">日</Label>
         <local:SmallCalendarDayBtn Grid.Row="1">1</local:SmallCalendarDayBtn>
+        <local:SmallCalendarDayBtn Grid.Row="2" Background="AntiqueWhite" Foreground="Red">2</local:SmallCalendarDayBtn>
     </Grid>
 </UserControl>
