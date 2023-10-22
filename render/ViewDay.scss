@@ -1,0 +1,25 @@
+#ViewDay{
+    flex: 1;
+    border-top: 1px solid #eee;
+    display: flex;
+    flex-direction: column;
+    &>div{
+        flex: 1;
+        border-bottom: 1px solid #eee;
+        position:relative;
+        .hourTag{
+            position: absolute;
+            text-align: center;
+            left: 0px;
+            top: 0px;
+            padding-top: 2px;
+            padding-bottom: 2px;
+            font-size: 10px;
+            background: #eee;
+            width: 36px;
+            border-bottom-right-radius: 6px;
+            color: #666;
+        }
+    }
+
+}

@@ -40,6 +40,8 @@ let creatreWindow = async ()=>{
     win = new BrowserWindow(
         {
             frame:false,
+            minHeight:800,
+            minWidth:1100,
             webPreferences:{
                 allowRunningInsecureContent: true,
                 contextIsolation: false,

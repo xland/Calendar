@@ -3,6 +3,7 @@ import React from "jsx-dom";
 import TitleBarBtns from "./TitleBarBtns";
 import "./MainPanel.scss";
 import SwitchBtns from "./SwitchBtns";
+import ViewDay from "./ViewDay";
 export default function () {
   
   return <div id="MainPanel">
@@ -10,5 +11,6 @@ export default function () {
       <SwitchBtns></SwitchBtns>
       <TitleBarBtns></TitleBarBtns>
     </div>  
+    <ViewDay></ViewDay>
   </div>;
 }
