@@ -2,4 +2,19 @@
     width: 300px;
     background: #fde9eb;
     height: 100%;
+    .title{
+        height: 32px;
+        line-height: 32px;
+        padding-left: 8px;
+        display: flex;
+        color: #333;        
+        -webkit-app-region: drag;
+        .icon{
+            color: #f02c38;
+        }
+        .label{
+            padding-left: 3px;
+            font-size: 14px;
+        }
+    }
 }
