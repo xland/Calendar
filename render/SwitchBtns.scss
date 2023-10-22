@@ -1,0 +1,41 @@
+#SwitchBtns{
+    display: flex;
+    .navigateBtns{
+        .selected{
+            background: #fde9eb;
+            color: #f02c38;
+        }
+    }
+    .btns{
+        width: 120px;
+        display: flex;
+        height: 22px;
+        overflow: hidden;
+        margin-left: 12px;
+        -webkit-app-region:none;
+        text-align: center;
+        border-radius: 3px;
+        overflow: hidden;
+        line-height: 22px;
+        color: #999;
+        background: #f6f6f6;
+        div{
+            cursor: pointer;
+            flex: 1;
+            &:hover{
+                color: #f02c38;
+            }
+        }
+    }
+    .dayBtns{
+        i{
+            font-size: 10px;
+        }
+        div{
+            &:first-child,&:last-child{
+                width: 22px;
+                flex:none !important;
+            }
+        }
+    }
+}
