@@ -42,7 +42,6 @@ export default function () {
                 })
             }
         }
-        console.log(dateArr)
     }
 
     let getDateEle = () =>{

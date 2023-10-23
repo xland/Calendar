@@ -42,6 +42,7 @@ let creatreWindow = async ()=>{
             frame:false,
             minHeight:800,
             minWidth:1100,
+            title:"日历",
             webPreferences:{
                 allowRunningInsecureContent: true,
                 contextIsolation: false,

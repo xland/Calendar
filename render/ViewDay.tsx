@@ -1,6 +1,13 @@
 import React from "jsx-dom";
 import "./ViewDay.scss";
 export default function () {   
+    let addNewJob = (e:PointerEvent)=>{
+        let target = e.target as HTMLElement;
+        if(target.parentElement?.getAttribute("id") != "ViewDay" && !target.classList.contains("hourTag")){
+            return;
+        }
+        alert(1);
+    }
     let getBgLineEles = ()=>{
         let eles:any[] = [];
         for(let i =0;i<24;i++){
@@ -9,7 +16,7 @@ export default function () {
         }
         return eles;
     } 
-  return <div id="ViewDay">
+  return <div id="ViewDay" onClick={addNewJob}>
     {getBgLineEles()}
   </div>;
 }

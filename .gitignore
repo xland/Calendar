@@ -1,7 +1,6 @@
 /node_modules/
 /dist/*.*
 /dist/server/
-!/dist/index.html
 Calendar/obj/Debug/
 Calendar/bin/
 .vs/
