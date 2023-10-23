@@ -53,6 +53,7 @@ let creatreWindow = async ()=>{
         }
     );
     initListener();
+    console.log(process.argv[2]);
     await win.loadURL(process.argv[2]);
     win.show();
     win.webContents.openDevTools({mode:"undocked"});

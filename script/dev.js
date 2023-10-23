@@ -48,7 +48,7 @@ let startDevServer = async ()=>{
     let { host, port } = await ctx.serve({
       servedir: 'dist',
     })
-    devServerAddr = `http://localhost:${port}`
+    devServerAddr = `http://localhost:${port}/index.html`
   }
 
 /**
