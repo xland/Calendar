@@ -35,7 +35,9 @@ let getWinOptions:()=>Electron.BrowserWindowConstructorOptions = ()=>{
 
 let winOpenHandler = (d:HandlerDetails)=>{
     let overrideBrowserWindowOptions = getWinOptions()
-    overrideBrowserWindowOptions.title = "增加"
+    overrideBrowserWindowOptions.title = "增加"  
+    overrideBrowserWindowOptions.height = 300;
+    overrideBrowserWindowOptions.width = 400;
     return {
         action: 'allow', 
         outlivesOpener: true, 
