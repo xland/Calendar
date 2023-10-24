@@ -14,11 +14,11 @@ export default function () {
         }
         if(!timeEle) return;
         let config ={
-            winConfig:{"width":400,"height":300,"title":"增加日程"},
+            winConfig:{width:400,height:300,title:"增加日程",minHeight:280,minWidth:380},
             extraConfig:{}
         }
         window.open(`/IndexNewJob.html?colorIndex=${colorIndex}`,'_blank',JSON.stringify(config));
-        let newIndex = colorIndex +1;
+        let newIndex = colorIndex + 1;
         if(newIndex > 5){
             newIndex = 0;
         }

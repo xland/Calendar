@@ -3,16 +3,18 @@ import "./NewJobBox.scss";
 export default function () {   
   return <div id="NewJobBox">
 <div class="timeBox">
-  <div>2023</div>
-  <div>-</div>
-  <div>10</div>
-  <div>-</div>
-  <div>24</div>
-  <div style="margin-left:8px">14:00</div>
-  <div>-</div>
-  <div>15:00</div>
+  <div>2023年</div>
+  <div>10月</div>
+  <div>24日</div>
+  <div style="margin-left:3px">14时</div>
+  <div style="margin-right:3px">15分</div>
+  -
+  <div style="margin-left:3px">14时</div>
+  <div>15分</div>
 </div>
-<div>不重复</div>
+<div>
+  <div class="recycleBtn">不重复</div>
+</div>
 <div class="preMins">
   <div style="margin-right:3px">提前</div>
   <input type="text" value={"5"} />

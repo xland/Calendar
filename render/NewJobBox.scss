@@ -1,12 +1,16 @@
 #NewJobBox{
     flex: 1;
-    padding-left: 12px;
-    padding-right: 12px;
+    padding-left: 18px;
+    padding-right: 18px;
     margin-top: 12px;
     margin-bottom: 12px;
     display: flex;
     flex-direction: column;
     line-height: 30px;
+    div{
+        margin-top: 3px;
+        margin-bottom: 3px;
+    }
     .textareaBox{
         flex: 1;
         margin-top: 8px;
@@ -22,10 +26,25 @@
     }
     .timeBox{
         display: flex;
-        height: 30px;
         div{
             padding-left: 2px;
             padding-right: 2px;
+            border-radius: 3px;
+            cursor: pointer;
+            &:hover{
+                background: #eee;
+            }
+        }
+    }
+    .recycleBtn{
+        padding-left: 8px;
+        padding-right: 8px;
+        border-radius: 3px;
+        display: inline-block;
+        background: #eee;
+        cursor: pointer;
+        &:hover{
+            background: #ddd;
         }
     }
     .preMins{
