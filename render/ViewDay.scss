@@ -15,10 +15,54 @@
             padding-top: 2px;
             padding-bottom: 2px;
             font-size: 10px;
-            background: #eee;
+            background: #00000011;
             width: 36px;
             border-bottom-right-radius: 6px;
             color: #666;
+        }
+        .half0{
+            &:hover{
+                background: rgba(3, 155, 229,0.1);
+            }
+        }
+        .half1{
+            &:hover{
+                background: rgba(106,0,255,0.1);
+            }
+        }
+        .half2{
+            &:hover{
+                background: rgba(96, 169, 23,0.1);
+            }
+        }
+        .half3{
+            &:hover{
+                background: rgba(87, 101, 206,0.1);
+            }
+        }
+        .half4{
+            &:hover{
+                background: rgba(216,0,115,0.1);
+            }
+        }
+        .half5{
+            &:hover{
+                background: rgba(216,144,0,0.1);
+            }
+        }
+        .halfTop,.halfBottom{
+            position: absolute;
+            left: 0px;
+            right: 0px;
+            cursor: pointer;
+        }
+        .halfTop{
+            top: 0px;
+            bottom: 50%;
+        }
+        .halfBottom{
+            top: 50%;
+            bottom: 0px;
         }
     }
 
