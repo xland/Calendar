@@ -16,11 +16,29 @@ div{
 }
 .titleBar{
     display: flex;
-    height: 28px;
-    line-height: 28px;
+    height: 32px;
+    line-height: 32px;
     .title{
         -webkit-app-region: drag;    
         padding-left: 8px;
         flex: 1;
     }
+}
+.color0{
+    background: rgba(3, 155, 229,0.1);
+}
+.color1{
+    background: rgba(106,0,255,0.1);
+}
+.color2{
+    background: rgba(96, 169, 23,0.1);
+}
+.color3{
+    background: rgba(87, 101, 206,0.1);
+}
+.color4{
+    background: rgba(216,0,115,0.1);
+}
+.color5{
+    background: rgba(216,144,0,0.1);
 }

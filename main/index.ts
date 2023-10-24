@@ -33,11 +33,10 @@ let getWinOptions:()=>Electron.BrowserWindowConstructorOptions = ()=>{
     };
 }
 
-let winOpenHandler = (d:HandlerDetails)=>{
+let winOpenHandler = (e:HandlerDetails)=>{
+    let config = JSON.parse(e.features)
     let overrideBrowserWindowOptions = getWinOptions()
-    overrideBrowserWindowOptions.title = "增加"  
-    overrideBrowserWindowOptions.height = 300;
-    overrideBrowserWindowOptions.width = 400;
+    Object.assign(overrideBrowserWindowOptions,config.winConfig);
     return {
         action: 'allow', 
         outlivesOpener: true, 
@@ -54,16 +53,16 @@ let creatreWindow = async ()=>{
     console.log(process.argv[2]);
     await win.loadURL(process.argv[2]);
     win.show();
-    win.webContents.openDevTools({mode:"undocked"});
 }
-let winCreateHandler = (e,win:BrowserWindow)=>{
+let winCreatedHandler = (e,win:BrowserWindow)=>{
     // @ts-ignore
     win.webContents.setWindowOpenHandler(winOpenHandler);
+    win.webContents.openDevTools({mode:"undocked"});
     initListener(win)
 }
 let init = async ()=>{
     initHook();
-    app.addListener("browser-window-created",winCreateHandler)
+    app.addListener("browser-window-created",winCreatedHandler)
     await creatreWindow();
 }
 app.whenReady().then(init)

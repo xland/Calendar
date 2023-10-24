@@ -1,6 +1,7 @@
 import React, { MouseEventHandler } from "jsx-dom";
 import "./ViewDay.scss";
-export default function () {   
+export default function () {
+    let colorIndex = 2;
     let addNewJob = (e:any)=>{
         let target = e.target as HTMLElement;
         let timeEle;
@@ -12,13 +13,17 @@ export default function () {
             timeEle = target;
         }
         if(!timeEle) return;
-        window.open("/IndexNewJob.html");
+        let config ={
+            winConfig:{"width":400,"height":300,"title":"增加日程"},
+            extraConfig:{}
+        }
+        window.open(`/IndexNewJob.html?colorIndex=${colorIndex}`,'_blank',JSON.stringify(config));
     }
     let getBgLineEles = ()=>{
         let eles:any[] = [];
         for(let i =0;i<24;i++){
-            let ele = <div><div class="halfTop half0"></div>
-                <div class="halfBottom half0"></div>
+            let ele = <div><div class={`halfTop color${colorIndex}`}></div>
+                <div class={`halfBottom color${colorIndex}`}></div>
                 <div class="hourTag">{`${i}:00`}</div></div>
             eles.push(ele)
         }

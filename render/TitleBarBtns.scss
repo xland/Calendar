@@ -7,11 +7,12 @@
         flex: 1;
         line-height: 32px;
         text-align: center;
-        color: #333;
+        color: #666;
         cursor: pointer;
     }
     div:hover{
-        background: #ddd;
+        background: #00000011;
+        color: #000;
     }
     div i{
         font-size: 10px;
