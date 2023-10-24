@@ -1,0 +1,26 @@
+html,body{
+    margin: 0px;
+    padding: 0px;
+}
+body{
+    display: flex;
+    height: 100%;
+    width: 100%;
+    user-select: none;
+    overflow: hidden;
+    font-size: 12px;
+    flex-direction: column;
+}
+div{
+    box-sizing: border-box;
+}
+.titleBar{
+    display: flex;
+    height: 28px;
+    line-height: 28px;
+    .title{
+        -webkit-app-region: drag;    
+        padding-left: 8px;
+        flex: 1;
+    }
+}
