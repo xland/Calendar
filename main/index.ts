@@ -39,7 +39,7 @@ let winOpenHandler = (e:HandlerDetails)=>{
     Object.assign(overrideBrowserWindowOptions,config.winConfig);
     return {
         action: 'allow', 
-        outlivesOpener: true, 
+        outlivesOpener: false, 
         overrideBrowserWindowOptions
     };
 }

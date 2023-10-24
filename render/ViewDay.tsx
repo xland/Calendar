@@ -1,7 +1,7 @@
 import React, { MouseEventHandler } from "jsx-dom";
 import "./ViewDay.scss";
 export default function () {
-    let colorIndex = 2;
+    let colorIndex = 0;
     let addNewJob = (e:any)=>{
         let target = e.target as HTMLElement;
         let timeEle;
@@ -18,6 +18,16 @@ export default function () {
             extraConfig:{}
         }
         window.open(`/IndexNewJob.html?colorIndex=${colorIndex}`,'_blank',JSON.stringify(config));
+        let newIndex = colorIndex +1;
+        if(newIndex > 5){
+            newIndex = 0;
+        }
+        let eleArr = document.querySelectorAll(".color"+colorIndex);
+        eleArr.forEach(ele=>{
+            ele.classList.remove("color"+colorIndex);
+            ele.classList.add("color"+newIndex);
+        })
+        colorIndex = newIndex;
     }
     let getBgLineEles = ()=>{
         let eles:any[] = [];

@@ -42,3 +42,18 @@ div{
 .color5{
     background: rgba(216,144,0,0.1);
 }
+.eventBox{
+    flex: 1;
+    padding-left: 12px;
+    padding-right: 12px;
+    margin-top: 12px;
+    margin-bottom: 12px;
+    display: flex;
+    flex-direction: column;
+}
+.btnBox{
+    display: flex;
+    justify-content: flex-end;
+    padding-right: 12px;
+    padding-bottom: 12px;
+}
