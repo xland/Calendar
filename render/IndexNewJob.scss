@@ -14,6 +14,17 @@ body{
 div{
     box-sizing: border-box;
 }
+input,textarea{    
+    outline: none;
+    margin: 0px;
+    padding-top: 0px;
+    padding-bottom: 0px;
+    padding-left: 6px;
+    padding-right: 6px;
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
 .titleBar{
     display: flex;
     height: 32px;
@@ -24,36 +35,17 @@ div{
         flex: 1;
     }
 }
-.color0{
-    background: rgba(3, 155, 229,0.1);
-}
-.color1{
-    background: rgba(106,0,255,0.1);
-}
-.color2{
-    background: rgba(96, 169, 23,0.1);
-}
-.color3{
-    background: rgba(87, 101, 206,0.1);
-}
-.color4{
-    background: rgba(216,0,115,0.1);
-}
-.color5{
-    background: rgba(216,144,0,0.1);
-}
-.eventBox{
-    flex: 1;
-    padding-left: 12px;
-    padding-right: 12px;
-    margin-top: 12px;
-    margin-bottom: 12px;
-    display: flex;
-    flex-direction: column;
-}
 .btnBox{
     display: flex;
     justify-content: flex-end;
     padding-right: 12px;
     padding-bottom: 12px;
+    .btnSave{
+        padding-left: 18px;
+        padding-right: 18px;
+        padding-top: 8px;
+        padding-bottom: 8px;
+        cursor: pointer;
+        border-radius: 3px;
+    }
 }

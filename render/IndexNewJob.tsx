@@ -1,30 +1,24 @@
 import React from "jsx-dom";
 import "./IndexNewJob.scss";
 import TitleBarBtns from "./TitleBarBtns";
+import NewJobBox from "./NewJobBox";
 function App() {
   let url = new URL(window.location.href);
   let colorIndex = url.searchParams.get("colorIndex")
-  console.log(colorIndex)
+  let arr = [`3, 155, 229`,`106,0,255`, `96, 169, 2`, `87, 101, 2`, `216,0,115`, `216,144,0`]
   return (
     <>
-      <div class={`titleBar color${colorIndex}`}>
+      <div class="titleBar" style={`background:rgba(${arr[colorIndex]},0.1);`}>
         <div class="title">增加日程</div>
         <TitleBarBtns></TitleBarBtns>
       </div>
-      <div class="eventBox">
-        <div>
-          <textarea placeholder="事件内容（Enter换行）"></textarea>
-        </div>
-        <div>
-          2023-10-24 14:00-15:00
-        </div>
-        <div>不重复</div>
-        <div>提前
-          <input type="text" value={"5"} />分钟提醒
-        </div>
-      </div>
+      <NewJobBox></NewJobBox>
       <div class="btnBox">
-        <button>保存</button>
+        <div class="btnSave" 
+             style={`background:rgb(${arr[colorIndex]});color:#fff`} 
+             onMouseOver={e=>e.target.style = `background:rgba(${arr[colorIndex]},0.9);color:#fff`}
+             onMouseOut={e=>e.target.style = `background:rgb(${arr[colorIndex]});color:#fff`}
+             >保存</div>
       </div>
     </>
   );

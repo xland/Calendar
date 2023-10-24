@@ -1,0 +1,46 @@
+#NewJobBox{
+    flex: 1;
+    padding-left: 12px;
+    padding-right: 12px;
+    margin-top: 12px;
+    margin-bottom: 12px;
+    display: flex;
+    flex-direction: column;
+    line-height: 30px;
+    .textareaBox{
+        flex: 1;
+        margin-top: 8px;
+    }
+    textarea{
+        resize: none;
+        display: block;
+        line-height: 22px;
+        overflow-y: auto;
+        width: 100%;
+        height: 100%;
+        border: 1px solid #999;
+    }
+    .timeBox{
+        display: flex;
+        height: 30px;
+        div{
+            padding-left: 2px;
+            padding-right: 2px;
+        }
+    }
+    .preMins{
+        display: flex;
+        align-items: center;
+        height: 30px;
+        div{
+            height: 24px;
+            line-height: 24px;
+        }
+        input{
+            width: 38px;
+            text-align: center;
+            height: 24px;
+            border: 1px solid #999;
+        }
+    }
+}
