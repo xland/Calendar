@@ -6,14 +6,14 @@
     margin-bottom: 12px;
     display: flex;
     flex-direction: column;
-    line-height: 30px;
+    line-height: 32px;
     div{
         margin-top: 3px;
         margin-bottom: 3px;
+        height: 32px;
     }
     .textareaBox{
         flex: 1;
-        margin-top: 8px;
     }
     textarea{
         resize: none;
@@ -50,7 +50,6 @@
     .preMins{
         display: flex;
         align-items: center;
-        height: 30px;
         div{
             height: 24px;
             line-height: 24px;

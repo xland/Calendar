@@ -25,7 +25,26 @@ input,textarea{
     font-family: Arial, Helvetica, sans-serif;
     
 }
-
+/* width */
+::-webkit-scrollbar {
+    width: 6px;
+  }
+  
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: #f6f6f6; 
+    cursor: pointer;
+  }
+   
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: #ddd; 
+  }
+  
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: #aaa; 
+  }
 .titleBar{
     display: flex;
     height: 32px;
@@ -39,11 +58,11 @@ input,textarea{
 .btnBox{
     display: flex;
     justify-content: flex-end;
-    padding-right: 12px;
-    padding-bottom: 12px;
+    padding-right: 18px;
+    padding-bottom: 18px;
     .btnSave{
-        padding-left: 18px;
-        padding-right: 18px;
+        padding-left: 22px;
+        padding-right: 22px;
         padding-top: 8px;
         padding-bottom: 8px;
         cursor: pointer;

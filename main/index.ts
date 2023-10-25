@@ -1,6 +1,8 @@
 import { app,BrowserWindow,HandlerDetails,ipcMain,webContents } from "electron";
+import { Db } from "./db";
 process.env.ELECTRON_DISABLE_SECURITY_WARNINGS = "true";
 let win:BrowserWindow;
+let db:Db
 let initHook = ()=>{
     ipcMain.handle("changeWindowState",(e,state)=>{
         let win = BrowserWindow.fromWebContents(e.sender) as BrowserWindow;
@@ -10,6 +12,10 @@ let initHook = ()=>{
         let win = BrowserWindow.fromWebContents(e.sender) as BrowserWindow;
         return win.isMaximized();
     })
+}
+let initDb = ()=>{
+    db = new Db();
+    db.init();
 }
 let initListener = (win:BrowserWindow)=>{
     win.addListener("maximize",()=>{
@@ -61,6 +67,7 @@ let winCreatedHandler = (e,win:BrowserWindow)=>{
     initListener(win)
 }
 let init = async ()=>{
+    initDb();
     initHook();
     app.addListener("browser-window-created",winCreatedHandler)
     await creatreWindow();
