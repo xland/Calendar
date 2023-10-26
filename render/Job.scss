@@ -1,0 +1,35 @@
+.Job{
+    position: absolute !important;
+    left: 60px;
+    right: 30px;
+    background: rgba(3, 155, 229,0.1);
+    top: 20%;
+    bottom: 30%;
+    border: 1px solid rgba(3, 155, 229) !important;
+    box-sizing:border-box !important;
+    &:hover{
+        background: rgba(3, 155, 229,0.2);
+        &::before{
+            content: "";
+            position: absolute;
+            width: 100px;
+            height: 12px;
+            background: rgba(3, 155, 229,0.6);
+            left: 50%;
+            top: -6px;
+            transform: translate(-50%,0px);
+            border-radius: 3px;
+        }
+        &::after{
+            content: "";
+            position: absolute;
+            width: 100px;
+            height: 12px;
+            background: rgba(3, 155, 229,0.6);
+            left: 50%;
+            bottom: -6px;
+            transform: translate(-50%,0px);
+            border-radius: 3px;
+        }
+    }
+}

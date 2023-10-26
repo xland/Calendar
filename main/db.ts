@@ -2,10 +2,11 @@ import Database from 'better-sqlite3';
 import { app } from 'electron';
 import fsex from "fs-extra"
 import path from "path"
+import crypto from "crypto"
 import { ModelJob } from '../model/ModelJob';
 
 export class Db{
-    db:Database
+    db:Database.Database
     openDb(dbPath:string){
         try{
             this.db = new Database(dbPath,{ timeout:8000 })
@@ -27,21 +28,22 @@ CREATE INDEX JobInfo_Index ON Job(JobInfo);`
             console.log(ex)
         }        
     }
-    getInsertSql(table:string,data:any){
-        console.log(table,data);
-        let columnNames:string[] = []
-        for(let key in data){
-            columnNames.push(key);
-        }
-        return `INSERT INTO ${table} (${columnNames.join(",")}) VALUES (@${columnNames.join(",@")})`
-    }
     saveToDb(type:string,data:any){
         if(type === "Job"){
-            console.log(data)
-            let insertSql = this.getInsertSql("Job",data)
-            console.log(insertSql);
-            const insert = this.db.prepare(insertSql);
-            insert(data)
+            data = data as ModelJob;
+            data.Id = crypto.randomUUID()
+            data.CreateTime = Date.now()
+            data.UpdateTime = data.CreateTime
+            data.IsDelete = 0
+            let columnNames:string[] = []
+            for(let key in data){
+                columnNames.push(key);
+            }
+            let insertSql = `INSERT INTO Job (${columnNames.join(",")}) VALUES (@${columnNames.join(",@")})`
+            let insert = this.db.prepare(insertSql);
+            insert.run(data)
+        }else if(type == ""){
+            
         }
     }
     init(){
