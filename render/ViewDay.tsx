@@ -42,5 +42,9 @@ export default function () {
         colorIndex += 1;
         if(colorIndex > 5) colorIndex = 0;
     })
+    document.addEventListener("DOMContentLoaded", async ()=>{
+        let data = await ipcRenderer.invoke("getJob")
+        console.log(data);
+    })
   return <div id="ViewDay" onClick={addNewJob}> {getBgLineEles()} </div>;
 }

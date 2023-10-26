@@ -42,10 +42,20 @@ CREATE INDEX JobInfo_Index ON Job(JobInfo);`
             let insertSql = `INSERT INTO Job (${columnNames.join(",")}) VALUES (@${columnNames.join(",@")})`
             let insert = this.db.prepare(insertSql);
             insert.run(data)
-            
+
         }else if(type == ""){
 
         }
+    }
+    getJob(type:string,value:string){
+        let now = new Date();
+        now.setHours(0,0,0,0);
+        let start = now.getTime();
+        now.setHours(23,59,59,0);
+        let end = now.getTime();
+        const row = this.db.prepare('SELECT * FROM Job WHERE StartTime >= ? and EndTime <= ?').all(start,end);
+        console.log(row)
+        return row;
     }
     init(){
         let dbPath = path.join(app.getPath("userData"),"db")         

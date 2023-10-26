@@ -14,10 +14,12 @@ let initHook = ()=>{
     })
     ipcMain.handle("saveToDb",(e,type,data)=>{
         db.saveToDb(type,data);
-        console.log("allen",data);
         win.webContents.send("saveToDbOk",data)
         let subWin = BrowserWindow.fromWebContents(e.sender) as BrowserWindow;
         subWin.close();
+    })
+    ipcMain.handle("getJob",(e,type,value)=>{
+        return db.getJob(type,value);
     })
 }
 let initDb = ()=>{
