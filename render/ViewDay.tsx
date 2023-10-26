@@ -1,6 +1,9 @@
 import React, { MouseEventHandler } from "jsx-dom";
 import "./ViewDay.scss";
 import Job from "./Job";
+import ColorGet from "./ColorGet";
+import { ipcRenderer } from "electron";
+import { ModelJob } from "../model/ModelJob";
 export default function () {
     let colorIndex = 0;
     let addNewJob = (e:any)=>{
@@ -21,9 +24,7 @@ export default function () {
         }
         window.open(`/IndexNewJob.html?colorIndex=${colorIndex}&startTime=${startTime.getTime()}`,'_blank',JSON.stringify(config));
         let newIndex = colorIndex + 1;
-        if(newIndex > 5){
-            newIndex = 0;
-        }
+        if(newIndex > 5) newIndex = 0;
         let eleArr = document.querySelectorAll(".color"+colorIndex);
         eleArr.forEach(ele=>{
             ele.classList.remove("color"+colorIndex);
@@ -34,16 +35,18 @@ export default function () {
     let getBgLineEles = ()=>{
         let eles:any[] = [];
         for(let i =0;i<24;i++){
-            let ele = <div class={`color${colorIndex}`}><div class="hourTag">{`${i}:00`}</div></div>
+            let ele = <div 
+            //@ts-ignore
+            onMouseOver={e=>e.target.style = `background:rgba(${ColorGet(colorIndex,0.1)});`}
+            //@ts-ignore
+            onMouseOut={e=>e.target.style = `background:rgba(0,0,0,0);`}
+            ><div class="hourTag">{`${i}:00`}</div></div>
             eles.push(ele)
         }
         return eles;
-    } 
-    let getJobs = ()=>{        
-        return <Job></Job>
     }
-  return <div id="ViewDay" onClick={addNewJob}>
-    {getBgLineEles()}
-    {getJobs()}
-  </div>;
+    ipcRenderer.on("saveToDbOk",(e:Electron.IpcRendererEvent,data:ModelJob)=>{
+        document.getElementById("ViewDay").append(<Job colorIndex="3"></Job>)
+    })
+  return <div id="ViewDay" onClick={addNewJob}> {getBgLineEles()} </div>;
 }

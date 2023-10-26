@@ -42,8 +42,9 @@ CREATE INDEX JobInfo_Index ON Job(JobInfo);`
             let insertSql = `INSERT INTO Job (${columnNames.join(",")}) VALUES (@${columnNames.join(",@")})`
             let insert = this.db.prepare(insertSql);
             insert.run(data)
-        }else if(type == ""){
             
+        }else if(type == ""){
+
         }
     }
     init(){

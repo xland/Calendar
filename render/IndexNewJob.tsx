@@ -2,12 +2,12 @@ import React from "jsx-dom";
 import "./IndexNewJob.scss";
 import TitleBarBtns from "./TitleBarBtns";
 import {NewJobBox} from "./NewJobBox";
+import ColorGet from "./ColorGet";
 function App() {  
   let getStyle = (alpha = 1)=>{
     let url = new URL(window.location.href);
-    let colorIndex = url.searchParams.get("colorIndex")
-    let arr = [`3,155,229`,`106,0,255`, `96,169,2`, `87,101,2`, `216,0,115`, `216,144,0`]
-    return `background:rgba(${arr[colorIndex]},${alpha});`
+    let colorIndex = parseInt(url.searchParams.get("colorIndex"))
+    return `background:rgba(${ColorGet(colorIndex,alpha)});`
   }
   let save = async ()=>{
     let data = NewJobBox.getData();
@@ -25,9 +25,9 @@ function App() {
         <div class="btnSave" 
              style={`${getStyle()}color:#fff`} 
              //@ts-ignore
-             onMouseOver={e=>e.target.style = `${getStyle(0.9)}color:#fff`}
+             onMouseOver={e=>e.target.style = `${getStyle(0.9)}color:#fff;`}
              //@ts-ignore
-             onMouseOut={e=>e.target.style = `${getStyle()}color:#fff`}
+             onMouseOut={e=>e.target.style = `${getStyle()}color:#fff;`}
              onClick={save}
              >保存</div>
       </div>
