@@ -2,6 +2,7 @@ import Database from 'better-sqlite3';
 import { app } from 'electron';
 import fsex from "fs-extra"
 import path from "path"
+import { ModelJob } from '../model/ModelJob';
 
 export class Db{
     db:Database
@@ -15,10 +16,9 @@ export class Db{
     }
     createDb(dbPath:string){
         let sql = `CREATE TABLE Job(Id VARCHAR2(36) NOT NULL ON CONFLICT FAIL UNIQUE ON CONFLICT FAIL, 
-            CreateTime BIGINT,UpdateTime BIGINT,DeleteTime BIGINT,IsDelete BOOLEAN, 
-            JobInfo TEXT,RepeatType INT,AlertBefore INT,StartTime BIGINT,EndTime BIGINT);          
-          CREATE INDEX JobInfo_Index ON Job(JobInfo);
-        `
+CreateTime BIGINT,UpdateTime BIGINT,DeleteTime BIGINT,IsDelete BOOLEAN, 
+JobInfo TEXT,RepeatType INT,RepeatTimes INT,RepeatEndDay INT,AlertBefore INT,StartTime BIGINT,EndTime BIGINT);          
+CREATE INDEX JobInfo_Index ON Job(JobInfo);`
         try{
             this.db = new Database(dbPath,{ timeout:8000 })
             this.db.pragma('journal_mode = WAL');
@@ -26,6 +26,23 @@ export class Db{
         }catch(ex){
             console.log(ex)
         }        
+    }
+    getInsertSql(table:string,data:any){
+        console.log(table,data);
+        let columnNames:string[] = []
+        for(let key in data){
+            columnNames.push(key);
+        }
+        return `INSERT INTO ${table} (${columnNames.join(",")}) VALUES (@${columnNames.join(",@")})`
+    }
+    saveToDb(type:string,data:any){
+        if(type === "Job"){
+            console.log(data)
+            let insertSql = this.getInsertSql("Job",data)
+            console.log(insertSql);
+            const insert = this.db.prepare(insertSql);
+            insert(data)
+        }
     }
     init(){
         let dbPath = path.join(app.getPath("userData"),"db")         

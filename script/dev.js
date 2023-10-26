@@ -42,6 +42,7 @@ let startDevServer = async ()=>{
       outdir: 'dist',
       external:["electron"],
       plugins: [sassPlugin()],
+      platform:"node",
       sourcemap:true
     })  
     await ctx.watch()  

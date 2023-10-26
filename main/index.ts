@@ -1,4 +1,4 @@
-import { app,BrowserWindow,HandlerDetails,ipcMain,webContents } from "electron";
+import { app,BrowserWindow,HandlerDetails,ipcMain } from "electron";
 import { Db } from "./db";
 process.env.ELECTRON_DISABLE_SECURITY_WARNINGS = "true";
 let win:BrowserWindow;
@@ -11,6 +11,9 @@ let initHook = ()=>{
     ipcMain.handle("getWindowState",(e)=>{
         let win = BrowserWindow.fromWebContents(e.sender) as BrowserWindow;
         return win.isMaximized();
+    })
+    ipcMain.handle("saveToDb",(e,type,data)=>{
+        db.saveToDb(type,data);
     })
 }
 let initDb = ()=>{

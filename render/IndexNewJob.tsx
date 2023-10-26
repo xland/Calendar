@@ -1,7 +1,7 @@
 import React from "jsx-dom";
 import "./IndexNewJob.scss";
 import TitleBarBtns from "./TitleBarBtns";
-import NewJobBox from "./NewJobBox";
+import {NewJobBox} from "./NewJobBox";
 function App() {  
   let getStyle = (alpha = 1)=>{
     let url = new URL(window.location.href);
@@ -9,8 +9,10 @@ function App() {
     let arr = [`3,155,229`,`106,0,255`, `96,169,2`, `87,101,2`, `216,0,115`, `216,144,0`]
     return `background:rgba(${arr[colorIndex]},${alpha});`
   }
-  let save = ()=>{
-    alert(1);
+  let save = async ()=>{
+    let data = NewJobBox.getData();
+    let { ipcRenderer } = require("electron");
+    await ipcRenderer.invoke("saveToDb","Job",data);
   }
   return (
     <>

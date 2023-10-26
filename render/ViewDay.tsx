@@ -5,12 +5,10 @@ export default function () {
     let addNewJob = (e:any)=>{
         let target = e.target as HTMLElement;
         let timeEle;
-        if(target.classList.contains("halfTop")){
-            timeEle = target.nextElementSibling.nextElementSibling;
-        }else if(target.classList.contains("halfBottom")){
-            timeEle = target.nextElementSibling;
-        }else if(target.classList.contains("hourTag")){
+        if(target.classList.contains("hourTag")){
             timeEle = target;
+        }else if(target.firstElementChild.classList.contains("hourTag")){
+            timeEle = target.firstElementChild;
         }
         if(!timeEle) return;
         let config ={
@@ -32,9 +30,7 @@ export default function () {
     let getBgLineEles = ()=>{
         let eles:any[] = [];
         for(let i =0;i<24;i++){
-            let ele = <div><div class={`halfTop color${colorIndex}`}></div>
-                <div class={`halfBottom color${colorIndex}`}></div>
-                <div class="hourTag">{`${i}:00`}</div></div>
+            let ele = <div class={`color${colorIndex}`}><div class="hourTag">{`${i}:00`}</div></div>
             eles.push(ele)
         }
         return eles;
