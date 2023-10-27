@@ -53,9 +53,8 @@ CREATE INDEX JobInfo_Index ON Job(JobInfo);`
         let start = now.getTime();
         now.setHours(23,59,59,0);
         let end = now.getTime();
-        const row = this.db.prepare('SELECT * FROM Job WHERE StartTime >= ? and EndTime <= ?').all(start,end);
-        console.log(row)
-        return row;
+        let objs = this.db.prepare('SELECT * FROM Job WHERE StartTime >= ? and EndTime <= ?').all(start,end);
+        return objs;
     }
     init(){
         let dbPath = path.join(app.getPath("userData"),"db")         
