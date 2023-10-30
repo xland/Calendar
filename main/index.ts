@@ -14,7 +14,7 @@ let initHook = ()=>{
     })
     ipcMain.handle("saveToDb",(e,type,data)=>{
         db.saveToDb(type,data);
-        win.webContents.send("saveToDbOk",data)
+        win.webContents.send("saveToDbOk")
         let subWin = BrowserWindow.fromWebContents(e.sender) as BrowserWindow;
         subWin.close();
     })

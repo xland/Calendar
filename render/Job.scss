@@ -1,7 +1,8 @@
 .Job{
     position: absolute !important;
-    left: 60px;
-    right: 30px;
+    text-align: center;
+    overflow: hidden;
+    padding-top: 6px;
     .dragger{
         position: absolute;
         height: 6px;
@@ -12,12 +13,8 @@
     }
     .draggerTop{        
         top: -3px;
-        border-top-right-radius: 3px;
-        border-top-left-radius: 3px;
     }
     .draggerBottom{
         bottom: -3px;
-        border-bottom-right-radius: 3px;
-        border-bottom-left-radius: 3px;
     }
 }
