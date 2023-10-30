@@ -18,7 +18,7 @@ export class Db{
     createDb(dbPath:string){
         let sql = `CREATE TABLE Job(Id VARCHAR2(36) NOT NULL ON CONFLICT FAIL UNIQUE ON CONFLICT FAIL, 
 CreateTime BIGINT,UpdateTime BIGINT,DeleteTime BIGINT,IsDelete BOOLEAN, 
-JobInfo TEXT,RepeatType INT,RepeatTimes INT,RepeatEndDay INT,AlertBefore INT,StartTime BIGINT,EndTime BIGINT);          
+JobInfo TEXT,RepeatType INT,RepeatTimes INT,RepeatEndDay INT,AlertBefore INT,StartTime BIGINT,EndTime BIGINT,ColorIndex INT);          
 CREATE INDEX JobInfo_Index ON Job(JobInfo);`
         try{
             this.db = new Database(dbPath,{ timeout:8000 })
@@ -51,9 +51,9 @@ CREATE INDEX JobInfo_Index ON Job(JobInfo);`
         let now = new Date();
         now.setHours(0,0,0,0);
         let start = now.getTime();
-        now.setHours(23,59,59,0);
+        now.setHours(23,59,59,999);
         let end = now.getTime();
-        let objs = this.db.prepare('SELECT * FROM Job WHERE StartTime >= ? and EndTime <= ?').all(start,end);
+        let objs = this.db.prepare('SELECT * FROM Job WHERE StartTime >= ? and EndTime <= ? order by StartTime asc').all(start,end);
         return objs;
     }
     init(){

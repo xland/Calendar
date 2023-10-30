@@ -37,4 +37,8 @@ export class ModelJob extends ModelBase{
      * 任务结束时间
      */
     EndTime:number
+    /**
+     * 任务颜色
+     */
+    ColorIndex:number
 }

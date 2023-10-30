@@ -24,27 +24,37 @@ export default function () {
         }
         window.open(`/IndexNewJob.html?colorIndex=${colorIndex}&startTime=${startTime.getTime()}`,'_blank',JSON.stringify(config));
     }
+    let bgLineMouseOver = (e)=>{
+        let target = e.target as HTMLElement;
+        if(target.classList.contains("hourTag")) target = target.parentElement;
+        target.style.background = `rgba(${ColorGet(colorIndex,0.1)})`
+    }
+    let bgLineMouseOut = (e)=>{
+        let target = e.target as HTMLElement;
+        if(target.classList.contains("hourTag")) target = target.parentElement;
+        target.style.background = ``
+    }
     let getBgLineEles = ()=>{
         let eles:any[] = [];
         for(let i =0;i<24;i++){
-            let ele = <div 
-            //@ts-ignore
-            onMouseOver={e=>e.target.style = `background:rgba(${ColorGet(colorIndex,0.1)});`}
-            //@ts-ignore
-            onMouseOut={e=>e.target.style = `background:rgba(0,0,0,0);`}
-            ><div class="hourTag">{`${i}:00`}</div></div>
+            let ele = <div onMouseOver={bgLineMouseOver} onMouseOut={bgLineMouseOut}><div class="hourTag">{`${i}:00`}</div></div>
             eles.push(ele)
         }
         return eles;
     }
     ipcRenderer.on("saveToDbOk",(e:Electron.IpcRendererEvent,data:ModelJob)=>{
-        document.getElementById("ViewDay").append(<Job colorIndex={colorIndex}></Job>)
+        document.getElementById("ViewDay").append(<Job data={data}></Job>)
         colorIndex += 1;
-        if(colorIndex > 5) colorIndex = 0;
+        if(colorIndex > 5) colorIndex = 0; //todo
     })
     document.addEventListener("DOMContentLoaded", async ()=>{
-        let data = await ipcRenderer.invoke("getJob")
-        console.log(data);
+        let data:ModelJob[] = await ipcRenderer.invoke("getJob")
+        let target = document.getElementById("ViewDay");
+        for(let job of data){
+            target.append(<Job data={job}></Job>)
+        }
+        colorIndex = data[data.length-1].ColorIndex + 1;
+        if(colorIndex > 5) colorIndex = 0; //todo
     })
   return <div id="ViewDay" onClick={addNewJob}> {getBgLineEles()} </div>;
 }

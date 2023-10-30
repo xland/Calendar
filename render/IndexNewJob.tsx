@@ -10,7 +10,9 @@ function App() {
     return `background:rgba(${ColorGet(colorIndex,alpha)});`
   }
   let save = async ()=>{
+    let url = new URL(window.location.href);
     let data = NewJobBox.getData();
+    data.ColorIndex = parseInt(url.searchParams.get("colorIndex"))
     let { ipcRenderer } = require("electron");
     await ipcRenderer.invoke("saveToDb","Job",data);
   }

@@ -2,14 +2,13 @@
     position: absolute !important;
     left: 60px;
     right: 30px;
-    top: 20%;
-    bottom: 30%;
     .dragger{
         position: absolute;
         height: 6px;
         left: 0px;
         right: 0px;
         cursor:ns-resize;
+        z-index: 2;
     }
     .draggerTop{        
         top: -3px;

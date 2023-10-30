@@ -17,7 +17,7 @@ export class NewJobBox extends React.Component {
     job.EndTime = new Date(year,month-1,date,hour1,minute1,0,0).getTime();
     job.RepeatType = 0;
     job.AlertBefore = parseInt((document.getElementById("alertBefore") as HTMLInputElement).value);
-    job.JobInfo = (document.getElementById("jobInfo") as HTMLTextAreaElement).value;
+    job.JobInfo = (document.getElementById("jobInfo") as HTMLTextAreaElement).value;    
     return job;
   } 
   constructor(){
