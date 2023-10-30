@@ -1,4 +1,4 @@
-import React, { MouseEventHandler } from "jsx-dom";
+import React from "jsx-dom";
 import "./ViewDay.scss";
 import Job from "./Job";
 import ColorGet from "./ColorGet";
@@ -42,38 +42,60 @@ export default function () {
         }
         return eles;
     }
-    let getStyle = (data:ModelJob,index:number,itemWidth:number,start:number,end:number)=>{
-        let leftNum = 60+index*6+index*itemWidth; 
-        let topNum = (data.StartTime - start)*100/(end - start)
-        let bottomNum = (end - data.EndTime)*100/(end - start)
+
+    let func = (index:number,data:ModelJob[],useableWidth:number,start:number,end:number)=>{
+        let tar = data[index]
+        let sameLineJobNum = 1;
+        let sameLineJobIndex = 0;
+        for(let i=0;i<data.length;i++){
+            if(i === index) continue;
+            if(tar.StartTime < data[i].StartTime && tar.EndTime > data[i].StartTime){
+                sameLineJobNum+=1
+                if(i < index) sameLineJobIndex+=1;
+                continue;
+            }
+            if(tar.StartTime < data[i].EndTime && tar.EndTime > data[i].EndTime){
+                sameLineJobNum += 1
+                if(i < index) sameLineJobIndex+=1;
+                continue
+            }
+            if(tar.StartTime === data[i].StartTime && tar.EndTime === data[i].EndTime){
+                sameLineJobNum += 1
+                if(i < index) sameLineJobIndex+=1;
+                continue
+            }
+        }
+        let itemWidth = useableWidth / sameLineJobNum - 6; 
+        let leftNum = 60+sameLineJobIndex*itemWidth+sameLineJobIndex*6
+        let topNum = (tar.StartTime - start)*100/(end - start)
+        let bottomNum = (end - tar.EndTime)*100/(end - start)
         let top = `top: ${topNum}%;`
         let bottom = `bottom: ${bottomNum}%;`
         let left = `left: ${leftNum}px;`
         let width = `width: ${itemWidth}px;`
-        let bg = `background: rgba(${ColorGet(data.ColorIndex,0.1)});`
-        let border = `border: 1px solid rgba(${ColorGet(data.ColorIndex)});`
-        return `${bg}${border}${top}${bottom}${left}${width}`;
+        let bg = `background: rgba(${ColorGet(tar.ColorIndex,0.1)});`
+        let border = `border: 1px solid rgba(${ColorGet(tar.ColorIndex)});`
+        return <Job data={tar} style={`${bg}${border}${top}${bottom}${left}${width}`}></Job>
     }
+
+
+
     let getData = async ()=>{
-        let data:ModelJob[] = await ipcRenderer.invoke("getJob")
         let target = document.getElementById("ViewDay");
         target.querySelectorAll(".Job").forEach(e=>e.remove())
-
-        let useableWidth = target.clientWidth - 90 - data.length*6;
-        let itemWidth = useableWidth/data.length;
+        let useableWidth = target.clientWidth - 90;
+        let data:ModelJob[] = await ipcRenderer.invoke("getJob")
         let curDay = new Date(data[0].StartTime);
         curDay.setHours(0,0,0,0);
         let start = curDay.getTime();
         curDay.setHours(23,59,59,999);
         let end = curDay.getTime();
-
-        let index = 0;
-        for(let job of data){
-            target.append(<Job data={job} count={data.length} index={index} style={getStyle(job,index,itemWidth,start,end)}></Job>)
-            index+=1;
+        for(let i=0;i<data.length;i++){
+            let ele = func(i,data,useableWidth,start,end)
+            target.append(ele)
         }
         colorIndex = data[data.length-1].ColorIndex + 1;
-        if(colorIndex > 5) colorIndex = 0; //todo
+        if(colorIndex > 5) colorIndex = 0;
     }
     let onMouseOver = (e)=>{
         let target = e.target as HTMLElement;
