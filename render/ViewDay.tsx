@@ -42,8 +42,7 @@ export default function () {
         }
         return eles;
     }
-
-    let func = (index:number,data:ModelJob[],useableWidth:number,start:number,end:number)=>{
+    let styleItem = (index:number,data:ModelJob[],useableWidth:number,start:number,end:number)=>{
         let tar = data[index]
         let sameLineJobNum = 1;
         let sameLineJobIndex = 0;
@@ -69,29 +68,24 @@ export default function () {
         let leftNum = 60+sameLineJobIndex*itemWidth+sameLineJobIndex*6
         let topNum = (tar.StartTime - start)*100/(end - start)
         let bottomNum = (end - tar.EndTime)*100/(end - start)
-        let top = `top: ${topNum}%;`
-        let bottom = `bottom: ${bottomNum}%;`
-        let left = `left: ${leftNum}px;`
-        let width = `width: ${itemWidth}px;`
-        let bg = `background: rgba(${ColorGet(tar.ColorIndex,0.1)});`
-        let border = `border: 1px solid rgba(${ColorGet(tar.ColorIndex)});`
-        return <Job data={tar} style={`${bg}${border}${top}${bottom}${left}${width}`}></Job>
+        let styleObj = {top:`${topNum}%`,bottom:`${bottomNum}%`,left:leftNum,width:itemWidth,background:`rgba(${ColorGet(tar.ColorIndex,0.1)})`,border:`1px solid rgba(${ColorGet(tar.ColorIndex)})`};
+        return <Job data={tar} style={styleObj}></Job>
     }
-
-
-
     let getData = async ()=>{
-        let target = document.getElementById("ViewDay");
-        target.querySelectorAll(".Job").forEach(e=>e.remove())
-        let useableWidth = target.clientWidth - 90;
         let data:ModelJob[] = await ipcRenderer.invoke("getJob")
+        if(data.length < 1) return;
         let curDay = new Date(data[0].StartTime);
         curDay.setHours(0,0,0,0);
         let start = curDay.getTime();
         curDay.setHours(23,59,59,999);
         let end = curDay.getTime();
+
+        let target = document.getElementById("ViewDay");
+        target.querySelectorAll(".Job").forEach(e=>e.remove())
+        let useableWidth = target.clientWidth - 90;
+        
         for(let i=0;i<data.length;i++){
-            let ele = func(i,data,useableWidth,start,end)
+            let ele = styleItem(i,data,useableWidth,start,end)
             target.append(ele)
         }
         colorIndex = data[data.length-1].ColorIndex + 1;
@@ -99,8 +93,8 @@ export default function () {
     }
     let onMouseOver = (e)=>{
         let target = e.target as HTMLElement;
-        if(target.classList.contains("dragger")){
-            target.style.background = `rgba(${ColorGet(0,1)})`
+        if(target.classList.contains("dragger")){            
+            target.style.background = target.parentElement.style.borderColor
         }
     }
     let onMouseOut = (e)=>{
@@ -109,9 +103,35 @@ export default function () {
             target.style.background = `none`
         }
     }
+    let onMouseDown = (e)=>{
+        let target = e.target as HTMLElement;
+        if(!target.classList.contains("dragger")) return;
+        let documentMouseMove = (e) => {
+            target.style.background = target.parentElement.style.borderColor
+            target.parentElement.parentElement.style.cursor = "ns-resize";
+            if(target.classList.contains("draggerTop")){
+                let top = e.y - target.parentElement.parentElement.offsetTop;
+                target.parentElement.style.top = top + "px";
+            }else{
+                let bottom = target.parentElement.parentElement.clientHeight + target.parentElement.parentElement.offsetTop - e.y;
+                target.parentElement.style.bottom = bottom + "px";
+            }
+            
+        };
+        let documentMouseUp = (e) => {
+            document.removeEventListener("mousemove", documentMouseMove);
+            document.removeEventListener("mouseup", documentMouseUp);
+            target.style.background = `none`
+            target.parentElement.parentElement.style.cursor = "pointer";
+            target = null;
+            //todo saveData
+        };
+        document.addEventListener("mousemove", documentMouseMove);
+        document.addEventListener("mouseup", documentMouseUp);
+    }
     ipcRenderer.on("saveToDbOk",getData)
     document.addEventListener("DOMContentLoaded", getData)
-  return <div id="ViewDay" onClick={addNewJob}  onMouseOver={onMouseOver} onMouseOut={onMouseOut}>
+  return <div id="ViewDay" onClick={addNewJob}  onMouseOver={onMouseOver} onMouseOut={onMouseOut} onMouseDown={onMouseDown}>
     {getBgLineEles()}
     </div>;
 }
