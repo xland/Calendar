@@ -18,8 +18,8 @@ let initHook = ()=>{
         let subWin = BrowserWindow.fromWebContents(e.sender) as BrowserWindow;
         subWin.close();
     })
-    ipcMain.handle("getJob",(e,type,value)=>{
-        return db.getJob(type,value);
+    ipcMain.handle("getData",(e,sql:string,...params)=>{
+        return db.getData(sql,...params);
     })
 }
 let initDb = ()=>{

@@ -47,13 +47,8 @@ CREATE INDEX JobInfo_Index ON Job(JobInfo);`
 
         }
     }
-    getJob(type:string,value:string){
-        let now = new Date();
-        now.setHours(0,0,0,0);
-        let start = now.getTime();
-        now.setHours(23,59,59,999);
-        let end = now.getTime();
-        let objs = this.db.prepare('SELECT * FROM Job WHERE StartTime >= ? and EndTime <= ? order by StartTime asc').all(start,end);
+    getData(sql:string,...params){
+        let objs = this.db.prepare(sql).all(params);
         return objs;
     }
     init(){

@@ -7,7 +7,7 @@ function App() {
   let getStyle = (alpha = 1)=>{
     let url = new URL(window.location.href);
     let colorIndex = parseInt(url.searchParams.get("colorIndex"))
-    return `background:rgba(${ColorGet(colorIndex,alpha)});`
+    return `background:rgba(${ColorGet(colorIndex)},${alpha});`
   }
   let save = async ()=>{
     let url = new URL(window.location.href);

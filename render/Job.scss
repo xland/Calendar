@@ -2,20 +2,50 @@
     position: absolute !important;
     text-align: center;
     overflow: hidden;
-    padding-top: 6px;
     border-radius: 2px;
+    background:rgba(var(--color),0.1);
+    border:1px solid rgba(var(--color),1);   
+    box-sizing: border-box; 
+    padding-top: 6px;
+    z-index: 2;
     .dragger{
         position: absolute;
-        height: 6px;
+        height: 5px;
         left: 0px;
         right: 0px;
         cursor:ns-resize;
         z-index: 2;
     }
+    .draggerSelected{
+        background: rgba(var(--color),1) !important;
+    }
     .draggerTop{        
-        top: -3px;
+        top: 0px;
     }
     .draggerBottom{
-        bottom: -3px;
+        bottom: 0px;
     }
+    .time{
+        position: absolute;
+        height: 12px;
+        right: 0px;
+        cursor:ns-resize;
+        z-index: 2;
+        font-size: 8px;
+        text-align: right;
+        padding-right: 3px;
+    }
+    .timeTop{
+        padding-top: 1px;
+        top: 0px;
+    }
+    .timeBottom{
+        bottom: 0px;
+        padding-bottom: 1px;
+    }
+}
+.jobSelected{
+    box-shadow:rgba(var(--color),0.8) 0px 0px 3px;
+    background:rgba(var(--color),0.3) !important;
+    z-index: 3 !important;
 }
