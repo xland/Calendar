@@ -110,7 +110,6 @@ export default function () {
         let minutes = dt.getMinutes();
         if(dt.getSeconds()>0 || dt.getMilliseconds()>0){
             minutes+=1;
-            console.log("start")
         }
         timeDiv.innerHTML = `${dt.getHours().toString().padStart(2,"0")}:${minutes.toString().padStart(2,"0")}`;
         timeDiv = target.querySelector(".timeBottom") as HTMLDivElement;
@@ -118,7 +117,6 @@ export default function () {
         minutes = dt.getMinutes();
         if(dt.getSeconds()>0 || dt.getMilliseconds()>0){
             minutes+=1;
-            console.log("end")
         }
         timeDiv.innerHTML = `${dt.getHours().toString().padStart(2,"0")}:${minutes.toString().padStart(2,"0")}`;
     }
@@ -148,41 +146,69 @@ export default function () {
                 document.querySelectorAll(".draggerSelected").forEach(v=>v.classList.remove("draggerSelected"))            
                 target.classList.add("draggerSelected")
             }
-        }else if(target.classList.contains("Job")){
+        }else if(target.classList.contains("jobInfo")){
             document.querySelectorAll(".jobSelected").forEach(v=>v.classList.remove("jobSelected"))
             document.querySelectorAll(".draggerSelected").forEach(v=>v.classList.remove("draggerSelected"))
-            target.classList.add("jobSelected")
+            target.parentElement.classList.add("jobSelected")
         }else {
             return;
         }
-        if(!target.classList.contains("dragger") && !target.classList.contains("Job")) return;
         let oldY = e.y;
-        let oldHeight = target.clientHeight;
+        let oldHeight = target.parentElement.clientHeight;
         let documentMouseMove = (e) => {
             if(target.classList.contains("draggerTop")){
                 target.style.background = target.parentElement.style.borderColor
                 target.parentElement.parentElement.style.cursor = "ns-resize";
                 let top = e.y - target.parentElement.parentElement.offsetTop;
                 if(top < 0) top = 0;
+                let height = target.parentElement.offsetTop + target.parentElement.clientHeight - top;
+                if(height < 12){
+                    return;
+                }
                 target.parentElement.style.top = top + "px";
+                if(height < 28){
+                    target.parentElement.lastElementChild.innerHTML = ""
+                    target.parentElement.querySelectorAll(".time").forEach(v=>v.innerHTML = "")
+                    return;
+                }else{                    
+                    target.parentElement.lastElementChild.innerHTML = target.parentElement.getAttribute("data-text")
+                }
                 updateTimeDom(target.parentElement);
             }else if(target.classList.contains("draggerBottom")){
                 target.style.background = target.parentElement.style.borderColor
                 target.parentElement.parentElement.style.cursor = "ns-resize";
-                let bottom = target.parentElement.parentElement.clientHeight + target.parentElement.parentElement.offsetTop - e.y;
+                let bottom = target.parentElement.parentElement.clientHeight + target.parentElement.parentElement.offsetTop - e.y;                 
                 if(bottom < 0) bottom = 0;
+                let height = target.parentElement.parentElement.clientHeight - target.parentElement.offsetTop - bottom;
+                if(height < 12){
+                    return;
+                }
                 target.parentElement.style.bottom = bottom + "px";
+                if(height < 28){
+                    target.parentElement.lastElementChild.innerHTML = ""
+                    target.parentElement.querySelectorAll(".time").forEach(v=>v.innerHTML = "")
+                    return;
+                }else{
+                    target.parentElement.lastElementChild.innerHTML = target.parentElement.getAttribute("data-text")
+                }
                 updateTimeDom(target.parentElement);
-            }else if(target.classList.contains("Job")) {
+            }else if(target.classList.contains("jobInfo")) {
                 let span = e.y - oldY;
-                let top = target.offsetTop + span;
+                let top = target.parentElement.offsetTop + span;
                 oldY = e.y
-                if(top < 0  || top + oldHeight > target.parentElement.clientHeight) return;
-                target.style.top = top + "px";
-                let bottom = target.parentElement.clientHeight - oldHeight - target.offsetTop-1;
-                target.style.bottom = bottom + "px";
+                if(top < 0) return;
+                if(target.parentElement.parentElement.clientHeight - oldHeight-top-1<0) return;
+                target.parentElement.style.top = top + "px";
+                let bottom = target.parentElement.parentElement.clientHeight - oldHeight - target.parentElement.offsetTop-1;
+                target.parentElement.style.bottom = bottom + "px";
+                if(target.parentElement.clientHeight < 26){
+                    target.parentElement.lastElementChild.innerHTML = ""
+                    target.parentElement.querySelectorAll(".time").forEach(v=>v.innerHTML = "")
+                    return;
+                }else{                    
+                    target.parentElement.lastElementChild.innerHTML = target.parentElement.getAttribute("data-text")
+                }
                 updateTimeDom(target);
-                console.log(oldHeight)
             }         
         };
         let documentMouseUp = (e) => {
