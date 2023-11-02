@@ -134,31 +134,31 @@ export default function () {
         if(top < 0) top = 0;
         let height = target.offsetTop + target.clientHeight - top;
         if(height < 12){
-            return;
+            return 0;
         }
         target.style.top = top + "px";
         if(height < 28){
             target.lastElementChild.innerHTML = ""
             target.querySelectorAll(".time").forEach(v=>v.innerHTML = "")
-            return;
-        }else{                    
-            target.lastElementChild.innerHTML = target.getAttribute("data-text")
+            return 1;
         }
+        target.lastElementChild.innerHTML = target.getAttribute("data-text")
+        return 2;
     }
     let draggerBottomMove = (target:HTMLElement,bottom:number)=>{
         if(bottom < 0) bottom = 0;
         let height = target.parentElement.clientHeight - target.offsetTop - bottom;
         if(height < 12){
-            return;
+            return 0;
         }
         target.style.bottom = bottom + "px";
         if(height < 28){
             target.lastElementChild.innerHTML = ""
             target.querySelectorAll(".time").forEach(v=>v.innerHTML = "")
-            return;
-        }else{
-            target.lastElementChild.innerHTML = target.getAttribute("data-text")
+            return 1
         }
+        target.lastElementChild.innerHTML = target.getAttribute("data-text")
+        return 2     
     }
     let onMouseDown = (e:MouseEvent)=>{
         let target = e.target as HTMLElement;
@@ -208,13 +208,7 @@ export default function () {
                 pE.style.top = top + "px";
                 let bottom = pE.parentElement.clientHeight - oldHeight - pE.offsetTop-1;
                 pE.style.bottom = bottom + "px";
-                if(pE.clientHeight < 26){
-                    pE.lastElementChild.innerHTML = ""
-                    pE.querySelectorAll(".time").forEach(v=>v.innerHTML = "")
-                    return;
-                }else{                    
-                    pE.lastElementChild.innerHTML = pE.getAttribute("data-text")
-                }
+                setJobTime(target.parentElement)
                 updateTimeDom(pE);
             }         
         };
@@ -264,10 +258,15 @@ export default function () {
                         if(startTime < t){
                             return;
                         }
-                        let top = job.parentElement.clientHeight/86400000 * (startTime.getTime() - t.getTime())  
-                        job.setAttribute("data-start",startTime.getTime().toString())                      
-                        draggerTopMove(job,top)
-                        updateTimeDom(job)
+                        let top = job.parentElement.clientHeight/86400000 * (startTime.getTime() - t.getTime())     
+                        let r = draggerTopMove(job,top)                                    
+                        if(r>0){
+                            job.setAttribute("data-start",startTime.getTime().toString())
+                            if(r >1){
+                                updateTimeDom(job)
+                            }                           
+                        }
+                        
                     }else{
                         let end = Number(job.getAttribute("data-end"))
                         let endTime = new Date(end);
@@ -281,14 +280,46 @@ export default function () {
                         if(endTime > t){
                             return;
                         }
-                        let bottom = job.parentElement.clientHeight/86400000 * (t.getTime()-endTime.getTime())  
-                        job.setAttribute("data-end",endTime.getTime().toString())                      
-                        draggerBottomMove(job,bottom)
-                        updateTimeDom(job)
+                        let bottom = job.parentElement.clientHeight/86400000 * (t.getTime()-endTime.getTime())        
+                        let r = draggerBottomMove(job,bottom)
+                        if(r>0){
+                            job.setAttribute("data-end",endTime.getTime().toString())
+                            if(r >1){
+                                updateTimeDom(job)
+                            }                           
+                        }                        
                     }
                 }else{
                     let job = document.querySelector(".jobSelected") as HTMLDivElement;
                     if(!job) return;
+                    let start = Number(job.getAttribute("data-start"))
+                    let startTime = new Date(start);
+                    let end = Number(job.getAttribute("data-end"))
+                    let endTime = new Date(end);
+                    if(e.key === "ArrowUp"){
+                        startTime.setMinutes(startTime.getMinutes()-1,0,0);
+                        endTime.setMinutes(endTime.getMinutes()-1,0,0);
+                    }else{
+                        startTime.setMinutes(startTime.getMinutes()+1,0,0);
+                        endTime.setMinutes(endTime.getMinutes()+1,0,0);
+                    }
+                    let t1 = new Date() //todo
+                    t1.setHours(0,0,0,0);
+                    if(startTime < t1){
+                        return;
+                    }
+                    let t2= new Date() //todo
+                    t2.setHours(23,59,59,999);
+                    if(endTime > t2){
+                        return;
+                    }
+                    let top = job.parentElement.clientHeight/86400000 * (startTime.getTime() - t1.getTime())     
+                    let bottom = job.parentElement.clientHeight/86400000 * (t2.getTime()-endTime.getTime()) 
+                    job.style.top = `${top}px`
+                    job.style.bottom = `${bottom}px`
+                    job.setAttribute("data-start",startTime.getTime().toString())
+                    job.setAttribute("data-end",endTime.getTime().toString())
+                    updateTimeDom(job)
                 }
             }
             console.log(e.key)            
