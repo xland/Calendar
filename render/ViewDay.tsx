@@ -232,100 +232,113 @@ export default function () {
         e.preventDefault();
         return false;
     }
-    ipcRenderer.on("saveToDbOk",getData)
-    document.addEventListener("DOMContentLoaded", ()=>{
-        getData();
-        window.addEventListener("keydown",(e:KeyboardEvent)=>{
-            if(e.key === "Escape"){
-                document.querySelectorAll(".draggerSelected").forEach(v=>v.classList.remove("draggerSelected"))
-                document.querySelectorAll(".jobSelected").forEach(v=>v.classList.remove("jobSelected"))
-                return;
-            }
-            if(e.ctrlKey && (e.key === "ArrowUp" || e.key === "ArrowDown") ){
-                let dragger = document.querySelector(".draggerSelected") as HTMLDivElement;
-                if(dragger){
-                    let job = dragger.parentElement;
-                    if(dragger.classList.contains("draggerTop")){                        
-                        let start = Number(job.getAttribute("data-start"))
-                        let startTime = new Date(start);
-                        if(e.key === "ArrowUp"){
-                            startTime.setMinutes(startTime.getMinutes()-1,0,0);
-                        }else{
-                            startTime.setMinutes(startTime.getMinutes()+1,0,0);
-                        }                        
-                        let t = new Date() //todo
-                        t.setHours(0,0,0,0);
-                        if(startTime < t){
-                            return;
-                        }
-                        let top = job.parentElement.clientHeight/86400000 * (startTime.getTime() - t.getTime())     
-                        let r = draggerTopMove(job,top)                                    
-                        if(r>0){
-                            job.setAttribute("data-start",startTime.getTime().toString())
-                            if(r >1){
-                                updateTimeDom(job)
-                            }                           
-                        }
-                        
-                    }else{
-                        let end = Number(job.getAttribute("data-end"))
-                        let endTime = new Date(end);
-                        if(e.key === "ArrowUp"){
-                            endTime.setMinutes(endTime.getMinutes()-1,0,0);
-                        }else{
-                            endTime.setMinutes(endTime.getMinutes()+1,0,0);
-                        }
-                        let t = new Date() //todo
-                        t.setHours(23,59,59,999);
-                        if(endTime > t){
-                            return;
-                        }
-                        let bottom = job.parentElement.clientHeight/86400000 * (t.getTime()-endTime.getTime())        
-                        let r = draggerBottomMove(job,bottom)
-                        if(r>0){
-                            job.setAttribute("data-end",endTime.getTime().toString())
-                            if(r >1){
-                                updateTimeDom(job)
-                            }                           
-                        }                        
-                    }
-                }else{
-                    let job = document.querySelector(".jobSelected") as HTMLDivElement;
-                    if(!job) return;
+    /**
+     * 使用键盘快捷键移动Job
+     * @param e 
+     * @returns 
+     */
+    let moveJobByKey = (e:KeyboardEvent)=>{
+        if(e.key === "Escape"){
+            document.querySelectorAll(".draggerSelected").forEach(v=>v.classList.remove("draggerSelected"))
+            document.querySelectorAll(".jobSelected").forEach(v=>v.classList.remove("jobSelected"))
+            return;
+        }
+        if(e.ctrlKey && (e.key === "ArrowUp" || e.key === "ArrowDown") ){
+            let dragger = document.querySelector(".draggerSelected") as HTMLDivElement;
+            if(dragger){
+                let job = dragger.parentElement;
+                if(dragger.classList.contains("draggerTop")){                        
                     let start = Number(job.getAttribute("data-start"))
                     let startTime = new Date(start);
+                    if(e.key === "ArrowUp"){
+                        startTime.setMinutes(startTime.getMinutes()-1,0,0);
+                    }else{
+                        startTime.setMinutes(startTime.getMinutes()+1,0,0);
+                    }                        
+                    let t = new Date() //todo
+                    t.setHours(0,0,0,0);
+                    if(startTime < t){
+                        return;
+                    }
+                    let top = job.parentElement.clientHeight/86400000 * (startTime.getTime() - t.getTime())     
+                    let r = draggerTopMove(job,top)                                    
+                    if(r>0){
+                        job.setAttribute("data-start",startTime.getTime().toString())
+                        if(r >1){
+                            updateTimeDom(job)
+                        }                           
+                    }
+                    
+                }else{
                     let end = Number(job.getAttribute("data-end"))
                     let endTime = new Date(end);
                     if(e.key === "ArrowUp"){
-                        startTime.setMinutes(startTime.getMinutes()-1,0,0);
                         endTime.setMinutes(endTime.getMinutes()-1,0,0);
                     }else{
-                        startTime.setMinutes(startTime.getMinutes()+1,0,0);
                         endTime.setMinutes(endTime.getMinutes()+1,0,0);
                     }
-                    let t1 = new Date() //todo
-                    t1.setHours(0,0,0,0);
-                    if(startTime < t1){
+                    let t = new Date() //todo
+                    t.setHours(23,59,59,999);
+                    if(endTime > t){
                         return;
                     }
-                    let t2= new Date() //todo
-                    t2.setHours(23,59,59,999);
-                    if(endTime > t2){
-                        return;
-                    }
-                    let top = job.parentElement.clientHeight/86400000 * (startTime.getTime() - t1.getTime())     
-                    let bottom = job.parentElement.clientHeight/86400000 * (t2.getTime()-endTime.getTime()) 
-                    job.style.top = `${top}px`
-                    job.style.bottom = `${bottom}px`
-                    job.setAttribute("data-start",startTime.getTime().toString())
-                    job.setAttribute("data-end",endTime.getTime().toString())
-                    updateTimeDom(job)
+                    let bottom = job.parentElement.clientHeight/86400000 * (t.getTime()-endTime.getTime())        
+                    let r = draggerBottomMove(job,bottom)
+                    if(r>0){
+                        job.setAttribute("data-end",endTime.getTime().toString())
+                        if(r >1){
+                            updateTimeDom(job)
+                        }                           
+                    }                        
                 }
+            }else{
+                let job = document.querySelector(".jobSelected") as HTMLDivElement;
+                if(!job) return;
+                let start = Number(job.getAttribute("data-start"))
+                let startTime = new Date(start);
+                let end = Number(job.getAttribute("data-end"))
+                let endTime = new Date(end);
+                if(e.key === "ArrowUp"){
+                    startTime.setMinutes(startTime.getMinutes()-1,0,0);
+                    endTime.setMinutes(endTime.getMinutes()-1,0,0);
+                }else{
+                    startTime.setMinutes(startTime.getMinutes()+1,0,0);
+                    endTime.setMinutes(endTime.getMinutes()+1,0,0);
+                }
+                let t1 = new Date() //todo
+                t1.setHours(0,0,0,0);
+                if(startTime < t1){
+                    return;
+                }
+                let t2= new Date() //todo
+                t2.setHours(23,59,59,999);
+                if(endTime > t2){
+                    return;
+                }
+                let top = job.parentElement.clientHeight/86400000 * (startTime.getTime() - t1.getTime())     
+                let bottom = job.parentElement.clientHeight/86400000 * (t2.getTime()-endTime.getTime()) 
+                job.style.top = `${top}px`
+                job.style.bottom = `${bottom}px`
+                job.setAttribute("data-start",startTime.getTime().toString())
+                job.setAttribute("data-end",endTime.getTime().toString())
+                updateTimeDom(job)
             }
-            console.log(e.key)            
-        })
+        }         
+    } 
+    let onDoubleClick = (e)=>{
+        let target = e.target as HTMLElement;
+        if(!target.classList.contains("jobInfo")){
+            return
+        }
+        target = target.parentElement;
+        alert(111)
+    }   
+    document.addEventListener("DOMContentLoaded", ()=>{
+        ipcRenderer.on("saveToDbOk",getData)
+        getData();
+        window.addEventListener("keydown",moveJobByKey)
     })
-  return <div id="ViewDay" onMouseOver={onMouseOver} onMouseOut={onMouseOut} onMouseDown={onMouseDown}>
+  return <div id="ViewDay" onDoubleClick={onDoubleClick} onMouseOver={onMouseOver} onMouseOut={onMouseOut} onMouseDown={onMouseDown}>
     {getBgLineEles()}
     </div>;
 }
