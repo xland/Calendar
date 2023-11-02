@@ -34,12 +34,12 @@ export default function () {
         target.style.background = ``
     }
     let getBgLineEles = ()=>{
-        let eles:any[] = [];
+        let bgLines:any[] = [];
         for(let i =0;i<24;i++){
             let ele = <div class="bgLine" onMouseOver={bgLineMouseOver} onMouseOut={bgLineMouseOut}><div class="hourTag">{`${i}:00`}</div></div>
-            eles.push(ele)
+            bgLines.push(ele)
         }
-        return eles;
+        return bgLines;
     }
     let styleItem = (index:number,data:ModelJob[],useableWidth:number,start:number,end:number)=>{
         let tar = data[index]
@@ -80,8 +80,7 @@ export default function () {
         if(data.length < 1) return;
         let target = document.getElementById("ViewDay");
         target.querySelectorAll(".Job").forEach(e=>e.remove())
-        let useableWidth = target.clientWidth - 90;
-        
+        let useableWidth = target.clientWidth - 90;        
         for(let i=0;i<data.length;i++){
             let ele = styleItem(i,data,useableWidth,start,end)
             target.append(ele)
@@ -89,35 +88,34 @@ export default function () {
         colorIndex = data[data.length-1].ColorIndex + 1;
         if(colorIndex > 5) colorIndex = 0;
     }
-    let getChangedTime = (target:HTMLElement)=>{
+    let setJobTime = (target:HTMLElement)=>{
         let height = target.parentElement.clientHeight;
         let ms = target.offsetTop/height*86400000
         let now = new Date();
         now.setHours(0,0,0,0);
         now.setMilliseconds(ms);
-        let StartTime = now.getTime();
+        target.setAttribute("data-start",now.getTime().toString())
         now.setHours(0,0,0,0);
         ms = (target.offsetTop + target.clientHeight)/height*86400000
         now.setMilliseconds(ms);
-        let EndTime = now.getTime();
-        return {StartTime,EndTime}
-        console.log(new Date(StartTime),new Date(EndTime));
+        target.setAttribute("data-end",now.getTime().toString())
     }
     let updateTimeDom = (target:HTMLElement)=>{
-        let {StartTime,EndTime} = getChangedTime(target);
+        let StartTime = Number(target.getAttribute("data-start")) 
+        let EndTime = Number(target.getAttribute("data-end")) 
         let timeDiv = target.querySelector(".timeTop") as HTMLDivElement;
         let dt = new Date(StartTime);
         let minutes = dt.getMinutes();
-        if(dt.getSeconds()>0 || dt.getMilliseconds()>0){
-            minutes+=1;
-        }
+        // if(dt.getSeconds()>0 || dt.getMilliseconds()>0){
+        //     minutes+=1;
+        // }
         timeDiv.innerHTML = `${dt.getHours().toString().padStart(2,"0")}:${minutes.toString().padStart(2,"0")}`;
         timeDiv = target.querySelector(".timeBottom") as HTMLDivElement;
         dt = new Date(EndTime);
         minutes = dt.getMinutes();
-        if(dt.getSeconds()>0 || dt.getMilliseconds()>0){
-            minutes+=1;
-        }
+        // if(dt.getSeconds()>0 || dt.getMilliseconds()>0){
+        //     minutes+=1;
+        // }
         timeDiv.innerHTML = `${dt.getHours().toString().padStart(2,"0")}:${minutes.toString().padStart(2,"0")}`;
     }
     let onMouseOver = (e)=>{
@@ -130,6 +128,36 @@ export default function () {
         let target = e.target as HTMLElement;
         if(target.classList.contains("dragger")){
             target.style.background = `none`
+        }
+    }
+    let draggerTopMove = (target:HTMLElement,top:number)=>{        
+        if(top < 0) top = 0;
+        let height = target.offsetTop + target.clientHeight - top;
+        if(height < 12){
+            return;
+        }
+        target.style.top = top + "px";
+        if(height < 28){
+            target.lastElementChild.innerHTML = ""
+            target.querySelectorAll(".time").forEach(v=>v.innerHTML = "")
+            return;
+        }else{                    
+            target.lastElementChild.innerHTML = target.getAttribute("data-text")
+        }
+    }
+    let draggerBottomMove = (target:HTMLElement,bottom:number)=>{
+        if(bottom < 0) bottom = 0;
+        let height = target.parentElement.clientHeight - target.offsetTop - bottom;
+        if(height < 12){
+            return;
+        }
+        target.style.bottom = bottom + "px";
+        if(height < 28){
+            target.lastElementChild.innerHTML = ""
+            target.querySelectorAll(".time").forEach(v=>v.innerHTML = "")
+            return;
+        }else{
+            target.lastElementChild.innerHTML = target.getAttribute("data-text")
         }
     }
     let onMouseDown = (e:MouseEvent)=>{
@@ -158,57 +186,36 @@ export default function () {
         let documentMouseMove = (e) => {
             if(target.classList.contains("draggerTop")){
                 target.style.background = target.parentElement.style.borderColor
-                target.parentElement.parentElement.style.cursor = "ns-resize";
-                let top = e.y - target.parentElement.parentElement.offsetTop;
-                if(top < 0) top = 0;
-                let height = target.parentElement.offsetTop + target.parentElement.clientHeight - top;
-                if(height < 12){
-                    return;
-                }
-                target.parentElement.style.top = top + "px";
-                if(height < 28){
-                    target.parentElement.lastElementChild.innerHTML = ""
-                    target.parentElement.querySelectorAll(".time").forEach(v=>v.innerHTML = "")
-                    return;
-                }else{                    
-                    target.parentElement.lastElementChild.innerHTML = target.parentElement.getAttribute("data-text")
-                }
+                let ppE = target.parentElement.parentElement
+                ppE.style.cursor = "ns-resize";
+                draggerTopMove(target.parentElement,e.y - ppE.offsetTop)
+                setJobTime(target.parentElement)
                 updateTimeDom(target.parentElement);
             }else if(target.classList.contains("draggerBottom")){
                 target.style.background = target.parentElement.style.borderColor
-                target.parentElement.parentElement.style.cursor = "ns-resize";
-                let bottom = target.parentElement.parentElement.clientHeight + target.parentElement.parentElement.offsetTop - e.y;                 
-                if(bottom < 0) bottom = 0;
-                let height = target.parentElement.parentElement.clientHeight - target.parentElement.offsetTop - bottom;
-                if(height < 12){
-                    return;
-                }
-                target.parentElement.style.bottom = bottom + "px";
-                if(height < 28){
-                    target.parentElement.lastElementChild.innerHTML = ""
-                    target.parentElement.querySelectorAll(".time").forEach(v=>v.innerHTML = "")
-                    return;
-                }else{
-                    target.parentElement.lastElementChild.innerHTML = target.parentElement.getAttribute("data-text")
-                }
+                let ppE = target.parentElement.parentElement
+                ppE.style.cursor = "ns-resize";           
+                draggerBottomMove(target.parentElement,ppE.clientHeight + ppE.offsetTop - e.y)
+                setJobTime(target.parentElement)
                 updateTimeDom(target.parentElement);
             }else if(target.classList.contains("jobInfo")) {
                 let span = e.y - oldY;
-                let top = target.parentElement.offsetTop + span;
+                let pE = target.parentElement;
+                let top = pE.offsetTop + span;
                 oldY = e.y
                 if(top < 0) return;
-                if(target.parentElement.parentElement.clientHeight - oldHeight-top-1<0) return;
-                target.parentElement.style.top = top + "px";
-                let bottom = target.parentElement.parentElement.clientHeight - oldHeight - target.parentElement.offsetTop-1;
-                target.parentElement.style.bottom = bottom + "px";
-                if(target.parentElement.clientHeight < 26){
-                    target.parentElement.lastElementChild.innerHTML = ""
-                    target.parentElement.querySelectorAll(".time").forEach(v=>v.innerHTML = "")
+                if(pE.parentElement.clientHeight - oldHeight-top-1<0) return;
+                pE.style.top = top + "px";
+                let bottom = pE.parentElement.clientHeight - oldHeight - pE.offsetTop-1;
+                pE.style.bottom = bottom + "px";
+                if(pE.clientHeight < 26){
+                    pE.lastElementChild.innerHTML = ""
+                    pE.querySelectorAll(".time").forEach(v=>v.innerHTML = "")
                     return;
                 }else{                    
-                    target.parentElement.lastElementChild.innerHTML = target.parentElement.getAttribute("data-text")
+                    pE.lastElementChild.innerHTML = pE.getAttribute("data-text")
                 }
-                updateTimeDom(target);
+                updateTimeDom(pE);
             }         
         };
         let documentMouseUp = (e) => {
@@ -235,13 +242,56 @@ export default function () {
     document.addEventListener("DOMContentLoaded", ()=>{
         getData();
         window.addEventListener("keydown",(e:KeyboardEvent)=>{
-            console.log(e.key)
-            if(e.key === "ArrowUp"){
-
-            }else if(e.key === "Escape"){
+            if(e.key === "Escape"){
                 document.querySelectorAll(".draggerSelected").forEach(v=>v.classList.remove("draggerSelected"))
                 document.querySelectorAll(".jobSelected").forEach(v=>v.classList.remove("jobSelected"))
+                return;
             }
+            if(e.ctrlKey && (e.key === "ArrowUp" || e.key === "ArrowDown") ){
+                let dragger = document.querySelector(".draggerSelected") as HTMLDivElement;
+                if(dragger){
+                    let job = dragger.parentElement;
+                    if(dragger.classList.contains("draggerTop")){                        
+                        let start = Number(job.getAttribute("data-start"))
+                        let startTime = new Date(start);
+                        if(e.key === "ArrowUp"){
+                            startTime.setMinutes(startTime.getMinutes()-1,0,0);
+                        }else{
+                            startTime.setMinutes(startTime.getMinutes()+1,0,0);
+                        }                        
+                        let t = new Date() //todo
+                        t.setHours(0,0,0,0);
+                        if(startTime < t){
+                            return;
+                        }
+                        let top = job.parentElement.clientHeight/86400000 * (startTime.getTime() - t.getTime())  
+                        job.setAttribute("data-start",startTime.getTime().toString())                      
+                        draggerTopMove(job,top)
+                        updateTimeDom(job)
+                    }else{
+                        let end = Number(job.getAttribute("data-end"))
+                        let endTime = new Date(end);
+                        if(e.key === "ArrowUp"){
+                            endTime.setMinutes(endTime.getMinutes()-1,0,0);
+                        }else{
+                            endTime.setMinutes(endTime.getMinutes()+1,0,0);
+                        }
+                        let t = new Date() //todo
+                        t.setHours(23,59,59,999);
+                        if(endTime > t){
+                            return;
+                        }
+                        let bottom = job.parentElement.clientHeight/86400000 * (t.getTime()-endTime.getTime())  
+                        job.setAttribute("data-end",endTime.getTime().toString())                      
+                        draggerBottomMove(job,bottom)
+                        updateTimeDom(job)
+                    }
+                }else{
+                    let job = document.querySelector(".jobSelected") as HTMLDivElement;
+                    if(!job) return;
+                }
+            }
+            console.log(e.key)            
         })
     })
   return <div id="ViewDay" onMouseOver={onMouseOver} onMouseOut={onMouseOut} onMouseDown={onMouseDown}>
