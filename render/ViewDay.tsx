@@ -62,6 +62,11 @@ export default function () {
                 if(i < index) sameLineJobIndex+=1;
                 continue
             }
+            if(tar.StartTime > data[i].StartTime && tar.EndTime < data[i].EndTime){
+                sameLineJobNum += 1
+                if(i < index) sameLineJobIndex+=1;
+                continue
+            }
         }
         let itemWidth = useableWidth / sameLineJobNum - 6; 
         let leftNum = 60+sameLineJobIndex*itemWidth+sameLineJobIndex*6
