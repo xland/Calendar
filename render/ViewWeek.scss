@@ -2,6 +2,9 @@
     .column{
         flex: 1;
         height: 100%;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
     }
     .weekHeader{
         height: 28px;
@@ -16,9 +19,28 @@
         flex: 1;
         display: flex;
         .column{
-            border-right: 1px solid #eee;
+            padding-top: 2px;
+            padding-bottom: 2px;
+            &:first-child{
+                padding-left: 2px;
+            }
             &:last-child{
                 border-right: none !important;
+            }
+            &>div{
+                line-height: 28px;
+                height: 28px;
+                padding-left: 8px;
+                padding-right: 8px;
+                overflow: hidden;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+                cursor: pointer;
+                flex: 1;
+                background: rgba(var(--color),0.1);
+                border: 1px solid rgb(var(--color));
+                margin: 2px;
+                border-radius: 2px;
             }
         }
     }

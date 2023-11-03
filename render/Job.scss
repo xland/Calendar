@@ -1,3 +1,4 @@
+#ViewDay{
 .Job{
     position: absolute !important;
     text-align: center;
@@ -50,4 +51,5 @@
     box-shadow:rgba(var(--color),0.8) 0px 0px 3px;
     background:rgba(var(--color),0.3) !important;
     z-index: 3 !important;
+}
 }

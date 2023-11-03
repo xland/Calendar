@@ -5,3 +5,5 @@ A easy to use calendar desktop software
 - Not yet released...
 
 ![day view](doc/dayview.png)
+
+![week view](doc/weekView.png)
