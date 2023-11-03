@@ -42,20 +42,10 @@ export default function () {
             container.append(dayDom)
         }
     }
-    let onMouseOver = (e)=>{
-        let target = e.target as HTMLElement;
-        if(!target.classList.contains("weekJob")) return;
-        target.style.background = `rgba(${ColorGet(0)},0.2)`
-    }
-    let onMouseOut = (e)=>{
-        let target = e.target as HTMLElement;
-        if(!target.classList.contains("weekJob")) return;
-        target.style.background = `rgba(${ColorGet(0)},0.1)`
-    }
     document.addEventListener("DOMContentLoaded", async ()=>{
         await getDataDom();
     })
-    return <div id="ViewWeek" class="view" style="z-index:20;" onMouseOver={onMouseOver} onMouseOut={onMouseOut}>
+    return <div id="ViewWeek" class="view" style="z-index:20;">
         <div class="weekHeader">
             <div class="column">一</div>
             <div class="column">二</div>
