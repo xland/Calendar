@@ -1,14 +1,7 @@
-#ViewWeek{
-    display: none;
-    flex: 1;
-    border-top: 1px solid #eee;
-    display: flex;
-    flex-direction: column;
-    cursor: pointer;
-    position: relative;
+#ViewWeek{    
     .column{
         flex: 1;
-        border-right: 1px solid #ddd;
+        border-right: 1px solid #eee;
         height: 100%;
         &:last-child{
             border-right: none !important;
@@ -18,7 +11,8 @@
         height: 28px;
         line-height: 28px;
         display: flex;
-        background: #eee;
+        border-bottom: 1px solid #eee;
+        color: #888;
         div{
             text-align: center;
         }

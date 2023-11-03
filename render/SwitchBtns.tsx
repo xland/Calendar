@@ -16,11 +16,12 @@ export default function () {
     let selectedDom = target.parentElement.querySelector(".selected") as HTMLElement
     selectedDom.classList.remove("selected")
     let id = getId(selectedDom)
-    document.getElementById(id).style.display = "none"
+    document.getElementById(id).style.zIndex = "0"
     target.classList.add("selected")
     id = getId(target);
-    document.getElementById(id).style.display = "flex"
+    document.getElementById(id).style.zIndex = "20"
   }
+
   return <div id="SwitchBtns">
     <div class="btns navigateBtns" onClick={switchBtnClick}>
         <div>日</div>

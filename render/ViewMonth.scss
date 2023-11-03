@@ -1,9 +1,30 @@
 #ViewMonth{
-    display: none;
-    flex: 1;
-    border-top: 1px solid #eee;
-    display: flex;
-    flex-direction: column;
-    cursor: pointer;
-    position: relative;
+    .row{
+        display: flex;
+        width: 100%;
+        div{
+            color: #666;
+            flex: 1;
+            font-size: 12px;
+            cursor: pointer;
+        }
+    }
+    .header{
+        height: 32px;
+        line-height: 32px;
+        div{
+            color: #aaa;
+        }
+    }
+    .content{
+        flex: 1;
+        flex-direction: column;
+        display: flex;
+        .row{
+            flex: 1;
+            div{
+                border: 1px solid #eee;
+            }
+        }
+    }
 }

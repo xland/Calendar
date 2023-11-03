@@ -222,7 +222,7 @@ export default function () {
                 pE.style.top = top + "px";
                 let bottom = pE.parentElement.clientHeight - oldHeight - pE.offsetTop-1;
                 pE.style.bottom = bottom + "px";
-                setJobTime(target.parentElement)
+                setJobTime(pE)
                 updateTimeDom(pE);
             }         
         };
@@ -234,7 +234,7 @@ export default function () {
                 target.parentElement.parentElement.style.cursor = "pointer";
                 updateItem(target.parentElement)
             }else{
-                updateItem(target)
+                updateItem(target.parentElement)
             }
             target = null;
         };
@@ -347,7 +347,7 @@ export default function () {
         window.addEventListener("keydown",moveJobByKey)
         window.addEventListener("keyup",onKeyUp)
     })
-  return <div id="ViewDay" style="display:none" onDoubleClick={onDoubleClick} onMouseOver={onMouseOver} onMouseOut={onMouseOut} onMouseDown={onMouseDown}>
+  return <div id="ViewDay"  class="view" onDoubleClick={onDoubleClick} onMouseOver={onMouseOver} onMouseOut={onMouseOut} onMouseDown={onMouseDown}>
     {getBgLineEles()}
     </div>;
 }
