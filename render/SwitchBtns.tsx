@@ -12,9 +12,7 @@ export default function () {
   }
   let switchBtnClick = (e)=>{
     let target = e.target as HTMLElement
-    if(target.classList.contains("selected")){
-      return;
-    }
+    if(target.classList.contains("selected")) return;
     let selectedDom = target.parentElement.querySelector(".selected") as HTMLElement
     selectedDom.classList.remove("selected")
     let id = getId(selectedDom)
@@ -25,18 +23,14 @@ export default function () {
   }
   return <div id="SwitchBtns">
     <div class="btns navigateBtns" onClick={switchBtnClick}>
-        <div class="selected">日</div>
-        <div>周</div>
+        <div>日</div>
+        <div class="selected">周</div>
         <div>月</div>
     </div>
     <div class="btns dayBtns">
-        <div>
-            <i class="iconfont icon-zuojiantou"></i>
-        </div>
+        <div><i class="iconfont icon-zuojiantou"></i></div>
         <div>2011-11-11</div>
-        <div>
-            <i class="iconfont icon-youjiantou"></i>
-        </div>
+        <div><i class="iconfont icon-youjiantou"></i></div>
     </div>
   </div>;
 }

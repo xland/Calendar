@@ -1,3 +1,30 @@
 #ViewWeek{
     display: none;
+    flex: 1;
+    border-top: 1px solid #eee;
+    display: flex;
+    flex-direction: column;
+    cursor: pointer;
+    position: relative;
+    .column{
+        flex: 1;
+        border-right: 1px solid #ddd;
+        height: 100%;
+        &:last-child{
+            border-right: none !important;
+        }
+    }
+    .weekHeader{
+        height: 28px;
+        line-height: 28px;
+        display: flex;
+        background: #eee;
+        div{
+            text-align: center;
+        }
+    }
+    .weekContent{
+        flex: 1;
+        display: flex;
+    }
 }

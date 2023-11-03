@@ -1,3 +1,9 @@
 #ViewMonth{
     display: none;
+    flex: 1;
+    border-top: 1px solid #eee;
+    display: flex;
+    flex-direction: column;
+    cursor: pointer;
+    position: relative;
 }

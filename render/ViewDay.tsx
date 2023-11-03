@@ -329,7 +329,7 @@ export default function () {
     } 
     let onKeyUp = ()=>{
         let job = document.querySelector("[data-editing]") as HTMLElement
-        console.log(job)
+        if(!job) return;
         job.removeAttribute("data-editing")
         updateItem(job)
     }
@@ -347,7 +347,7 @@ export default function () {
         window.addEventListener("keydown",moveJobByKey)
         window.addEventListener("keyup",onKeyUp)
     })
-  return <div id="ViewDay" onDoubleClick={onDoubleClick} onMouseOver={onMouseOver} onMouseOut={onMouseOut} onMouseDown={onMouseDown}>
+  return <div id="ViewDay" style="display:none" onDoubleClick={onDoubleClick} onMouseOver={onMouseOver} onMouseOut={onMouseOut} onMouseDown={onMouseDown}>
     {getBgLineEles()}
     </div>;
 }
