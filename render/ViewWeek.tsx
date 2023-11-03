@@ -3,7 +3,7 @@ import "./ViewWeek.scss";
 export default function () {
     document.addEventListener("DOMContentLoaded", ()=>{
     })
-    return <div id="ViewWeek" class="view" style="z-index:20;">
+    return <div id="ViewWeek" class="view">
         <div class="weekHeader">
             <div class="column">一</div>
             <div class="column">二</div>

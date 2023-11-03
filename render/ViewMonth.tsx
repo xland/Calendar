@@ -51,7 +51,7 @@ export default function () {
         for(let i=0;i<6;i++){
             let row = <div class="row"></div>            
             for(let j=0;j<7;j++){
-                let cell = <div>{dateArr[index].day}</div>
+                let cell = <div><div class="cellHeader">{dateArr[index].day}</div></div>
                 if(!dateArr[index].isCurMonth){
                     cell.classList.add("notCurMonth");
                 }
@@ -68,7 +68,7 @@ export default function () {
 
     initDateArr();
 
-    return <div id="ViewMonth" class="view">
+    return <div id="ViewMonth" class="view" style="z-index:20;">
         <div class="row header">
         <div>一</div>
         <div>二</div>
