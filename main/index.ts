@@ -21,6 +21,9 @@ let initHook = ()=>{
     ipcMain.handle("getData",(e,sql:string,...params)=>{
         return db.getData(sql,...params);
     })
+    ipcMain.handle("updateData",(e,sql:string,...params)=>{
+        return db.updateData(sql,...params);
+    })
 }
 let initDb = ()=>{
     db = new Db();

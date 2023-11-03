@@ -51,6 +51,13 @@ CREATE INDEX JobInfo_Index ON Job(JobInfo);`
         let objs = this.db.prepare(sql).all(params);
         return objs;
     }
+    updateData(sql:string,...params){
+        try{
+            this.db.prepare(sql).run(params)
+        }catch(ex){
+            console.log(ex)
+        }        
+    }
     init(){
         let dbPath = path.join(app.getPath("userData"),"db")         
         let exist = fsex.pathExistsSync(dbPath);

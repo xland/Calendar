@@ -88,6 +88,15 @@ export default function () {
         colorIndex = data[data.length-1].ColorIndex + 1;
         if(colorIndex > 5) colorIndex = 0;
     }
+    
+    let updateItem = async (targeDom:HTMLElement)=>{
+        let sql = `Update Job set StartTime = ? ,EndTime = ? where id = ?`
+        let startTime = Number(targeDom.getAttribute("data-start")) 
+        let endTime = Number(targeDom.getAttribute("data-end")) 
+        let id = targeDom.getAttribute("id")
+        await ipcRenderer.invoke("updateData",sql,startTime,endTime,id)
+        getData();
+    }
     let setJobTime = (target:HTMLElement)=>{
         let height = target.parentElement.clientHeight;
         let ms = target.offsetTop/height*86400000
@@ -215,17 +224,14 @@ export default function () {
         let documentMouseUp = (e) => {
             document.removeEventListener("mousemove", documentMouseMove);
             document.removeEventListener("mouseup", documentMouseUp);
-            let id;
             if(target.classList.contains("dragger")){
                 target.style.background = `none`
                 target.parentElement.parentElement.style.cursor = "pointer";
-                id = target.parentElement.getAttribute("id");
+                updateItem(target.parentElement)
             }else{
-                id = target.getAttribute("id")
+                updateItem(target)
             }
             target = null;
-            // updateItem(id)
-            //todo saveData
         };
         document.addEventListener("mousemove", documentMouseMove);
         document.addEventListener("mouseup", documentMouseUp);
@@ -244,45 +250,39 @@ export default function () {
             return;
         }
         if(e.ctrlKey && (e.key === "ArrowUp" || e.key === "ArrowDown") ){
+            let stepVal = e.key === "ArrowUp"?-1:1;
             let dragger = document.querySelector(".draggerSelected") as HTMLDivElement;
             if(dragger){
                 let job = dragger.parentElement;
+                let t = new Date() //todo
+                let msHeight = job.parentElement.clientHeight/86400000;
                 if(dragger.classList.contains("draggerTop")){                        
                     let start = Number(job.getAttribute("data-start"))
                     let startTime = new Date(start);
-                    if(e.key === "ArrowUp"){
-                        startTime.setMinutes(startTime.getMinutes()-1,0,0);
-                    }else{
-                        startTime.setMinutes(startTime.getMinutes()+1,0,0);
-                    }                        
-                    let t = new Date() //todo
+                    startTime.setMinutes(startTime.getMinutes()+stepVal,0,0)                     
                     t.setHours(0,0,0,0);
                     if(startTime < t){
                         return;
                     }
-                    let top = job.parentElement.clientHeight/86400000 * (startTime.getTime() - t.getTime())     
+                    job.setAttribute("data-editing","true")
+                    let top = msHeight * (startTime.getTime() - t.getTime())     
                     let r = draggerTopMove(job,top)                                    
                     if(r>0){
                         job.setAttribute("data-start",startTime.getTime().toString())
                         if(r >1){
                             updateTimeDom(job)
                         }                           
-                    }
-                    
+                    }                    
                 }else{
                     let end = Number(job.getAttribute("data-end"))
                     let endTime = new Date(end);
-                    if(e.key === "ArrowUp"){
-                        endTime.setMinutes(endTime.getMinutes()-1,0,0);
-                    }else{
-                        endTime.setMinutes(endTime.getMinutes()+1,0,0);
-                    }
-                    let t = new Date() //todo
+                    endTime.setMinutes(endTime.getMinutes()+stepVal,0,0)
                     t.setHours(23,59,59,999);
                     if(endTime > t){
                         return;
                     }
-                    let bottom = job.parentElement.clientHeight/86400000 * (t.getTime()-endTime.getTime())        
+                    job.setAttribute("data-editing","true")
+                    let bottom = msHeight * (t.getTime()-endTime.getTime())        
                     let r = draggerBottomMove(job,bottom)
                     if(r>0){
                         job.setAttribute("data-end",endTime.getTime().toString())
@@ -294,17 +294,13 @@ export default function () {
             }else{
                 let job = document.querySelector(".jobSelected") as HTMLDivElement;
                 if(!job) return;
+                let msHeight = job.parentElement.clientHeight/86400000;
                 let start = Number(job.getAttribute("data-start"))
                 let startTime = new Date(start);
                 let end = Number(job.getAttribute("data-end"))
                 let endTime = new Date(end);
-                if(e.key === "ArrowUp"){
-                    startTime.setMinutes(startTime.getMinutes()-1,0,0);
-                    endTime.setMinutes(endTime.getMinutes()-1,0,0);
-                }else{
-                    startTime.setMinutes(startTime.getMinutes()+1,0,0);
-                    endTime.setMinutes(endTime.getMinutes()+1,0,0);
-                }
+                startTime.setMinutes(startTime.getMinutes()+stepVal,0,0);
+                endTime.setMinutes(endTime.getMinutes()+stepVal,0,0);
                 let t1 = new Date() //todo
                 t1.setHours(0,0,0,0);
                 if(startTime < t1){
@@ -315,8 +311,9 @@ export default function () {
                 if(endTime > t2){
                     return;
                 }
-                let top = job.parentElement.clientHeight/86400000 * (startTime.getTime() - t1.getTime())     
-                let bottom = job.parentElement.clientHeight/86400000 * (t2.getTime()-endTime.getTime()) 
+                job.setAttribute("data-editing","true")
+                let top = msHeight * (startTime.getTime() - t1.getTime())     
+                let bottom = msHeight * (t2.getTime()-endTime.getTime()) 
                 job.style.top = `${top}px`
                 job.style.bottom = `${bottom}px`
                 job.setAttribute("data-start",startTime.getTime().toString())
@@ -325,6 +322,12 @@ export default function () {
             }
         }         
     } 
+    let onKeyUp = ()=>{
+        let job = document.querySelector("[data-editing]") as HTMLElement
+        console.log(job)
+        job.removeAttribute("data-editing")
+        updateItem(job)
+    }
     let onDoubleClick = (e)=>{
         let target = e.target as HTMLElement;
         if(!target.classList.contains("jobInfo")){
@@ -337,6 +340,7 @@ export default function () {
         ipcRenderer.on("saveToDbOk",getData)
         getData();
         window.addEventListener("keydown",moveJobByKey)
+        window.addEventListener("keyup",onKeyUp)
     })
   return <div id="ViewDay" onDoubleClick={onDoubleClick} onMouseOver={onMouseOver} onMouseOut={onMouseOut} onMouseDown={onMouseDown}>
     {getBgLineEles()}
