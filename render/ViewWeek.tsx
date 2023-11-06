@@ -6,10 +6,8 @@ import { ModelJob } from "../model/ModelJob";
 export default function () {
     let addNewJob = (e)=>{
         let target = e.target as HTMLElement
-        if(target.classList.contains("column")){
-            console.log(target)
-        }
-        // window.open(`/IndexNewJob.html?colorIndex=${colorIndex}&startTime=${startTime.getTime()}`,'_blank',JSON.stringify(config));
+        if(!target.classList.contains("column")) return;
+        window.open(`/IndexNewJob.html?colorIndex=${colorIndex}&startTime=${startTime.getTime()}`,'_blank',JSON.stringify(config));
     }
     let getData = async ()=>{
         let t = new Date();
