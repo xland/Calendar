@@ -47,9 +47,9 @@ export default function () {
             container.append(dayDom)
         }
     }
-    document.addEventListener("DOMContentLoaded", async ()=>{
-        await getDataDom();
-    })
+    // document.addEventListener("DOMContentLoaded", async ()=>{
+    //     await getDataDom();
+    // })
     return <div id="ViewWeek" class="view" style="z-index:20;">
         <div class="weekHeader">
             <div class="column">一</div>

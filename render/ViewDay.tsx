@@ -341,12 +341,12 @@ export default function () {
         target = target.parentElement;
         alert(111)
     }   
-    document.addEventListener("DOMContentLoaded", ()=>{
-        ipcRenderer.on("saveToDbOk",getData)
-        getData();
-        window.addEventListener("keydown",moveJobByKey)
-        window.addEventListener("keyup",onKeyUp)
-    })
+
+    ipcRenderer.on("saveToDbOk",getData)
+    getData();
+    window.addEventListener("keydown",moveJobByKey)
+    window.addEventListener("keyup",onKeyUp)
+
   return <div id="ViewDay"  class="view" onDoubleClick={onDoubleClick} onMouseOver={onMouseOver} onMouseOut={onMouseOut} onMouseDown={onMouseDown}>
     {getBgLineEles()}
     </div>;
