@@ -3,7 +3,7 @@ import { Db } from "./db";
 process.env.ELECTRON_DISABLE_SECURITY_WARNINGS = "true";
 let win:BrowserWindow;
 let db:Db
-let initHook = ()=>{
+let initHook = ()=>{ 
     ipcMain.handle("changeWindowState",(e,state)=>{
         let win = BrowserWindow.fromWebContents(e.sender) as BrowserWindow;
         win[state]();
