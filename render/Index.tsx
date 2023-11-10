@@ -4,6 +4,7 @@ import LeftPanel from "./LeftPanel";
 import MainPanel from "./MainPanel";
 import { dataMonth } from "./DataMonth";
 import React from "./React";
+import { eventer } from "../event/eventer";
 // import React from "jsx-dom";
 let App = ()=>{
     return <><LeftPanel/><MainPanel/></>
@@ -22,14 +23,14 @@ let App = ()=>{
 //     </div>
 // }
 
-document.body.appendChild(<App/>);
+
 
 document.addEventListener("DOMContentLoaded", async ()=>{
   document.body.ondragstart = () => false;
   document.body.ondragend = () => false;
-  document.body.ondrop = () => false;
-  await dataMonth.init(); //这个比子控件晚，如果早的话，子控件就没办法注册DOMContentLoaded
-  
-  // App.ready()
+  document.body.ondrop = () => false; 
+  await dataMonth.init();
+  document.body.appendChild(<App/>);
+  eventer.emit("domReady")
 })
 

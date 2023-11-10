@@ -1,3 +1,4 @@
+import { eventer } from "../event/eventer";
 import { dataMonth } from "./DataMonth";
 import React from "./React";
 import "./SmallCalendar.scss";
@@ -28,8 +29,7 @@ export default function () {
 
     // initDateArr();
 
-  document.addEventListener("DOMContentLoaded", async ()=>{
-    console.log(dataMonth.dateArr)
+    eventer.once("domReady",async ()=>{
       let eles:any[] = [];
       let index = 0;
       for(let i=0;i<6;i++){
