@@ -2,7 +2,6 @@ import React from "./React";
 import "./ViewDay.scss";
 import Job from "./Job";
 import ColorGet from "./ColorGet";
-import { ipcRenderer } from "electron";
 import { ModelJob } from "../model/ModelJob";
 export default function () {
     let colorIndex = 0;
@@ -81,6 +80,7 @@ export default function () {
         let start = now.getTime();
         now.setHours(23,59,59,999);
         let end = now.getTime();
+        let {ipcRenderer} = require("electron")
         let data:ModelJob[] = await ipcRenderer.invoke("getData","SELECT * FROM Job WHERE StartTime >= ? and EndTime <= ? order by StartTime asc",start,end)
         if(data.length < 1) return;
         let target = document.getElementById("ViewDay");
@@ -99,6 +99,7 @@ export default function () {
         let startTime = Number(targeDom.getAttribute("data-start")) 
         let endTime = Number(targeDom.getAttribute("data-end")) 
         let id = targeDom.getAttribute("id")
+        let {ipcRenderer} = require("electron")
         await ipcRenderer.invoke("updateData",sql,startTime,endTime,id)
         getData();
     }
@@ -341,7 +342,7 @@ export default function () {
         target = target.parentElement;
         alert(111)
     }   
-
+    let {ipcRenderer} = require("electron")
     ipcRenderer.on("saveToDbOk",getData)
     getData();
     window.addEventListener("keydown",moveJobByKey)

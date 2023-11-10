@@ -28,13 +28,12 @@ export default function () {
       maximizeBtn.style.display = "";
     }
   }
-  // let { ipcRenderer } = require("electron");
-  // ipcRenderer.addListener("windowStateChanged", windowStateHandler);
-  // ipcRenderer.invoke("getWindowState").then(flag=>{
-  //   windowStateHandler(null,flag?"maximize":"unmaximize");
-  // });
-  
-
+  document.addEventListener("DOMContentLoaded", async ()=>{
+    let { ipcRenderer } = require("electron");
+    ipcRenderer.addListener("windowStateChanged", windowStateHandler);
+    let flag = await ipcRenderer.invoke("getWindowState");
+    windowStateHandler(null,flag?"maximize":"unmaximize");
+  })
   return <div id="TitleBarBtns">
     <div onClick={minimize}>
       <i class="iconfont icon-minimize"></i>

@@ -1,4 +1,3 @@
-import { ipcRenderer } from 'electron';
 import { ModelJob } from './../model/ModelJob';
 class DataMonth{
     curDate:Date;
@@ -7,6 +6,7 @@ class DataMonth{
     private async initMonthData(){
         let start = new Date(this.dateArr[0].year,this.dateArr[0].month,this.dateArr[0].day,0,0,0,0).getTime();
         let end = new Date(this.dateArr[1].year,this.dateArr[1].month,this.dateArr[1].day,23,59,59,999).getTime();
+        let {ipcRenderer} = require("electron")
         this.jobArr = await ipcRenderer.invoke("getData","SELECT * FROM Job WHERE StartTime >= ? and EndTime <= ? order by StartTime asc",start,end)
     }
     private initDateArr(tarDate:Date){

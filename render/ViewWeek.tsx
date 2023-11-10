@@ -1,7 +1,6 @@
 import React from "./React";
 import "./ViewWeek.scss";
 import ColorGet from "./ColorGet";
-import { ipcRenderer } from "electron";
 import { ModelJob } from "../model/ModelJob";
 export default function () {
     let addNewJob = (e)=>{
@@ -18,6 +17,7 @@ export default function () {
         t.setHours(23,59,59,999)
         let end = t.getTime()
         let sql = `SELECT * FROM Job WHERE StartTime >= ? and EndTime <= ? order by StartTime asc`
+        let {ipcRenderer} = require("electron")
         let items:ModelJob[] = await ipcRenderer.invoke("getData",sql,start,end)
         let result:ModelJob[][] = [[],[],[],[],[],[],[]]
         let dayLastTime = new Date(start);
