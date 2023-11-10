@@ -4,34 +4,9 @@ import React from "./React";
 import "./SmallCalendar.scss";
 
 export default function () {
-
-
-    // let getDateEle = () =>{
-    //     let eles:any[] = [];
-    //     let index = 0;
-    //     for(let i=0;i<6;i++){
-    //         let row = <div class="row"></div>            
-    //         for(let j=0;j<7;j++){
-    //             let cell = <div>{dateArr[index].day}</div>
-    //             if(!dateArr[index].isCurMonth){
-    //                 cell.classList.add("notCurMonth");
-    //             }
-    //             if(dateArr[index].isCurDay){
-    //                 cell.classList.add("selected");
-    //             }
-    //             row.appendChild(cell)
-    //             index += 1;
-    //         }
-    //         eles.push(row);
-    //     }
-    //     return eles;
-    // }
-
-    // initDateArr();
-
     eventer.once("domReady",async ()=>{
-      let eles:any[] = [];
       let index = 0;
+      let target = document.getElementById("smallCalendarBox");
       for(let i=0;i<6;i++){
           let row = <div class="row"></div>            
           for(let j=0;j<7;j++){
@@ -45,9 +20,8 @@ export default function () {
               row.appendChild(cell)
               index += 1;
           }
-          eles.push(row);
+          target.append(row)
       }
-    document.getElementById("smallCalendarBox").append(eles)
   })
   return <div id="SmallCalendar">
     <div class="row header">

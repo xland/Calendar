@@ -51,6 +51,31 @@ class DataMonth{
             }
         }
     }
+    getCurWeek(){
+        let start = new Date(this.curDate.getTime());
+        start.setDate(start.getDate()-(start.getDay()-1))
+        start.setHours(0,0,0,0);
+        let end = new Date(start.getTime());
+        end.setHours(23,59,59,999)
+        let lastEnd = new Date(end.getTime());
+        lastEnd.setDate(lastEnd.getDate()+6)
+        lastEnd.setHours(23,59,59,999)
+        let result:ModelJob[][] = [[],[],[],[],[],[],[]]
+        let index = 0;
+        for(let i=0;i<this.jobArr.length;i++){
+            if(this.jobArr[i].StartTime >= start.getTime() && this.jobArr[i].EndTime <= end.getTime()){
+                result[index].push(this.jobArr[i])
+            }else if(this.jobArr[i].StartTime > end.getTime() && this.jobArr[i].EndTime < lastEnd.getTime()){
+                index+=1;
+                start.setDate(start.getDate()+1)
+                end.setDate(end.getDate()+1)
+                result[index].push(this.jobArr[i])
+            } else if(this.jobArr[i].StartTime > lastEnd.getTime()){
+                break;
+            }
+        }
+        return result
+    }
     async init(){        
         this.initDateArr(this.curDate);
         await this.initJobArr()

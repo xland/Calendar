@@ -1,3 +1,4 @@
+import { eventer } from "../event/eventer";
 import React from "./React";
 import "./TitleBarBtns.scss";
 export default function () {
@@ -28,7 +29,7 @@ export default function () {
       maximizeBtn.style.display = "";
     }
   }
-  document.addEventListener("DOMContentLoaded", async ()=>{
+  eventer.once("domReady",async ()=>{
     let { ipcRenderer } = require("electron");
     ipcRenderer.addListener("windowStateChanged", windowStateHandler);
     let flag = await ipcRenderer.invoke("getWindowState");
