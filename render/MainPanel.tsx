@@ -1,5 +1,4 @@
-import React from "jsx-dom";
-
+import React from "./React";
 import TitleBarBtns from "./TitleBarBtns";
 import "./MainPanel.scss";
 import SwitchBtns from "./SwitchBtns";

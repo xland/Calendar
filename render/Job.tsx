@@ -1,4 +1,4 @@
-import React from "jsx-dom";
+import React from "./React";
 import "./Job.scss";
 export default function (props) {
   return <div class="Job" id={props.data.Id} style={props.style} 

@@ -1,4 +1,4 @@
-import React from "jsx-dom";
+import React from "./React";
 import "./LeftPanel.scss";
 import SmallCalendar from "./SmallCalendar";
 export default function () {    

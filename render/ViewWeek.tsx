@@ -1,4 +1,4 @@
-import React, { ReactNode } from "jsx-dom";
+import React from "./React";
 import "./ViewWeek.scss";
 import ColorGet from "./ColorGet";
 import { ipcRenderer } from "electron";

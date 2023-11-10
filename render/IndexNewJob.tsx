@@ -1,4 +1,4 @@
-import React from "jsx-dom";
+import React from "./React";
 import "./IndexNewJob.scss";
 import TitleBarBtns from "./TitleBarBtns";
 import NewJobBox from "./NewJobBox";

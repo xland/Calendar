@@ -1,4 +1,4 @@
-import React from "jsx-dom";
+import React from "./React";
 import "./ViewMonth.scss";
 export default function () {
 

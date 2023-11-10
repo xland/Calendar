@@ -1,4 +1,4 @@
-import React from "jsx-dom";
+import React from "./React";
 import "./ViewDay.scss";
 import Job from "./Job";
 import ColorGet from "./ColorGet";

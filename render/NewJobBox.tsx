@@ -1,4 +1,4 @@
-import React from "jsx-dom";
+import React from "./React";
 import "./NewJobBox.scss";
 import { ModelJob } from "../model/ModelJob";
 

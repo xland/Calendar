@@ -1,4 +1,4 @@
-import React from "jsx-dom";
+import React from "./React";
 import "./SwitchBtns.scss";
 export default function () {
   let getId = (dom)=>{

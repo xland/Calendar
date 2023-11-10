@@ -1,4 +1,4 @@
-import React from "jsx-dom";
+import React from "./React";
 import "./TitleBarBtns.scss";
 export default function () {
   let minimize = async () => {
