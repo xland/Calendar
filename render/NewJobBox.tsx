@@ -2,8 +2,8 @@ import React from "jsx-dom";
 import "./NewJobBox.scss";
 import { ModelJob } from "../model/ModelJob";
 
-export class NewJobBox extends React.Component {
-  static getData(){
+export default function() {
+  let getData = ()=>{
     let year = parseInt(document.getElementById("year").innerHTML);
     let month = parseInt(document.getElementById("month").innerHTML);
     let date = parseInt(document.getElementById("date").innerHTML);
@@ -20,19 +20,15 @@ export class NewJobBox extends React.Component {
     job.JobInfo = (document.getElementById("jobInfo") as HTMLTextAreaElement).value;    
     return job;
   } 
-  constructor(){
-    super(null);
-    document.addEventListener("DOMContentLoaded", async ()=>{
-      let url = new URL(window.location.href)
-      let startTime = new Date(parseInt(url.searchParams.get("startTime")))
-      document.getElementById("year").innerHTML = startTime.getFullYear().toString();
-      document.getElementById("month").innerHTML = (startTime.getMonth()+1).toString();
-      document.getElementById("date").innerHTML = (startTime.getDate()).toString();
-      document.getElementById("hour0").innerHTML = (startTime.getHours()).toString();
-      document.getElementById("hour1").innerHTML = (startTime.getHours()+1).toString();
-    })
-  }
-  render() {
+  document.addEventListener("DOMContentLoaded", async ()=>{
+    let url = new URL(window.location.href)
+    let startTime = new Date(parseInt(url.searchParams.get("startTime")))
+    document.getElementById("year").innerHTML = startTime.getFullYear().toString();
+    document.getElementById("month").innerHTML = (startTime.getMonth()+1).toString();
+    document.getElementById("date").innerHTML = (startTime.getDate()).toString();
+    document.getElementById("hour0").innerHTML = (startTime.getHours()).toString();
+    document.getElementById("hour1").innerHTML = (startTime.getHours()+1).toString();
+  })
   return <div id="NewJobBox">
   <div class="timeBox">
     <div><span id="year"></span>年</div>
@@ -56,5 +52,4 @@ export class NewJobBox extends React.Component {
     <textarea id="jobInfo" spellCheck={false} placeholder="事件内容"></textarea>
   </div>
 </div>;
-  }
 }

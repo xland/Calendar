@@ -1,8 +1,7 @@
 import React from "jsx-dom";
 import "./LeftPanel.scss";
 import SmallCalendar from "./SmallCalendar";
-export default function () {
-    
+export default function () {    
   return <div id="LeftPanel">
     <div class="title">
         <div class="icon">

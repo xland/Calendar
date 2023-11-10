@@ -4,46 +4,28 @@ import LeftPanel from "./LeftPanel";
 import MainPanel from "./MainPanel";
 import { dataMonth } from "./DataMonth";
 import React from "./React";
-// class App extends React.Component {
-//   static ready(){
-
-//   }
-//   render(){
-//     return (
-//       <>
-//         <LeftPanel></LeftPanel>
-//         <MainPanel></MainPanel>
-//       </>
-//     );
-//   }
-// }
-
-// class App extends React.Widget {
-//   static ready(){
-
-//   }
-//   render(){
-//     return (<span>{`测试测试不错不错`}</span>);
-//   }
-//   constructor(){
-//     super()
-    
-//     document.addEventListener("DOMContentLoaded", async ()=>{
-//       console.log("aaa")
-//     })
-//   }
-// }
-
+// import React from "jsx-dom";
 let App = ()=>{
-  let click = ()=>{
-    alert(1);
-  }
-  return <div style="background:#ddd" onClick={click}>
-    <p>测试测试</p>
-    </div>
+    return <>
+        <LeftPanel></LeftPanel>
+        <MainPanel></MainPanel>
+      </>
 }
 
-document.body.appendChild(<App style="font-size:18px" />);
+// let Sub = (props)=>{
+//   return <div>测试测试!!!{props.data.abc}</div>
+// }
+
+// let App = ()=>{
+//   let click = ()=>{
+//     alert(1);
+//   }
+//   return <div data-id="123" style="background:#ddd" onClick={click}>
+//     <Sub data={{abc:123}}></Sub>
+//     </div>
+// }
+
+document.body.appendChild(<App />);
 
 document.addEventListener("DOMContentLoaded", async ()=>{
   document.body.ondragstart = () => false;

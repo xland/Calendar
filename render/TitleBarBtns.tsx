@@ -1,6 +1,6 @@
 import React from "jsx-dom";
 import "./TitleBarBtns.scss";
-export default async function () {
+export default function () {
   let minimize = async () => {
     let { ipcRenderer } = require("electron");
     await ipcRenderer.invoke("changeWindowState", "minimize");
@@ -28,10 +28,12 @@ export default async function () {
       maximizeBtn.style.display = "";
     }
   }
-  let { ipcRenderer } = require("electron");
-  ipcRenderer.addListener("windowStateChanged", windowStateHandler);
-  let flag = await ipcRenderer.invoke("getWindowState");
-  windowStateHandler(null,flag?"maximize":"unmaximize");
+  // let { ipcRenderer } = require("electron");
+  // ipcRenderer.addListener("windowStateChanged", windowStateHandler);
+  // ipcRenderer.invoke("getWindowState").then(flag=>{
+  //   windowStateHandler(null,flag?"maximize":"unmaximize");
+  // });
+  
 
   return <div id="TitleBarBtns">
     <div onClick={minimize}>

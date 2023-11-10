@@ -1,60 +1,61 @@
-//脚踏esbuild祥云，胸怀tsx利刃，身披scss羽衣，追寻前端的本真
+//脚踏esbuild祥云，胸怀tsx利刃，身披scss羽衣，追寻前端的本质
 
-let isString = (val)=>typeof val === "string"
-let isNumber = (val)=>typeof val === "number"
-let isElement = (val)=>val && typeof val.nodeType === "number"
-let isFunction = (val)=>val && typeof val === "function"
-
-let appendChild = (child: any,node: Node)=> {
-    if (Array.isArray(child)) {
-        for (const c of child) {
+let appendChild = (children: any,node: Node)=> {
+    if (Array.isArray(children)) {
+        for (const c of children) {
             appendChild(c,node)
           }
-    } else if (isString(child) || isNumber(child)) {
-        let textNode = document.createTextNode(child as any)
+    } else if (typeof children === "string" || typeof children === "number") {
+        let textNode = document.createTextNode(children as any)
         node.appendChild(textNode)
-    } else if (child === null) {
-        console.log("child null error",child)
+    } else if (children === null) {
+        console.log("child null error",children)
         //   appendChildToNode(document.createComment(""), node)
-    }
-    else if (isElement(child)) {
-        node.appendChild(child)
+    } else if (typeof children.nodeType === "number") {
+        node.appendChild(children)
       }
 }
-
 let appendAttr = (attr: object,node: HTMLElement)=>{
     if(!attr) return node;
     for (let key of Object.keys(attr)) {
         let val = attr[key];
         if(key === "style"){
             node.setAttribute("style", val)
-        }
-        if(isFunction(val)){
+        } else if(typeof val === "function"){
             if(key.startsWith("on")){
                 node.addEventListener(key.toLocaleLowerCase().substring(2), val)
             }
+        } else if(typeof val === "object"){
+            node[key] = val
+            console.log("allen",node,key)
+        }        
+        else {
+            node.setAttribute(key, val)
         }
-        console.log(key,"--", attr[key], node)
     }
     return node
 }
-
 let createElement = (tag: any, attr: any, ...children: any[]) => {
+    console.log(tag)
     if(typeof tag === "string"){
         let node = document.createElement(tag);
-        appendAttr(attr,node)
-        appendChild(children,node)
+        if(attr) appendAttr(attr,node)
+        if(children) appendChild(children,node)
         return node;
-    }
-    let obj = tag({...attr,children})
-    return obj
+    } else if(typeof tag === "function"){
+        let obj = tag({...attr,children})
+        return obj
+    }else {
+        console.log(tag,attr,children)
+    }    
 }
-
-
-
-
-
+let Fragment = (attr:any) =>{
+    const fragment = document.createDocumentFragment()
+    appendChild(attr.children, fragment)
+    return fragment
+  }
 
 export default {
-    createElement
+    createElement,
+    Fragment
 }

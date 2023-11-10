@@ -1,7 +1,7 @@
 import React from "jsx-dom";
 import "./IndexNewJob.scss";
 import TitleBarBtns from "./TitleBarBtns";
-import {NewJobBox} from "./NewJobBox";
+import NewJobBox from "./NewJobBox";
 import ColorGet from "./ColorGet";
 function App() {  
   let getStyle = (alpha = 1)=>{
@@ -11,10 +11,10 @@ function App() {
   }
   let save = async ()=>{
     let url = new URL(window.location.href);
-    let data = NewJobBox.getData();
-    data.ColorIndex = parseInt(url.searchParams.get("colorIndex"))
-    let { ipcRenderer } = require("electron");
-    await ipcRenderer.invoke("saveToDb","Job",data);
+    // let data = NewJobBox.getData();
+    // data.ColorIndex = parseInt(url.searchParams.get("colorIndex"))
+    // let { ipcRenderer } = require("electron");
+    // await ipcRenderer.invoke("saveToDb","Job",data);
   }
   return (
     <>
