@@ -12,14 +12,15 @@ export default function () {
     }
     eventer.once("domReady",()=>{
         let container = document.getElementById("ViewWeek").lastElementChild;
-        let items = dataMonth.getCurWeek();
-        for(let i=0;i<items.length;i++){
+        let index = dataMonth.getCurWeekFirstDayIndex()
+        for(let i=0;i<7;i++){
             let dayDom = <div class="column"></div>
-            for (let index = 0;index < items[i].length; index++) {
-                const jobEle = <div class="weekJob" style={`--color:${ColorGet(items[i][index].ColorIndex)}`}>{items[i][index].JobInfo}</div>;
+            dataMonth.dateArr[index].jobs.forEach(job=>{
+                let jobEle = <div class="weekJob" style={`--color:${ColorGet(job.ColorIndex)}`}>{job.JobInfo}</div>;
                 dayDom.append(jobEle);
-            }
+            })
             container.append(dayDom)
+            index +=1
         }
     })
     return <div id="ViewWeek" class="view" style="z-index:20;">

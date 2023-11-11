@@ -1,15 +1,20 @@
 import { ModelJob } from './../model/ModelJob';
 class DataMonth{
     curDate:Date;
-    jobArr:ModelJob[];
-    dateArr:{year:number,month:number,day:number,isCurMonth:boolean,isCurDay:boolean}[] = [];
+    dateArr:{year:number,month:number,day:number,isCurMonth:boolean,isCurDay:boolean,jobs:ModelJob[]}[] = [];
     private async initJobArr(){
         let startDate = this.dateArr[0];
         let endDate = this.dateArr[this.dateArr.length-1];
-        let start = new Date(startDate.year,startDate.month-1,startDate.day,0,0,0,0).getTime();
-        let end = new Date(endDate.year,endDate.month-1,endDate.day,23,59,59,999).getTime();
+        let start = new Date(startDate.year,startDate.month-1,startDate.day,0,0,0,0);
+        let end = new Date(endDate.year,endDate.month-1,endDate.day,23,59,59,999);
         let {ipcRenderer} = require("electron")
-        this.jobArr = await ipcRenderer.invoke("getData","SELECT * FROM Job WHERE StartTime >= ? and EndTime <= ? order by StartTime asc",start,end)
+        let jobArr:ModelJob[] = await ipcRenderer.invoke("getData","SELECT * FROM Job WHERE StartTime >= ? and EndTime <= ? order by StartTime asc",start.getTime(),end.getTime())
+        console.log(this.dateArr);
+        for(let i=0;i<jobArr.length;i++){
+            let jobStartDate = new Date(jobArr[i].StartTime)
+            let index = this.dateArr.findIndex(v=>v.month === jobStartDate.getMonth()+1 && v.day === jobStartDate.getDate())
+            this.dateArr[index].jobs.push(jobArr[i]);            
+        }
     }
     private initDateArr(tarDate:Date){
         let year = tarDate.getFullYear();
@@ -25,6 +30,7 @@ class DataMonth{
                 day:i,
                 isCurMonth:false,
                 isCurDay:false,
+                jobs:[]
             })
         }
         let curMonthLastDay = new Date(year,month+1,0);
@@ -35,6 +41,7 @@ class DataMonth{
                 day:i,
                 isCurMonth:true,
                 isCurDay:i === date,
+                jobs:[]
             })
         }    
         let lastDayCount = 42 - this.dateArr.length;
@@ -47,41 +54,24 @@ class DataMonth{
                     day:i,
                     isCurMonth:false,
                     isCurDay:false,
+                    jobs:[]
                 })
             }
         }
     }
-    getCurWeek(){
+    getCurWeekFirstDayIndex(){
         let start = new Date(this.curDate.getTime());
         start.setDate(start.getDate()-(start.getDay()-1))
-        start.setHours(0,0,0,0);
-        let end = new Date(start.getTime());
-        end.setHours(23,59,59,999)
-        let lastEnd = new Date(end.getTime());
-        lastEnd.setDate(lastEnd.getDate()+6)
-        lastEnd.setHours(23,59,59,999)
-        let result:ModelJob[][] = [[],[],[],[],[],[],[]]
-        let index = 0;
-        for(let i=0;i<this.jobArr.length;i++){
-            if(this.jobArr[i].StartTime >= start.getTime() && this.jobArr[i].EndTime <= end.getTime()){
-                result[index].push(this.jobArr[i])
-            }else if(this.jobArr[i].StartTime > end.getTime() && this.jobArr[i].EndTime < lastEnd.getTime()){
-                index+=1;
-                start.setDate(start.getDate()+1)
-                end.setDate(end.getDate()+1)
-                result[index].push(this.jobArr[i])
-            } else if(this.jobArr[i].StartTime > lastEnd.getTime()){
-                break;
-            }
-        }
-        return result
+        let index = this.dateArr.findIndex(v=>v.month === start.getMonth()+1 && v.day === start.getDate())
+        return index;
     }
-    async init(){        
+    async init(){     
+        this.curDate = new Date()  
         this.initDateArr(this.curDate);
         await this.initJobArr()
     }
     constructor(){
-        this.curDate = new Date()
+        
     }
 }
 
