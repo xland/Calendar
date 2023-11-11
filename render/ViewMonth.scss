@@ -21,6 +21,7 @@
         .row{
             flex: 1;
             border-top: 1px solid #888;
+            overflow: hidden;
             &>div{
                 border-right: 1px solid #e6e6e6;
                 &:last-child{
@@ -33,6 +34,17 @@
                 line-height: 26px;
                 background: #f3f3f3;
                 text-align: center;
+            }
+            .cellItem{
+                line-height: 22px;
+                height: 22px;
+                padding-left: 4px;
+                padding-right: 4px;
+                text-align: center;
+                cursor: pointer;
+                &:hover{
+                    background: #fde9eb;
+                }
             }
             .notCurMonth{
                 .cellHeader{

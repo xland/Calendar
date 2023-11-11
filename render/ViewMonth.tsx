@@ -9,13 +9,17 @@ export default function () {
         for(let i=0;i<6;i++){
             let row = <div class="row"></div>            
             for(let j=0;j<7;j++){
-                let cell = <div><div class="cellHeader">{dataMonth.dateArr[index].day}</div></div>
-                if(!dataMonth.dateArr[index].isCurMonth){
+                let dayObj = dataMonth.dateArr[index];
+                let cell = <div><div class="cellHeader">{dayObj.day}</div></div>
+                if(!dayObj.isCurMonth){
                     cell.classList.add("notCurMonth");
                 }
-                if(dataMonth.dateArr[index].isCurDay){
+                if(dayObj.isCurDay){
                     cell.classList.add("selected");
                 }
+                dayObj.jobs.forEach(job=>{
+                    cell.appendChild(<div class="cellItem">{job.JobInfo}</div>)
+                })
                 row.appendChild(cell)
                 index += 1;
             }

@@ -9,7 +9,6 @@ class DataMonth{
         let end = new Date(endDate.year,endDate.month-1,endDate.day,23,59,59,999);
         let {ipcRenderer} = require("electron")
         let jobArr:ModelJob[] = await ipcRenderer.invoke("getData","SELECT * FROM Job WHERE StartTime >= ? and EndTime <= ? order by StartTime asc",start.getTime(),end.getTime())
-        console.log(this.dateArr);
         for(let i=0;i<jobArr.length;i++){
             let jobStartDate = new Date(jobArr[i].StartTime)
             let index = this.dateArr.findIndex(v=>v.month === jobStartDate.getMonth()+1 && v.day === jobStartDate.getDate())
