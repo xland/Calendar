@@ -17,9 +17,11 @@ export default function () {
                 if(dayObj.isCurDay){
                     cell.classList.add("selected");
                 }
+                let cellContent = <div class="cellContent"></div>
                 dayObj.jobs.forEach(job=>{
-                    cell.appendChild(<div class="cellItem">{job.JobInfo}</div>)
+                    cellContent.appendChild(<div class="cellItem">{job.JobInfo}</div>)
                 })
+                cell.appendChild(cellContent)
                 row.appendChild(cell)
                 index += 1;
             }
