@@ -50,7 +50,13 @@
                 .cellHeader{
                     color: #ccc !important;
                     background: #f8f8f8 !important;
-                }                
+                }
+                .cellItem{
+                    color: #bbb !important;
+                    &:hover{
+                        color: #333 !important;
+                    }
+                }
             }
         }
     }
