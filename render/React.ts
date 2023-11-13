@@ -37,7 +37,6 @@ let createElement = (tag: any, attr: any, ...children: any[]) => {
         return node;
     } else if(typeof tag === "function"){
         let obj = tag({...attr,children})
-        console.log(obj)
         return obj
     }else {
         // console.log(tag,attr,children)

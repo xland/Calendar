@@ -65,8 +65,8 @@ export default function () {
         let leftNum = 60+sameLineJobIndex*itemWidth+sameLineJobIndex*6
         let topNum = (tar.StartTime - start)*100/(end - start)
         let bottomNum = (end - tar.EndTime)*100/(end - start)
-        let styleObj = {top:`${topNum}%`,bottom:`${bottomNum}%`,left:leftNum,width:itemWidth,'--color':ColorGet(tar.ColorIndex)};
-        return <Job data={tar} style={styleObj}></Job>
+        let style = `top:${topNum}%;bottom:${bottomNum}%;left:${leftNum}px;width:${itemWidth}px;--color:${ColorGet(tar.ColorIndex)};`;
+        return <Job data={tar} style={style}></Job>
     }
     let getData = async ()=>{
         let now = new Date(dataMonth.curDate.getTime());
