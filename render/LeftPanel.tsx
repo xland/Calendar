@@ -1,6 +1,7 @@
 import React from "./React";
 import "./LeftPanel.scss";
 import SmallCalendar from "./SmallCalendar";
+import RecentJob from "./RecentJob";
 export default function () {    
   return <div id="LeftPanel">
     <div class="title">
@@ -12,5 +13,6 @@ export default function () {
         </div>        
     </div>
     <SmallCalendar></SmallCalendar>
+    <RecentJob></RecentJob>
   </div>;
 }
