@@ -1,3 +1,4 @@
+import { eventer } from '../event/eventer';
 import { ModelJob } from './../model/ModelJob';
 class DataMonth{
     curDate:Date;
@@ -14,6 +15,7 @@ class DataMonth{
             let index = this.dateArr.findIndex(v=>v.month === jobStartDate.getMonth()+1 && v.day === jobStartDate.getDate())
             this.dateArr[index].jobs.push(jobArr[i]);            
         }
+        eventer.emit("dataReady")
     }
     private initDateArr(tarDate:Date){
         let year = tarDate.getFullYear();
@@ -64,10 +66,16 @@ class DataMonth{
         let index = this.dateArr.findIndex(v=>v.month === start.getMonth()+1 && v.day === start.getDate())
         return index;
     }
+    getCurDateIndex(){
+        let index = dataMonth.dateArr.findIndex(v=>v.month === this.curDate.getMonth()+1 && v.day === this.curDate.getDate())
+        return index;
+    }
     async init(){     
         this.curDate = new Date()  
         this.initDateArr(this.curDate);
         await this.initJobArr()
+        let {ipcRenderer} = require("electron")
+        ipcRenderer.on("saveToDbOk",()=>{this.initJobArr()})
     }
     constructor(){
         

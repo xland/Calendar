@@ -8,6 +8,8 @@ let appendChild = (children: any,node: Node)=> {
     } else if (typeof children === "string" || typeof children === "number") {
         let textNode = document.createTextNode(children as any)
         node.appendChild(textNode)
+    } else if(!children){
+        node.appendChild(document.createComment(""))
     } else if (typeof children.nodeType === "number") {
         node.appendChild(children)
     }

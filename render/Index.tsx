@@ -29,8 +29,7 @@ document.addEventListener("DOMContentLoaded", async ()=>{
   document.body.ondragstart = () => false;
   document.body.ondragend = () => false;
   document.body.ondrop = () => false; 
-  await dataMonth.init();
   document.body.appendChild(<App/>);
-  eventer.emit("domReady")
+  dataMonth.init();
 })
 

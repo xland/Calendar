@@ -3,6 +3,8 @@ import "./ViewDay.scss";
 import Job from "./Job";
 import ColorGet from "./ColorGet";
 import { ModelJob } from "../model/ModelJob";
+import { eventer } from "../event/eventer";
+import { dataMonth } from "./DataMonth";
 export default function () {
     let colorIndex = 0;
     let addNewJob = (target:HTMLElement)=>{
@@ -31,14 +33,6 @@ export default function () {
         let target = e.target as HTMLElement;
         if(target.classList.contains("hourTag")) target = target.parentElement;
         target.style.background = ``
-    }
-    let getBgLineEles = ()=>{
-        let bgLines:any[] = [];
-        for(let i =0;i<24;i++){
-            let ele = <div class="bgLine" onMouseOver={bgLineMouseOver} onMouseOut={bgLineMouseOut}><div class="hourTag">{`${i}:00`}</div></div>
-            bgLines.push(ele)
-        }
-        return bgLines;
     }
     let styleItem = (index:number,data:ModelJob[],useableWidth:number,start:number,end:number)=>{
         let tar = data[index]
@@ -75,17 +69,15 @@ export default function () {
         return <Job data={tar} style={styleObj}></Job>
     }
     let getData = async ()=>{
-        let now = new Date();
+        let now = new Date(dataMonth.curDate.getTime());
         now.setHours(0,0,0,0);
         let start = now.getTime();
         now.setHours(23,59,59,999);
         let end = now.getTime();
-        let {ipcRenderer} = require("electron")
-        let data:ModelJob[] = await ipcRenderer.invoke("getData","SELECT * FROM Job WHERE StartTime >= ? and EndTime <= ? order by StartTime asc",start,end)
-        if(data.length < 1) return;
         let target = document.getElementById("ViewDay");
         target.querySelectorAll(".Job").forEach(e=>e.remove())
-        let useableWidth = target.clientWidth - 90;        
+        let useableWidth = target.clientWidth - 90; 
+        let data = dataMonth.dateArr[dataMonth.getCurDateIndex()].jobs
         for(let i=0;i<data.length;i++){
             let ele = styleItem(i,data,useableWidth,start,end)
             target.append(ele)
@@ -341,14 +333,16 @@ export default function () {
         }
         target = target.parentElement;
         alert(111)
-    }   
-    let {ipcRenderer} = require("electron")
-    ipcRenderer.on("saveToDbOk",getData)
-    getData();
-    window.addEventListener("keydown",moveJobByKey)
-    window.addEventListener("keyup",onKeyUp)
+    } 
+    eventer.on("dataReady",()=>{
+        window.addEventListener("keydown",moveJobByKey)
+        window.addEventListener("keyup",onKeyUp)
+        getData();
+    })
 
-  return <div id="ViewDay"  class="view" onDoubleClick={onDoubleClick} onMouseOver={onMouseOver} onMouseOut={onMouseOut} onMouseDown={onMouseDown}>
-    {getBgLineEles()}
+  return <div id="ViewDay" style="z-index:20;" class="view" onDoubleClick={onDoubleClick} onMouseOver={onMouseOver} onMouseOut={onMouseOut} onMouseDown={onMouseDown}>
+        {[...Array(24)].forEach((v,i)=>{
+            return <div class="bgLine" onMouseOver={bgLineMouseOver} onMouseOut={bgLineMouseOut}><div class="hourTag">{`${i}:00`}</div></div>
+        })}
     </div>;
 }

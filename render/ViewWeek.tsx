@@ -10,7 +10,7 @@ export default function () {
         if(!target.classList.contains("column")) return;
         window.open(`/IndexNewJob.html?colorIndex=${colorIndex}&startTime=${startTime.getTime()}`,'_blank',JSON.stringify(config));
     }
-    eventer.once("domReady",()=>{
+    eventer.on("dataReady",()=>{
         let container = document.getElementById("ViewWeek").lastElementChild;
         let index = dataMonth.getCurWeekFirstDayIndex()
         for(let i=0;i<7;i++){
@@ -23,7 +23,7 @@ export default function () {
             index +=1
         }
     })
-    return <div id="ViewWeek" class="view" style="z-index:20;">
+    return <div id="ViewWeek" class="view">
         <div class="weekHeader">
             <div class="column">一</div>
             <div class="column">二</div>

@@ -24,8 +24,8 @@ export default function () {
 
   return <div id="SwitchBtns">
     <div class="btns navigateBtns" onClick={switchBtnClick}>
-        <div>日</div>
-        <div class="selected">周</div>
+        <div class="selected">日</div>
+        <div>周</div>
         <div>月</div>
     </div>
     <div class="btns dayBtns">

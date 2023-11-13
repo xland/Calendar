@@ -3,7 +3,7 @@ import { dataMonth } from "./DataMonth";
 import React from "./React";
 import "./ViewMonth.scss";
 export default function () {
-    eventer.once("domReady",()=>{
+    eventer.on("dataReady",()=>{
         let container = document.getElementById("ViewMonth").lastElementChild;
         let index = 0;
         for(let i=0;i<6;i++){
