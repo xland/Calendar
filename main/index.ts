@@ -55,6 +55,11 @@ let winOpenHandler = (e:HandlerDetails)=>{
     let config = JSON.parse(e.features)
     let overrideBrowserWindowOptions = getWinOptions()
     Object.assign(overrideBrowserWindowOptions,config.winConfig);
+    if(win){
+        config.winConfig.modal = true
+        config.winConfig.parent = win
+    }
+    console.log(config.winConfig)
     return {
         action: 'allow', 
         outlivesOpener: false, 
@@ -72,11 +77,14 @@ let creatreWindow = async ()=>{
     await win.loadURL(process.argv[2]);
     win.show();
 }
-let winCreatedHandler = (e,win:BrowserWindow)=>{
+let winCreatedHandler = (e,target:BrowserWindow)=>{
     // @ts-ignore
-    win.webContents.setWindowOpenHandler(winOpenHandler);
-    win.webContents.openDevTools({mode:"undocked"});
-    initListener(win)
+    target.webContents.setWindowOpenHandler(winOpenHandler);
+    target.webContents.openDevTools({mode:"undocked"});
+    initListener(target)
+    if(target != win){
+        target.setParentWindow(win);
+    }
 }
 let init = async ()=>{
     initDb();

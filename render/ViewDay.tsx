@@ -19,7 +19,7 @@ export default function () {
         let startTime = new Date();
         startTime.setHours(hour);
         let config ={
-            winConfig:{width:400,height:300,title:"增加日程",minHeight:280,minWidth:380},
+            winConfig:{width:400,height:300,title:"增加日程",minHeight:280,minWidth:380,modal:true},
             extraConfig:{}
         }
         window.open(`/IndexNewJob.html?colorIndex=${colorIndex}&startTime=${startTime.getTime()}`,'_blank',JSON.stringify(config));

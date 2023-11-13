@@ -4,7 +4,7 @@ import TitleBarBtns from "./TitleBarBtns";
 import IndexJobBox from "./IndexJobBox";
 import ColorGet from "./ColorGet";
 import { ModelJob } from "../model/ModelJob";
-
+import { eventer } from "../event/eventer";
 function App() {  
   let getStyle = (alpha = 1)=>{
     let url = new URL(window.location.href);
@@ -13,13 +13,14 @@ function App() {
   }
 
   let getData = ()=>{
-    let year = parseInt(document.getElementById("year").innerHTML);
-    let month = parseInt(document.getElementById("month").innerHTML);
-    let date = parseInt(document.getElementById("date").innerHTML);
-    let hour0 = parseInt(document.getElementById("hour0").innerHTML);
-    let minute0 = parseInt(document.getElementById("minute0").innerHTML);
-    let hour1 = parseInt(document.getElementById("hour1").innerHTML);
-    let minute1 = parseInt(document.getElementById("minute1").innerHTML);
+    let timeBox = document.getElementById("IndexJobBox").firstElementChild;
+    let year = parseInt(timeBox.querySelector("#year").innerHTML);
+    let month = parseInt(timeBox.querySelector("#month").innerHTML);
+    let date = parseInt(timeBox.querySelector("#date").innerHTML);
+    let hour0 = parseInt(timeBox.querySelector("#hour0").innerHTML);
+    let minute0 = parseInt(timeBox.querySelector("#minute0").innerHTML);
+    let hour1 = parseInt(timeBox.querySelector("#hour1").innerHTML);
+    let minute1 = parseInt(timeBox.querySelector("#minute1").innerHTML);
     let job = new ModelJob();
     job.StartTime = new Date(year,month-1,date,hour0,minute0,0,0).getTime();
     job.EndTime = new Date(year,month-1,date,hour1,minute1,0,0).getTime();
@@ -27,7 +28,7 @@ function App() {
     job.AlertBefore = parseInt((document.getElementById("alertBefore") as HTMLInputElement).value);
     job.JobInfo = (document.getElementById("jobInfo") as HTMLTextAreaElement).value;    
     return job;
-  } 
+  }
 
   let save = async ()=>{
     let url = new URL(window.location.href);
@@ -36,8 +37,7 @@ function App() {
     let { ipcRenderer } = require("electron");
     await ipcRenderer.invoke("saveToDb","Job",data);
   }
-  return (
-    <>
+  return <>
       <div class="titleBar" style={getStyle(0.1)}>
         <div class="title">增加日程</div>
         <TitleBarBtns></TitleBarBtns>
@@ -54,6 +54,19 @@ function App() {
              >保存</div>
       </div>
     </>
-  );
 }
-document.body.appendChild(<App />);
+
+document.addEventListener("DOMContentLoaded", async ()=>{
+  let url = new URL(window.location.href);
+  let editId = url.searchParams.get("editId")
+  let job:ModelJob;
+  if(editId){
+    let {ipcRenderer} = require("electron")
+    job = await ipcRenderer.invoke("getOneData",editId);
+  }else{
+    job = new ModelJob();
+    job.ColorIndex = parseInt(url.searchParams.get("colorIndex"))
+  }
+  document.body.appendChild(<App/>);
+  eventer.emit("dataReady",job)
+})

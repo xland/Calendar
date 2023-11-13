@@ -10,7 +10,7 @@ let App = ()=>{
 
 
 
-document.addEventListener("DOMContentLoaded", async ()=>{
+document.addEventListener("DOMContentLoaded", ()=>{
   document.body.ondragstart = () => false;
   document.body.ondragend = () => false;
   document.body.ondrop = () => false; 
