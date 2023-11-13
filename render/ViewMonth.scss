@@ -22,10 +22,13 @@
             flex: 1;
             border-top: 1px solid #888;
             overflow: hidden;
+            display: flex;
             &>div{
                 border-right: 1px solid #e6e6e6;
                 height: 100%;
+                flex: 1;
                 display: flex;
+                overflow: hidden;
                 flex-direction: column;
                 &:last-child{
                     border-right: none !important;
@@ -35,9 +38,10 @@
                 color: #666;
                 height: 22px;
                 line-height: 22px;
-                background: #f3f3f3;
+                background: #f0f0f0;
                 text-align: center;
                 font-size: 10px;
+                cursor: pointer;
             }
             .cellContent{
                 flex: 1;
