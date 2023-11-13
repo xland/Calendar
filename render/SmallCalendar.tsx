@@ -4,7 +4,7 @@ import React from "./React";
 import "./SmallCalendar.scss";
 
 export default function () {
-    eventer.once("domReady",async ()=>{
+    eventer.once("dataReady",async ()=>{
       let index = 0;
       let target = document.getElementById("smallCalendarBox");
       for(let i=0;i<6;i++){

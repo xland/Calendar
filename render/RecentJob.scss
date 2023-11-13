@@ -6,7 +6,7 @@
     flex-direction: column;
     #searchBox{
         display:  flex;
-        line-height: 26px;
+        line-height: 28px;
         border-radius: 3px;
         overflow: hidden;
         input{
@@ -16,17 +16,22 @@
             padding: 0px;
             border: none;
             outline: none;
-            height: 26px;
-            padding-left: 4px;
-            padding-right: 4px;
+            height: 28px;
+            padding-left: 6px;
+            padding-right: 6px;
             color: #f02c38;
+            background: #f02c3811;
+            font-size: 12px;
+            &:focus{
+                background: #fff;
+            }
         }
         .searchBtn{
             width: 32px;
-            height: 26px;
+            height: 28px;
             text-align: center;
             cursor: pointer;
-            background: #f02c3822;
+            background: #f02c3811;
             i{
                 font-size: 14px;
                 color: #f02c38;

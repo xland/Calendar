@@ -1,18 +1,18 @@
 import React from "./React";
-import "./NewJobBox.scss";
+import "./IndexJobBox.scss";
 
 export default function() {
   document.addEventListener("DOMContentLoaded", async ()=>{
     let url = new URL(window.location.href)
     let startTime = new Date(parseInt(url.searchParams.get("startTime")))
-    let timeBox = document.getElementById("NewJobBox").firstElementChild;
+    let timeBox = document.getElementById("IndexJobBox").firstElementChild;
     timeBox.querySelector("#year").innerHTML = startTime.getFullYear().toString();
     timeBox.querySelector("#month").innerHTML = (startTime.getMonth()+1).toString();
     timeBox.querySelector("#date").innerHTML = (startTime.getDate()).toString();
     timeBox.querySelector("#hour0").innerHTML = (startTime.getHours()).toString();
     timeBox.querySelector("#hour1").innerHTML = (startTime.getHours()+1).toString();
   })
-  return <div id="NewJobBox">
+  return <div id="IndexJobBox">
   <div class="timeBox">
     <div><span id="year"></span>年</div>
     <div><span id="month"></span>月</div>

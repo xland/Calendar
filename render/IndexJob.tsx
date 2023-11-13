@@ -1,7 +1,7 @@
 import React from "./React";
-import "./IndexNewJob.scss";
+import "./IndexJob.scss";
 import TitleBarBtns from "./TitleBarBtns";
-import NewJobBox from "./NewJobBox";
+import IndexJobBox from "./IndexJobBox";
 import ColorGet from "./ColorGet";
 import { ModelJob } from "../model/ModelJob";
 
@@ -42,7 +42,7 @@ function App() {
         <div class="title">增加日程</div>
         <TitleBarBtns></TitleBarBtns>
       </div>
-      <NewJobBox></NewJobBox>
+      <IndexJobBox></IndexJobBox>
       <div class="btnBox">
         <div class="btnSave" 
              style={`${getStyle()}color:#fff`} 
