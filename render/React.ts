@@ -3,13 +3,11 @@
 let appendChild = (children: any,node: Node)=> {
     if (Array.isArray(children)) {
         for (const child of children) {
-            appendChild(child,node)
+            if(child) appendChild(child,node)
         }
     } else if (typeof children === "string" || typeof children === "number") {
         let textNode = document.createTextNode(children as any)
         node.appendChild(textNode)
-    } else if(!children){
-        node.appendChild(document.createComment(""))
     } else if (typeof children.nodeType === "number") {
         node.appendChild(children)
     }
@@ -39,6 +37,7 @@ let createElement = (tag: any, attr: any, ...children: any[]) => {
         return node;
     } else if(typeof tag === "function"){
         let obj = tag({...attr,children})
+        console.log(obj)
         return obj
     }else {
         // console.log(tag,attr,children)
