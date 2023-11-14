@@ -7,9 +7,6 @@ import React from "./React";
 let App = ()=>{
     return <><LeftPanel/><MainPanel/></>
 }
-
-
-
 document.addEventListener("DOMContentLoaded", ()=>{
   document.body.ondragstart = () => false;
   document.body.ondragend = () => false;
@@ -17,4 +14,11 @@ document.addEventListener("DOMContentLoaded", ()=>{
   document.body.appendChild(<App/>);
   dataMonth.init();
 })
+
+// let App = ()=>{
+//   return <p>
+//             { [...Array(2)].map((v,i)=><div>abc</div>) }
+//     </p>
+// }
+// document.body.appendChild(<App/>);
 
