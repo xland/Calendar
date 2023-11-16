@@ -8,15 +8,9 @@ import SettingSkin from "./SettingSkin";
 
 
 export default function () {  
-    let bottomBtnClick = (id:string)=>{
-        document.querySelectorAll(".drawerDom").forEach(v=>{
-            (v as HTMLElement).style.display = "none"
-        })
-        let target = document.getElementById(id);
-        target.style.display = target.style.display === "none"?"block":"none"
-    }
     let closeDrawerBtnClick = ()=>{
-
+        let drawer = document.getElementById("SettingDrawer")
+        drawer.style.display = "none"
     }
     let settingBtnClick = (e)=>{
         let target = e.target as HTMLElement
@@ -24,9 +18,19 @@ export default function () {
             target = target.parentElement
         }
         let drawer = document.getElementById("SettingDrawer")
-        drawer.firstElementChild.firstElementChild.innerHTML = target.title;        
+        drawer.firstElementChild.firstElementChild.innerHTML = target.title;  
+        let contentBox = drawer.lastElementChild;
+        contentBox.innerHTML = ""      
         if(target.title === "设置"){
-            drawer.appendChild(<SettingDefault></SettingDefault>)
+            contentBox.appendChild(<SettingDefault></SettingDefault>)
+        }else if(target.title === "皮肤"){
+            contentBox.appendChild(<SettingSkin></SettingSkin>)
+        }else if(target.title === "番茄钟"){
+            contentBox.appendChild(<SettingTomato></SettingTomato>)
+        }else if(target.title === "语言"){
+            contentBox.appendChild(<SettingLang></SettingLang>)
+        }else if(target.title === "捐赠（微信）"){
+            contentBox.appendChild(<SettingDonate></SettingDonate>)
         }
         drawer.style.display = "block"
     }
@@ -53,6 +57,9 @@ export default function () {
             <div onClick={closeDrawerBtnClick}>
                 <i class="iconfont icon-close"></i>
             </div>
+        </div>
+        <div class="drawerContent">
+
         </div>
     </div>
     </>
