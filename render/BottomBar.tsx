@@ -17,7 +17,18 @@ export default function () {
         if(target.tagName === "I"){
             target = target.parentElement
         }
+        let prevSelectedDom = document.querySelector(".bottomBtnSelected") as HTMLElement
+        if(prevSelectedDom){
+            prevSelectedDom.classList.remove("bottomBtnSelected")
+        }
         let drawer = document.getElementById("SettingDrawer")
+        if(drawer.style.display === "block"){
+            if(drawer.firstElementChild.firstElementChild.innerHTML === target.title){
+                drawer.style.display = "none"
+                return
+            }
+        }
+        target.classList.add("bottomBtnSelected")
         drawer.firstElementChild.firstElementChild.innerHTML = target.title;  
         let contentBox = drawer.lastElementChild;
         contentBox.innerHTML = ""      
