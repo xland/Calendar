@@ -2,6 +2,8 @@
     width: 300px;
     background: #fde9eb;
     height: 100%;
+    display: flex;
+    flex-direction: column;
     .title{
         height: 32px;
         line-height: 32px;
