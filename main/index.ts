@@ -17,6 +17,7 @@ let initHook = ()=>{
         win.webContents.send("saveToDbOk")
         let subWin = BrowserWindow.fromWebContents(e.sender) as BrowserWindow;
         subWin.close();
+        win.show();
     })
     ipcMain.handle("getData",(e,sql:string,...params)=>{
         return db.getData(sql,...params);
@@ -55,11 +56,10 @@ let winOpenHandler = (e:HandlerDetails)=>{
     let config = JSON.parse(e.features)
     let overrideBrowserWindowOptions = getWinOptions()
     Object.assign(overrideBrowserWindowOptions,config.winConfig);
-    if(win){
-        config.winConfig.modal = true
+    if(win){        
+        config.winConfig.modal = true;
         config.winConfig.parent = win
     }
-    console.log(config.winConfig)
     return {
         action: 'allow', 
         outlivesOpener: false, 
@@ -83,7 +83,9 @@ let winCreatedHandler = (e,target:BrowserWindow)=>{
     target.webContents.openDevTools({mode:"undocked"});
     initListener(target)
     if(target != win){
-        target.setParentWindow(win);
+        target.once("close",()=>{
+            win.webContents.send("modalWindowClosed")
+        })
     }
 }
 let init = async ()=>{

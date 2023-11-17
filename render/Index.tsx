@@ -3,9 +3,10 @@ import LeftPanel from "./LeftPanel";
 import MainPanel from "./MainPanel";
 import { dataMonth } from "./DataMonth";
 import React from "./React";
+import ModalMask from "./ModalMask";
 // import React from "jsx-dom";
 let App = ()=>{
-    return <><LeftPanel/><MainPanel/></>
+    return <><LeftPanel/><MainPanel/><ModalMask/></>
 }
 document.addEventListener("DOMContentLoaded", ()=>{
   document.body.ondragstart = () => false;

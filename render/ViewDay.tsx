@@ -23,6 +23,7 @@ export default function () {
             extraConfig:{}
         }
         window.open(`/IndexNewJob.html?colorIndex=${colorIndex}&startTime=${startTime.getTime()}`,'_blank',JSON.stringify(config));
+        document.getElementById("ModalMask").style.display="block"
     }
     let bgLineMouseOver = (e)=>{
         let target = e.target as HTMLElement;
@@ -82,7 +83,9 @@ export default function () {
             let ele = styleItem(i,data,useableWidth,start,end)
             target.append(ele)
         }
-        colorIndex = data[data.length-1].ColorIndex + 1;
+        if(data.length){
+            colorIndex = data[data.length-1].ColorIndex + 1;
+        }        
         if(colorIndex > 5) colorIndex = 0;
     }
     
