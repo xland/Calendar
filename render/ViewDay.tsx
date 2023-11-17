@@ -61,10 +61,14 @@ export default function () {
     }
     
     let updateItem = async (targeDom:HTMLElement)=>{
-        let sql = `Update Job set StartTime = ? ,EndTime = ? where id = ?`
+        let Id = targeDom.getAttribute("id")
         let StartTime = Number(targeDom.getAttribute("data-start")) 
         let EndTime = Number(targeDom.getAttribute("data-end")) 
-        let Id = targeDom.getAttribute("id")
+        let job = dataMonth.getJobById(Id)
+        if(job.StartTime === StartTime && job.EndTime === EndTime){
+            return;
+        }
+        let sql = `Update Job set StartTime = ? ,EndTime = ? where id = ?`
         let {ipcRenderer} = require("electron")
         await ipcRenderer.invoke("updateData",sql,StartTime,EndTime,Id)
         await dataMonth.initJobArr();

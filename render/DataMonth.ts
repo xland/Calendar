@@ -71,6 +71,15 @@ class DataMonth{
         let index = this.dateArr.findIndex(v=>v.month === this.curDate.getMonth()+1 && v.day === this.curDate.getDate())
         return index;
     }
+    getJobById(Id:string){
+        for(let i=0;i<this.dateArr.length;i++){
+            for(let j=0;j<this.dateArr[i].jobs.length;j++){
+                if(this.dateArr[i].jobs[j].Id === Id){
+                    return this.dateArr[i].jobs[j]
+                }
+            }
+        }
+    }
     async init(){     
         this.curDate = new Date()  
         this.initDateArr(this.curDate);
