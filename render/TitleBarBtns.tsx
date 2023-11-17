@@ -1,4 +1,4 @@
-import { eventer } from "../event/eventer";
+import { eventer } from "../common/eventer";
 import React from "./React";
 import "./TitleBarBtns.scss";
 export default function () {

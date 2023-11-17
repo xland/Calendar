@@ -2,9 +2,10 @@ import React from "./React";
 import "./ViewDay.scss";
 import Job from "./Job";
 import ColorGet from "./ColorGet";
-import { ModelJob } from "../model/ModelJob";
-import { eventer } from "../event/eventer";
+import { eventer } from "../common/eventer";
 import { dataMonth } from "./DataMonth";
+import debounce from "../common/debounce";
+
 export default function () {
     let colorIndex = 0;
     let addNewJob = (target:HTMLElement)=>{
@@ -299,11 +300,15 @@ export default function () {
             }
         }         
     } 
-    let onKeyUp = ()=>{
-        let job = document.querySelector("[data-editing]") as HTMLElement
-        if(!job) return;
+    let onKeyUpUpdate = debounce(1600,(job:HTMLElement)=>{
         job.removeAttribute("data-editing")
         updateItem(job)
+    },{atBegin: false});
+
+    let onKeyUp = ()=>{
+        let job = document.querySelector("[data-editing]") as HTMLElement
+        if(!job) return;       
+        onKeyUpUpdate(job);
     }
     let onDoubleClick = (e)=>{
         let target = e.target as HTMLElement;

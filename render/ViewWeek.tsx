@@ -2,7 +2,7 @@ import React from "./React";
 import "./ViewWeek.scss";
 import ColorGet from "./ColorGet";
 import { ModelJob } from "../model/ModelJob";
-import { eventer } from "../event/eventer";
+import { eventer } from "../common/eventer";
 import { dataMonth } from "./DataMonth";
 export default function () {
     let addNewJob = (e)=>{

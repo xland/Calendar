@@ -4,7 +4,7 @@ import TitleBarBtns from "./TitleBarBtns";
 import IndexJobBox from "./IndexJobBox";
 import ColorGet from "./ColorGet";
 import { ModelJob } from "../model/ModelJob";
-import { eventer } from "../event/eventer";
+import { eventer } from "../common/eventer";
 function App() {  
   let getStyle = (alpha = 1)=>{
     let url = new URL(window.location.href);
