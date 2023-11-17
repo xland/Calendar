@@ -35,40 +35,6 @@ export default function () {
         if(target.classList.contains("hourTag")) target = target.parentElement;
         target.style.background = ``
     }
-    let styleItem = (index:number,data:ModelJob[],useableWidth:number,start:number,end:number)=>{
-        let tar = data[index]
-        let sameLineJobNum = 1;
-        let sameLineJobIndex = 0;
-        for(let i=0;i<data.length;i++){
-            if(i === index) continue;
-            if(tar.StartTime < data[i].StartTime && tar.EndTime > data[i].StartTime){
-                sameLineJobNum+=1
-                if(i < index) sameLineJobIndex+=1;
-                continue;
-            }
-            if(tar.StartTime < data[i].EndTime && tar.EndTime > data[i].EndTime){
-                sameLineJobNum += 1
-                if(i < index) sameLineJobIndex+=1;
-                continue
-            }
-            if(tar.StartTime === data[i].StartTime && tar.EndTime === data[i].EndTime){
-                sameLineJobNum += 1
-                if(i < index) sameLineJobIndex+=1;
-                continue
-            }
-            if(tar.StartTime > data[i].StartTime && tar.EndTime < data[i].EndTime){
-                sameLineJobNum += 1
-                if(i < index) sameLineJobIndex+=1;
-                continue
-            }
-        }
-        let itemWidth = useableWidth / sameLineJobNum - 6; 
-        let leftNum = 60+sameLineJobIndex*itemWidth+sameLineJobIndex*6
-        let topNum = (tar.StartTime - start)*100/(end - start)
-        let bottomNum = (end - tar.EndTime)*100/(end - start)
-        let style = `top:${topNum}%;bottom:${bottomNum}%;left:${leftNum}px;width:${itemWidth}px;--color:${ColorGet(tar.ColorIndex)};`;
-        return <Job data={tar} style={style}></Job>
-    }
     let getData = async ()=>{
         let now = new Date(dataMonth.curDate.getTime());
         now.setHours(0,0,0,0);
@@ -80,8 +46,13 @@ export default function () {
         let useableWidth = target.clientWidth - 90; 
         let data = dataMonth.dateArr[dataMonth.getCurDateIndex()].jobs
         for(let i=0;i<data.length;i++){
-            let ele = styleItem(i,data,useableWidth,start,end)
-            target.append(ele)
+            let tar = data[i]
+            let itemWidth = useableWidth - data.length* 36 + (i+1)*36
+            let leftNum = 60
+            let topNum = (tar.StartTime - start)*100/(end - start)
+            let bottomNum = (end - tar.EndTime)*100/(end - start)
+            let style = `top:${topNum}%;bottom:${bottomNum}%;left:${leftNum}px;width:${itemWidth}px;--color:${ColorGet(tar.ColorIndex)};`;
+            target.append(<Job data={tar} style={style}></Job>)
         }
         if(data.length){
             colorIndex = data[data.length-1].ColorIndex + 1;
@@ -96,7 +67,7 @@ export default function () {
         let Id = targeDom.getAttribute("id")
         let {ipcRenderer} = require("electron")
         await ipcRenderer.invoke("updateData",sql,StartTime,EndTime,Id)
-        dataMonth.updateJob({Id,StartTime,EndTime})
+        await dataMonth.initJobArr();
         getData();
     }
     let setJobTime = (target:HTMLElement)=>{

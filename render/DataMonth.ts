@@ -3,7 +3,7 @@ import { ModelJob } from './../model/ModelJob';
 class DataMonth{
     curDate:Date;
     dateArr:{year:number,month:number,day:number,isCurMonth:boolean,isCurDay:boolean,jobs:ModelJob[]}[] = [];
-    private async initJobArr(){
+    async initJobArr(){
         let startDate = this.dateArr[0];
         let endDate = this.dateArr[this.dateArr.length-1];
         let start = new Date(startDate.year,startDate.month-1,startDate.day,0,0,0,0);
@@ -70,17 +70,6 @@ class DataMonth{
     getCurDateIndex(){
         let index = this.dateArr.findIndex(v=>v.month === this.curDate.getMonth()+1 && v.day === this.curDate.getDate())
         return index;
-    }
-    updateJob(job){
-        for(let i=0;i<this.dateArr.length;i++){
-            for(let j=0;j<this.dateArr[i].jobs.length;j++){
-                if(this.dateArr[i].jobs[j].Id === job.Id){
-                    this.dateArr[i].jobs[j] = {...this.dateArr[i].jobs[j],...job}
-                    console.log(this.dateArr[i].jobs[j])
-                    break;
-                }
-            }
-        }
     }
     async init(){     
         this.curDate = new Date()  
