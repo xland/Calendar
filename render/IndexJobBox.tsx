@@ -1,8 +1,10 @@
 import React from "./React";
 import "./IndexJobBox.scss";
+import { eventer } from "../common/eventer";
 
 export default function() {
-  document.addEventListener("DOMContentLoaded", async ()=>{
+  eventer.once("dataReady", async ()=>{
+    console.log("allen")
     let url = new URL(window.location.href)
     let startTime = new Date(parseInt(url.searchParams.get("startTime")))
     let timeBox = document.getElementById("IndexJobBox").firstElementChild;

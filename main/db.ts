@@ -39,10 +39,13 @@ CREATE INDEX JobInfo_Index ON Job(JobInfo);`
             for(let key in data){
                 columnNames.push(key);
             }
-            let insertSql = `INSERT INTO Job (${columnNames.join(",")}) VALUES (@${columnNames.join(",@")})`
-            let insert = this.db.prepare(insertSql);
-            insert.run(data)
-
+            let insertSql = `INSERT INTO Job (${columnNames.join(",")}) VALUES (@${columnNames.join(",@")})`            
+            try{
+                let insert = this.db.prepare(insertSql);
+                insert.run(data)
+            }catch(ex){
+                console.log(ex)
+            }
         }else if(type == ""){
 
         }
