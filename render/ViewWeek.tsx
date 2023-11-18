@@ -8,7 +8,7 @@ export default function () {
     let addNewJob = (e)=>{
         let target = e.target as HTMLElement
         if(!target.classList.contains("column")) return;
-        window.open(`/IndexNewJob.html?colorIndex=${colorIndex}&startTime=${startTime.getTime()}`,'_blank',JSON.stringify(config));
+        window.open(`/IndexJob.html?colorIndex=${colorIndex}&startTime=${startTime.getTime()}`,'_blank',JSON.stringify(config));
     }
     eventer.on("dataReady",()=>{
         let container = document.getElementById("ViewWeek").lastElementChild;

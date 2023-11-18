@@ -23,7 +23,7 @@ export default function () {
             winConfig:{width:400,height:300,title:"增加日程",minHeight:280,minWidth:380,modal:true},
             extraConfig:{}
         }
-        window.open(`/IndexNewJob.html?colorIndex=${colorIndex}&startTime=${startTime.getTime()}`,'_blank',JSON.stringify(config));
+        window.open(`/IndexJob.html?colorIndex=${colorIndex}&startTime=${startTime.getTime()}`,'_blank',JSON.stringify(config));
         document.getElementById("ModalMask").style.display="block"
     }
     let bgLineMouseOver = (e)=>{
