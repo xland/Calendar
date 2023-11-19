@@ -30,18 +30,19 @@ export default function () {
         }
         target.classList.add("bottomBtnSelected")
         drawer.firstElementChild.firstElementChild.innerHTML = target.title;  
-        let contentBox = drawer.lastElementChild;
-        contentBox.innerHTML = ""      
+        if(drawer.children.length>1){
+            drawer.lastElementChild.remove();   
+        }        
         if(target.title === "设置"){
-            contentBox.appendChild(<SettingDefault></SettingDefault>)
+            drawer.appendChild(<SettingDefault></SettingDefault>)
         }else if(target.title === "皮肤"){
-            contentBox.appendChild(<SettingSkin></SettingSkin>)
+            drawer.appendChild(<SettingSkin></SettingSkin>)
         }else if(target.title === "番茄钟"){
-            contentBox.appendChild(<SettingTomato></SettingTomato>)
+            drawer.appendChild(<SettingTomato></SettingTomato>)
         }else if(target.title === "语言"){
-            contentBox.appendChild(<SettingLang></SettingLang>)
+            drawer.appendChild(<SettingLang></SettingLang>)
         }else if(target.title === "捐赠（微信）"){
-            contentBox.appendChild(<SettingDonate></SettingDonate>)
+            drawer.appendChild(<SettingDonate></SettingDonate>)
         }
         drawer.style.display = "block"
     }
@@ -68,9 +69,6 @@ export default function () {
             <div onClick={closeDrawerBtnClick}>
                 <i class="iconfont icon-close"></i>
             </div>
-        </div>
-        <div class="drawerContent">
-
         </div>
     </div>
     </>

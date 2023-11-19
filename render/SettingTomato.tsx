@@ -1,7 +1,9 @@
 import React from "./React";
-export default function (props) { 
-  return <>
-  <div>每30分钟提醒一次</div>
-  <div>每60分钟提醒一次</div>
-  </>;
+export default function (props) {
+  return (
+    <div>
+      <div>每30分钟提醒一次</div>
+      <div>每60分钟提醒一次</div>
+    </div>
+  );
 }

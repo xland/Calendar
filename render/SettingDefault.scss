@@ -1,0 +1,19 @@
+#settingDefault {
+  .settingRow {
+    display: flex;
+    padding-left: 30px;
+    height: 26px;
+    line-height: 26px;
+    cursor: pointer;
+    &:hover {
+      background: #f02c3811;
+    }
+    & > div {
+      padding-left: 3px;
+      padding-right: 3px;
+      i {
+        font-size: 13px !important;
+      }
+    }
+  }
+}
