@@ -24,7 +24,7 @@ export default function () {
       }
   })
   return <div id="SmallCalendar">
-    <div class="row header">
+    <div class="header">
         <div>一</div>
         <div>二</div>
         <div>三</div>
