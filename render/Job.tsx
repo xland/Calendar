@@ -7,6 +7,7 @@ export default function (props) {
       extraConfig: {},
     };
     window.open(`/IndexJob.html?editId=${props.data.Id}`, "_blank", JSON.stringify(config));
+    document.getElementById("ModalMask").style.display = "block";
   };
   return (
     <div class="Job" id={props.data.Id} style={props.style} onDblClick={jobDbClick} data-text={props.data.JobInfo} data-start={props.data.StartTime} data-end={props.data.EndTime}>

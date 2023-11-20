@@ -37,6 +37,15 @@ let initHook = ()=>{
     ipcMain.handle("setOpenAtLogin",(e,flag:boolean)=>{
         app.setLoginItemSettings({openAtLogin:flag});
     })
+    ipcMain.handle("activeSubWindow",(e)=>{
+        let wins = BrowserWindow.getAllWindows();
+        for(let item of wins){
+            if(item.id != win.id){
+                item.show();
+                break;
+            }
+        }
+    })
 }
 let initDb = ()=>{
     db = new Db();
