@@ -25,6 +25,14 @@ let initHook = ()=>{
     ipcMain.handle("updateData",(e,sql:string,...params)=>{
         return db.updateData(sql,...params);
     })
+    ipcMain.handle("getSetting",()=>{
+        let result:any = {}
+        result.openAtLogin = app.getLoginItemSettings().openAtLogin
+        return result;
+    })
+    ipcMain.handle("setOpenAtLogin",(e,flag:boolean)=>{
+        app.setLoginItemSettings({openAtLogin:flag});
+    })
 }
 let initDb = ()=>{
     db = new Db();

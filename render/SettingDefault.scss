@@ -1,7 +1,8 @@
-#settingDefault {
+.settingBox {
+  color: #666;
   .settingRow {
     display: flex;
-    padding-left: 30px;
+    padding-left: 36px;
     height: 26px;
     line-height: 26px;
     cursor: pointer;
@@ -13,6 +14,7 @@
       padding-right: 3px;
       i {
         font-size: 13px !important;
+        color: #666;
       }
     }
   }
