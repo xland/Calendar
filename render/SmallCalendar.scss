@@ -21,27 +21,30 @@
       display: flex;
       width: 100%;
       height: 28px;
-      line-height: 28px;
-      div {
+      & > div {
         color: #666;
         flex: 1;
         text-align: center;
         font-size: 12px;
         cursor: pointer;
-        border-radius: 3px;
-        &:hover {
-          background: #f02c38;
-          color: #fff !important;
-        }
+        position: relative;
       }
-    }
-
-    .notCurMonth {
-      color: #aaa !important;
-    }
-    .selected {
-      background: #f02c38 !important;
-      color: #fff !important;
+      .dayItem {
+        position: absolute;
+        left: 3px;
+        top: 3px;
+        right: 3px;
+        bottom: 3px;
+        line-height: 22px;
+      }
+      .notCurMonth {
+        color: #aaa;
+      }
+      .selected {
+        background: #f02c38 !important;
+        color: #fff !important;
+        border-radius: 2px;
+      }
     }
   }
 }
