@@ -1,7 +1,6 @@
 import React from "./React";
 import "./ViewWeek.scss";
 import ColorGet from "./ColorGet";
-import { ModelJob } from "../model/ModelJob";
 import { eventer } from "../common/eventer";
 import { dataMonth } from "./DataMonth";
 export default function () {
@@ -40,7 +39,7 @@ export default function () {
       let dayDom = <div class="column" data-index={i}></div>;
       dataMonth.dateArr[index].jobs.forEach((job) => {
         let jobEle = (
-          <div class="weekJob" data-id={job.Id} style={`--color:${ColorGet(job.ColorIndex)}`} onDblClick={jobDbClick}>
+          <div class="weekJob" title={job.JobInfo} data-id={job.Id} style={`--color:${ColorGet(job.ColorIndex)}`} onDblClick={jobDbClick}>
             {job.JobInfo}
           </div>
         );
