@@ -62,8 +62,8 @@ export default function () {
   };
   let updateItem = async (targeDom: HTMLElement) => {
     let Id = targeDom.getAttribute("id");
-    let StartTime = Number(targeDom.getAttribute("data-start"));
-    let EndTime = Number(targeDom.getAttribute("data-end"));
+    let StartTime = Number(targeDom.dataset.start);
+    let EndTime = Number(targeDom.dataset.end);
     let job = dataMonth.getJobById(Id);
     if (job.StartTime === StartTime && job.EndTime === EndTime) {
       return;
@@ -71,8 +71,6 @@ export default function () {
     let sql = `Update Job set StartTime = ? ,EndTime = ? where id = ?`;
     let { ipcRenderer } = require("electron");
     await ipcRenderer.invoke("updateData", sql, StartTime, EndTime, Id);
-    await dataMonth.initJobArr();
-    getData();
   };
   let setJobTime = (target: HTMLElement) => {
     let height = target.parentElement.clientHeight;
@@ -80,15 +78,15 @@ export default function () {
     let now = new Date();
     now.setHours(0, 0, 0, 0);
     now.setMilliseconds(ms);
-    target.setAttribute("data-start", now.getTime().toString());
+    target.dataset.start = now.getTime().toString();
     now.setHours(0, 0, 0, 0);
     ms = ((target.offsetTop + target.clientHeight) / height) * 86400000;
     now.setMilliseconds(ms);
-    target.setAttribute("data-end", now.getTime().toString());
+    target.dataset.end = now.getTime().toString();
   };
   let updateTimeDom = (target: HTMLElement) => {
-    let StartTime = Number(target.getAttribute("data-start"));
-    let EndTime = Number(target.getAttribute("data-end"));
+    let StartTime = Number(target.dataset.start);
+    let EndTime = Number(target.dataset.end);
     let timeDiv = target.querySelector(".timeTop") as HTMLDivElement;
     let dt = new Date(StartTime);
     let minutes = dt.getMinutes();
@@ -128,7 +126,7 @@ export default function () {
       target.querySelectorAll(".time").forEach((v) => (v.innerHTML = ""));
       return 1;
     }
-    target.lastElementChild.innerHTML = target.getAttribute("data-text");
+    target.lastElementChild.innerHTML = target.dataset.text;
     return 2;
   };
   let draggerBottomMove = (target: HTMLElement, bottom: number) => {
@@ -143,7 +141,7 @@ export default function () {
       target.querySelectorAll(".time").forEach((v) => (v.innerHTML = ""));
       return 1;
     }
-    target.lastElementChild.innerHTML = target.getAttribute("data-text");
+    target.lastElementChild.innerHTML = target.dataset.text;
     return 2;
   };
   let onMouseDown = (e: MouseEvent) => {
@@ -234,35 +232,35 @@ export default function () {
         let t = new Date(); //todo
         let msHeight = job.parentElement.clientHeight / 86400000;
         if (dragger.classList.contains("draggerTop")) {
-          let start = Number(job.getAttribute("data-start"));
+          let start = Number(job.dataset.start);
           let startTime = new Date(start);
           startTime.setMinutes(startTime.getMinutes() + stepVal, 0, 0);
           t.setHours(0, 0, 0, 0);
           if (startTime < t) {
             return;
           }
-          job.setAttribute("data-editing", "true");
+          job.dataset.editing = "true";
           let top = msHeight * (startTime.getTime() - t.getTime());
           let r = draggerTopMove(job, top);
           if (r > 0) {
-            job.setAttribute("data-start", startTime.getTime().toString());
+            job.dataset.start = startTime.getTime().toString();
             if (r > 1) {
               updateTimeDom(job);
             }
           }
         } else {
-          let end = Number(job.getAttribute("data-end"));
+          let end = Number(job.dataset.end);
           let endTime = new Date(end);
           endTime.setMinutes(endTime.getMinutes() + stepVal, 0, 0);
           t.setHours(23, 59, 59, 999);
           if (endTime > t) {
             return;
           }
-          job.setAttribute("data-editing", "true");
+          job.dataset.editing = "true";
           let bottom = msHeight * (t.getTime() - endTime.getTime());
           let r = draggerBottomMove(job, bottom);
           if (r > 0) {
-            job.setAttribute("data-end", endTime.getTime().toString());
+            job.dataset.end = endTime.getTime().toString();
             if (r > 1) {
               updateTimeDom(job);
             }
@@ -272,9 +270,9 @@ export default function () {
         let job = document.querySelector(".jobSelected") as HTMLDivElement;
         if (!job) return;
         let msHeight = job.parentElement.clientHeight / 86400000;
-        let start = Number(job.getAttribute("data-start"));
+        let start = Number(job.dataset.start);
         let startTime = new Date(start);
-        let end = Number(job.getAttribute("data-end"));
+        let end = Number(job.dataset.end);
         let endTime = new Date(end);
         startTime.setMinutes(startTime.getMinutes() + stepVal, 0, 0);
         endTime.setMinutes(endTime.getMinutes() + stepVal, 0, 0);
@@ -288,13 +286,13 @@ export default function () {
         if (endTime > t2) {
           return;
         }
-        job.setAttribute("data-editing", "true");
+        job.dataset.editing = "true";
         let top = msHeight * (startTime.getTime() - t1.getTime());
         let bottom = msHeight * (t2.getTime() - endTime.getTime());
         job.style.top = `${top}px`;
         job.style.bottom = `${bottom}px`;
-        job.setAttribute("data-start", startTime.getTime().toString());
-        job.setAttribute("data-end", endTime.getTime().toString());
+        job.dataset.start = startTime.getTime().toString();
+        job.dataset.end = endTime.getTime().toString();
         updateTimeDom(job);
       }
     }
@@ -302,7 +300,7 @@ export default function () {
   let onKeyUpUpdate = debounce(
     1600,
     (job: HTMLElement) => {
-      job.removeAttribute("data-editing");
+      delete job.dataset.editing;
       updateItem(job);
     },
     { atBegin: false }

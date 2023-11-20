@@ -26,8 +26,10 @@ let initHook = ()=>{
         db.updateData(sql,...params);
         win.webContents.send("saveToDbOk")
         let subWin = BrowserWindow.fromWebContents(e.sender) as BrowserWindow;
-        subWin.close();
-        win.show();
+        if(subWin.id != win.id){
+            subWin.close();
+            win.show();
+        }
     })
     ipcMain.handle("getSetting",()=>{
         let result:any = {}
