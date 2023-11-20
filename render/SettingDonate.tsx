@@ -1,7 +1,7 @@
 import React from "./React";
 export default function (props) {
   return (
-    <div>
+    <div class="settingBox">
       <img src="./res/qr.png" alt="" />
     </div>
   );
