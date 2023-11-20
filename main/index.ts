@@ -23,7 +23,11 @@ let initHook = ()=>{
         return db.getData(sql,...params);
     })
     ipcMain.handle("updateData",(e,sql:string,...params)=>{
-        return db.updateData(sql,...params);
+        db.updateData(sql,...params);
+        win.webContents.send("saveToDbOk")
+        let subWin = BrowserWindow.fromWebContents(e.sender) as BrowserWindow;
+        subWin.close();
+        win.show();
     })
     ipcMain.handle("getSetting",()=>{
         let result:any = {}

@@ -4,7 +4,7 @@ export class ModelJob extends ModelBase{
     /**
      * 日程内容
      */
-    JobInfo:string
+    JobInfo:string = ""
     /**
      * 0 不重复
      * 1 每天

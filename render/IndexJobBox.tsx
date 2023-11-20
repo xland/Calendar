@@ -1,17 +1,21 @@
 import React from "./React";
 import "./IndexJobBox.scss";
 import { eventer } from "../common/eventer";
+import { ModelJob } from "../model/ModelJob";
 
 export default function () {
-  eventer.once("dataReady", async () => {
-    let url = new URL(window.location.href);
-    let startTime = new Date(parseInt(url.searchParams.get("startTime")));
+  eventer.once("dataReady", (job: ModelJob) => {
+    let startTime = new Date(job.StartTime);
     let timeBox = document.getElementById("IndexJobBox").firstElementChild;
     timeBox.querySelector("#year").innerHTML = startTime.getFullYear().toString();
     timeBox.querySelector("#month").innerHTML = (startTime.getMonth() + 1).toString();
     timeBox.querySelector("#date").innerHTML = startTime.getDate().toString();
     timeBox.querySelector("#hour0").innerHTML = startTime.getHours().toString();
     timeBox.querySelector("#hour1").innerHTML = (startTime.getHours() + 1).toString();
+    let taEle = document.getElementById("jobInfo") as HTMLTextAreaElement;
+    taEle.value = job.JobInfo;
+    let inputId = taEle.nextElementSibling as HTMLInputElement;
+    inputId.value = job.Id;
   });
   return (
     <div id="IndexJobBox">
@@ -49,6 +53,7 @@ export default function () {
       </div>
       <div class="textareaBox">
         <textarea id="jobInfo" spellCheck={false} placeholder="事件内容"></textarea>
+        <input id="jobId" type="hidden" />
       </div>
     </div>
   );
