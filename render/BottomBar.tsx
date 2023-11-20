@@ -10,23 +10,21 @@ export default function () {
   let closeDrawerBtnClick = () => {
     let drawer = document.getElementById("SettingDrawer");
     drawer.style.display = "none";
+    let btn = drawer.previousElementSibling.querySelector(".bottomBtnSelected") as HTMLElement;
+    btn.classList.remove("bottomBtnSelected");
   };
   let settingBtnClick = (e) => {
     let target = e.target as HTMLElement;
     if (target.tagName === "I") {
       target = target.parentElement;
     }
-    let prevSelectedDom = document.querySelector(
-      ".bottomBtnSelected"
-    ) as HTMLElement;
+    let prevSelectedDom = document.querySelector(".bottomBtnSelected") as HTMLElement;
     if (prevSelectedDom) {
       prevSelectedDom.classList.remove("bottomBtnSelected");
     }
     let drawer = document.getElementById("SettingDrawer");
     if (drawer.style.display === "block") {
-      if (
-        drawer.firstElementChild.firstElementChild.innerHTML === target.title
-      ) {
+      if (drawer.firstElementChild.firstElementChild.innerHTML === target.title) {
         drawer.style.display = "none";
         return;
       }
