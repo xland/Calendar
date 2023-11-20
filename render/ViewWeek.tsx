@@ -23,7 +23,15 @@ export default function () {
     window.open(`/IndexJob.html?colorIndex=${colorIndex}&startTime=${startTime.getTime()}`, "_blank", JSON.stringify(config));
     document.getElementById("ModalMask").style.display = "block";
   };
-  let jobDbClick = (e) => {};
+  let jobDbClick = (e: MouseEvent) => {
+    let id = (e.target as HTMLElement).dataset.id;
+    let config = {
+      winConfig: { width: 400, height: 300, title: "修改日程", minHeight: 280, minWidth: 380 },
+      extraConfig: {},
+    };
+    window.open(`/IndexJob.html?editId=${id}`, "_blank", JSON.stringify(config));
+    document.getElementById("ModalMask").style.display = "block";
+  };
   eventer.on("dataReady", () => {
     let container = document.getElementById("ViewWeek").lastElementChild;
     container.innerHTML = "";
@@ -32,7 +40,7 @@ export default function () {
       let dayDom = <div class="column" data-index={i}></div>;
       dataMonth.dateArr[index].jobs.forEach((job) => {
         let jobEle = (
-          <div class="weekJob" style={`--color:${ColorGet(job.ColorIndex)}`} onDblClick={jobDbClick}>
+          <div class="weekJob" data-id={job.Id} style={`--color:${ColorGet(job.ColorIndex)}`} onDblClick={jobDbClick}>
             {job.JobInfo}
           </div>
         );

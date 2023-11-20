@@ -1,5 +1,6 @@
 - week add new job
 - week edit job
+- job hover title
 - 小日历：某日有事，角标
 - 最近事务：需要从数据库取数据，并显示发生时间
 - 删除Job
