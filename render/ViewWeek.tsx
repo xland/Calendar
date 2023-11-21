@@ -6,6 +6,7 @@ import { dataMonth } from "./DataMonth";
 export default function () {
   let addNewJob = (e) => {
     let target = e.target as HTMLElement;
+    target = target.parentElement;
     if (!target.classList.contains("column")) return;
     let index = dataMonth.getCurWeekFirstDayIndex() + Number(target.dataset.index);
     let dateObj = dataMonth.dateArr[index];
@@ -45,6 +46,11 @@ export default function () {
         );
         dayDom.append(jobEle);
       });
+      dayDom.appendChild(
+        <div class="addBtn" onClick={addNewJob}>
+          增加
+        </div>
+      );
       container.append(dayDom);
       index += 1;
     }
@@ -60,7 +66,7 @@ export default function () {
         <div class="column">六</div>
         <div class="column">日</div>
       </div>
-      <div class="weekContent" onClick={addNewJob}></div>
+      <div class="weekContent"></div>
     </div>
   );
 }
