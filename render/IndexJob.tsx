@@ -22,7 +22,6 @@ function App(props) {
     job.StartTime = new Date(year, month - 1, date, hour0, minute0, 0, 0).getTime();
     job.EndTime = new Date(year, month - 1, date, hour1, minute1, 0, 0).getTime();
     job.RepeatType = 0;
-    job.AlertBefore = parseInt((document.getElementById("alertBefore") as HTMLInputElement).value);
     let taEle = document.getElementById("jobInfo") as HTMLTextAreaElement;
     let inputId = taEle.nextElementSibling as HTMLInputElement;
     job.JobInfo = taEle.value;

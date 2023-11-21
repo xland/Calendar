@@ -17,9 +17,9 @@ export class Db{
     }
     createDb(dbPath:string){
         let sql = `CREATE TABLE Job(Id VARCHAR2(36) NOT NULL ON CONFLICT FAIL UNIQUE ON CONFLICT FAIL, CreateTime BIGINT,UpdateTime BIGINT,DeleteTime BIGINT,IsDelete BOOLEAN, 
-JobInfo TEXT,RepeatType INT,RepeatTimes INT,RepeatEndDay INT,AlertBefore INT,StartTime BIGINT,EndTime BIGINT,ColorIndex INT);          
+JobInfo TEXT,RepeatType INT,RepeatTimes INT,RepeatEndDay INT,StartTime BIGINT,EndTime BIGINT,ColorIndex INT);          
 CREATE INDEX JobInfo_Index ON Job(JobInfo);
-CREATE TABLE Setting(ViewDefault INT DEFAULT 0);
+CREATE TABLE Setting(ViewDefault INT DEFAULT 0,AlertBefore INT);
 INSERT INTO Setting (ViewDefault) VALUES (0);
 `
         try{

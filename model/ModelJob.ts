@@ -26,10 +26,6 @@ export class ModelJob extends ModelBase{
      */
     RepeatEndDay:number
     /**
-     * 提前几分钟提醒
-     */
-    AlertBefore:number
-    /**
      * 任务开始时间
      */
     StartTime:number

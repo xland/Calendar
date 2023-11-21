@@ -46,11 +46,6 @@ export default function () {
       <div>
         <div class="recycleBtn">不重复</div>
       </div>
-      <div class="preMins">
-        <div style="margin-right:3px">提前</div>
-        <input id="alertBefore" type="text" value={"5"} />
-        <div style="margin-left:3px">分钟提醒</div>
-      </div>
       <div class="textareaBox">
         <textarea id="jobInfo" spellCheck={false} placeholder="事件内容"></textarea>
         <input id="jobId" type="hidden" />
