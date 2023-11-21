@@ -4,8 +4,7 @@ class DataSetting{
     setting:ModelSetting
     async init(){
         let {ipcRenderer} = require("electron")
-        let objs = await ipcRenderer.invoke("getData","SELECT * FROM Setting")
-        this.setting = objs[0]
+        this.setting = await ipcRenderer.invoke("getSetting")
     }
 }
 export let dataSetting = new DataSetting();

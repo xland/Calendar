@@ -1,5 +1,6 @@
 import { app,BrowserWindow,HandlerDetails,ipcMain } from "electron";
 import { Db } from "./db";
+import { ModelSetting } from "../model/ModelSetting";
 process.env.ELECTRON_DISABLE_SECURITY_WARNINGS = "true";
 let win:BrowserWindow;
 let db:Db
@@ -24,9 +25,9 @@ let initHook = ()=>{
         win.show();
     })
     ipcMain.handle("getSetting",()=>{
-        let result:any = {}
-        result.openAtLogin = app.getLoginItemSettings().openAtLogin
-        return result;
+        let setting:ModelSetting = db.getData(`SELECT * FROM Setting`)[0] as ModelSetting
+        setting.OpenAtLogin = app.getLoginItemSettings().openAtLogin
+        return setting;
     })
     ipcMain.handle("setOpenAtLogin",(e,flag:boolean)=>{
         app.setLoginItemSettings({openAtLogin:flag});

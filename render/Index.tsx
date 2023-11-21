@@ -24,15 +24,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   await dataSetting.init();
   eventer.emit("dataReady");
   window.addEventListener("saveJobOk", async (e) => {
-    debugger;
     await dataMonth.initJobArr();
     eventer.emit("dataReady");
   });
 });
-
-// let App = ()=>{
-//   return <p>
-//             { [...Array(2)].map((v,i)=><div>abc</div>) }
-//     </p>
-// }
-// document.body.appendChild(<App/>);

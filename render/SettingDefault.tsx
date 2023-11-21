@@ -1,3 +1,4 @@
+import { dataSetting } from "./DataSetting";
 import React from "./React";
 import "./SettingDefault.scss";
 export default function (props) {
@@ -10,11 +11,18 @@ export default function (props) {
       icon.classList.add("icon-uncheck");
     }
   };
+  let setDefaultView = (target: HTMLElement) => {
+    let icon = target.parentElement.querySelector(".icon-woderilixuanzhong") as HTMLElement;
+    icon.classList.remove("icon-woderilixuanzhong");
+    icon.classList.add("icon-jietutubiao_yuan");
+    target.firstElementChild.firstElementChild.classList.add("icon-woderilixuanzhong");
+  };
   let openAtLoginClick = async (e: MouseEvent) => {
     let icon = document.getElementById("openAtLoginIcon");
     let flag = !icon.classList.contains("icon-check");
     let { ipcRenderer } = require("electron");
     await ipcRenderer.invoke("setOpenAtLogin", flag);
+    dataSetting.setting.OpenAtLogin = flag;
     setCheckBox(icon, flag);
     return false;
   };
@@ -31,17 +39,18 @@ export default function (props) {
     if (target.firstElementChild.firstElementChild.classList.contains("icon-woderilixuanzhong")) {
       return;
     }
-    let icon = target.parentElement.querySelector(".icon-woderilixuanzhong") as HTMLElement;
-    icon.classList.remove("icon-woderilixuanzhong");
-    icon.classList.add("icon-jietutubiao_yuan");
-    target.firstElementChild.firstElementChild.classList.add("icon-woderilixuanzhong");
+    setDefaultView(target);
     let val = Number(target.dataset.index);
+    let { ipcRenderer } = require("electron");
+    let sql = `Update Setting set ViewDefault = ?`;
+    await ipcRenderer.invoke("updateData", sql, val);
   };
   let loaded = async () => {
-    let { ipcRenderer } = require("electron");
-    let result = await ipcRenderer.invoke("getSetting");
     let icon = document.getElementById("openAtLoginIcon");
-    setCheckBox(icon, result.openAtLogin);
+    setCheckBox(icon, dataSetting.setting.OpenAtLogin);
+    let defaultViewRow = document.getElementById("defaultViewRow");
+    let target = defaultViewRow.children[dataSetting.setting.ViewDefault + 1] as HTMLElement;
+    setDefaultView(target);
   };
   return (
     <div class="settingBox" onLoaded={loaded}>
@@ -51,7 +60,7 @@ export default function (props) {
         </div>
         <div>开机自启动</div>
       </div>
-      <div class="settingRow" onClick={defaultViewClick}>
+      <div id="defaultViewRow" class="settingRow" onClick={defaultViewClick}>
         <div>默认视图：</div>
         <div class="viewItem" data-index="0">
           <div>
