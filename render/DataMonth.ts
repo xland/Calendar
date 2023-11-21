@@ -1,4 +1,3 @@
-import { eventer } from '../common/eventer';
 import { ModelJob } from './../model/ModelJob';
 class DataMonth{
     curDate:Date;
@@ -16,7 +15,6 @@ class DataMonth{
             let index = this.dateArr.findIndex(v=>v.month === jobStartDate.getMonth()+1 && v.day === jobStartDate.getDate())
             this.dateArr[index].jobs.push(jobArr[i]);                   
         }
-        eventer.emit("dataReady")
     }
     private initDateArr(tarDate:Date){
         let year = tarDate.getFullYear();

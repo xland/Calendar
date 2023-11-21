@@ -326,7 +326,7 @@ export default function () {
   });
 
   return (
-    <div id="ViewDay" style="z-index:20;" class="view" onDoubleClick={onDoubleClick} onMouseOver={onMouseOver} onMouseOut={onMouseOut} onMouseDown={onMouseDown}>
+    <div id="ViewDay" class="view" onDoubleClick={onDoubleClick} onMouseOver={onMouseOver} onMouseOut={onMouseOut} onMouseDown={onMouseDown}>
       {[...Array(24)].map((v, i) => (
         <div class="bgLine" onMouseOver={bgLineMouseOver} onMouseOut={bgLineMouseOut}>
           <div class="hourTag">{`${i}:00`}</div>

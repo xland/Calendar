@@ -16,10 +16,12 @@ export class Db{
         }
     }
     createDb(dbPath:string){
-        let sql = `CREATE TABLE Job(Id VARCHAR2(36) NOT NULL ON CONFLICT FAIL UNIQUE ON CONFLICT FAIL, 
-CreateTime BIGINT,UpdateTime BIGINT,DeleteTime BIGINT,IsDelete BOOLEAN, 
+        let sql = `CREATE TABLE Job(Id VARCHAR2(36) NOT NULL ON CONFLICT FAIL UNIQUE ON CONFLICT FAIL, CreateTime BIGINT,UpdateTime BIGINT,DeleteTime BIGINT,IsDelete BOOLEAN, 
 JobInfo TEXT,RepeatType INT,RepeatTimes INT,RepeatEndDay INT,AlertBefore INT,StartTime BIGINT,EndTime BIGINT,ColorIndex INT);          
-CREATE INDEX JobInfo_Index ON Job(JobInfo);`
+CREATE INDEX JobInfo_Index ON Job(JobInfo);
+CREATE TABLE Setting(ViewDefault INT DEFAULT 0);
+INSERT INTO Setting (ViewDefault) VALUES (0);
+`
         try{
             this.db = new Database(dbPath,{ timeout:8000 })
             this.db.pragma('journal_mode = WAL');

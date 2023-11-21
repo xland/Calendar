@@ -1,6 +1,6 @@
 @font-face {
   font-family: "iconfont"; /* Project id 3833620 */
-  src: url('iconfont.ttf?t=1700114857979') format('truetype');
+  src: url('iconfont.ttf?t=1700527454505') format('truetype');
 }
 
 .iconfont {
@@ -9,6 +9,14 @@
   font-style: normal;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-jietutubiao_yuan:before {
+  content: "\e6b6";
+}
+
+.icon-Start-01:before {
+  content: "\e6e0";
 }
 
 .icon-pifu:before {

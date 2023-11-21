@@ -38,7 +38,7 @@ export default function () {
   });
 
   return (
-    <div id="ViewMonth" class="view">
+    <div id="ViewMonth" class="view" style="z-index:20;">
       <div class="row header">
         <div>一</div>
         <div>二</div>

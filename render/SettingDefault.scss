@@ -2,19 +2,29 @@
   color: #666;
   .settingRow {
     display: flex;
-    padding-left: 36px;
+    padding-left: 14px;
     height: 26px;
     line-height: 26px;
     cursor: pointer;
     &:hover {
       background: #f02c3811;
     }
-    & > div {
-      padding-left: 3px;
-      padding-right: 3px;
+    div {
+      padding-left: 2px;
+      padding-right: 2px;
       i {
         font-size: 13px !important;
         color: #666;
+      }
+      .icon-check {
+        color: #f02c38 !important;
+      }
+    }
+    .viewItem {
+      flex: 1;
+      display: flex;
+      .icon-woderilixuanzhong {
+        color: #f02c38 !important;
       }
     }
   }
