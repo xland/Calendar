@@ -14,6 +14,23 @@ export default function () {
     window.open(`/IndexJob.html?editId=${id}`, "_blank", JSON.stringify(config));
     document.getElementById("ModalMask").style.display = "block";
   };
+  let addJob = (e) => {
+    let target = e.target as HTMLElement;
+    let index = Number(target.dataset.index);
+    let dateObj = dataMonth.dateArr[index];
+    let colorIndex = 0;
+    if (dateObj.jobs.length) {
+      colorIndex = dateObj.jobs[dateObj.jobs.length - 1].ColorIndex + 1;
+      if (colorIndex > 5) colorIndex = 0;
+    }
+    let startTime = new Date(dateObj.year, dateObj.month - 1, dateObj.day, 8, 0, 0, 0);
+    let config = {
+      winConfig: { width: 400, height: 300, title: "增加日程", minHeight: 280, minWidth: 380, modal: true },
+      extraConfig: {},
+    };
+    window.open(`/IndexJob.html?colorIndex=${colorIndex}&startTime=${startTime.getTime()}`, "_blank", JSON.stringify(config));
+    document.getElementById("ModalMask").style.display = "block";
+  };
   eventer.on("dataReady", () => {
     let container = document.getElementById("ViewMonth").lastElementChild;
     container.innerHTML = "";
@@ -42,7 +59,11 @@ export default function () {
           );
         });
         cell.appendChild(cellContent);
-        cell.appendChild(<div class="addBtn">增加</div>);
+        cell.appendChild(
+          <div class="addBtn" data-index={index} onClick={addJob}>
+            增加
+          </div>
+        );
         row.appendChild(cell);
         index += 1;
       }
