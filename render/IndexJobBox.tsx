@@ -1,10 +1,10 @@
 import React from "./React";
 import "./IndexJobBox.scss";
-import { eventer } from "../common/eventer";
 import { ModelJob } from "../model/ModelJob";
 
 export default function () {
-  eventer.once("dataReady", (job: ModelJob) => {
+  let loaded = (e: CustomEvent) => {
+    let job = e.detail as ModelJob;
     let startTime = new Date(job.StartTime);
     let timeBox = document.getElementById("IndexJobBox").firstElementChild;
     timeBox.querySelector("#year").innerHTML = startTime.getFullYear().toString();
@@ -16,9 +16,9 @@ export default function () {
     taEle.value = job.JobInfo;
     let inputId = taEle.nextElementSibling as HTMLInputElement;
     inputId.value = job.Id;
-  });
+  };
   return (
-    <div id="IndexJobBox">
+    <div id="IndexJobBox" onLoaded={loaded}>
       <div class="timeBox">
         <div>
           <span id="year"></span>年

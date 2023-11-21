@@ -4,7 +4,6 @@ import TitleBarBtns from "./TitleBarBtns";
 import IndexJobBox from "./IndexJobBox";
 import ColorGet from "./ColorGet";
 import { ModelJob } from "../model/ModelJob";
-import { eventer } from "../common/eventer";
 function App(props) {
   let getStyle = (alpha = 1) => {
     return `background:rgba(${ColorGet(props.colorIndex)},${alpha});`;
@@ -87,5 +86,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     job.Id = "";
   }
   document.body.appendChild(<App colorIndex={job.ColorIndex} />);
-  eventer.emit("dataReady", job);
+  let event = new CustomEvent("loaded", { detail: job });
+  document.getElementById("IndexJobBox").dispatchEvent(event);
 });
