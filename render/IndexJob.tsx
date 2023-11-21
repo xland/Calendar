@@ -41,6 +41,9 @@ function App(props) {
     } else {
       await ipcRenderer.invoke("saveToDb", "Job", job);
     }
+    let win = window.opener as Window;
+    win.dispatchEvent(new Event("saveJobOk"));
+    window.close();
   };
   return (
     <>

@@ -14,9 +14,6 @@ let initHook = ()=>{
     })
     ipcMain.handle("saveToDb",(e,type,data)=>{
         db.saveToDb(type,data);
-        win.webContents.send("saveToDbOk")
-        let subWin = BrowserWindow.fromWebContents(e.sender) as BrowserWindow;
-        subWin.close();
         win.show();
     })
     ipcMain.handle("getData",(e,sql:string,...params)=>{
@@ -24,12 +21,7 @@ let initHook = ()=>{
     })
     ipcMain.handle("updateData",(e,sql:string,...params)=>{
         db.updateData(sql,...params);
-        win.webContents.send("saveToDbOk")
-        let subWin = BrowserWindow.fromWebContents(e.sender) as BrowserWindow;
-        if(subWin.id != win.id){
-            subWin.close();
-            win.show();
-        }
+        win.show();
     })
     ipcMain.handle("getSetting",()=>{
         let result:any = {}

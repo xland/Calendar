@@ -35,6 +35,7 @@ export default function (props) {
     icon.classList.remove("icon-woderilixuanzhong");
     icon.classList.add("icon-jietutubiao_yuan");
     target.firstElementChild.firstElementChild.classList.add("icon-woderilixuanzhong");
+    let val = Number(target.dataset.index);
   };
   let loaded = async () => {
     let { ipcRenderer } = require("electron");
@@ -52,19 +53,19 @@ export default function (props) {
       </div>
       <div class="settingRow" onClick={defaultViewClick}>
         <div>默认视图：</div>
-        <div class="viewItem">
+        <div class="viewItem" data-index="0">
           <div>
             <i class="iconfont icon-woderilixuanzhong"></i>
           </div>
           <div>日视图</div>
         </div>
-        <div class="viewItem">
+        <div class="viewItem" data-index="1">
           <div>
             <i class="iconfont icon-jietutubiao_yuan"></i>
           </div>
           <div>周视图</div>
         </div>
-        <div class="viewItem">
+        <div class="viewItem" data-index="2">
           <div>
             <i class="iconfont icon-jietutubiao_yuan"></i>
           </div>

@@ -23,6 +23,11 @@ document.addEventListener("DOMContentLoaded", async () => {
   await dataMonth.init();
   await dataSetting.init();
   eventer.emit("dataReady");
+  window.addEventListener("saveJobOk", async (e) => {
+    debugger;
+    await dataMonth.initJobArr();
+    eventer.emit("dataReady");
+  });
 });
 
 // let App = ()=>{

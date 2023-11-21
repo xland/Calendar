@@ -82,8 +82,6 @@ class DataMonth{
         this.curDate = new Date()  
         this.initDateArr(this.curDate);
         await this.initJobArr()
-        let {ipcRenderer} = require("electron")
-        ipcRenderer.on("saveToDbOk",()=>{this.initJobArr()})
     }
     constructor(){
         

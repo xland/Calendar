@@ -319,14 +319,14 @@ export default function () {
     target = target.parentElement;
     alert(111);
   };
+  window.addEventListener("keydown", moveJobByKey);
+  window.addEventListener("keyup", onKeyUp);
   eventer.on("dataReady", () => {
-    window.addEventListener("keydown", moveJobByKey);
-    window.addEventListener("keyup", onKeyUp);
     getData();
   });
 
   return (
-    <div id="ViewDay" class="view" onDoubleClick={onDoubleClick} onMouseOver={onMouseOver} onMouseOut={onMouseOut} onMouseDown={onMouseDown}>
+    <div style="z-index:20;" id="ViewDay" class="view" onDoubleClick={onDoubleClick} onMouseOver={onMouseOver} onMouseOut={onMouseOut} onMouseDown={onMouseDown}>
       {[...Array(24)].map((v, i) => (
         <div class="bgLine" onMouseOver={bgLineMouseOver} onMouseOut={bgLineMouseOut}>
           <div class="hourTag">{`${i}:00`}</div>
