@@ -311,14 +311,6 @@ export default function () {
     if (!job) return;
     onKeyUpUpdate(job);
   };
-  let onDoubleClick = (e) => {
-    let target = e.target as HTMLElement;
-    if (!target.classList.contains("jobInfo")) {
-      return;
-    }
-    target = target.parentElement;
-    alert(111);
-  };
   window.addEventListener("keydown", moveJobByKey);
   window.addEventListener("keyup", onKeyUp);
   eventer.on("dataReady", () => {
@@ -326,7 +318,7 @@ export default function () {
   });
 
   return (
-    <div id="ViewDay" class="view" onDoubleClick={onDoubleClick} onMouseOver={onMouseOver} onMouseOut={onMouseOut} onMouseDown={onMouseDown}>
+    <div id="ViewDay" class="view" onMouseOver={onMouseOver} onMouseOut={onMouseOut} onMouseDown={onMouseDown}>
       {[...Array(24)].map((v, i) => (
         <div class="bgLine" onMouseOver={bgLineMouseOver} onMouseOut={bgLineMouseOut}>
           <div class="hourTag">{`${i}:00`}</div>

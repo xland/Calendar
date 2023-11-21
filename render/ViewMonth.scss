@@ -1,87 +1,106 @@
-#ViewMonth{
-    .row{
-        display: flex;
-        width: 100%;
-        &>div{
-            flex: 1;
-            font-size: 12px;
-        }
+#ViewMonth {
+  .row {
+    display: flex;
+    width: 100%;
+    & > div {
+      flex: 1;
+      font-size: 12px;
     }
-    .header{
-        height: 28px;
-        line-height: 28px;
-        background: #f8f8f8;
-        color: #888;
-        text-align: center;
-    }
-    .content{
+  }
+  .header {
+    height: 28px;
+    line-height: 28px;
+    background: #f8f8f8;
+    color: #888;
+    text-align: center;
+  }
+  .content {
+    flex: 1;
+    flex-direction: column;
+    display: flex;
+    .row {
+      flex: 1;
+      border-top: 1px solid #888;
+      overflow: hidden;
+      display: flex;
+      & > div {
+        border-right: 1px solid #e6e6e6;
+        height: 100%;
         flex: 1;
-        flex-direction: column;
         display: flex;
-        .row{
-            flex: 1;
-            border-top: 1px solid #888;
-            overflow: hidden;
-            display: flex;
-            &>div{
-                border-right: 1px solid #e6e6e6;
-                height: 100%;
-                flex: 1;
-                display: flex;
-                overflow: hidden;
-                flex-direction: column;
-                &:last-child{
-                    border-right: none !important;
-                }
-            }
-            .cellHeader{
-                color: #666;
-                height: 22px;
-                line-height: 22px;
-                background: #f0f0f0;
-                text-align: center;
-                font-size: 10px;
-                cursor: pointer;
-            }
-            .cellContent{
-                flex: 1;
-                overflow-y: auto;
-                .cellItem{
-                    line-height: 22px;
-                    height: 22px;
-                    padding-left: 4px;
-                    padding-right: 4px;
-                    text-align: center;
-                    cursor: pointer;
-                    overflow: hidden;
-                    white-space: nowrap;
-                    text-overflow: ellipsis;
-                    &:hover{
-                        background: #fde9eb;
-                    }
-                }
-                /* width */
-                &::-webkit-scrollbar {
-                    width: 2px;
-                }               
-                /* Handle */
-                &::-webkit-scrollbar-thumb {
-                    background: #ddd; 
-                }
-            }
-
-            .notCurMonth{
-                .cellHeader{
-                    color: #ccc !important;
-                    background: #f8f8f8 !important;
-                }
-                .cellItem{
-                    color: #bbb !important;
-                    &:hover{
-                        color: #333 !important;
-                    }
-                }
-            }
+        overflow: hidden;
+        flex-direction: column;
+        position: relative;
+        &:last-child {
+          border-right: none !important;
         }
+      }
+      .addBtn {
+        position: absolute;
+        bottom: 0px;
+        left: 0px;
+        right: 2px;
+        height: 20px;
+        background: linear-gradient(transparent, #fff);
+        cursor: pointer;
+        color: transparent;
+        text-align: center;
+        line-height: 20px;
+        &:hover {
+          background: linear-gradient(#f02c3822, #f02c3888);
+          color: #333;
+          right: 0px;
+        }
+      }
+      .cellHeader {
+        color: #666;
+        height: 22px;
+        line-height: 22px;
+        background: #f0f0f0;
+        text-align: center;
+        font-size: 10px;
+        cursor: pointer;
+      }
+      .cellContent {
+        flex: 1;
+        overflow-y: auto;
+        padding-bottom: 20px;
+        .cellItem {
+          line-height: 22px;
+          height: 22px;
+          padding-left: 4px;
+          padding-right: 4px;
+          text-align: center;
+          cursor: pointer;
+          overflow: hidden;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+          &:hover {
+            background: #fde9eb;
+          }
+        }
+        /* width */
+        &::-webkit-scrollbar {
+          width: 2px;
+        }
+        /* Handle */
+        &::-webkit-scrollbar-thumb {
+          background: #ddd;
+        }
+      }
+
+      .notCurMonth {
+        .cellHeader {
+          color: #ccc !important;
+          background: #f8f8f8 !important;
+        }
+        .cellItem {
+          color: #bbb !important;
+          &:hover {
+            color: #333 !important;
+          }
+        }
+      }
     }
+  }
 }

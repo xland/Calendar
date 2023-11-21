@@ -1,4 +1,4 @@
-- 设置：默认显示：日视图、周视图、月视图
+- 月视图：修改JOB
 - week view add job btn on bottom
 - month view add job btn on bottom
 - 小日历：某日有事，角标

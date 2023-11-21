@@ -3,8 +3,20 @@ import { dataMonth } from "./DataMonth";
 import React from "./React";
 import "./ViewMonth.scss";
 export default function () {
+  let jobDbClick = (e) => {
+    let target = e.target as HTMLElement;
+    let id = target.getAttribute("id");
+    if (!id) return;
+    let config = {
+      winConfig: { width: 400, height: 300, title: "修改日程", minHeight: 280, minWidth: 380 },
+      extraConfig: {},
+    };
+    window.open(`/IndexJob.html?editId=${id}`, "_blank", JSON.stringify(config));
+    document.getElementById("ModalMask").style.display = "block";
+  };
   eventer.on("dataReady", () => {
     let container = document.getElementById("ViewMonth").lastElementChild;
+    container.innerHTML = "";
     let index = 0;
     for (let i = 0; i < 6; i++) {
       let row = <div class="row"></div>;
@@ -24,12 +36,13 @@ export default function () {
         let cellContent = <div class="cellContent"></div>;
         dayObj.jobs.forEach((job) => {
           cellContent.appendChild(
-            <div class="cellItem" title={job.JobInfo}>
+            <div class="cellItem" id={job.Id} title={job.JobInfo} onDblClick={jobDbClick}>
               {job.JobInfo}
             </div>
           );
         });
         cell.appendChild(cellContent);
+        cell.appendChild(<div class="addBtn">增加</div>);
         row.appendChild(cell);
         index += 1;
       }
