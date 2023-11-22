@@ -14,6 +14,7 @@ export default function () {
     };
     window.open(`/IndexJob.html?editId=${id}`, "_blank", JSON.stringify(config));
     document.getElementById("ModalMask").style.display = "block";
+    return false;
   };
   let addJob = (e) => {
     let target = e.target as HTMLElement;
@@ -51,7 +52,7 @@ export default function () {
         if (dayObj.isCurDay) {
           cell.classList.add("selected");
         }
-        let cellContent = <div class="cellContent"></div>;
+        let cellContent = <div class="cellContent" data-index={index} onClick={addJob}></div>;
         dayObj.jobs.forEach((job) => {
           cellContent.appendChild(
             <div class="cellItem" id={job.Id} title={job.JobInfo} onDblClick={jobDbClick} style={`--color:${ColorGet(job.ColorIndex)};`}>

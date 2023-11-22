@@ -6,8 +6,12 @@ import { dataMonth } from "./DataMonth";
 export default function () {
   let addNewJob = (e) => {
     let target = e.target as HTMLElement;
-    target = target.parentElement;
-    if (!target.classList.contains("column")) return;
+    if (!target.dataset.index) {
+      target = target.parentElement;
+    }
+    if (!target.dataset.index) {
+      return;
+    }
     let index = dataMonth.getCurWeekFirstDayIndex() + Number(target.dataset.index);
     let dateObj = dataMonth.dateArr[index];
     let colorIndex = 0;
@@ -37,7 +41,7 @@ export default function () {
     container.innerHTML = "";
     let index = dataMonth.getCurWeekFirstDayIndex();
     for (let i = 0; i < 7; i++) {
-      let dayDom = <div class="column" data-index={i}></div>;
+      let dayDom = <div class="column" data-index={i} onClick={addNewJob}></div>;
       dataMonth.dateArr[index].jobs.forEach((job) => {
         let jobEle = (
           <div class="weekJob" title={job.JobInfo} data-id={job.Id} style={`--color:${ColorGet(job.ColorIndex)}`} onDblClick={jobDbClick}>

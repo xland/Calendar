@@ -54,48 +54,101 @@ export default function (props) {
   };
   return (
     <div class="settingBox" onLoaded={loaded}>
-      <div class="settingRow" onClick={openAtLoginClick}>
-        <div>
-          <i id="openAtLoginIcon" class="iconfont icon-uncheck"></i>
-        </div>
-        <div>开机自启动</div>
-      </div>
       <div id="defaultViewRow" class="settingRow" onClick={defaultViewClick}>
         <div>默认视图：</div>
         <div class="radioItem" data-index="0">
           <div>
             <i class="iconfont icon-woderilixuanzhong"></i>
           </div>
-          <div>日视图</div>
+          <div>日</div>
         </div>
         <div class="radioItem" data-index="1">
           <div>
             <i class="iconfont icon-jietutubiao_yuan"></i>
           </div>
-          <div>周视图</div>
+          <div>周</div>
         </div>
         <div class="radioItem" data-index="2">
           <div>
             <i class="iconfont icon-jietutubiao_yuan"></i>
           </div>
-          <div>月视图</div>
+          <div>月</div>
+        </div>
+        <div class="radioItem" data-index="3">
+          <div>
+            <i class="iconfont icon-jietutubiao_yuan"></i>
+          </div>
+          <div>记住上次视图</div>
         </div>
       </div>
       <div id="langRow" class="settingRow" onClick={defaultViewClick}>
         <div>默认语言：</div>
-        <div class="radioItem" data-index="0">
-          <div>
-            <i class="iconfont icon-woderilixuanzhong"></i>
-          </div>
-          <div>中文</div>
-        </div>
         <div class="radioItem" data-index="1">
           <div>
             <i class="iconfont icon-jietutubiao_yuan"></i>
           </div>
           <div>英文</div>
         </div>
-        <div class="radioItem"></div>
+        <div class="radioItem" data-index="0">
+          <div>
+            <i class="iconfont icon-woderilixuanzhong"></i>
+          </div>
+          <div>简体中文</div>
+        </div>
+        <div class="radioItem">
+          <div>
+            <i class="iconfont icon-jietutubiao_yuan"></i>
+          </div>
+          <div>繁体中文</div>
+        </div>
+      </div>
+      <div id="langRow" class="settingRow" onClick={defaultViewClick}>
+        <div>提前提醒：</div>
+        <div class="radioItem" data-index="1">
+          <div>
+            <i class="iconfont icon-jietutubiao_yuan"></i>
+          </div>
+          <div>5分钟</div>
+        </div>
+        <div class="radioItem" data-index="0">
+          <div>
+            <i class="iconfont icon-woderilixuanzhong"></i>
+          </div>
+          <div>15分钟</div>
+        </div>
+        <div class="radioItem">
+          <div>
+            <i class="iconfont icon-jietutubiao_yuan"></i>
+          </div>
+          <div>30分钟</div>
+        </div>
+      </div>
+      <div id="langRow" class="settingRow" onClick={defaultViewClick}>
+        <div>系统皮肤：</div>
+        <div class="radioItem" data-index="1">
+          <div>
+            <i class="iconfont icon-jietutubiao_yuan"></i>
+          </div>
+          <div>红</div>
+        </div>
+        <div class="radioItem" data-index="0">
+          <div>
+            <i class="iconfont icon-woderilixuanzhong"></i>
+          </div>
+          <div>绿</div>
+        </div>
+        <div class="radioItem">
+          <div>
+            <i class="iconfont icon-jietutubiao_yuan"></i>
+          </div>
+          <div>蓝</div>
+        </div>
+      </div>
+      <div class="settingRow" onClick={openAtLoginClick}>
+        <div>
+          <i id="openAtLoginIcon" class="iconfont icon-uncheck"></i>
+        </div>
+        <div>开机自启动</div>
       </div>
       <div class="settingRow">
         <div>

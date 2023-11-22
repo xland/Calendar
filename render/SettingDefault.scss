@@ -2,9 +2,9 @@
   color: #666;
   .settingRow {
     display: flex;
-    padding-left: 14px;
-    height: 26px;
-    line-height: 26px;
+    padding-left: 12px;
+    height: 30px;
+    line-height: 30px;
     cursor: pointer;
     &:hover {
       background: #f02c3811;
@@ -21,7 +21,6 @@
       }
     }
     .radioItem {
-      flex: 1;
       display: flex;
       .icon-woderilixuanzhong {
         color: #f02c38 !important;
