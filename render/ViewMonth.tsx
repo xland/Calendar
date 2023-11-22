@@ -1,4 +1,5 @@
 import { eventer } from "../common/eventer";
+import ColorGet from "./ColorGet";
 import { dataMonth } from "./DataMonth";
 import React from "./React";
 import "./ViewMonth.scss";
@@ -53,7 +54,7 @@ export default function () {
         let cellContent = <div class="cellContent"></div>;
         dayObj.jobs.forEach((job) => {
           cellContent.appendChild(
-            <div class="cellItem" id={job.Id} title={job.JobInfo} onDblClick={jobDbClick}>
+            <div class="cellItem" id={job.Id} title={job.JobInfo} onDblClick={jobDbClick} style={`--color:${ColorGet(job.ColorIndex)};`}>
               {job.JobInfo}
             </div>
           );

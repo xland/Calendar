@@ -76,7 +76,7 @@
           white-space: nowrap;
           text-overflow: ellipsis;
           &:hover {
-            background: #fde9eb;
+            background: rgba(var(--color), 0.1) !important;
           }
         }
         /* width */
