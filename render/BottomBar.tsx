@@ -40,8 +40,6 @@ export default function () {
       drawer.appendChild(<SettingSkin></SettingSkin>);
     } else if (target.title === "番茄钟") {
       drawer.appendChild(<SettingTomato></SettingTomato>);
-    } else if (target.title === "语言") {
-      drawer.appendChild(<SettingLang></SettingLang>);
     } else if (target.title === "捐赠（微信）") {
       drawer.appendChild(<SettingDonate></SettingDonate>);
     }
@@ -59,9 +57,6 @@ export default function () {
         </div>
         <div class="bottomBtn" title="番茄钟">
           <i class="iconfont icon-shijian1"></i>
-        </div>
-        <div class="bottomBtn" title="语言">
-          <i class="iconfont icon-yuyan"></i>
         </div>
         <div class="bottomBtn" title="捐赠（微信）">
           <i class="iconfont icon-juanzeng"></i>

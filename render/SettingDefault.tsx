@@ -33,7 +33,7 @@ export default function (props) {
     } else if (target.tagName === "DIV") {
       target = target.parentElement;
     }
-    if (!target.classList.contains("viewItem")) {
+    if (!target.classList.contains("radioItem")) {
       return;
     }
     if (target.firstElementChild.firstElementChild.classList.contains("icon-woderilixuanzhong")) {
@@ -62,24 +62,40 @@ export default function (props) {
       </div>
       <div id="defaultViewRow" class="settingRow" onClick={defaultViewClick}>
         <div>默认视图：</div>
-        <div class="viewItem" data-index="0">
+        <div class="radioItem" data-index="0">
           <div>
             <i class="iconfont icon-woderilixuanzhong"></i>
           </div>
           <div>日视图</div>
         </div>
-        <div class="viewItem" data-index="1">
+        <div class="radioItem" data-index="1">
           <div>
             <i class="iconfont icon-jietutubiao_yuan"></i>
           </div>
           <div>周视图</div>
         </div>
-        <div class="viewItem" data-index="2">
+        <div class="radioItem" data-index="2">
           <div>
             <i class="iconfont icon-jietutubiao_yuan"></i>
           </div>
           <div>月视图</div>
         </div>
+      </div>
+      <div id="langRow" class="settingRow" onClick={defaultViewClick}>
+        <div>默认语言：</div>
+        <div class="radioItem" data-index="0">
+          <div>
+            <i class="iconfont icon-woderilixuanzhong"></i>
+          </div>
+          <div>中文</div>
+        </div>
+        <div class="radioItem" data-index="1">
+          <div>
+            <i class="iconfont icon-jietutubiao_yuan"></i>
+          </div>
+          <div>英文</div>
+        </div>
+        <div class="radioItem"></div>
       </div>
       <div class="settingRow">
         <div>
