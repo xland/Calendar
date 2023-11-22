@@ -20,8 +20,8 @@ let initHook = ()=>{
     ipcMain.handle("getData",(e,sql:string,...params)=>{
         return db.getData(sql,...params);
     })
-    ipcMain.handle("updateData",(e,sql:string,...params)=>{
-        db.updateData(sql,...params);
+    ipcMain.handle("excuteSQL",(e,sql:string,...params)=>{
+        db.excuteSQL(sql,...params);
         win.show();
     })
     ipcMain.handle("getSetting",()=>{

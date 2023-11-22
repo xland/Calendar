@@ -70,7 +70,7 @@ export default function () {
     }
     let sql = `Update Job set StartTime = ? ,EndTime = ? where id = ?`;
     let { ipcRenderer } = require("electron");
-    await ipcRenderer.invoke("updateData", sql, StartTime, EndTime, Id);
+    await ipcRenderer.invoke("excuteSQL", sql, StartTime, EndTime, Id);
     dispatchEvent(new Event("saveJobOk"));
   };
   let setJobTime = (target: HTMLElement) => {

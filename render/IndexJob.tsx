@@ -35,7 +35,7 @@ function App(props) {
     let { ipcRenderer } = require("electron");
     if (job.Id) {
       let sql = `Update Job set JobInfo = ? ,StartTime = ? ,EndTime = ? where Id = ?`;
-      await ipcRenderer.invoke("updateData", sql, job.JobInfo, job.StartTime, job.EndTime, job.Id);
+      await ipcRenderer.invoke("excuteSQL", sql, job.JobInfo, job.StartTime, job.EndTime, job.Id);
     } else {
       await ipcRenderer.invoke("saveToDb", "Job", job);
     }

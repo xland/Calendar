@@ -1,13 +1,37 @@
 import React from "./React";
 import "./Menu.scss";
+import { dataMonth } from "./DataMonth";
 export default function (props) {
-  let hideMenu = (e) => {
+  let hideMenu = async (e) => {
     let target = e.target as HTMLElement;
     if (target.parentElement.getAttribute("id") === "Menu") {
+      let id = target.parentElement.dataset.id;
       if (target.innerHTML === "增加") {
+        let config = {
+          winConfig: { width: 400, height: 300, title: "增加日程", minHeight: 280, minWidth: 380, modal: true },
+          extraConfig: {},
+        };
+        let data = dataMonth.dateArr[dataMonth.getCurDateIndex()].jobs;
+        let colorIndex = 0;
+        if (data.length) {
+          colorIndex = data[data.length - 1].ColorIndex + 1;
+        }
+        if (colorIndex > 5) colorIndex = 0;
+        let startTime = new Date(data[0].StartTime);
+        startTime.setHours(8, 0, 0, 0);
+        window.open(`/IndexJob.html?colorIndex=${colorIndex}&startTime=${startTime.getTime()}`, "_blank", JSON.stringify(config));
+        document.getElementById("ModalMask").style.display = "block";
       } else if (target.innerHTML === "修改") {
+        let config = {
+          winConfig: { width: 400, height: 300, title: "修改日程", minHeight: 280, minWidth: 380 },
+          extraConfig: {},
+        };
+        window.open(`/IndexJob.html?editId=${id}`, "_blank", JSON.stringify(config));
+        document.getElementById("ModalMask").style.display = "block";
       } else {
-        alert(123);
+        let { ipcRenderer } = require("electron");
+        await ipcRenderer.invoke("excuteSQL", `delete from Job where id=?`, id);
+        dispatchEvent(new Event("saveJobOk"));
       }
     }
     document.getElementById("Menu").style.display = "none";

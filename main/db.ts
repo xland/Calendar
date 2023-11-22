@@ -56,7 +56,7 @@ INSERT INTO Setting (ViewDefault) VALUES (0);
         let objs = this.db.prepare(sql).all(params);
         return objs;
     }
-    updateData(sql:string,...params){
+    excuteSQL(sql:string,...params){
         try{
             this.db.prepare(sql).run(params)
         }catch(ex){

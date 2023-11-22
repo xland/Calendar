@@ -43,7 +43,7 @@ export default function (props) {
     let val = Number(target.dataset.index);
     let { ipcRenderer } = require("electron");
     let sql = `Update Setting set ViewDefault = ?`;
-    await ipcRenderer.invoke("updateData", sql, val);
+    await ipcRenderer.invoke("excuteSQL", sql, val);
   };
   let loaded = async () => {
     let icon = document.getElementById("openAtLoginIcon");

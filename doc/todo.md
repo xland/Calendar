@@ -5,6 +5,8 @@
 - 右键菜单：删除，修改，增加
 - 时区
 - 小日历：今天
+- 删除时 confirm
+- viewday.tsx addNewJob 开始时间有问题
 
 
 
