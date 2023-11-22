@@ -31,7 +31,7 @@ export default function (props) {
       } else {
         let { ipcRenderer } = require("electron");
         await ipcRenderer.invoke("excuteSQL", `delete from Job where id=?`, id);
-        dispatchEvent(new Event("saveJobOk"));
+        dispatchEvent(new Event("refreshView"));
       }
     }
     document.getElementById("Menu").style.display = "none";

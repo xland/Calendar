@@ -26,7 +26,20 @@ export default function () {
   };
   let gotoCurDay = () => {
     let switchLabel = document.getElementById("switchLabel");
+    let nowDate = new Date();
+    switchLabel.innerHTML = `${nowDate.getFullYear()}-${nowDate.getMonth() + 1}-${nowDate.getDate()}`;
+  };
+  let prevBtnClick = () => {
+    dataMonth.curDate.setDate(dataMonth.curDate.getDate() - 1);
+    let switchLabel = document.getElementById("switchLabel");
     switchLabel.innerHTML = `${dataMonth.curDate.getFullYear()}-${dataMonth.curDate.getMonth() + 1}-${dataMonth.curDate.getDate()}`;
+    dispatchEvent(new Event("refreshView"));
+  };
+  let nextBtnClick = () => {
+    dataMonth.curDate.setDate(dataMonth.curDate.getDate() + 1);
+    let switchLabel = document.getElementById("switchLabel");
+    switchLabel.innerHTML = `${dataMonth.curDate.getFullYear()}-${dataMonth.curDate.getMonth() + 1}-${dataMonth.curDate.getDate()}`;
+    dispatchEvent(new Event("refreshView"));
   };
   eventer.once("dataReady", () => {
     let index = dataSetting.setting.ViewDefault;
@@ -44,11 +57,11 @@ export default function () {
         <div>月</div>
       </div>
       <div class="btns dayBtns">
-        <div>
+        <div onClick={prevBtnClick}>
           <i class="iconfont icon-zuojiantou"></i>
         </div>
         <div id="switchLabel"></div>
-        <div>
+        <div onClick={nextBtnClick}>
           <i class="iconfont icon-youjiantou"></i>
         </div>
       </div>

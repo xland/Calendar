@@ -29,7 +29,7 @@
   }
   .dayBtns {
     i {
-      font-size: 10px;
+      font-size: 12px;
     }
     div {
       &:first-child,
@@ -46,6 +46,11 @@
     cursor: pointer;
     &:hover {
       color: #f02c38;
+    }
+  }
+  #switchLabel {
+    &:hover {
+      color: #999;
     }
   }
 }

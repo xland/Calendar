@@ -25,7 +25,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   await dataMonth.init();
   await dataSetting.init();
   eventer.emit("dataReady");
-  window.addEventListener("saveJobOk", async (e) => {
+  window.addEventListener("refreshView", async (e) => {
     await dataMonth.initJobArr();
     eventer.emit("dataReady");
   });

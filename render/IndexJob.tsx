@@ -40,7 +40,7 @@ function App(props) {
       await ipcRenderer.invoke("saveToDb", "Job", job);
     }
     let win = window.opener as Window;
-    win.dispatchEvent(new Event("saveJobOk"));
+    win.dispatchEvent(new Event("refreshView"));
     window.close();
   };
   return (

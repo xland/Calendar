@@ -72,7 +72,7 @@ export default function () {
     let sql = `Update Job set StartTime = ? ,EndTime = ? where id = ?`;
     let { ipcRenderer } = require("electron");
     await ipcRenderer.invoke("excuteSQL", sql, StartTime, EndTime, Id);
-    dispatchEvent(new Event("saveJobOk"));
+    dispatchEvent(new Event("refreshView"));
   };
   let setJobTime = (target: HTMLElement) => {
     let height = target.parentElement.clientHeight;
