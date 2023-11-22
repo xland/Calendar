@@ -1,0 +1,18 @@
+#Menu {
+  position: absolute;
+  left: 100px;
+  top: 100px;
+  width: 100px;
+  background: #aaa;
+  line-height: 26px;
+  cursor: pointer;
+  box-shadow: 0px 0px 6px #aaa;
+  display: none;
+  div {
+    height: 26px;
+    text-align: center;
+    &:hover {
+      background: #fff;
+    }
+  }
+}

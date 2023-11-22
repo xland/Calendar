@@ -13,8 +13,21 @@ export default function (props) {
     window.open(`/IndexJob.html?editId=${id}`, "_blank", JSON.stringify(config));
     document.getElementById("ModalMask").style.display = "block";
   };
+  let jobMouseDown = (e: MouseEvent) => {
+    if (e.button != 2) return;
+    //show context menu
+  };
   return (
-    <div class="Job" id={props.data.Id} style={props.style} onDblClick={jobDbClick} data-text={props.data.JobInfo} data-start={props.data.StartTime} data-end={props.data.EndTime}>
+    <div
+      class="Job"
+      id={props.data.Id}
+      style={props.style}
+      onMouseDown={jobMouseDown}
+      onDblClick={jobDbClick}
+      data-text={props.data.JobInfo}
+      data-start={props.data.StartTime}
+      data-end={props.data.EndTime}
+    >
       <div class="dragger draggerTop"></div>
       <div class="dragger draggerBottom"></div>
       <div class="time timeTop"></div>

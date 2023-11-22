@@ -6,12 +6,14 @@ import React from "./React";
 import ModalMask from "./ModalMask";
 import { eventer } from "../common/eventer";
 import { dataSetting } from "./DataSetting";
+import Menu from "./Menu";
 let App = () => {
   return (
     <>
       <LeftPanel />
       <MainPanel />
       <ModalMask />
+      <Menu />
     </>
   );
 };
