@@ -45,6 +45,7 @@ export default function () {
           <i class="iconfont icon-youjiantou"></i>
         </div>
       </div>
+      <div class="btns today">今</div>
     </div>
   );
 }
