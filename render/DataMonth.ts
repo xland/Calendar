@@ -79,7 +79,7 @@ class DataMonth{
         }
     }
     async init(){     
-        this.curDate = new Date()  
+        this.curDate = new Date()
         this.initDateArr(this.curDate);
         await this.initJobArr()
     }
