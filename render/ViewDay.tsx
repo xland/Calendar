@@ -16,9 +16,10 @@ export default function () {
       startHour = target.firstElementChild.innerHTML;
     }
     if (!startHour) return;
+    let dateObj = dataMonth.dateArr[dataMonth.getCurDateIndex()];
+
     let hour = parseInt(startHour.split(":")[0]);
-    let startTime = new Date();
-    startTime.setHours(hour);
+    let startTime = new Date(dateObj.year, dateObj.month - 1, dateObj.day, hour, 0, 0, 0);
     let config = {
       winConfig: { width: 400, height: 300, title: "增加日程", minHeight: 280, minWidth: 380, modal: true },
       extraConfig: {},
