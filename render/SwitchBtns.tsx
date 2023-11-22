@@ -1,4 +1,5 @@
 import { eventer } from "../common/eventer";
+import { dataMonth } from "./DataMonth";
 import { dataSetting } from "./DataSetting";
 import React from "./React";
 import "./SwitchBtns.scss";
@@ -23,10 +24,16 @@ export default function () {
     }
     document.getElementById(arr[index]).style.zIndex = "20";
   };
+  let gotoCurDay = () => {
+    let switchLabel = document.getElementById("switchLabel");
+    switchLabel.innerHTML = `${dataMonth.curDate.getFullYear()}-${dataMonth.curDate.getMonth() + 1}-${dataMonth.curDate.getDate()}`;
+  };
   eventer.once("dataReady", () => {
     let index = dataSetting.setting.ViewDefault;
     let dom = document.getElementById("SwitchBtns").firstElementChild;
     switchBtnClick({ target: dom.children[index] });
+    let switchLabel = dom.nextElementSibling.firstElementChild.nextElementSibling;
+    switchLabel.innerHTML = `${dataMonth.curDate.getFullYear()}-${dataMonth.curDate.getMonth() + 1}-${dataMonth.curDate.getDate()}`;
   });
 
   return (
@@ -40,12 +47,14 @@ export default function () {
         <div>
           <i class="iconfont icon-zuojiantou"></i>
         </div>
-        <div>2011-11-11</div>
+        <div id="switchLabel"></div>
         <div>
           <i class="iconfont icon-youjiantou"></i>
         </div>
       </div>
-      <div class="btns today">今</div>
+      <div onClick={gotoCurDay} class="btns today">
+        今
+      </div>
     </div>
   );
 }
