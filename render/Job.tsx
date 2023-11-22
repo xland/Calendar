@@ -15,7 +15,12 @@ export default function (props) {
   };
   let jobMouseDown = (e: MouseEvent) => {
     if (e.button != 2) return;
-    //show context menu
+    let menu = document.getElementById("Menu");
+    let evt = new CustomEvent("show", { detail: { x: e.x, y: e.y } });
+    e.preventDefault();
+    e.stopPropagation();
+    menu.dispatchEvent(evt);
+    return false;
   };
   return (
     <div

@@ -146,6 +146,7 @@ export default function () {
     return 2;
   };
   let onMouseDown = (e: MouseEvent) => {
+    if (e.button != 0) return;
     let target = e.target as HTMLElement;
     if (target.classList.contains("bgLine")) {
       addNewJob(target);
