@@ -40,17 +40,29 @@ export default function () {
     switchLabel.innerHTML = `${nowDate.getFullYear()}-${nowDate.getMonth() + 1}-${nowDate.getDate()}`;
     dispatchEvent(new Event("refreshView"));
   };
-  let prevBtnClick = () => {
-    dataMonth.curDate.setDate(dataMonth.curDate.getDate() - 1);
+
+  let goPrevOrNext = (val) => {
+    let selectedDom = document.getElementById("SwitchBtns").querySelector(".selected") as HTMLElement;
     let switchLabel = document.getElementById("switchLabel");
-    switchLabel.innerHTML = `${dataMonth.curDate.getFullYear()}-${dataMonth.curDate.getMonth() + 1}-${dataMonth.curDate.getDate()}`;
+    if (selectedDom.innerHTML === "日") {
+      dataMonth.curDate.setDate(dataMonth.curDate.getDate() + val);
+      switchLabel.innerHTML = `${dataMonth.curDate.getFullYear()}-${dataMonth.curDate.getMonth() + 1}-${dataMonth.curDate.getDate()}`;
+    } else if (selectedDom.innerHTML === "周") {
+      dataMonth.curDate.setDate(dataMonth.curDate.getDate() + val * 7);
+      let weekIndex = dataMonth.getCurWeekFirstDayIndex() / 7;
+      switchLabel.innerHTML = `${dataMonth.curDate.getMonth() + 1}月第${weekIndex + 1}周`;
+    } else {
+      dataMonth.curDate.setMonth(dataMonth.curDate.getMonth() + val);
+      switchLabel.innerHTML = `${dataMonth.curDate.getFullYear()}年${dataMonth.curDate.getMonth() + 1}月`;
+    }
     dispatchEvent(new Event("refreshView"));
   };
+
+  let prevBtnClick = () => {
+    goPrevOrNext(-1);
+  };
   let nextBtnClick = () => {
-    dataMonth.curDate.setDate(dataMonth.curDate.getDate() + 1);
-    let switchLabel = document.getElementById("switchLabel");
-    switchLabel.innerHTML = `${dataMonth.curDate.getFullYear()}-${dataMonth.curDate.getMonth() + 1}-${dataMonth.curDate.getDate()}`;
-    dispatchEvent(new Event("refreshView"));
+    goPrevOrNext(1);
   };
   eventer.once("dataReady", () => {
     let index = dataSetting.setting.ViewDefault;
