@@ -27,16 +27,10 @@ export default function (props) {
     menu.style.top = `${top}px`;
     menu.style.left = `${left}px`;
     menu.style.display = "block";
+    menu.dataset.id = e.id;
     setTimeout(() => {
       document.addEventListener("mousedown", hideMenu);
     }, 10);
-  };
-  let addClick = (e: MouseEvent) => {};
-  let editClick = (e: MouseEvent) => {};
-  let delClick = (e: MouseEvent) => {
-    alert(123);
-    e.preventDefault();
-    e.stopPropagation();
   };
   return (
     <div id="Menu" onShow={show}>
