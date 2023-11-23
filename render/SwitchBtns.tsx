@@ -41,19 +41,24 @@ export default function () {
     dispatchEvent(new Event("refreshView"));
   };
 
-  let goPrevOrNext = (val) => {
+  let goPrevOrNext = async (val) => {
     let selectedDom = document.getElementById("SwitchBtns").querySelector(".selected") as HTMLElement;
     let switchLabel = document.getElementById("switchLabel");
+    let oldMonthIndex = dataMonth.curDate.getMonth();
     if (selectedDom.innerHTML === "日") {
       dataMonth.curDate.setDate(dataMonth.curDate.getDate() + val);
-      switchLabel.innerHTML = `${dataMonth.curDate.getFullYear()}-${dataMonth.curDate.getMonth() + 1}-${dataMonth.curDate.getDate()}`;
+      switchLabel.innerHTML = `${dataMonth.curDate.getFullYear()}-${oldMonthIndex + 1}-${dataMonth.curDate.getDate()}`;
     } else if (selectedDom.innerHTML === "周") {
       dataMonth.curDate.setDate(dataMonth.curDate.getDate() + val * 7);
       let weekIndex = dataMonth.getCurWeekFirstDayIndex() / 7;
-      switchLabel.innerHTML = `${dataMonth.curDate.getMonth() + 1}月第${weekIndex + 1}周`;
+      switchLabel.innerHTML = `${oldMonthIndex + 1}月第${weekIndex + 1}周`;
     } else {
-      dataMonth.curDate.setMonth(dataMonth.curDate.getMonth() + val);
+      dataMonth.curDate.setMonth(oldMonthIndex + val);
       switchLabel.innerHTML = `${dataMonth.curDate.getFullYear()}年${dataMonth.curDate.getMonth() + 1}月`;
+    }
+    if (oldMonthIndex != dataMonth.curDate.getMonth()) {
+      dataMonth.initDateArr();
+      await dataMonth.initJobArr();
     }
     dispatchEvent(new Event("refreshView"));
   };

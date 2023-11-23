@@ -1,7 +1,7 @@
 import { ModelJob } from './../model/ModelJob';
 class DataMonth{
     curDate:Date;
-    dateArr:{year:number,month:number,day:number,isCurMonth:boolean,isCurDay:boolean,jobs:ModelJob[]}[] = [];
+    dateArr:{year:number,month:number,day:number,isCurMonth:boolean,isCurDay:boolean,jobs:ModelJob[]}[];
     async initJobArr(){
         let startDate = this.dateArr[0];
         let endDate = this.dateArr[this.dateArr.length-1];
@@ -16,10 +16,11 @@ class DataMonth{
             this.dateArr[index].jobs.push(jobArr[i]);                   
         }
     }
-    private initDateArr(tarDate:Date){
-        let year = tarDate.getFullYear();
-        let month = tarDate.getMonth();
-        let date = tarDate.getDate();
+    initDateArr(){
+        this.dateArr = []
+        let year = this.curDate.getFullYear();
+        let month = this.curDate.getMonth();
+        let date = this.curDate.getDate();
         let preMonthLastDay = new Date(year,month,0);
         let weekIndex = preMonthLastDay.getDay();
         weekIndex = weekIndex===0?7:weekIndex;
@@ -80,7 +81,7 @@ class DataMonth{
     }
     async init(){     
         this.curDate = new Date()
-        this.initDateArr(this.curDate);
+        this.initDateArr();
         await this.initJobArr()
     }
     constructor(){
