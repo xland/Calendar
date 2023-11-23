@@ -1,6 +1,6 @@
 @font-face {
   font-family: "iconfont"; /* Project id 3833620 */
-  src: url('iconfont.ttf?t=1700707383611') format('truetype');
+  src: url('iconfont.ttf?t=1700707557877') format('truetype');
 }
 
 .iconfont {
@@ -13,10 +13,6 @@
 
 .icon-face-smile-wink:before {
   content: "\e600";
-}
-
-.icon-bellring:before {
-  content: "\e695";
 }
 
 .icon-heart:before {

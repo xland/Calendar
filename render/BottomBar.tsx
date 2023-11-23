@@ -2,8 +2,7 @@ import React from "./React";
 import "./BottomBar.scss";
 import SettingDefault from "./SettingDefault";
 import SettingDonate from "./SettingDonate";
-import SettingTomato from "./SettingTomato";
-import SettingSkin from "./SettingSkin";
+import SettingAuthor from "./SettingAuthor";
 
 export default function () {
   let closeDrawerBtnClick = () => {
@@ -35,10 +34,8 @@ export default function () {
     }
     if (target.title === "设置") {
       drawer.appendChild(<SettingDefault></SettingDefault>);
-    } else if (target.title === "皮肤") {
-      drawer.appendChild(<SettingSkin></SettingSkin>);
-    } else if (target.title === "番茄钟") {
-      drawer.appendChild(<SettingTomato></SettingTomato>);
+    } else if (target.title === "作者（微信）") {
+      drawer.appendChild(<SettingAuthor></SettingAuthor>);
     } else if (target.title === "捐赠（微信）") {
       drawer.appendChild(<SettingDonate></SettingDonate>);
     }
