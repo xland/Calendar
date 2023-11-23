@@ -156,18 +156,6 @@ export default function (props) {
         </div>
         <div>显示农历</div>
       </div>
-      <div class="settingRow">
-        <div>
-          <i class="iconfont icon-uncheck"></i>
-        </div>
-        <div>显示农历</div>
-      </div>
-      <div class="settingRow">
-        <div>
-          <i class="iconfont icon-uncheck"></i>
-        </div>
-        <div>压缩数据库</div>
-      </div>
     </div>
   );
 }

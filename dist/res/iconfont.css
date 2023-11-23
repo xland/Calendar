@@ -1,6 +1,6 @@
 @font-face {
   font-family: "iconfont"; /* Project id 3833620 */
-  src: url('iconfont.ttf?t=1700527454505') format('truetype');
+  src: url('iconfont.ttf?t=1700707383611') format('truetype');
 }
 
 .iconfont {
@@ -9,6 +9,18 @@
   font-style: normal;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-face-smile-wink:before {
+  content: "\e600";
+}
+
+.icon-bellring:before {
+  content: "\e695";
+}
+
+.icon-heart:before {
+  content: "\e629";
 }
 
 .icon-jietutubiao_yuan:before {
@@ -41,10 +53,6 @@
 
 .icon-shanchucha:before {
   content: "\e743";
-}
-
-.icon-kefu:before {
-  content: "\e603";
 }
 
 .icon-tag:before {

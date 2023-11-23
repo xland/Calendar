@@ -1,68 +1,67 @@
-#BottomBar{
-    height: 36px;
-    line-height: 36px;
-    background: #f02c3810;
-    display:  flex;
-    border-top: 1px solid #f02c3822;
-    .bottomBtn{
-        flex: 1;
-        cursor: pointer;
-        text-align: center;
-        i{
-            font-size: 14px !important;
-            color: #f02c3877;
-        }
-        &:hover{
-            i{
-                color: #f02c38 !important;
-            }
-        }
-    }    
-    .bottomBtnSelected{
-        i{
-            font-size: 14px !important;
-            color: #f02c38;
-        }
-    }
-}
-#SettingDrawer{
-    position: absolute;
-    bottom: 36px;
-    width: 300px;
-    left: 0px;
-    z-index: 2;
-    padding-bottom: 8px;
-    background: #f02c3810;
+#BottomBar {
+  height: 36px;
+  line-height: 36px;
+  background: #f02c3810;
+  display: flex;
+  border-top: 1px solid #f02c3822;
+  .bottomBtn {
+    flex: 1;
+    cursor: pointer;
     text-align: center;
-    border-top: 1px solid #f02c3822;
+    i {
+      font-size: 16px !important;
+      color: #f02c3877;
+    }
+    &:hover {
+      i {
+        color: #f02c38 !important;
+      }
+    }
+  }
+  .bottomBtnSelected {
+    i {
+      color: #f02c38;
+    }
+  }
+}
+#SettingDrawer {
+  position: absolute;
+  bottom: 36px;
+  width: 300px;
+  left: 0px;
+  z-index: 2;
+  padding-bottom: 8px;
+  background: #f02c3810;
+  text-align: center;
+  border-top: 1px solid #f02c3822;
 
-    img{
-        width: 120px;
-        height: 120px;
-        display: inline-block;
+  img {
+    width: 120px;
+    height: 120px;
+    display: inline-block;
+  }
+  .drawerTitle {
+    height: 26px;
+    line-height: 26px;
+    display: flex;
+    > div:first-child {
+      flex: 1;
+      text-align: left;
+      padding-left: 8px;
+      color: #666;
     }
-    .drawerTitle{
-        height: 26px;
-        line-height: 26px;
-        display: flex;
-        >div:first-child{
-            flex: 1;
-            text-align: left;
-            padding-left: 8px;
-            color: #666;
+    > div:last-child {
+      width: 26px;
+      cursor: pointer;
+      i {
+        font-size: 10px !important;
+        color: #888 !important;
+      }
+      &:hover {
+        i {
+          color: #f02c38 !important;
         }
-        >div:last-child{
-            width: 26px;
-            cursor: pointer;
-            i{
-                font-size: 10px !important;
-                color: #888 !important;
-            }
-            &:hover{
-                i{
-                    color: #f02c38 !important;
-                }
-            }
-        }
+      }
     }
+  }
 }

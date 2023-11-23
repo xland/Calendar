@@ -1,4 +1,3 @@
-- go next month redo init dataMonth
 - 小日历：某日有事，角标
 - 最近事务：需要从数据库取数据，并显示发生时间
 - 跳转到今天

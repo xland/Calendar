@@ -2,7 +2,6 @@ import React from "./React";
 import "./BottomBar.scss";
 import SettingDefault from "./SettingDefault";
 import SettingDonate from "./SettingDonate";
-import SettingLang from "./SettingLang";
 import SettingTomato from "./SettingTomato";
 import SettingSkin from "./SettingSkin";
 
@@ -52,14 +51,11 @@ export default function () {
         <div class="bottomBtn" title="设置">
           <i class="iconfont icon-setting"></i>
         </div>
-        <div class="bottomBtn" title="皮肤">
-          <i class="iconfont icon-pifu"></i>
-        </div>
-        <div class="bottomBtn" title="番茄钟">
-          <i class="iconfont icon-shijian1"></i>
+        <div class="bottomBtn" title="作者（微信）">
+          <i class="iconfont icon-face-smile-wink"></i>
         </div>
         <div class="bottomBtn" title="捐赠（微信）">
-          <i class="iconfont icon-juanzeng"></i>
+          <i class="iconfont icon-heart"></i>
         </div>
       </div>
       <div id="SettingDrawer" style="display:none">
