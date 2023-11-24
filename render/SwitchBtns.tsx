@@ -31,18 +31,26 @@ export default function () {
     }
     document.getElementById(arr[index]).style.zIndex = "20";
   };
-  let gotoCurDay = () => {
+  let gotoCurDay = async () => {
     let switchLabel = document.getElementById("switchLabel");
     let nowDate = new Date();
     if (nowDate.getFullYear() === dataMonth.curDate.getFullYear() && nowDate.getMonth() === dataMonth.curDate.getMonth() && nowDate.getDate() === dataMonth.curDate.getDate()) {
       return;
+    } else if (nowDate.getFullYear() != dataMonth.curDate.getFullYear() || nowDate.getMonth() != dataMonth.curDate.getMonth()) {
+      dataMonth.curDate = nowDate;
+      dataMonth.initDateArr();
+      await dataMonth.initJobArr();
+    } else {
+      dataMonth.curDate = nowDate;
     }
+    switchLabel.parentElement.nextElementSibling.classList.add("todaySelected");
     switchLabel.innerHTML = `${nowDate.getFullYear()}-${nowDate.getMonth() + 1}-${nowDate.getDate()}`;
     dispatchEvent(new Event("refreshView"));
   };
 
   let goPrevOrNext = async (val) => {
-    let selectedDom = document.getElementById("SwitchBtns").querySelector(".selected") as HTMLElement;
+    let SwitchBtns = document.getElementById("SwitchBtns");
+    let selectedDom = SwitchBtns.querySelector(".selected") as HTMLElement;
     let switchLabel = document.getElementById("switchLabel");
     let oldMonthIndex = dataMonth.curDate.getMonth();
     if (selectedDom.innerHTML === "日") {
@@ -56,9 +64,15 @@ export default function () {
       dataMonth.curDate.setMonth(oldMonthIndex + val);
       switchLabel.innerHTML = `${dataMonth.curDate.getFullYear()}年${dataMonth.curDate.getMonth() + 1}月`;
     }
-    if (oldMonthIndex != dataMonth.curDate.getMonth()) {
-      dataMonth.initDateArr();
-      await dataMonth.initJobArr();
+    let nowDate = new Date();
+    if (nowDate.getFullYear() === dataMonth.curDate.getFullYear() && nowDate.getMonth() === dataMonth.curDate.getMonth() && nowDate.getDate() === dataMonth.curDate.getDate()) {
+      SwitchBtns.lastElementChild.classList.add("todaySelected");
+    } else {
+      SwitchBtns.lastElementChild.classList.remove("todaySelected");
+      if (oldMonthIndex != dataMonth.curDate.getMonth()) {
+        dataMonth.initDateArr();
+        await dataMonth.initJobArr();
+      }
     }
     dispatchEvent(new Event("refreshView"));
   };
@@ -91,7 +105,7 @@ export default function () {
           <i class="iconfont icon-youjiantou"></i>
         </div>
       </div>
-      <div onClick={gotoCurDay} class="btns today">
+      <div onClick={gotoCurDay} class="btns today todaySelected">
         今
       </div>
     </div>
