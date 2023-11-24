@@ -16,23 +16,66 @@ export default function () {
     taEle.value = job.JobInfo;
     let inputId = taEle.nextElementSibling as HTMLInputElement;
     inputId.value = job.Id;
+
+    let year = startTime.getFullYear();
   };
-  let yearOptionMouseWheel = (e: MouseEvent) => {
+  let yearOptionMouseWheel = (e: WheelEvent) => {
     let target = e.currentTarget as HTMLElement;
-    console.log(target);
+    if (target.classList.contains("optionBox")) {
+      let src = target.previousElementSibling.firstElementChild;
+      let year = Number(src.innerHTML);
+      if (e.deltaY < 0) {
+        year -= 3;
+      } else {
+        year -= 1;
+      }
+      target.innerHTML = "";
+      for (let i = year; i < year + 5; i++) {
+        let ele = <div>{i}年</div>;
+        if (i === year + 2) {
+          ele.classList.add("selectedOption");
+        }
+        target.append(ele);
+      }
+      src.innerHTML = (year + 2).toString();
+    } else {
+      let src = target.firstElementChild;
+      let year = Number(src.innerHTML);
+      if (e.deltaY < 0) {
+        year -= 1;
+      } else {
+        year += 1;
+      }
+      src.innerHTML = year.toString();
+    }
+  };
+  let yearClick = (e: MouseEvent) => {
+    let target = e.currentTarget as HTMLElement;
+    let year = Number(target.firstElementChild.innerHTML);
+    target = target.nextElementSibling as HTMLElement;
+    target.innerHTML = "";
+    for (let i = -2; i < 3; i++) {
+      let ele = <div>{year + i}年</div>;
+      if (i === 0) {
+        ele.classList.add("selectedOption");
+      }
+      target.append(ele);
+    }
+    target.style.display = "block";
+    target.focus();
+  };
+  let optionBoxBlur = (e: MouseEvent) => {
+    let target = e.currentTarget as HTMLElement;
+    target.style.display = "none";
   };
   return (
     <div id="IndexJobBox" onLoaded={loaded}>
       <div class="timeBox">
         <div>
-          <div class="rowItem">
+          <div class="rowItem" onMouseWheel={yearOptionMouseWheel} onClick={yearClick}>
             <span id="year"></span>年
           </div>
-          <div class="optionBox" onMouseWheel={yearOptionMouseWheel}>
-            <div>2023年</div>
-            <div>2024年</div>
-            <div>2025年</div>
-          </div>
+          <div tabindex="-1" class="optionBox" onMouseWheel={yearOptionMouseWheel} onBlur={optionBoxBlur}></div>
         </div>
         <div>
           <span id="month"></span>月

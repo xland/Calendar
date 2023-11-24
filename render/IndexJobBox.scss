@@ -44,6 +44,12 @@
       box-shadow: 0px 0px 6px #999;
       border-radius: 3px;
       width: 56px;
+      display: none;
+      &:focus {
+        display: block;
+        outline: none;
+        border: none;
+      }
       & > div {
         padding-left: 6px;
         padding-right: 6px;
@@ -51,8 +57,11 @@
         line-height: 26px;
         cursor: pointer;
         &:hover {
-          background: #eee;
+          background: #f8f8f8;
         }
+      }
+      .selectedOption {
+        background: #eee !important;
       }
     }
   }
