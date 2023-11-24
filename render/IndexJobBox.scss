@@ -39,15 +39,15 @@
     &:focus {
       outline: none;
     }
-    cursor: pointer;
   }
   .selectColumn {
+    flex: 1;
     height: 150px;
+    display: flex;
     flex-direction: column;
     color: #666;
     background: #eee;
     border-left: 1px dotted #ccc;
-    background: #fff;
     &:first-child {
       flex: 1.3 !important;
       border-left: none !important;
@@ -59,10 +59,11 @@
       text-align: center;
     }
     &:hover {
-      background: #666 !important;
+      background: #ddd !important;
     }
   }
   .selectCell {
+    background: #fff;
     border-top: 1px solid #ddd;
     border-bottom: 1px solid #ddd;
   }
