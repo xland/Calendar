@@ -17,11 +17,22 @@ export default function () {
     let inputId = taEle.nextElementSibling as HTMLInputElement;
     inputId.value = job.Id;
   };
+  let yearOptionMouseWheel = (e: MouseEvent) => {
+    let target = e.currentTarget as HTMLElement;
+    console.log(target);
+  };
   return (
     <div id="IndexJobBox" onLoaded={loaded}>
       <div class="timeBox">
         <div>
-          <span id="year"></span>年
+          <div class="rowItem">
+            <span id="year"></span>年
+          </div>
+          <div class="optionBox" onMouseWheel={yearOptionMouseWheel}>
+            <div>2023年</div>
+            <div>2024年</div>
+            <div>2025年</div>
+          </div>
         </div>
         <div>
           <span id="month"></span>月
