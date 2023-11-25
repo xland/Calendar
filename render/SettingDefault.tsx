@@ -53,7 +53,7 @@ export default function (props) {
     setDefaultView(target);
   };
   return (
-    <div class="settingBox" onLoaded={loaded}>
+    <div class="settingBox" id="settingDefault" onLoaded={loaded}>
       <div id="defaultViewRow" class="settingRow" onClick={defaultViewClick}>
         <div>默认视图：</div>
         <div class="radioItem" data-index="0">

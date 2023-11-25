@@ -34,12 +34,6 @@
   background: #f02c3810;
   text-align: center;
   border-top: 1px solid #f02c3822;
-
-  img {
-    width: 120px;
-    height: 120px;
-    display: inline-block;
-  }
   .drawerTitle {
     height: 26px;
     line-height: 26px;
@@ -63,5 +57,8 @@
         }
       }
     }
+  }
+  .settingBox {
+    color: #666;
   }
 }
