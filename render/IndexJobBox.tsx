@@ -25,6 +25,45 @@ export default function () {
     taEle.value = job.JobInfo;
     let inputId = taEle.nextElementSibling as HTMLInputElement;
     inputId.value = job.Id;
+
+    dom = dom.parentElement.nextElementSibling.firstElementChild as HTMLElement;
+    for (let i = 0; i < 5; i++) {
+      dom.children[i].innerHTML = (startTime.getFullYear() - 2 + i).toString() + "年";
+    }
+    dom = dom.nextElementSibling as HTMLElement;
+    let month = startTime.getMonth() - 1;
+    for (let i = 0; i < 5; i++) {
+      dom.children[i].innerHTML = month.toString() + "月";
+      month += 1;
+      month = month > 12 ? 1 : month;
+    }
+    dom = dom.nextElementSibling as HTMLElement;
+    let date = startTime.getDate();
+    let maxDate = new Date(startTime);
+    maxDate.setMonth(maxDate.getMonth() + 1);
+    maxDate.setDate(0);
+    let max = maxDate.getDate();
+    for (let i = 0; i < 5; i++) {
+      dom.children[i].innerHTML = date.toString() + "日";
+      date += 1;
+      date = date > max ? 1 : date;
+    }
+    dom = dom.nextElementSibling as HTMLElement;
+    let hour = startTime.getHours() - 2;
+    hour = hour < 0 ? 24 + hour : hour;
+    for (let i = 0; i < 5; i++) {
+      dom.children[i].innerHTML = hour.toString() + "时";
+      hour += 1;
+      hour = hour >= 24 ? 0 : hour;
+    }
+    dom = dom.nextElementSibling as HTMLElement;
+    let minute = startTime.getMinutes() - 2;
+    minute = minute < 0 ? 60 + minute : minute;
+    for (let i = 0; i < 5; i++) {
+      dom.children[i].innerHTML = minute.toString() + "分";
+      minute += 1;
+      minute = minute > 59 ? 0 : minute;
+    }
   };
   let timeBtnClick = (e: MouseEvent) => {
     let target = e.currentTarget as HTMLElement;
@@ -36,35 +75,8 @@ export default function () {
     let target = e.currentTarget as HTMLElement;
     target.style.display = "none";
   };
-  let yearOptionMouseWheel = (e: WheelEvent) => {
+  let yearMouseWheel = (e: WheelEvent) => {
     let target = e.currentTarget as HTMLElement;
-    if (target.classList.contains("optionBox")) {
-      let src = target.previousElementSibling.firstElementChild;
-      let year = Number(src.innerHTML);
-      if (e.deltaY < 0) {
-        year -= 3;
-      } else {
-        year -= 1;
-      }
-      target.innerHTML = "";
-      for (let i = year; i < year + 5; i++) {
-        let ele = <div>{i}年</div>;
-        if (i === year + 2) {
-          ele.classList.add("selectedOption");
-        }
-        target.append(ele);
-      }
-      src.innerHTML = (year + 2).toString();
-    } else {
-      let src = target.firstElementChild;
-      let year = Number(src.innerHTML);
-      if (e.deltaY < 0) {
-        year -= 1;
-      } else {
-        year += 1;
-      }
-      src.innerHTML = year.toString();
-    }
   };
   let yearClick = (e: MouseEvent) => {
     let target = e.currentTarget as HTMLElement;
@@ -97,40 +109,40 @@ export default function () {
         <span id="minute1">00</span>
       </div>
       <div class="selectOption" tabindex="-1" onBlur={selectOptionBlur}>
-        <div class="selectColumn" style="width:52px">
-          <div>2023年</div>
-          <div>2023年</div>
-          <div class="selectCell">2023年</div>
-          <div>2023年</div>
-          <div>2023年</div>
+        <div class="selectColumn" style="width:52px" onMouseWheel={yearMouseWheel}>
+          <div></div>
+          <div></div>
+          <div class="selectCell"></div>
+          <div></div>
+          <div></div>
         </div>
         <div class="selectColumn">
-          <div>1月</div>
-          <div>1月</div>
-          <div class="selectCell">1月</div>
-          <div>1月</div>
-          <div>1月</div>
+          <div></div>
+          <div></div>
+          <div class="selectCell"></div>
+          <div></div>
+          <div></div>
         </div>
         <div class="selectColumn">
-          <div>22日</div>
-          <div>23日</div>
-          <div class="selectCell">23日</div>
-          <div>23日</div>
-          <div>23日</div>
+          <div></div>
+          <div></div>
+          <div class="selectCell"></div>
+          <div></div>
+          <div></div>
         </div>
         <div class="selectColumn">
-          <div>06时</div>
-          <div>06时</div>
-          <div class="selectCell">06时</div>
-          <div>06时</div>
-          <div>06时</div>
+          <div></div>
+          <div></div>
+          <div class="selectCell"></div>
+          <div></div>
+          <div></div>
         </div>
         <div class="selectColumn">
-          <div>33分</div>
-          <div>33分</div>
-          <div class="selectCell">33分</div>
-          <div>33分</div>
-          <div>33分</div>
+          <div></div>
+          <div></div>
+          <div class="selectCell"></div>
+          <div></div>
+          <div></div>
         </div>
         <div class="selectColumn selectColumnSpan">
           <div>-</div>
@@ -140,22 +152,21 @@ export default function () {
           <div>-</div>
         </div>
         <div class="selectColumn">
-          <div>06时</div>
-          <div>06时</div>
-          <div class="selectCell">06时</div>
-          <div>06时</div>
-          <div>06时</div>
+          <div></div>
+          <div></div>
+          <div class="selectCell"></div>
+          <div></div>
+          <div></div>
         </div>
         <div class="selectColumn">
-          <div>33分</div>
-          <div>33分</div>
-          <div class="selectCell">33分</div>
-          <div>33分</div>
-          <div>33分</div>
+          <div></div>
+          <div></div>
+          <div class="selectCell"></div>
+          <div></div>
+          <div></div>
         </div>
       </div>
       <div class="selectBtn">不重复</div>
-      <div class="selectOption"></div>
       <div class="textareaBox">
         <textarea id="jobInfo" spellCheck={false} placeholder="事件内容"></textarea>
         <input id="jobId" type="hidden" />
