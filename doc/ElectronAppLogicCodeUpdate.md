@@ -206,7 +206,8 @@ module.exports = main
 
 # 应用程序升级
 
-`electron-updater`允许开发者把安装包提前下载到用户的缓存目录下
+
+开发者可以使用`electron-updater`安装程序下载到用户的缓存目录下（静默下载）
 
 ```ts
 let macPath = path.join(app.getPath('appData'), `Application Support/Caches/appName-updater/pending`)
