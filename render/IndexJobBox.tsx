@@ -64,6 +64,23 @@ export default function () {
       minute += 1;
       minute = minute > 59 ? 0 : minute;
     }
+
+    dom = dom.nextElementSibling.nextElementSibling as HTMLElement;
+    hour = endTime.getHours() - 2;
+    hour = hour < 0 ? 24 + hour : hour;
+    for (let i = 0; i < 5; i++) {
+      dom.children[i].innerHTML = hour.toString() + "时";
+      hour += 1;
+      hour = hour >= 24 ? 0 : hour;
+    }
+    dom = dom.nextElementSibling as HTMLElement;
+    minute = endTime.getMinutes() - 2;
+    minute = minute < 0 ? 60 + minute : minute;
+    for (let i = 0; i < 5; i++) {
+      dom.children[i].innerHTML = minute.toString() + "分";
+      minute += 1;
+      minute = minute > 59 ? 0 : minute;
+    }
   };
   let timeBtnClick = (e: MouseEvent) => {
     let target = e.currentTarget as HTMLElement;

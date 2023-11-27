@@ -80,6 +80,9 @@ document.addEventListener("DOMContentLoaded", async () => {
   } else {
     job = new ModelJob();
     job.StartTime = Number(url.searchParams.get("startTime"));
+    let endTime = new Date(job.StartTime);
+    endTime.setHours(endTime.getHours() + 1);
+    job.EndTime = endTime.getTime();
     job.ColorIndex = Number(url.searchParams.get("colorIndex"));
     job.JobInfo = "";
     job.Id = "";
