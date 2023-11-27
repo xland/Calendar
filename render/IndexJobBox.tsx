@@ -94,6 +94,26 @@ export default function () {
   };
   let yearMouseWheel = (e: WheelEvent) => {
     let target = e.currentTarget as HTMLElement;
+    for (let i = 0; i < 5; i++) {}
+  };
+  let monthMouseWheel = (e: WheelEvent) => {
+    let target = e.currentTarget as HTMLElement;
+  };
+
+  let dateMouseWheel = (e: WheelEvent) => {
+    let target = e.currentTarget as HTMLElement;
+  };
+  let hour1MouseWheel = (e: WheelEvent) => {
+    let target = e.currentTarget as HTMLElement;
+  };
+  let minute1MouseWheel = (e: WheelEvent) => {
+    let target = e.currentTarget as HTMLElement;
+  };
+  let hour2MouseWheel = (e: WheelEvent) => {
+    let target = e.currentTarget as HTMLElement;
+  };
+  let minute2MouseWheel = (e: WheelEvent) => {
+    let target = e.currentTarget as HTMLElement;
   };
   let yearClick = (e: MouseEvent) => {
     let target = e.currentTarget as HTMLElement;
@@ -133,28 +153,28 @@ export default function () {
           <div></div>
           <div></div>
         </div>
-        <div class="selectColumn">
+        <div class="selectColumn" onMouseWheel={monthMouseWheel}>
           <div></div>
           <div></div>
           <div class="selectCell"></div>
           <div></div>
           <div></div>
         </div>
-        <div class="selectColumn">
+        <div class="selectColumn" onMouseWheel={dateMouseWheel}>
           <div></div>
           <div></div>
           <div class="selectCell"></div>
           <div></div>
           <div></div>
         </div>
-        <div class="selectColumn">
+        <div class="selectColumn" onMouseWheel={hour1MouseWheel}>
           <div></div>
           <div></div>
           <div class="selectCell"></div>
           <div></div>
           <div></div>
         </div>
-        <div class="selectColumn">
+        <div class="selectColumn" onMouseWheel={minute1MouseWheel}>
           <div></div>
           <div></div>
           <div class="selectCell"></div>
@@ -168,14 +188,14 @@ export default function () {
           <div>-</div>
           <div>-</div>
         </div>
-        <div class="selectColumn">
+        <div class="selectColumn" onMouseWheel={hour2MouseWheel}>
           <div></div>
           <div></div>
           <div class="selectCell"></div>
           <div></div>
           <div></div>
         </div>
-        <div class="selectColumn">
+        <div class="selectColumn" onMouseWheel={minute2MouseWheel}>
           <div></div>
           <div></div>
           <div class="selectCell"></div>
