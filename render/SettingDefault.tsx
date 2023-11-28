@@ -17,16 +17,7 @@ export default function (props) {
     icon.classList.add("icon-jietutubiao_yuan");
     target.firstElementChild.firstElementChild.classList.add("icon-woderilixuanzhong");
   };
-  let openAtLoginClick = async (e: MouseEvent) => {
-    let icon = document.getElementById("openAtLoginIcon");
-    let flag = !icon.classList.contains("icon-check");
-    let { ipcRenderer } = require("electron");
-    await ipcRenderer.invoke("setOpenAtLogin", flag);
-    dataSetting.setting.OpenAtLogin = flag;
-    setCheckBox(icon, flag);
-    return false;
-  };
-  let defaultViewClick = async (e: MouseEvent) => {
+  let checkOneItem = (e: MouseEvent) => {
     let target = e.target as HTMLElement;
     if (target.tagName === "I") {
       target = target.parentElement.parentElement;
@@ -40,17 +31,67 @@ export default function (props) {
       return;
     }
     setDefaultView(target);
+    return target;
+  };
+  let openAtLoginClick = async (e: MouseEvent) => {
+    let icon = document.getElementById("openAtLoginIcon");
+    let flag = !icon.classList.contains("icon-check");
+    let { ipcRenderer } = require("electron");
+    await ipcRenderer.invoke("setOpenAtLogin", flag);
+    dataSetting.setting.OpenAtLogin = flag;
+    setCheckBox(icon, flag);
+    return false;
+  };
+  let defaultViewClick = async (e: MouseEvent) => {
+    let target = checkOneItem(e);
     let val = Number(target.dataset.index);
     let { ipcRenderer } = require("electron");
     let sql = `Update Setting set ViewDefault = ?`;
     await ipcRenderer.invoke("excuteSQL", sql, val);
+    dataSetting.setting.ViewDefault = val;
+  };
+  let defaultLangClick = async (e: MouseEvent) => {
+    let target = checkOneItem(e);
+    let val = Number(target.dataset.index);
+    let { ipcRenderer } = require("electron");
+    let sql = `Update Setting set LangDefault = ?`;
+    await ipcRenderer.invoke("excuteSQL", sql, val);
+    dataSetting.setting.LangDefault = val;
+  };
+  let alertBeforeClick = async (e: MouseEvent) => {
+    let target = checkOneItem(e);
+    let val = Number(target.dataset.index);
+    let { ipcRenderer } = require("electron");
+    let sql = `Update Setting set AlertBefore = ?`;
+    await ipcRenderer.invoke("excuteSQL", sql, val);
+    dataSetting.setting.AlertBefore = val;
+  };
+  let defaultSkinClick = async (e: MouseEvent) => {
+    let target = checkOneItem(e);
+    let val = Number(target.dataset.index);
+    let { ipcRenderer } = require("electron");
+    let sql = `Update Setting set SkinDefault = ?`;
+    await ipcRenderer.invoke("excuteSQL", sql, val);
+    dataSetting.setting.SkinDefault = val;
   };
   let loaded = async () => {
     let icon = document.getElementById("openAtLoginIcon");
     setCheckBox(icon, dataSetting.setting.OpenAtLogin);
-    let defaultViewRow = document.getElementById("defaultViewRow");
-    let target = defaultViewRow.children[dataSetting.setting.ViewDefault + 1] as HTMLElement;
-    setDefaultView(target);
+    let row = document.getElementById("defaultViewRow");
+    let dom = row.children[dataSetting.setting.ViewDefault + 1] as HTMLElement;
+    setDefaultView(dom);
+
+    row = row.nextElementSibling as HTMLElement;
+    dom = row.children[dataSetting.setting.LangDefault + 1] as HTMLElement;
+    setDefaultView(dom);
+
+    row = row.nextElementSibling as HTMLElement;
+    dom = row.children[dataSetting.setting.AlertBefore + 1] as HTMLElement;
+    setDefaultView(dom);
+
+    row = row.nextElementSibling as HTMLElement;
+    dom = row.children[dataSetting.setting.SkinDefault + 1] as HTMLElement;
+    setDefaultView(dom);
   };
   return (
     <div class="settingBox" id="settingDefault" onLoaded={loaded}>
@@ -81,63 +122,63 @@ export default function (props) {
           <div>记住上次视图</div>
         </div>
       </div>
-      <div id="langRow" class="settingRow" onClick={defaultViewClick}>
+      <div id="langRow" class="settingRow" onClick={defaultLangClick}>
         <div>默认语言：</div>
-        <div class="radioItem" data-index="1">
-          <div>
-            <i class="iconfont icon-jietutubiao_yuan"></i>
-          </div>
-          <div>英文</div>
-        </div>
         <div class="radioItem" data-index="0">
           <div>
             <i class="iconfont icon-woderilixuanzhong"></i>
           </div>
           <div>简体中文</div>
         </div>
-        <div class="radioItem">
+        <div class="radioItem" data-index="1">
           <div>
             <i class="iconfont icon-jietutubiao_yuan"></i>
           </div>
           <div>繁体中文</div>
         </div>
+        <div class="radioItem" data-index="2">
+          <div>
+            <i class="iconfont icon-jietutubiao_yuan"></i>
+          </div>
+          <div>英文</div>
+        </div>
       </div>
-      <div id="langRow" class="settingRow" onClick={defaultViewClick}>
+      <div id="langRow" class="settingRow" onClick={alertBeforeClick}>
         <div>提前提醒：</div>
-        <div class="radioItem" data-index="1">
+        <div class="radioItem" data-index="0">
           <div>
             <i class="iconfont icon-jietutubiao_yuan"></i>
           </div>
           <div>5分钟</div>
         </div>
-        <div class="radioItem" data-index="0">
+        <div class="radioItem" data-index="1">
           <div>
             <i class="iconfont icon-woderilixuanzhong"></i>
           </div>
           <div>15分钟</div>
         </div>
-        <div class="radioItem">
+        <div class="radioItem" data-index="2">
           <div>
             <i class="iconfont icon-jietutubiao_yuan"></i>
           </div>
           <div>30分钟</div>
         </div>
       </div>
-      <div id="langRow" class="settingRow" onClick={defaultViewClick}>
+      <div id="langRow" class="settingRow" onClick={defaultSkinClick}>
         <div>系统皮肤：</div>
-        <div class="radioItem" data-index="1">
+        <div class="radioItem" data-index="0">
           <div>
             <i class="iconfont icon-jietutubiao_yuan"></i>
           </div>
           <div>红</div>
         </div>
-        <div class="radioItem" data-index="0">
+        <div class="radioItem" data-index="1">
           <div>
             <i class="iconfont icon-woderilixuanzhong"></i>
           </div>
           <div>绿</div>
         </div>
-        <div class="radioItem">
+        <div class="radioItem" data-index="2">
           <div>
             <i class="iconfont icon-jietutubiao_yuan"></i>
           </div>

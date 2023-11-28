@@ -2,7 +2,9 @@ import { ModelBase } from "./ModelBase";
 
 export class ModelSetting extends ModelBase{
     ViewDefault:number
-    OpenAtLogin:boolean    
+    LangDefault:number
+    OpenAtLogin:boolean
+    SkinDefault:number
     /**
     * 提前几分钟提醒
     */

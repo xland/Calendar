@@ -19,9 +19,8 @@ export class Db{
         let sql = `CREATE TABLE Job(Id VARCHAR2(36) NOT NULL ON CONFLICT FAIL UNIQUE ON CONFLICT FAIL, CreateTime BIGINT,UpdateTime BIGINT,DeleteTime BIGINT,IsDelete BOOLEAN, 
 JobInfo TEXT,RepeatType INT,RepeatTimes INT,RepeatEndDay INT,StartTime BIGINT,EndTime BIGINT,ColorIndex INT);          
 CREATE INDEX JobInfo_Index ON Job(JobInfo);
-CREATE TABLE Setting(ViewDefault INT DEFAULT 0,AlertBefore INT);
-INSERT INTO Setting (ViewDefault) VALUES (0);
-`
+CREATE TABLE Setting(ViewDefault INT DEFAULT 0,LangDefault INT DEFAULT 0,SkinDefault INT DEFAULT 0,AlertBefore INT);
+INSERT INTO Setting (ViewDefault,LangDefault,SkinDefault,AlertBefore) VALUES (0,0,0,5);`
         try{
             this.db = new Database(dbPath,{ timeout:8000 })
             this.db.pragma('journal_mode = WAL');
