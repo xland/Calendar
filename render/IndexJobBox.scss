@@ -48,7 +48,7 @@
       background: #dfdfdf;
     }
   }
-  .selectOption {
+  #selectOption {
     position: absolute;
     width: 160px;
     left: 18px;
@@ -57,11 +57,10 @@
     border-bottom: none;
     box-shadow: 0px 0px 6px #ddd;
     overflow: hidden;
-    // display: none;
-    display: flex;
-    flex-direction: column;
+    display: none;
     z-index: 2;
     background: #eee;
+    cursor: pointer;
     &:focus {
       outline: none;
     }
@@ -69,6 +68,9 @@
     div {
       padding-left: 8px;
       border-bottom: 1px solid #aaa;
+      &:hover {
+        background: #fefefe;
+      }
     }
   }
   .selectColumnSpan {

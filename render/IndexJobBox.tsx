@@ -8,6 +8,7 @@ export default function () {
     let startTime = new Date(job.StartTime);
     let endTime = new Date(job.EndTime);
     let dom = document.getElementById("IndexJobBox").firstElementChild.firstElementChild as HTMLElement;
+    //todo to dom.children[0]
     dom.innerHTML = startTime.getFullYear().toString() + "年";
     dom = dom.nextElementSibling as HTMLElement;
     dom.innerHTML = (startTime.getMonth() + 1).toString() + "月";
@@ -25,6 +26,11 @@ export default function () {
     taEle.value = job.JobInfo;
     let inputId = taEle.nextElementSibling as HTMLInputElement;
     inputId.value = job.Id;
+    let arr = ["日", "一", "二", "三", "四", "五", "六"];
+    dom = taEle.parentElement.previousElementSibling as HTMLElement;
+    dom.children[3].innerHTML = `每周${arr[startTime.getDay()]}`;
+    dom.children[4].innerHTML = `每月第${startTime.getDate()}天`;
+    dom.children[5].innerHTML = `每年${startTime.getMonth() + 1}月${startTime.getDate()}日`;
   };
   let timeItemClick = (e: MouseEvent) => {
     let target = e.target as HTMLElement;
@@ -68,23 +74,32 @@ export default function () {
       if (num < 1) num = max;
       if (num > max) num = 1;
       target.innerHTML = num.toString() + "日";
-    } else if (id === "hour0") {
+    } else if (id.startsWith("hour")) {
       if (num < 0) num = 59;
       if (num > 59) num = 0;
       target.innerHTML = num.toString().padStart(2, "0") + "时";
-    } else if (id === "minute0") {
-      if (num < 0) num = 59;
-      if (num > 59) num = 0;
-      target.innerHTML = num.toString().padStart(2, "0") + "分";
-    } else if (id === "hour1") {
-      if (num < 0) num = 59;
-      if (num > 59) num = 0;
-      target.innerHTML = num.toString().padStart(2, "0") + "时";
-    } else if (id === "minute1") {
+    } else if (id.startsWith("minute")) {
       if (num < 0) num = 59;
       if (num > 59) num = 0;
       target.innerHTML = num.toString().padStart(2, "0") + "分";
     }
+  };
+  let repeatBtnClick = (e: MouseEvent) => {
+    let target = e.currentTarget as HTMLElement;
+    target = target.nextElementSibling as HTMLElement;
+    target.style.display = "block";
+    target.focus();
+  };
+  let selectOptionClick = (e: MouseEvent) => {
+    let target = e.target as HTMLElement;
+    let val = target.innerHTML;
+    target = e.currentTarget as HTMLElement;
+    target.style.display = "none";
+    target.previousElementSibling.innerHTML = val;
+  };
+  let selectOptionBlur = (e: MouseEvent) => {
+    let target = e.currentTarget as HTMLElement;
+    target.style.display = "none";
   };
   return (
     <div id="IndexJobBox" onLoaded={loaded}>
@@ -98,15 +113,16 @@ export default function () {
         <div class="timeItem" id="hour1"></div>
         <div class="timeItem" id="minute1"></div>
       </div>
-      <div class="repeatBtn">不重复</div>
-      <div class="selectOption">
+      <div class="repeatBtn" onClick={repeatBtnClick}>
+        不重复
+      </div>
+      <div tabindex="-1" id="selectOption" onClick={selectOptionClick} onBlur={selectOptionBlur}>
         <div>不重复</div>
         <div>每天</div>
-        <div>每天</div>
-        <div>每天</div>
-        <div>每天</div>
-        <div>每天</div>
-        <div>每天</div>
+        <div>每个工作日</div>
+        <div></div>
+        <div></div>
+        <div></div>
       </div>
       <div class="textareaBox">
         <textarea id="jobInfo" spellCheck={false} placeholder="事件内容"></textarea>
