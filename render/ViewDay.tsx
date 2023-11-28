@@ -21,7 +21,7 @@ export default function () {
     let hour = parseInt(startHour.split(":")[0]);
     let startTime = new Date(dateObj.year, dateObj.month - 1, dateObj.day, hour, 0, 0, 0);
     let config = {
-      winConfig: { width: 400, height: 300, title: "增加日程", minHeight: 280, minWidth: 380, modal: true },
+      winConfig: { width: 480, height: 380, title: "增加日程", minHeight: 380, minWidth: 480 },
       extraConfig: {},
     };
     window.open(`/IndexJob.html?colorIndex=${colorIndex}&startTime=${startTime.getTime()}`, "_blank", JSON.stringify(config));

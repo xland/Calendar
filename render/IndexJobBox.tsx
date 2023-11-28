@@ -99,6 +99,15 @@ export default function () {
         <div class="timeItem" id="minute1"></div>
       </div>
       <div class="repeatBtn">不重复</div>
+      <div class="selectOption">
+        <div>不重复</div>
+        <div>每天</div>
+        <div>每天</div>
+        <div>每天</div>
+        <div>每天</div>
+        <div>每天</div>
+        <div>每天</div>
+      </div>
       <div class="textareaBox">
         <textarea id="jobInfo" spellCheck={false} placeholder="事件内容"></textarea>
         <input id="jobId" type="hidden" />

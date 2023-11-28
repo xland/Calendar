@@ -8,7 +8,7 @@ export default function (props) {
       let id = target.parentElement.dataset.id;
       if (target.innerHTML === "增加") {
         let config = {
-          winConfig: { width: 400, height: 300, title: "增加日程", minHeight: 280, minWidth: 380, modal: true },
+          winConfig: { width: 480, height: 380, title: "增加日程", minHeight: 380, minWidth: 480 },
           extraConfig: {},
         };
         let data = dataMonth.dateArr[dataMonth.getCurDateIndex()].jobs;
@@ -23,7 +23,7 @@ export default function (props) {
         document.getElementById("ModalMask").style.display = "block";
       } else if (target.innerHTML === "修改") {
         let config = {
-          winConfig: { width: 400, height: 300, title: "修改日程", minHeight: 280, minWidth: 380 },
+          winConfig: { width: 480, height: 380, title: "修改日程", minHeight: 380, minWidth: 480 },
           extraConfig: {},
         };
         window.open(`/IndexJob.html?editId=${id}`, "_blank", JSON.stringify(config));

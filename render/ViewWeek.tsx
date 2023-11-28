@@ -21,7 +21,7 @@ export default function () {
     }
     let startTime = new Date(dateObj.year, dateObj.month - 1, dateObj.day, 8, 0, 0, 0);
     let config = {
-      winConfig: { width: 400, height: 300, title: "增加日程", minHeight: 280, minWidth: 380, modal: true },
+      winConfig: { width: 480, height: 380, title: "增加日程", minHeight: 380, minWidth: 480 },
       extraConfig: {},
     };
     window.open(`/IndexJob.html?colorIndex=${colorIndex}&startTime=${startTime.getTime()}`, "_blank", JSON.stringify(config));
@@ -30,7 +30,7 @@ export default function () {
   let jobDbClick = (e: MouseEvent) => {
     let id = (e.target as HTMLElement).dataset.id;
     let config = {
-      winConfig: { width: 400, height: 300, title: "修改日程", minHeight: 280, minWidth: 380 },
+      winConfig: { width: 480, height: 380, title: "修改日程", minHeight: 380, minWidth: 480 },
       extraConfig: {},
     };
     window.open(`/IndexJob.html?editId=${id}`, "_blank", JSON.stringify(config));

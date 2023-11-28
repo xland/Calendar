@@ -50,48 +50,26 @@
   }
   .selectOption {
     position: absolute;
-    width: 320px;
-    height: 150px;
+    width: 160px;
     left: 18px;
-    top: 5px;
+    top: 38px;
     border: 1px solid #aaa;
-    border-radius: 3px;
+    border-bottom: none;
     box-shadow: 0px 0px 6px #ddd;
     overflow: hidden;
     // display: none;
     display: flex;
+    flex-direction: column;
     z-index: 2;
+    background: #eee;
     &:focus {
       outline: none;
     }
-  }
-  .selectColumn {
-    flex: 1;
-    height: 150px;
-    display: flex;
-    flex-direction: column;
-    color: #666;
-    background: #eee;
-    border-left: 1px dotted #ccc;
-    &:hover {
-      background: #e2e6e8;
-    }
-    &:first-child {
-      flex: 1.3 !important;
-      border-left: none !important;
-    }
+
     div {
-      height: 30px;
-      line-height: 30px;
-      color: #333;
-      text-align: center;
-      cursor: pointer;
+      padding-left: 8px;
+      border-bottom: 1px solid #aaa;
     }
-  }
-  .selectCell {
-    background: #fff;
-    border-top: 1px solid #bbb;
-    border-bottom: 1px solid #bbb;
   }
   .selectColumnSpan {
     flex: 0.5 !important;

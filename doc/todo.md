@@ -8,6 +8,7 @@
 - 小日历：今天
 - 删除时 confirm
 - 记住上一次的视图
+- winConfig太多
 
 
 

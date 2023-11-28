@@ -7,7 +7,7 @@ export default function (props) {
     let id = target.getAttribute("id");
     if (!id) return;
     let config = {
-      winConfig: { width: 400, height: 300, title: "修改日程", minHeight: 280, minWidth: 380 },
+      winConfig: { width: 480, height: 380, title: "修改日程", minHeight: 380, minWidth: 480 },
       extraConfig: {},
     };
     window.open(`/IndexJob.html?editId=${id}`, "_blank", JSON.stringify(config));
