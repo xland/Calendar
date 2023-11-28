@@ -11,17 +11,24 @@ function App(props) {
 
   let getData = () => {
     let timeBox = document.getElementById("IndexJobBox").firstElementChild;
-    let year = parseInt(timeBox.querySelector("#year").innerHTML);
-    let month = parseInt(timeBox.querySelector("#month").innerHTML);
-    let date = parseInt(timeBox.querySelector("#date").innerHTML);
-    let hour0 = parseInt(timeBox.querySelector("#hour0").innerHTML);
-    let minute0 = parseInt(timeBox.querySelector("#minute0").innerHTML);
-    let hour1 = parseInt(timeBox.querySelector("#hour1").innerHTML);
-    let minute1 = parseInt(timeBox.querySelector("#minute1").innerHTML);
+    let year = parseInt(timeBox.children[0].innerHTML);
+    let month = parseInt(timeBox.children[1].innerHTML);
+    let date = parseInt(timeBox.children[2].innerHTML);
+    let hour0 = parseInt(timeBox.children[3].innerHTML);
+    let minute0 = parseInt(timeBox.children[4].innerHTML);
+    let hour1 = parseInt(timeBox.children[6].innerHTML);
+    let minute1 = parseInt(timeBox.children[7].innerHTML);
     let job = new ModelJob();
     job.StartTime = new Date(year, month - 1, date, hour0, minute0, 0, 0).getTime();
     job.EndTime = new Date(year, month - 1, date, hour1, minute1, 0, 0).getTime();
-    job.RepeatType = 0;
+    let repeatDom = timeBox.nextElementSibling;
+    let repeatOption = repeatDom.nextElementSibling;
+    for (let i = 0; i < 5; i++) {
+      if (repeatOption.children[i].innerHTML === repeatDom.innerHTML) {
+        job.RepeatType = i;
+        break;
+      }
+    }
     let taEle = document.getElementById("jobInfo") as HTMLTextAreaElement;
     let inputId = taEle.nextElementSibling as HTMLInputElement;
     job.JobInfo = taEle.value;

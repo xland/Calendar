@@ -7,21 +7,16 @@ export default function () {
     let job = e.detail as ModelJob;
     let startTime = new Date(job.StartTime);
     let endTime = new Date(job.EndTime);
-    let dom = document.getElementById("IndexJobBox").firstElementChild.firstElementChild as HTMLElement;
-    //todo to dom.children[0]
-    dom.innerHTML = startTime.getFullYear().toString() + "年";
+    let dom = document.getElementById("IndexJobBox").firstElementChild as HTMLElement;
+    dom.children[0].innerHTML = startTime.getFullYear().toString() + "年";
+    dom.children[1].innerHTML = (startTime.getMonth() + 1).toString() + "月";
+    dom.children[2].innerHTML = startTime.getDate().toString() + "日";
+    dom.children[3].innerHTML = startTime.getHours().toString().padStart(2, "0") + "时";
+    dom.children[4].innerHTML = startTime.getMinutes().toString().padStart(2, "0") + "分";
+    dom.children[6].innerHTML = endTime.getHours().toString().padStart(2, "0") + "时";
+    dom.children[7].innerHTML = endTime.getMinutes().toString().padStart(2, "0") + "分";
     dom = dom.nextElementSibling as HTMLElement;
-    dom.innerHTML = (startTime.getMonth() + 1).toString() + "月";
-    dom = dom.nextElementSibling as HTMLElement;
-    dom.innerHTML = startTime.getDate().toString() + "日";
-    dom = dom.nextElementSibling as HTMLElement;
-    dom.innerHTML = startTime.getHours().toString().padStart(2, "0") + "时";
-    dom = dom.nextElementSibling as HTMLElement;
-    dom.innerHTML = startTime.getMinutes().toString().padStart(2, "0") + "分";
-    dom = dom.nextElementSibling.nextElementSibling as HTMLElement;
-    dom.innerHTML = endTime.getHours().toString().padStart(2, "0") + "时";
-    dom = dom.nextElementSibling as HTMLElement;
-    dom.innerHTML = endTime.getMinutes().toString().padStart(2, "0") + "分";
+    dom.innerHTML = dom.nextElementSibling.children[job.RepeatType].innerHTML;
     let taEle = document.getElementById("jobInfo") as HTMLTextAreaElement;
     taEle.value = job.JobInfo;
     let inputId = taEle.nextElementSibling as HTMLInputElement;
@@ -35,6 +30,7 @@ export default function () {
   let timeItemClick = (e: MouseEvent) => {
     let target = e.target as HTMLElement;
     if (!target.classList.contains("timeItem")) return;
+    //todo 显示输入框
   };
   let getCurMonthMaxDate = (dom: HTMLElement) => {
     let year = dom.children[0].innerHTML;
@@ -112,6 +108,7 @@ export default function () {
         <div class="timeBlank">至</div>
         <div class="timeItem" id="hour1"></div>
         <div class="timeItem" id="minute1"></div>
+        <div style="display:inline-block">（鼠标滚轮控制）</div>
       </div>
       <div class="repeatBtn" onClick={repeatBtnClick}>
         不重复
@@ -125,7 +122,7 @@ export default function () {
         <div></div>
       </div>
       <div class="textareaBox">
-        <textarea id="jobInfo" spellCheck={false} placeholder="事件内容"></textarea>
+        <textarea id="jobInfo" spellCheck={false} placeholder="日程内容"></textarea>
         <input id="jobId" type="hidden" />
       </div>
     </div>
