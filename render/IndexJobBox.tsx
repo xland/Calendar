@@ -12,250 +12,93 @@ export default function () {
     dom = dom.nextElementSibling as HTMLElement;
     dom.innerHTML = (startTime.getMonth() + 1).toString() + "月";
     dom = dom.nextElementSibling as HTMLElement;
-    dom.innerHTML = startTime.getDate().toString() + "日 &nbsp;";
+    dom.innerHTML = startTime.getDate().toString() + "日";
     dom = dom.nextElementSibling as HTMLElement;
-    dom.innerHTML = startTime.getHours().toString().padStart(2, "0") + ":";
+    dom.innerHTML = startTime.getHours().toString().padStart(2, "0") + "时";
     dom = dom.nextElementSibling as HTMLElement;
-    dom.innerHTML = startTime.getMinutes().toString().padStart(2, "0") + "——";
+    dom.innerHTML = startTime.getMinutes().toString().padStart(2, "0") + "分";
+    dom = dom.nextElementSibling.nextElementSibling as HTMLElement;
+    dom.innerHTML = endTime.getHours().toString().padStart(2, "0") + "时";
     dom = dom.nextElementSibling as HTMLElement;
-    dom.innerHTML = endTime.getHours().toString().padStart(2, "0") + ":";
-    dom = dom.nextElementSibling as HTMLElement;
-    dom.innerHTML = endTime.getMinutes().toString().padStart(2, "0");
+    dom.innerHTML = endTime.getMinutes().toString().padStart(2, "0") + "分";
     let taEle = document.getElementById("jobInfo") as HTMLTextAreaElement;
     taEle.value = job.JobInfo;
     let inputId = taEle.nextElementSibling as HTMLInputElement;
     inputId.value = job.Id;
-
-    dom = dom.parentElement.nextElementSibling.firstElementChild as HTMLElement;
-    for (let i = 0; i < 5; i++) {
-      dom.children[i].innerHTML = (startTime.getFullYear() - 2 + i).toString() + "年";
-    }
-    dom = dom.nextElementSibling as HTMLElement;
-    let month = startTime.getMonth() - 1;
-    for (let i = 0; i < 5; i++) {
-      dom.children[i].innerHTML = month.toString() + "月";
-      month += 1;
-      month = month > 12 ? 1 : month;
-    }
-    dom = dom.nextElementSibling as HTMLElement;
-    let date = startTime.getDate();
-    let maxDate = new Date(startTime);
-    maxDate.setMonth(maxDate.getMonth() + 1);
-    maxDate.setDate(0);
-    let max = maxDate.getDate();
-    for (let i = 0; i < 5; i++) {
-      dom.children[i].innerHTML = date.toString() + "日";
-      date += 1;
-      date = date > max ? 1 : date;
-    }
-    dom = dom.nextElementSibling as HTMLElement;
-    let hour = startTime.getHours() - 2;
-    hour = hour < 0 ? 24 + hour : hour;
-    for (let i = 0; i < 5; i++) {
-      dom.children[i].innerHTML = hour.toString() + "时";
-      hour += 1;
-      hour = hour >= 24 ? 0 : hour;
-    }
-    dom = dom.nextElementSibling as HTMLElement;
-    let minute = startTime.getMinutes() - 2;
-    minute = minute < 0 ? 60 + minute : minute;
-    for (let i = 0; i < 5; i++) {
-      dom.children[i].innerHTML = minute.toString() + "分";
-      minute += 1;
-      minute = minute > 59 ? 0 : minute;
-    }
-
-    dom = dom.nextElementSibling.nextElementSibling as HTMLElement;
-    hour = endTime.getHours() - 2;
-    hour = hour < 0 ? 24 + hour : hour;
-    for (let i = 0; i < 5; i++) {
-      dom.children[i].innerHTML = hour.toString() + "时";
-      hour += 1;
-      hour = hour >= 24 ? 0 : hour;
-    }
-    dom = dom.nextElementSibling as HTMLElement;
-    minute = endTime.getMinutes() - 2;
-    minute = minute < 0 ? 60 + minute : minute;
-    for (let i = 0; i < 5; i++) {
-      dom.children[i].innerHTML = minute.toString() + "分";
-      minute += 1;
-      minute = minute > 59 ? 0 : minute;
-    }
   };
-  let timeBtnClick = (e: MouseEvent) => {
-    let target = e.currentTarget as HTMLElement;
-    target = target.nextElementSibling as HTMLElement;
-    target.style.display = "block";
-    target.focus();
+  let timeItemClick = (e: MouseEvent) => {
+    let target = e.target as HTMLElement;
+    if (!target.classList.contains("timeItem")) return;
   };
-  let selectOptionBlur = (e: Event) => {
-    let target = e.currentTarget as HTMLElement;
-    target.style.display = "none";
-  };
-
-  let getCurMonthData = () => {
-    let doms = document.querySelectorAll(".selectCell");
-    let year = doms[0].innerHTML;
-    let month = doms[1].innerHTML;
-    let date = doms[2].innerHTML;
+  let getCurMonthMaxDate = (dom: HTMLElement) => {
+    let year = dom.children[0].innerHTML;
+    let month = dom.children[1].innerHTML;
     year = year.substring(0, year.length - 1);
     month = month.substring(0, month.length - 1);
-    date = date.substring(0, date.length - 1);
-
     let dateObj = new Date(Number(year), Number(month), 0);
     let result = dateObj.getDate();
-    if (Number(date) > result) {
-      let dateColumn = document.getElementById("dateColumn");
-      let date = result - 2;
-      for (let i = 0; i < 5; i++) {
-        dateColumn.children[i].innerHTML = date.toString() + "月";
-        date += 1;
-        date = date > result ? 1 : date;
-      }
-    }
     return result;
   };
-
-  let yearMouseWheel = (e: WheelEvent) => {
-    let target = e.currentTarget as HTMLElement;
+  let currectCurMonthDate = (date: number, dom: HTMLElement) => {
+    let str = dom.children[2].innerHTML;
+    str = str.substring(0, str.length - 1);
+    if (Number(str) > date) {
+      dom.children[2].innerHTML = date.toString() + "日";
+    }
+  };
+  let timeItemWheel = (e: WheelEvent) => {
+    let target = e.target as HTMLElement;
+    if (!target.classList.contains("timeItem")) return;
+    let id = target.getAttribute("id");
     let val = e.deltaY < 0 ? -1 : 1;
-    for (let i = 0; i < 5; i++) {
-      let str = target.children[i].innerHTML;
-      let num = Number(str.substring(0, str.length - 1)) + val;
-      target.children[i].innerHTML = num.toString() + "年";
+    let str = target.innerHTML;
+    let num = Number(str.substring(0, str.length - 1)) + val;
+    if (id === "year") {
+      target.innerHTML = num.toString() + "年";
+      let max = getCurMonthMaxDate(e.currentTarget as HTMLElement);
+      currectCurMonthDate(max, e.currentTarget as HTMLElement);
+    } else if (id === "month") {
+      if (num < 1) num = 12;
+      if (num > 12) num = 1;
+      target.innerHTML = num.toString() + "月";
+      let max = getCurMonthMaxDate(e.currentTarget as HTMLElement);
+      currectCurMonthDate(max, e.currentTarget as HTMLElement);
+    } else if (id === "date") {
+      let max = getCurMonthMaxDate(e.currentTarget as HTMLElement);
+      if (num < 1) num = max;
+      if (num > max) num = 1;
+      target.innerHTML = num.toString() + "日";
+    } else if (id === "hour0") {
+      if (num < 0) num = 59;
+      if (num > 59) num = 0;
+      target.innerHTML = num.toString().padStart(2, "0") + "时";
+    } else if (id === "minute0") {
+      if (num < 0) num = 59;
+      if (num > 59) num = 0;
+      target.innerHTML = num.toString().padStart(2, "0") + "分";
+    } else if (id === "hour1") {
+      if (num < 0) num = 59;
+      if (num > 59) num = 0;
+      target.innerHTML = num.toString().padStart(2, "0") + "时";
+    } else if (id === "minute1") {
+      if (num < 0) num = 59;
+      if (num > 59) num = 0;
+      target.innerHTML = num.toString().padStart(2, "0") + "分";
     }
-    getCurMonthData();
-  };
-  let monthMouseWheel = (e: WheelEvent) => {
-    let target = e.currentTarget as HTMLElement;
-    let val = e.deltaY < 0 ? -1 : 1;
-    for (let i = 0; i < 5; i++) {
-      let str = target.children[i].innerHTML;
-      let num = Number(str.substring(0, str.length - 1)) + val;
-      if (num < 1) {
-        num = 12;
-      }
-      if (num > 12) {
-        num = 1;
-      }
-      target.children[i].innerHTML = num.toString() + "月";
-    }
-    getCurMonthData();
-  };
-
-  let dateMouseWheel = (e: WheelEvent) => {
-    let target = e.currentTarget as HTMLElement;
-    let val = e.deltaY < 0 ? -1 : 1;
-    let maxDate = getCurMonthData();
-    for (let i = 0; i < 5; i++) {
-      let str = target.children[i].innerHTML;
-      let num = Number(str.substring(0, str.length - 1)) + val;
-      if (num < 1) num = maxDate;
-      if (num > maxDate) num = 1;
-      target.children[i].innerHTML = num.toString() + "日";
-    }
-  };
-  let hour1MouseWheel = (e: WheelEvent) => {
-    let target = e.currentTarget as HTMLElement;
-  };
-  let minute1MouseWheel = (e: WheelEvent) => {
-    let target = e.currentTarget as HTMLElement;
-  };
-  let hour2MouseWheel = (e: WheelEvent) => {
-    let target = e.currentTarget as HTMLElement;
-  };
-  let minute2MouseWheel = (e: WheelEvent) => {
-    let target = e.currentTarget as HTMLElement;
-  };
-  let yearClick = (e: MouseEvent) => {
-    let target = e.currentTarget as HTMLElement;
-    let year = Number(target.firstElementChild.innerHTML);
-    target = target.nextElementSibling as HTMLElement;
-    target.innerHTML = "";
-    for (let i = -2; i < 3; i++) {
-      let ele = <div>{year + i}年</div>;
-      if (i === 0) {
-        ele.classList.add("selectedOption");
-      }
-      target.append(ele);
-    }
-    target.style.display = "block";
-    target.focus();
-  };
-  let optionBoxBlur = (e: MouseEvent) => {
-    let target = e.currentTarget as HTMLElement;
-    target.style.display = "none";
   };
   return (
     <div id="IndexJobBox" onLoaded={loaded}>
-      <div class="selectBtn" onClick={timeBtnClick}>
-        <span id="year"></span>
-        <span id="month"></span>
-        <span id="date"></span>
-        <span id="hour0"></span>
-        <span id="minute0">00</span>
-        <span id="hour1"></span>
-        <span id="minute1">00</span>
+      <div class="timeBox" onClick={timeItemClick} onMouseWheel={timeItemWheel}>
+        <div class="timeItem" id="year" style="width:60px"></div>
+        <div class="timeItem" id="month"></div>
+        <div class="timeItem" id="date"></div>
+        <div class="timeItem" id="hour0"></div>
+        <div class="timeItem" id="minute0"></div>
+        <div class="timeBlank">至</div>
+        <div class="timeItem" id="hour1"></div>
+        <div class="timeItem" id="minute1"></div>
       </div>
-      <div class="selectOption" tabindex="-1" onBlur={selectOptionBlur}>
-        <div class="selectColumn" style="width:52px" onMouseWheel={yearMouseWheel}>
-          <div></div>
-          <div></div>
-          <div class="selectCell"></div>
-          <div></div>
-          <div></div>
-        </div>
-        <div class="selectColumn" onMouseWheel={monthMouseWheel}>
-          <div></div>
-          <div></div>
-          <div class="selectCell"></div>
-          <div></div>
-          <div></div>
-        </div>
-        <div id="dateColumn" class="selectColumn" onMouseWheel={dateMouseWheel}>
-          <div></div>
-          <div></div>
-          <div class="selectCell"></div>
-          <div></div>
-          <div></div>
-        </div>
-        <div class="selectColumn" onMouseWheel={hour1MouseWheel}>
-          <div></div>
-          <div></div>
-          <div class="selectCell"></div>
-          <div></div>
-          <div></div>
-        </div>
-        <div class="selectColumn" onMouseWheel={minute1MouseWheel}>
-          <div></div>
-          <div></div>
-          <div class="selectCell"></div>
-          <div></div>
-          <div></div>
-        </div>
-        <div class="selectColumn selectColumnSpan">
-          <div>-</div>
-          <div>-</div>
-          <div class="selectCell">-</div>
-          <div>-</div>
-          <div>-</div>
-        </div>
-        <div class="selectColumn" onMouseWheel={hour2MouseWheel}>
-          <div></div>
-          <div></div>
-          <div class="selectCell"></div>
-          <div></div>
-          <div></div>
-        </div>
-        <div class="selectColumn" onMouseWheel={minute2MouseWheel}>
-          <div></div>
-          <div></div>
-          <div class="selectCell"></div>
-          <div></div>
-          <div></div>
-        </div>
-      </div>
-      <div class="selectBtn">不重复</div>
+      <div class="repeatBtn">不重复</div>
       <div class="textareaBox">
         <textarea id="jobInfo" spellCheck={false} placeholder="事件内容"></textarea>
         <input id="jobId" type="hidden" />

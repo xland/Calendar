@@ -2,22 +2,46 @@
   flex: 1;
   padding-left: 18px;
   padding-right: 18px;
-  margin-top: 6px;
+  margin-top: 12px;
   margin-bottom: 12px;
   display: flex;
   flex-direction: column;
   line-height: 32px;
   position: relative;
-  .selectBtn {
-    width: 204px;
+  .timeBox {
+    display: inline-block;
+    border-left: 1px solid #ccc;
+    .timeItem {
+      border-top: 1px solid #ccc;
+      border-bottom: 1px solid #ccc;
+      border-right: 1px solid #ccc;
+      background: #eee;
+      display: inline-block;
+      cursor: pointer;
+      position: relative;
+      text-align: center;
+      width: 42px;
+    }
+    .timeBlank {
+      border-top: 1px solid #ccc;
+      border-bottom: 1px solid #ccc;
+      border-right: 1px solid #ccc;
+      padding-left: 6px;
+      padding-right: 6px;
+      background: #f8f8f8;
+      display: inline-block;
+    }
+  }
+  .repeatBtn {
+    width: 120px;
     margin-top: 6px;
     margin-bottom: 3px;
     height: 32px;
     padding-left: 8px;
     padding-right: 8px;
-    border-radius: 3px;
     display: inline-block;
     margin-bottom: 3px;
+    border: 1px solid #ccc;
     background: #eee;
     cursor: pointer;
     &:hover {
