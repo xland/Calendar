@@ -92,16 +92,68 @@ export default function () {
     let target = e.currentTarget as HTMLElement;
     target.style.display = "none";
   };
+
+  let getCurMonthData = () => {
+    let doms = document.querySelectorAll(".selectCell");
+    let year = doms[0].innerHTML;
+    let month = doms[1].innerHTML;
+    let date = doms[2].innerHTML;
+    year = year.substring(0, year.length - 1);
+    month = month.substring(0, month.length - 1);
+    date = date.substring(0, date.length - 1);
+
+    let dateObj = new Date(Number(year), Number(month), 0);
+    let result = dateObj.getDate();
+    if (Number(date) > result) {
+      let dateColumn = document.getElementById("dateColumn");
+      let date = result - 2;
+      for (let i = 0; i < 5; i++) {
+        dateColumn.children[i].innerHTML = date.toString() + "月";
+        date += 1;
+        date = date > result ? 1 : date;
+      }
+    }
+    return result;
+  };
+
   let yearMouseWheel = (e: WheelEvent) => {
     let target = e.currentTarget as HTMLElement;
-    for (let i = 0; i < 5; i++) {}
+    let val = e.deltaY < 0 ? -1 : 1;
+    for (let i = 0; i < 5; i++) {
+      let str = target.children[i].innerHTML;
+      let num = Number(str.substring(0, str.length - 1)) + val;
+      target.children[i].innerHTML = num.toString() + "年";
+    }
+    getCurMonthData();
   };
   let monthMouseWheel = (e: WheelEvent) => {
     let target = e.currentTarget as HTMLElement;
+    let val = e.deltaY < 0 ? -1 : 1;
+    for (let i = 0; i < 5; i++) {
+      let str = target.children[i].innerHTML;
+      let num = Number(str.substring(0, str.length - 1)) + val;
+      if (num < 1) {
+        num = 12;
+      }
+      if (num > 12) {
+        num = 1;
+      }
+      target.children[i].innerHTML = num.toString() + "月";
+    }
+    getCurMonthData();
   };
 
   let dateMouseWheel = (e: WheelEvent) => {
     let target = e.currentTarget as HTMLElement;
+    let val = e.deltaY < 0 ? -1 : 1;
+    let maxDate = getCurMonthData();
+    for (let i = 0; i < 5; i++) {
+      let str = target.children[i].innerHTML;
+      let num = Number(str.substring(0, str.length - 1)) + val;
+      if (num < 1) num = maxDate;
+      if (num > maxDate) num = 1;
+      target.children[i].innerHTML = num.toString() + "日";
+    }
   };
   let hour1MouseWheel = (e: WheelEvent) => {
     let target = e.currentTarget as HTMLElement;
@@ -160,7 +212,7 @@ export default function () {
           <div></div>
           <div></div>
         </div>
-        <div class="selectColumn" onMouseWheel={dateMouseWheel}>
+        <div id="dateColumn" class="selectColumn" onMouseWheel={dateMouseWheel}>
           <div></div>
           <div></div>
           <div class="selectCell"></div>
