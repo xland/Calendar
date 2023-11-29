@@ -9,7 +9,7 @@ function App(props) {
     return `background:rgba(${ColorGet(props.colorIndex)},${alpha});`;
   };
 
-  let getData = () => {
+  let getJob = () => {
     let timeBox = document.getElementById("IndexJobBox").firstElementChild;
     let year = parseInt(timeBox.children[0].innerHTML);
     let month = parseInt(timeBox.children[1].innerHTML);
@@ -38,7 +38,7 @@ function App(props) {
   };
 
   let save = async () => {
-    let job = getData();
+    let job = getJob();
     let { ipcRenderer } = require("electron");
     if (job.Id) {
       let sql = `Update Job set JobInfo = ? ,StartTime = ? ,EndTime = ? where Id = ?`;

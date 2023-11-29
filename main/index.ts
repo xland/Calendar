@@ -35,8 +35,8 @@ let initHook = ()=>{
         setting.OpenAtLogin = app.getLoginItemSettings().openAtLogin
         return setting;
     })
-    ipcMain.handle("getDataNearby",(e)=>{
-        db.getData("SELECT * FROM Job where RepeatType > 0")
+    ipcMain.handle("getDataRecent",(e)=>{
+        return db.getDataRecent()
     })
     ipcMain.handle("getDataOneMonth",(e,startTime:number,endTime:number)=>{
         return db.getDataOneMonth(startTime,endTime)

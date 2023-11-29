@@ -54,6 +54,119 @@ INSERT INTO Setting (ViewDefault,LangDefault,SkinDefault,AlertBefore) VALUES (0,
     let objs = this.db.prepare(sql).all(params);
     return objs;
   }
+
+  getDataRecent() {
+    let count = 12;
+    let nowDate = new Date();
+    let sql = `SELECT * FROM Job WHERE StartTime >= ${nowDate.getTime()} and RepeatType == 0 order by StartTime asc LIMIT ${count}`;
+    let result = this.db.prepare(sql).all() as ModelJob[];
+    let repeatJobs = this.db.prepare(`SELECT * FROM Job where RepeatType > 0`).all() as ModelJob[];
+    for (let j = 0; j < repeatJobs.length; j++) {
+      let job = repeatJobs[j];
+      let start = new Date(job.StartTime);
+      if (job.RepeatType === 1) {
+        //每天
+        start.setFullYear(nowDate.getFullYear());
+        start.setMonth(nowDate.getMonth());
+        start.setDate(nowDate.getDate());
+        if (start < nowDate) {
+          start.setDate(start.getDate() + 1);
+        }
+        for (let i = 0; i < count; i++) {
+          start.setDate(start.getDate() + i);
+          let end = new Date(job.EndTime);
+          end.setFullYear(start.getFullYear());
+          end.setMonth(start.getMonth());
+          end.setDate(start.getDate());
+          job.StartTime = start.getTime();
+          job.EndTime = end.getTime();
+          result.push({ ...job });
+        }
+      } else if (job.RepeatType === 2) {
+        //工作日
+        start.setFullYear(nowDate.getFullYear());
+        start.setMonth(nowDate.getMonth());
+        start.setDate(nowDate.getDate());
+        let temp = 0;
+        while (temp < count) {
+          if (start.getDay() === 0 || start.getDay() === 6 || start < nowDate) {
+            start.setDate(start.getDate() + 1);
+          } else {
+            let end = new Date(job.EndTime);
+            end.setFullYear(start.getFullYear());
+            end.setMonth(start.getMonth());
+            end.setDate(start.getDate());
+            job.StartTime = start.getTime();
+            job.EndTime = end.getTime();
+            result.push({ ...job });
+            start.setDate(start.getDate() + 1);
+            temp += 1;
+          }
+        }
+      } else if (job.RepeatType === 3) {
+        //每周几
+        start.setFullYear(nowDate.getFullYear());
+        start.setMonth(nowDate.getMonth());
+        let temp = 0;
+        while (temp < count) {
+          if (start < nowDate) {
+            start.setDate(start.getDate() + 7);
+          } else {
+            let end = new Date(job.EndTime);
+            end.setFullYear(start.getFullYear());
+            end.setMonth(start.getMonth());
+            end.setDate(start.getDate());
+            job.StartTime = start.getTime();
+            job.EndTime = end.getTime();
+            result.push({ ...job });
+            start.setDate(start.getDate() + 7);
+            temp += 1;
+          }
+        }
+      } else if (job.RepeatType === 4) {
+        //每月第几天
+        start.setFullYear(nowDate.getFullYear());
+        start.setMonth(nowDate.getMonth());
+        let temp = 0;
+        while (temp < count) {
+          if (start < nowDate) {
+            start.setMonth(start.getMonth() + 1);
+          }else{
+            let end = new Date(job.EndTime);
+            end.setFullYear(start.getFullYear());
+            end.setMonth(start.getMonth());
+            end.setDate(start.getDate());
+            job.StartTime = start.getTime();
+            job.EndTime = end.getTime();
+            result.push({ ...job });
+            start.setMonth(start.getMonth() + 1);
+            temp += 1;
+          }
+        }
+      } else if (job.RepeatType === 5) {
+        //每年几月几日
+        start.setFullYear(nowDate.getFullYear());
+        let temp = 0;
+        while (temp < count) {
+          if (start < nowDate) {
+            start.setFullYear(start.getFullYear() + 1);
+          }else{
+            let end = new Date(job.EndTime);
+            end.setFullYear(start.getFullYear());
+            job.StartTime = start.getTime();
+            job.EndTime = end.getTime();
+            result.push({ ...job });
+            start.setFullYear(start.getFullYear() + 1);
+            temp += 1;
+          }
+        }
+      }
+    }
+    result.sort((a, b) => a.StartTime - b.StartTime);
+    result = result.slice(0, count);
+    return result;
+  }
+
   getDataOneMonth(startTime: number, endTime: number) {
     let sql = `SELECT * FROM Job WHERE StartTime >= ? and EndTime <= ? and RepeatType == 0 order by StartTime asc`;
     let result = this.db.prepare(sql).all(startTime, endTime) as ModelJob[];

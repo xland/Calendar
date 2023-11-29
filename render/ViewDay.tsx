@@ -37,7 +37,7 @@ export default function () {
     if (target.classList.contains("hourTag")) target = target.parentElement;
     target.style.background = ``;
   };
-  let getData = async () => {
+  let setJobsToView = async () => {
     let now = new Date(dataMonth.curDate.getTime());
     now.setHours(0, 0, 0, 0);
     let start = now.getTime();
@@ -317,7 +317,7 @@ export default function () {
   window.addEventListener("keydown", moveJobByKey);
   window.addEventListener("keyup", onKeyUp);
   eventer.on("dataReady", () => {
-    getData();
+    setJobsToView();
   });
 
   return (
