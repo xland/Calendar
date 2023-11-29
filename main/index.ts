@@ -1,9 +1,15 @@
-import { app,BrowserWindow,HandlerDetails,ipcMain } from "electron";
+import path  from 'path';
+import fs from  "fs"
+import { app,BrowserWindow,HandlerDetails,ipcMain,protocol } from "electron";
 import { Db } from "./db";
 import { ModelSetting } from "../model/ModelSetting";
+
 process.env.ELECTRON_DISABLE_SECURITY_WARNINGS = "true";
+protocol.registerSchemesAsPrivileged([{ scheme:'liulun', privileges: { standard: true, supportFetchAPI: true, secure: true, corsEnabled: true } }])
 let win:BrowserWindow;
 let db:Db
+
+
 let initHook = ()=>{ 
     ipcMain.handle("changeWindowState",(e,state)=>{
         let win = BrowserWindow.fromWebContents(e.sender) as BrowserWindow;
@@ -28,6 +34,12 @@ let initHook = ()=>{
         let setting:ModelSetting = db.getData(`SELECT * FROM Setting`)[0] as ModelSetting
         setting.OpenAtLogin = app.getLoginItemSettings().openAtLogin
         return setting;
+    })
+    ipcMain.handle("getDataNearby",(e)=>{
+        db.getData("SELECT * FROM Job where RepeatType > 0")
+    })
+    ipcMain.handle("getDataOneMonth",(e,startTime:number,endTime:number)=>{
+        return db.getDataOneMonth(startTime,endTime)
     })
     ipcMain.handle("setOpenAtLogin",(e,flag:boolean)=>{
         app.setLoginItemSettings({openAtLogin:flag});
@@ -89,8 +101,13 @@ let creatreWindow = async ()=>{
     options.minHeight = 800;
     options.minWidth = 1100;
     win = new BrowserWindow(options);
-    console.log(process.argv[2]);
-    await win.loadURL(process.argv[2]);
+    let serverUrl = process.argv[2]
+    console.log(serverUrl)
+    if(serverUrl){
+        await win.loadURL(serverUrl);
+    }else{
+        await win.loadURL(`liulun://./index.html`)
+    }    
     win.show();
 }
 let winCreatedHandler = (e,target:BrowserWindow)=>{
@@ -105,6 +122,14 @@ let winCreatedHandler = (e,target:BrowserWindow)=>{
     }
 }
 let init = async ()=>{
+    protocol.handle('liulun', (request) => {
+        let url = request.url
+        let pathName = new URL(url).pathname
+        pathName = decodeURI(pathName)
+        let filePath = path.join(__dirname, pathName)
+        let data = fs.readFileSync(filePath)
+        return new Response(data)
+    })
     initDb();
     initHook();
     app.addListener("browser-window-created",winCreatedHandler)

@@ -4,6 +4,7 @@
   "description": "A easy to use calendar desktop software",
   "main": "index.js",
   "scripts": {
+    "devMain": "node ./script/devMain.js",
     "dev": "node ./script/dev.js",
     "release": "node ./script/prod.js"
   },

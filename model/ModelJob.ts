@@ -16,7 +16,7 @@ export class ModelJob extends ModelBase{
      * 7 每月倒数第几个星期几
      * 8 每年第几月第几日
      */
-    RepeatType:number
+    RepeatType:number = 0
     /**
      * 重复次数
      */

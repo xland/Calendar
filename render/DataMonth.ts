@@ -9,11 +9,14 @@ class DataMonth{
         let end = new Date(endDate.year,endDate.month-1,endDate.day,23,59,59,999);
         this.dateArr.forEach(v=>v.jobs = [])
         let {ipcRenderer} = require("electron")
-        let jobArr:ModelJob[] = await ipcRenderer.invoke("getData","SELECT * FROM Job WHERE StartTime >= ? and EndTime <= ? order by StartTime asc",start.getTime(),end.getTime())
+        let jobArr:ModelJob[] = await ipcRenderer.invoke("getDataOneMonth",start.getTime(),end.getTime())
+        console.log(jobArr)
         for(let i=0;i<jobArr.length;i++){
             let jobStartDate = new Date(jobArr[i].StartTime)
-            let index = this.dateArr.findIndex(v=>v.month === jobStartDate.getMonth()+1 && v.day === jobStartDate.getDate())
-            this.dateArr[index].jobs.push(jobArr[i]);                   
+            
+            let index = this.dateArr.findIndex(v=>v.year === jobStartDate.getFullYear() && v.month === jobStartDate.getMonth()+1 && v.day === jobStartDate.getDate())
+            console.log(index)
+            this.dateArr[index].jobs.push(jobArr[i]); 
         }
     }
     initDateArr(){
