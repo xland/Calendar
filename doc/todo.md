@@ -8,7 +8,8 @@
 - 删除时 confirm
 - 记住上一次的视图
 - winConfig太多
-
+- job id会因为repeat job 而重复
+- week双击不是修改
 
 
 - 设置：日视图隐藏23:00-5:00时间段

@@ -10,12 +10,9 @@ class DataMonth{
         this.dateArr.forEach(v=>v.jobs = [])
         let {ipcRenderer} = require("electron")
         let jobArr:ModelJob[] = await ipcRenderer.invoke("getDataOneMonth",start.getTime(),end.getTime())
-        console.log(jobArr)
         for(let i=0;i<jobArr.length;i++){
-            let jobStartDate = new Date(jobArr[i].StartTime)
-            
+            let jobStartDate = new Date(jobArr[i].StartTime)            
             let index = this.dateArr.findIndex(v=>v.year === jobStartDate.getFullYear() && v.month === jobStartDate.getMonth()+1 && v.day === jobStartDate.getDate())
-            console.log(index)
             this.dateArr[index].jobs.push(jobArr[i]); 
         }
     }

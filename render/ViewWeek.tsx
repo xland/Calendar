@@ -41,7 +41,7 @@ export default function () {
     container.innerHTML = "";
     let index = dataMonth.getCurWeekFirstDayIndex();
     for (let i = 0; i < 7; i++) {
-      let dayDom = <div class="column" data-index={i} onClick={addNewJob}></div>;
+      let dayDom: HTMLElement = <div class="column" data-index={i}></div>;
       dataMonth.dateArr[index].jobs.forEach((job) => {
         let jobEle = (
           <div class="weekJob" title={job.JobInfo} data-id={job.Id} style={`--color:${ColorGet(job.ColorIndex)}`} onDblClick={jobDbClick}>
@@ -50,6 +50,9 @@ export default function () {
         );
         dayDom.append(jobEle);
       });
+      if (dayDom.children.length === 0) {
+        dayDom.addEventListener("click", addNewJob);
+      }
       dayDom.appendChild(
         <div class="addBtn" onClick={addNewJob}>
           增加
