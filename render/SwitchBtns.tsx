@@ -23,8 +23,8 @@ export default function () {
     }
     if (target.innerHTML === "周") {
       index = 1;
-      let weekIndex = dataMonth.getCurWeekFirstDayIndex() / 7;
-      switchLabel.innerHTML = `${dataMonth.curDate.getMonth() + 1}月第${weekIndex + 1}周`;
+      let index2 = dataMonth.getCurWeekFirstDayIndex();
+      switchLabel.innerHTML = `${dataMonth.dateArr[index2].month}-${dataMonth.dateArr[index2].day}~${dataMonth.dateArr[index2 + 6].month}-${dataMonth.dateArr[index2 + 6].day}`;
     } else if (target.innerHTML === "月") {
       index = 2;
       switchLabel.innerHTML = `${dataMonth.curDate.getFullYear()}年${dataMonth.curDate.getMonth() + 1}月`;
@@ -55,11 +55,11 @@ export default function () {
     let oldMonthIndex = dataMonth.curDate.getMonth();
     if (selectedDom.innerHTML === "日") {
       dataMonth.curDate.setDate(dataMonth.curDate.getDate() + val);
-      switchLabel.innerHTML = `${dataMonth.curDate.getFullYear()}-${oldMonthIndex + 1}-${dataMonth.curDate.getDate()}`;
+      switchLabel.innerHTML = `${dataMonth.curDate.getFullYear()}-${dataMonth.curDate.getMonth() + 1}-${dataMonth.curDate.getDate()}`;
     } else if (selectedDom.innerHTML === "周") {
       dataMonth.curDate.setDate(dataMonth.curDate.getDate() + val * 7);
-      let weekIndex = dataMonth.getCurWeekFirstDayIndex() / 7;
-      switchLabel.innerHTML = `${oldMonthIndex + 1}月第${weekIndex + 1}周`;
+      let index = dataMonth.getCurWeekFirstDayIndex();
+      switchLabel.innerHTML = `${dataMonth.dateArr[index].month}-${dataMonth.dateArr[index].day}~${dataMonth.dateArr[index + 6].month}-${dataMonth.dateArr[index + 6].day}`;
     } else {
       dataMonth.curDate.setMonth(oldMonthIndex + val);
       switchLabel.innerHTML = `${dataMonth.curDate.getFullYear()}年${dataMonth.curDate.getMonth() + 1}月`;
