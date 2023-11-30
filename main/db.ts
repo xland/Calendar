@@ -56,7 +56,7 @@ INSERT INTO Setting (ViewDefault,LangDefault,SkinDefault,AlertBefore) VALUES (0,
   }
 
   getDataRecent() {
-    let count = 12;
+    let count = 14;
     let nowDate = new Date();
     let sql = `SELECT * FROM Job WHERE StartTime >= ${nowDate.getTime()} and RepeatType == 0 order by StartTime asc LIMIT ${count}`;
     let result = this.db.prepare(sql).all() as ModelJob[];
@@ -189,16 +189,17 @@ INSERT INTO Setting (ViewDefault,LangDefault,SkinDefault,AlertBefore) VALUES (0,
     for (let j = 0; j < repeatJobs.length; j++) {
       let job = repeatJobs[j];
       if (job.RepeatType === 1) {
-        //每天
+        //每天     
+        let start = new Date(job.StartTime);
+        let end = new Date(job.EndTime);  
         for (let i = 0; i < 42; i++) {
-          let start = new Date(job.StartTime);
-          let end = new Date(job.EndTime);
+          start.setDate(1);
+          end.setDate(1);
           start.setFullYear(monthStart.getFullYear());
           start.setMonth(monthStart.getMonth());
-          start.setDate(monthStart.getDate() + i);
-
           end.setFullYear(monthStart.getFullYear());
           end.setMonth(monthStart.getMonth());
+          start.setDate(monthStart.getDate() + i);          
           end.setDate(monthStart.getDate() + i);
           job.StartTime = start.getTime();
           job.EndTime = end.getTime();

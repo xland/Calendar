@@ -1,64 +1,66 @@
-#RecentJob{
-    padding-top: 36px;
-    padding-left: 20px;
-    padding-right: 20px;
-    flex: 1;
+#RecentJob {
+  padding-top: 36px;
+  padding-left: 20px;
+  padding-right: 20px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  #searchBox {
     display: flex;
-    flex-direction: column;
-    #searchBox{
-        display:  flex;
-        line-height: 28px;
-        border-radius: 3px;
-        overflow: hidden;
-        input{
-            flex: 1;
-            display: block;
-            margin: 0px;
-            padding: 0px;
-            border: none;
-            outline: none;
-            height: 28px;
-            padding-left: 6px;
-            padding-right: 6px;
-            color: #f02c38;
-            background: #f02c3811;
-            font-size: 12px;
-            &:focus{
-                background: #fff;
-            }
-        }
-        .searchBtn{
-            width: 32px;
-            height: 28px;
-            text-align: center;
-            cursor: pointer;
-            background: #f02c3811;
-            i{
-                font-size: 14px;
-                color: #f02c38;
-            }
-            &:hover{
-                background: #f02c3844 !important;
-            }
-        }
+    line-height: 28px;
+    border-radius: 3px;
+    overflow: hidden;
+    input {
+      flex: 1;
+      display: block;
+      margin: 0px;
+      padding: 0px;
+      border: none;
+      outline: none;
+      height: 28px;
+      padding-left: 6px;
+      padding-right: 6px;
+      color: #f02c38;
+      background: #f02c3811;
+      font-size: 12px;
+      &:focus {
+        background: #fff;
+      }
     }
-    #recentJobBox{
-        padding-top: 8px;
-        line-height: 32px;
-        color: #666;
-        div{
-            height: 32px;
-            overflow: hidden;
-            white-space: nowrap;
-            text-overflow: ellipsis;
-            border-radius: 3px;
-            padding-left: 6px;
-            padding-right: 6px;
-            cursor: pointer;
-            &:hover{
-                background:#f02c3822;
-                color: #333 !important;
-            }
-        }
+    .searchBtn {
+      width: 32px;
+      height: 28px;
+      text-align: center;
+      cursor: pointer;
+      background: #f02c3811;
+      i {
+        font-size: 14px;
+        color: #f02c38;
+      }
+      &:hover {
+        background: #f02c3844 !important;
+      }
     }
+  }
+  #recentJobBox {
+    padding-top: 6px;
+    line-height: 28px;
+    color: #666;
+    flex: 1;
+    overflow-y: auto;
+    div {
+      height: 28px;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      border-radius: 3px;
+      padding-left: 6px;
+      padding-right: 6px;
+      cursor: pointer;
+      &:hover {
+        background: #f02c3822;
+        color: #333 !important;
+      }
+    }
+  }
 }
