@@ -7,6 +7,7 @@ import ModalMask from "./ModalMask";
 import { eventer } from "../common/eventer";
 import { dataSetting } from "./DataSetting";
 import Menu from "./Menu";
+import { dataMonthSmall } from "./DataMonthSmall";
 let App = () => {
   return (
     <>
@@ -23,6 +24,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   document.body.ondrop = () => false;
   document.body.appendChild(<App />);
   await dataMonth.init();
+  dataMonthSmall.initFirst();
   await dataSetting.init();
   eventer.emit("dataReady");
   window.addEventListener("refreshView", async (e) => {

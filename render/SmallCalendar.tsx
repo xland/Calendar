@@ -1,8 +1,8 @@
 import { eventer } from "../common/eventer";
-import { dataMonth } from "./DataMonth";
 import React from "./React";
 import "./SmallCalendar.scss";
 import { Helper } from "../common/Helper";
+import { dataMonthSmall } from "./DataMonthSmall";
 
 export default function () {
   //once("dataReady" todo
@@ -12,7 +12,7 @@ export default function () {
     for (let i = 0; i < 6; i++) {
       let row = <div class="row"></div>;
       for (let j = 0; j < 7; j++) {
-        let dateObj = dataMonth.dateArr[index];
+        let dateObj = dataMonthSmall.dateArr[index];
         let cell: HTMLElement = <div class="dayItem">{dateObj.day}</div>;
         if (!dateObj.isCurMonth) {
           cell.classList.add("notCurMonth");
@@ -20,7 +20,7 @@ export default function () {
         if (dateObj.isCurDay) {
           cell.classList.add("selected");
         }
-        if (dateObj.jobs.length > 0) {
+        if (dateObj.hasJob) {
           cell.classList.add("hasEvent");
         }
         row.appendChild(<div class="dayBox">{cell}</div>);
