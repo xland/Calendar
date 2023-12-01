@@ -1,3 +1,4 @@
+import { Helper } from '../common/Helper';
 import { ModelJob } from './../model/ModelJob';
 class DataMonth{
     curDate:Date;
@@ -16,50 +17,7 @@ class DataMonth{
             this.dateArr[index].jobs.push(jobArr[i]); 
         }
     }
-    initDateArr(){
-        this.dateArr = []
-        let year = this.curDate.getFullYear();
-        let month = this.curDate.getMonth();
-        let date = this.curDate.getDate();
-        let preMonthLastDay = new Date(year,month,0);
-        let weekIndex = preMonthLastDay.getDay();
-        weekIndex = weekIndex===0?7:weekIndex;
-        for(let i=preMonthLastDay.getDate() - weekIndex+1;i<=preMonthLastDay.getDate();i++){
-            this.dateArr.push({
-                year:preMonthLastDay.getFullYear(),
-                month:preMonthLastDay.getMonth()+1,
-                day:i,
-                isCurMonth:false,
-                isCurDay:false,
-                jobs:[]
-            })
-        }
-        let curMonthLastDay = new Date(year,month+1,0);
-        for(let i=1;i<=curMonthLastDay.getDate();i++){
-            this.dateArr.push({
-                year:curMonthLastDay.getFullYear(),
-                month:curMonthLastDay.getMonth()+1,
-                day:i,
-                isCurMonth:true,
-                isCurDay:i === date,
-                jobs:[]
-            })
-        }    
-        let lastDayCount = 42 - this.dateArr.length;
-        if(lastDayCount > 0){
-            let nextMonthLastDay = new Date(year,month+2,0);
-            for(let i=1;i<=lastDayCount;i++){
-                this.dateArr.push({
-                    year:nextMonthLastDay.getFullYear(),
-                    month:nextMonthLastDay.getMonth()+1,
-                    day:i,
-                    isCurMonth:false,
-                    isCurDay:false,
-                    jobs:[]
-                })
-            }
-        }
-    }
+    
     getCurWeekFirstDayIndex(){
         let start = new Date(this.curDate.getTime());
         start.setDate(start.getDate()-(start.getDay()-1))
@@ -81,7 +39,7 @@ class DataMonth{
     }
     async init(){     
         this.curDate = new Date()
-        this.initDateArr();
+        this.dateArr = Helper.getOneMonthDate(this.curDate);
         await this.initJobArr()
     }
     constructor(){
