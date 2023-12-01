@@ -31,14 +31,21 @@
       }
       .dayItem {
         position: absolute;
-        left: 3px;
+        left: 6px;
         top: 3px;
-        right: 3px;
+        right: 6px;
         bottom: 3px;
         line-height: 22px;
+        color: #444;
+        &:hover {
+          background: #f02c3822;
+        }
+      }
+      .hasEvent {
+        background: #f02c3811;
       }
       .notCurMonth {
-        color: #aaa;
+        color: #888;
       }
       .selected {
         background: #f02c38 !important;
