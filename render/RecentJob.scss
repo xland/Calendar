@@ -45,10 +45,10 @@
     line-height: 28px;
     color: #666;
     position: absolute;
-    top: 50px;
+    top: 56px;
     bottom: 0px;
-    padding-top: 6px;
-    padding-bottom: 6px;
+    padding-top: 0px;
+    padding-bottom: 0px;
     overflow: hidden;
     overflow-y: auto;
     left: 12px;
@@ -64,7 +64,6 @@
     }
     &::-webkit-scrollbar-thumb {
       position: absolute;
-      right: -6px;
       background: #f02c3844;
     }
     .item {
@@ -73,6 +72,9 @@
       display: flex;
       padding-left: 8px;
       padding-right: 8px;
+      &:last-child {
+        margin-bottom: 6px;
+      }
       .title {
         flex: 1;
         overflow: hidden;
