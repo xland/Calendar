@@ -1,5 +1,6 @@
 import React from "./React";
 import "./Job.scss";
+import { Helper } from "../common/Helper";
 export default function (props) {
   let jobDbClick = (e: MouseEvent) => {
     let target = e.target as HTMLElement;
@@ -11,13 +12,13 @@ export default function (props) {
       extraConfig: {},
     };
     window.open(`/IndexJob.html?editId=${id}`, "_blank", JSON.stringify(config));
-    document.getElementById("ModalMask").style.display = "block";
+    Helper.$id("ModalMask").style.display = "block";
   };
   let jobMouseDown = (e: MouseEvent) => {
     if (e.button != 2) return;
     let target = e.target as HTMLElement;
     target = target.parentElement;
-    let menu = document.getElementById("Menu");
+    let menu = Helper.$id("Menu");
     let evt = new CustomEvent("show", { detail: { x: e.x, y: e.y, id: target.getAttribute("id") } });
     e.preventDefault();
     e.stopPropagation();

@@ -12,16 +12,24 @@
     .title {
       flex: 1;
       padding-left: 8px;
+      color: #666;
     }
     .btn {
-      width: 30px;
+      width: 24px;
+      height: 20px;
+      margin: 4px;
+      line-height: 20px;
       text-align: center;
       cursor: pointer;
       &:hover {
         background: #f02c3811;
+        i {
+          color: #f02c38 !important;
+        }
       }
       i {
-        font-size: 10px !important;
+        color: #666;
+        font-size: 11px !important;
       }
     }
   }

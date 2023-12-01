@@ -3,10 +3,11 @@ import "./BottomBar.scss";
 import SettingDefault from "./SettingDefault";
 import SettingDonate from "./SettingDonate";
 import SettingAuthor from "./SettingAuthor";
+import { Helper } from "../common/Helper";
 
 export default function () {
   let closeDrawerBtnClick = () => {
-    let drawer = document.getElementById("SettingDrawer");
+    let drawer = Helper.$id("SettingDrawer");
     drawer.style.display = "none";
     let btn = drawer.previousElementSibling.querySelector(".bottomBtnSelected") as HTMLElement;
     btn.classList.remove("bottomBtnSelected");
@@ -20,7 +21,7 @@ export default function () {
     if (prevSelectedDom) {
       prevSelectedDom.classList.remove("bottomBtnSelected");
     }
-    let drawer = document.getElementById("SettingDrawer");
+    let drawer = Helper.$id("SettingDrawer");
     if (drawer.style.display === "block") {
       if (drawer.firstElementChild.firstElementChild.innerHTML === target.title) {
         drawer.style.display = "none";

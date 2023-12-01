@@ -1,6 +1,7 @@
 import { dataSetting } from "./DataSetting";
 import React from "./React";
 import "./SettingDefault.scss";
+import { Helper } from "../common/Helper";
 export default function (props) {
   let setCheckBox = (icon: HTMLElement, flag: boolean) => {
     if (flag) {
@@ -34,7 +35,7 @@ export default function (props) {
     return target;
   };
   let openAtLoginClick = async (e: MouseEvent) => {
-    let icon = document.getElementById("openAtLoginIcon");
+    let icon = Helper.$id("openAtLoginIcon");
     let flag = !icon.classList.contains("icon-check");
     let { ipcRenderer } = require("electron");
     await ipcRenderer.invoke("setOpenAtLogin", flag);
@@ -75,9 +76,9 @@ export default function (props) {
     dataSetting.setting.SkinDefault = val;
   };
   let loaded = async () => {
-    let icon = document.getElementById("openAtLoginIcon");
+    let icon = Helper.$id("openAtLoginIcon");
     setCheckBox(icon, dataSetting.setting.OpenAtLogin);
-    let row = document.getElementById("defaultViewRow");
+    let row = Helper.$id("defaultViewRow");
     let dom = row.children[dataSetting.setting.ViewDefault + 1] as HTMLElement;
     setDefaultView(dom);
 

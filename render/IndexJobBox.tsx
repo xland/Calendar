@@ -1,13 +1,15 @@
 import React from "./React";
 import "./IndexJobBox.scss";
 import { ModelJob } from "../model/ModelJob";
+import { Helper } from "../common/Helper";
 
 export default function () {
   let loaded = (e: CustomEvent) => {
     let job = e.detail as ModelJob;
     let startTime = new Date(job.StartTime);
     let endTime = new Date(job.EndTime);
-    let dom = document.getElementById("IndexJobBox").firstElementChild as HTMLElement;
+
+    let dom = Helper.$id("IndexJobBox").firstElementChild as HTMLElement;
     dom.children[0].innerHTML = startTime.getFullYear().toString() + "年";
     dom.children[1].innerHTML = (startTime.getMonth() + 1).toString() + "月";
     dom.children[2].innerHTML = startTime.getDate().toString() + "日";
@@ -17,7 +19,7 @@ export default function () {
     dom.children[7].innerHTML = endTime.getMinutes().toString().padStart(2, "0") + "分";
     dom = dom.nextElementSibling as HTMLElement;
     dom.innerHTML = dom.nextElementSibling.children[job.RepeatType].innerHTML;
-    let taEle = document.getElementById("jobInfo") as HTMLTextAreaElement;
+    let taEle = Helper.$id("jobInfo") as HTMLTextAreaElement;
     taEle.value = job.JobInfo;
     let inputId = taEle.nextElementSibling as HTMLInputElement;
     inputId.value = job.Id;

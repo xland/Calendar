@@ -2,6 +2,7 @@ import React from "./React";
 import "./ViewDay.scss";
 import Job from "./Job";
 import ColorGet from "./ColorGet";
+import { Helper } from "../common/Helper";
 import { eventer } from "../common/eventer";
 import { dataMonth } from "./DataMonth";
 import debounce from "../common/debounce";
@@ -25,7 +26,7 @@ export default function () {
       extraConfig: {},
     };
     window.open(`/IndexJob.html?colorIndex=${colorIndex}&startTime=${startTime.getTime()}`, "_blank", JSON.stringify(config));
-    document.getElementById("ModalMask").style.display = "block";
+    Helper.$id("ModalMask").style.display = "block";
   };
   let bgLineMouseOver = (e) => {
     let target = e.target as HTMLElement;
@@ -43,7 +44,7 @@ export default function () {
     let start = now.getTime();
     now.setHours(23, 59, 59, 999);
     let end = now.getTime();
-    let target = document.getElementById("ViewDay");
+    let target = Helper.$id("ViewDay");
     target.querySelectorAll(".Job").forEach((e) => e.remove());
     let useableWidth = target.clientWidth - 90;
     let data = dataMonth.dateArr[dataMonth.getCurDateIndex()].jobs;

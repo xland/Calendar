@@ -4,13 +4,14 @@ import TitleBarBtns from "./TitleBarBtns";
 import IndexJobBox from "./IndexJobBox";
 import ColorGet from "./ColorGet";
 import { ModelJob } from "../model/ModelJob";
+import { Helper } from "../common/Helper";
 function App(props) {
   let getStyle = (alpha = 1) => {
     return `background:rgba(${ColorGet(props.colorIndex)},${alpha});`;
   };
 
   let getJob = () => {
-    let timeBox = document.getElementById("IndexJobBox").firstElementChild;
+    let timeBox = Helper.$id("IndexJobBox").firstElementChild;
     let year = parseInt(timeBox.children[0].innerHTML);
     let month = parseInt(timeBox.children[1].innerHTML);
     let date = parseInt(timeBox.children[2].innerHTML);
@@ -29,7 +30,7 @@ function App(props) {
         break;
       }
     }
-    let taEle = document.getElementById("jobInfo") as HTMLTextAreaElement;
+    let taEle = Helper.$id("jobInfo") as HTMLTextAreaElement;
     let inputId = taEle.nextElementSibling as HTMLInputElement;
     job.JobInfo = taEle.value;
     job.Id = inputId.value;
@@ -96,5 +97,5 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
   document.body.appendChild(<App colorIndex={job.ColorIndex} />);
   let event = new CustomEvent("loaded", { detail: job });
-  document.getElementById("IndexJobBox").dispatchEvent(event);
+  Helper.$id("IndexJobBox").dispatchEvent(event);
 });

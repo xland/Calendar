@@ -1,6 +1,7 @@
 import { eventer } from "../common/eventer";
 import React from "./React";
 import "./TitleBarBtns.scss";
+import { Helper } from "../common/Helper";
 export default function () {
   let minimize = async () => {
     let { ipcRenderer } = require("electron");
@@ -19,8 +20,8 @@ export default function () {
     await ipcRenderer.invoke("changeWindowState", "close");
   };
   let windowStateHandler = (e, state) => {
-    let restoreBtn = document.getElementById("restoreBtn") as HTMLElement;
-    let maximizeBtn = document.getElementById("maximizeBtn") as HTMLElement;
+    let restoreBtn = Helper.$id("restoreBtn") as HTMLElement;
+    let maximizeBtn = Helper.$id("maximizeBtn") as HTMLElement;
     if (state === "maximize") {
       restoreBtn.style.display = "";
       maximizeBtn.style.display = "none";

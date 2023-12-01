@@ -1,6 +1,7 @@
 import React from "./React";
 import "./Menu.scss";
 import { dataMonth } from "./DataMonth";
+import { Helper } from "../common/Helper";
 export default function (props) {
   let hideMenu = async (e) => {
     let target = e.target as HTMLElement;
@@ -20,21 +21,21 @@ export default function (props) {
         let startTime = new Date(data[0].StartTime);
         startTime.setHours(8, 0, 0, 0);
         window.open(`/IndexJob.html?colorIndex=${colorIndex}&startTime=${startTime.getTime()}`, "_blank", JSON.stringify(config));
-        document.getElementById("ModalMask").style.display = "block";
+        Helper.$id("ModalMask").style.display = "block";
       } else if (target.innerHTML === "修改") {
         let config = {
           winConfig: { width: 480, height: 380, title: "修改日程", minHeight: 380, minWidth: 480 },
           extraConfig: {},
         };
         window.open(`/IndexJob.html?editId=${id}`, "_blank", JSON.stringify(config));
-        document.getElementById("ModalMask").style.display = "block";
+        Helper.$id("ModalMask").style.display = "block";
       } else {
         let { ipcRenderer } = require("electron");
         await ipcRenderer.invoke("excuteSQL", `delete from Job where id=?`, id);
         dispatchEvent(new Event("refreshView"));
       }
     }
-    document.getElementById("Menu").style.display = "none";
+    Helper.$id("Menu").style.display = "none";
     document.removeEventListener("mousedown", hideMenu);
   };
   let show = (evt: CustomEvent) => {

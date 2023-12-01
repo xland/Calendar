@@ -2,12 +2,13 @@ import { eventer } from "../common/eventer";
 import { dataMonth } from "./DataMonth";
 import React from "./React";
 import "./SmallCalendar.scss";
+import { Helper } from "../common/Helper";
 
 export default function () {
   //once("dataReady" todo
   eventer.once("dataReady", async () => {
     let index = 0;
-    let target = document.getElementById("smallCalendarBox");
+    let target = Helper.$id("smallCalendarBox");
     for (let i = 0; i < 6; i++) {
       let row = <div class="row"></div>;
       for (let j = 0; j < 7; j++) {

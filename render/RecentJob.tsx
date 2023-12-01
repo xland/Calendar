@@ -2,6 +2,7 @@ import React from "./React";
 import "./RecentJob.scss";
 import { eventer } from "../common/eventer";
 import { ModelJob } from "../model/ModelJob";
+import { Helper } from "../common/Helper";
 export default function () {
   let getStartTimeStr = (startTime: number) => {
     let span = startTime - Date.now();
@@ -30,7 +31,7 @@ export default function () {
   eventer.on("dataReady", async () => {
     let { ipcRenderer } = require("electron");
     let jobs: ModelJob[] = await ipcRenderer.invoke("getDataRecent");
-    let dom = document.getElementById("recentJobBox");
+    let dom = Helper.$id("recentJobBox");
     dom.innerHTML = "";
     for (let i = 0; i < jobs.length; i++) {
       dom.append(

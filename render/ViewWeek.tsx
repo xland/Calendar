@@ -3,6 +3,7 @@ import "./ViewWeek.scss";
 import ColorGet from "./ColorGet";
 import { eventer } from "../common/eventer";
 import { dataMonth } from "./DataMonth";
+import { Helper } from "../common/Helper";
 export default function () {
   let addNewJob = (e) => {
     let target = e.target as HTMLElement;
@@ -25,7 +26,7 @@ export default function () {
       extraConfig: {},
     };
     window.open(`/IndexJob.html?colorIndex=${colorIndex}&startTime=${startTime.getTime()}`, "_blank", JSON.stringify(config));
-    document.getElementById("ModalMask").style.display = "block";
+    Helper.$id("ModalMask").style.display = "block";
   };
   let jobDbClick = (e: MouseEvent) => {
     let id = (e.target as HTMLElement).dataset.id;
@@ -34,10 +35,10 @@ export default function () {
       extraConfig: {},
     };
     window.open(`/IndexJob.html?editId=${id}`, "_blank", JSON.stringify(config));
-    document.getElementById("ModalMask").style.display = "block";
+    Helper.$id("ModalMask").style.display = "block";
   };
   eventer.on("dataReady", () => {
-    let container = document.getElementById("ViewWeek").lastElementChild;
+    let container = Helper.$id("ViewWeek").lastElementChild;
     container.innerHTML = "";
     let index = dataMonth.getCurWeekFirstDayIndex();
     for (let i = 0; i < 7; i++) {

@@ -1,4 +1,5 @@
 import { eventer } from "../common/eventer";
+import { Helper } from "../common/Helper";
 import ColorGet from "./ColorGet";
 import { dataMonth } from "./DataMonth";
 import React from "./React";
@@ -13,7 +14,7 @@ export default function () {
       extraConfig: {},
     };
     window.open(`/IndexJob.html?editId=${id}`, "_blank", JSON.stringify(config));
-    document.getElementById("ModalMask").style.display = "block";
+    Helper.$id("ModalMask").style.display = "block";
     return false;
   };
   let addJob = (e) => {
@@ -31,10 +32,10 @@ export default function () {
       extraConfig: {},
     };
     window.open(`/IndexJob.html?colorIndex=${colorIndex}&startTime=${startTime.getTime()}`, "_blank", JSON.stringify(config));
-    document.getElementById("ModalMask").style.display = "block";
+    Helper.$id("ModalMask").style.display = "block";
   };
   eventer.on("dataReady", () => {
-    let container = document.getElementById("ViewMonth").lastElementChild;
+    let container = Helper.$id("ViewMonth").lastElementChild;
     container.innerHTML = "";
     let index = 0;
     for (let i = 0; i < 6; i++) {
