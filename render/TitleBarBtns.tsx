@@ -28,25 +28,27 @@ export default function () {
       restoreBtn.style.display = "none";
       maximizeBtn.style.display = "";
     }
-  }
-  eventer.once("domReady",async ()=>{
+  };
+  eventer.once("dataReady", async () => {
     let { ipcRenderer } = require("electron");
     ipcRenderer.addListener("windowStateChanged", windowStateHandler);
     let flag = await ipcRenderer.invoke("getWindowState");
-    windowStateHandler(null,flag?"maximize":"unmaximize");
-  })
-  return <div id="TitleBarBtns">
-    <div onClick={minimize}>
-      <i class="iconfont icon-minimize"></i>
+    windowStateHandler(null, flag ? "maximize" : "unmaximize");
+  });
+  return (
+    <div id="TitleBarBtns">
+      <div onClick={minimize}>
+        <i class="iconfont icon-minimize"></i>
+      </div>
+      <div onClick={restore} id="restoreBtn" style="display: none;">
+        <i class="iconfont icon-restore"></i>
+      </div>
+      <div onClick={maximize} id="maximizeBtn">
+        <i class="iconfont icon-maximize"></i>
+      </div>
+      <div onClick={close} id="closeBtn">
+        <i class="iconfont icon-close"></i>
+      </div>
     </div>
-    <div onClick={restore} id="restoreBtn" style="display: none;">
-      <i class="iconfont icon-restore"></i>
-    </div>
-    <div onClick={maximize} id="maximizeBtn">
-      <i class="iconfont icon-maximize"></i>
-    </div>
-    <div onClick={close} id="closeBtn">
-      <i class="iconfont icon-close"></i>
-    </div>
-</div>;
+  );
 }
