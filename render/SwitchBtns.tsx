@@ -46,6 +46,13 @@ export default function () {
     switchLabel.parentElement.nextElementSibling.classList.add("todaySelected");
     switchLabel.innerHTML = `${nowDate.getFullYear()}-${nowDate.getMonth() + 1}-${nowDate.getDate()}`;
     dispatchEvent(new Event("refreshView"));
+    document.getElementById("ViewWeek").style.zIndex = "0";
+    document.getElementById("ViewMonth").style.zIndex = "0";
+    document.getElementById("ViewDay").style.zIndex = "20";
+    let dom = switchLabel.parentElement.previousElementSibling;
+    dom.children[0].classList.add("selected");
+    dom.children[1].classList.remove("selected");
+    dom.children[2].classList.remove("selected");
   };
 
   let goPrevOrNext = async (val) => {
