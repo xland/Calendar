@@ -7,17 +7,17 @@
   flex-direction: column;
   .titlebar {
     display: flex;
-    height: 28px;
-    line-height: 28px;
+    height: 24px;
+    line-height: 24px;
     .title {
       flex: 1;
       padding-left: 8px;
       color: #666;
     }
     .btn {
-      width: 24px;
+      width: 26px;
       height: 20px;
-      margin: 4px;
+      margin-top: 2px;
       line-height: 20px;
       text-align: center;
       cursor: pointer;
@@ -35,8 +35,8 @@
   }
   .header {
     display: flex;
-    height: 28px;
-    line-height: 28px;
+    height: 24px;
+    line-height: 24px;
     & > div {
       flex: 1;
       text-align: center;
@@ -59,9 +59,9 @@
       }
       .dayItem {
         position: absolute;
-        left: 6px;
+        left: 3px;
         top: 3px;
-        right: 6px;
+        right: 3px;
         bottom: 3px;
         line-height: 22px;
         color: #444;

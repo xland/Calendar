@@ -27,12 +27,14 @@ export default function () {
         index += 1;
       }
       target.append(row);
+      let dom = target.parentElement.firstElementChild.firstElementChild;
+      dom.innerHTML = `${dataMonthSmall.curDate.getFullYear() + 1}年${dataMonthSmall.curDate.getMonth()}月`;
     }
   });
   return (
     <div id="SmallCalendar">
       <div class="titlebar">
-        <div class="title">2023年12月</div>
+        <div class="title"></div>
         <div class="btn">
           <i class="iconfont icon-zuojiantou"></i>
         </div>
