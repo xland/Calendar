@@ -56,7 +56,7 @@ INSERT INTO Setting (ViewDefault,LangDefault,SkinDefault,AlertBefore) VALUES (0,
   }
 
   getDataRecent() {
-    let count = 14;
+    let count = 28;
     let nowDate = new Date();
     let sql = `SELECT * FROM Job WHERE StartTime >= ${nowDate.getTime()} and RepeatType == 0 order by StartTime asc LIMIT ${count}`;
     let result = this.db.prepare(sql).all() as ModelJob[];

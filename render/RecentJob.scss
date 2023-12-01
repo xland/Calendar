@@ -1,15 +1,14 @@
 #RecentJob {
-  padding-top: 36px;
-  padding-left: 20px;
-  padding-right: 20px;
+  padding-top: 22px;
   flex: 1;
   display: flex;
   flex-direction: column;
+  position: relative;
   #searchBox {
     display: flex;
+    padding-left: 20px;
+    padding-right: 20px;
     line-height: 28px;
-    border-radius: 3px;
-    overflow: hidden;
     input {
       flex: 1;
       display: block;
@@ -43,20 +42,47 @@
     }
   }
   #recentJobBox {
-    padding-top: 6px;
     line-height: 28px;
     color: #666;
-    flex: 1;
+    position: absolute;
+    top: 56px;
+    bottom: 6px;
+    overflow: hidden;
     overflow-y: auto;
-    div {
-      height: 28px;
-      overflow: hidden;
-      white-space: nowrap;
-      text-overflow: ellipsis;
-      border-radius: 3px;
-      padding-left: 6px;
-      padding-right: 6px;
+    left: 12px;
+    right: 0px;
+    padding-right: 12px;
+    /* width */
+    &::-webkit-scrollbar {
+      width: 2px;
+    }
+    &::-webkit-scrollbar-track {
+      background: transparent !important;
       cursor: pointer;
+    }
+    &::-webkit-scrollbar-thumb {
+      position: absolute;
+      right: -6px;
+      background: #f02c3844;
+    }
+    .item {
+      border-radius: 3px;
+      cursor: pointer;
+      display: flex;
+      padding-left: 8px;
+      padding-right: 8px;
+      .title {
+        flex: 1;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        height: 28px;
+      }
+      .time {
+        height: 28px;
+        width: 68px;
+        text-align: right;
+      }
       &:hover {
         background: #f02c3822;
         color: #333 !important;

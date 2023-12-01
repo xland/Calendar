@@ -8,7 +8,12 @@ export default function () {
     let jobs: ModelJob[] = await ipcRenderer.invoke("getDataRecent");
     let dom = document.getElementById("recentJobBox");
     for (let i = 0; i < jobs.length; i++) {
-      dom.append(<div>{jobs[i].JobInfo}</div>);
+      dom.append(
+        <div class="item">
+          <div class="title">{jobs[i].JobInfo}</div>
+          <div class="time">3小时后</div>
+        </div>
+      );
     }
   });
 
