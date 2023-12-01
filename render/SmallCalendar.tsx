@@ -29,6 +29,15 @@ export default function () {
   });
   return (
     <div id="SmallCalendar">
+      <div class="titlebar">
+        <div class="title">2023年12月</div>
+        <div class="btn">
+          <i class="iconfont icon-zuojiantou"></i>
+        </div>
+        <div class="btn">
+          <i class="iconfont icon-youjiantou"></i>
+        </div>
+      </div>
       <div class="header">
         <div>一</div>
         <div>二</div>
