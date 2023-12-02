@@ -38,9 +38,7 @@ export default function () {
     if (nowDate.getFullYear() === dataMonth.curDate.getFullYear() && nowDate.getMonth() === dataMonth.curDate.getMonth() && nowDate.getDate() === dataMonth.curDate.getDate()) {
       return;
     } else if (nowDate.getFullYear() != dataMonth.curDate.getFullYear() || nowDate.getMonth() != dataMonth.curDate.getMonth()) {
-      dataMonth.curDate = nowDate;
-      dataMonth.initDateArr();
-      await dataMonth.initJobArr();
+      await dataMonth.init();
     } else {
       dataMonth.curDate = nowDate;
     }
@@ -78,7 +76,7 @@ export default function () {
     } else {
       SwitchBtns.lastElementChild.classList.remove("todaySelected");
       if (oldMonthIndex != dataMonth.curDate.getMonth()) {
-        dataMonth.initDateArr();
+        dataMonth.dateArr = Helper.getOneMonthDate(dataMonth.curDate);
         await dataMonth.initJobArr();
       }
     }

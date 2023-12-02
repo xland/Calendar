@@ -31,14 +31,16 @@ export default function () {
       dom.innerHTML = `${dataMonthSmall.curDate.getFullYear() + 1}年${dataMonthSmall.curDate.getMonth()}月`;
     }
   });
+  let goPrevMonth = (e: MouseEvent) => {};
+  let goNextMonth = (e: MouseEvent) => {};
   return (
     <div id="SmallCalendar">
       <div class="titlebar">
         <div class="title"></div>
-        <div class="btn">
+        <div onClick={goPrevMonth} class="btn">
           <i class="iconfont icon-zuojiantou"></i>
         </div>
-        <div class="btn">
+        <div onClick={goNextMonth} class="btn">
           <i class="iconfont icon-youjiantou"></i>
         </div>
       </div>
