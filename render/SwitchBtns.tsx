@@ -35,12 +35,14 @@ export default function () {
   let gotoCurDay = async () => {
     let switchLabel = Helper.$id("switchLabel");
     let nowDate = new Date();
-    if (nowDate.getFullYear() === dataMonth.curDate.getFullYear() && nowDate.getMonth() === dataMonth.curDate.getMonth() && nowDate.getDate() === dataMonth.curDate.getDate()) {
-      return;
-    } else if (nowDate.getFullYear() != dataMonth.curDate.getFullYear() || nowDate.getMonth() != dataMonth.curDate.getMonth()) {
-      await dataMonth.init();
+    if (nowDate.getFullYear() === dataMonth.curDate.getFullYear() && nowDate.getMonth() === dataMonth.curDate.getMonth()) {
+      if (nowDate.getDate() === dataMonth.curDate.getDate()) {
+        return;
+      } else {
+        dataMonth.curDate = nowDate;
+      }
     } else {
-      dataMonth.curDate = nowDate;
+      await dataMonth.init();
     }
     switchLabel.parentElement.nextElementSibling.classList.add("todaySelected");
     switchLabel.innerHTML = `${nowDate.getFullYear()}-${nowDate.getMonth() + 1}-${nowDate.getDate()}`;
