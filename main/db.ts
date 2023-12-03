@@ -293,6 +293,93 @@ CREATE TABLE Setting(ViewDefault INT DEFAULT 0,LangDefault INT DEFAULT 0,SkinDef
     result.sort((a, b) => a.StartTime - b.StartTime);
     return result;
   }
+
+
+  hasDataOneMonth(startTime: number, endTime: number){
+    let hasJob = Array(42).fill(false);
+    let repeatJobs = this.db.prepare(`SELECT * FROM Job where RepeatType > 0`).all() as ModelJob[];
+    for (let j = 0; j < repeatJobs.length; j++) {
+      let job = repeatJobs[j];
+      if(job.StartTime > endTime){
+        continue;
+      }
+      if (job.RepeatType === 1) {
+        //每天     
+        if(job.StartTime < startTime){
+          hasJob.fill(true)
+          return hasJob;
+        } else {
+          let span = job.StartTime - startTime
+          let dayIndex = Math.floor(span / 86400000)  //1天
+          hasJob.fill(true,dayIndex)
+        }
+        if(hasJob.findIndex(v=>v===false) < 0) return hasJob;
+      } else if (job.RepeatType === 2) {
+        //工作日
+        let i = 0;
+        if(job.StartTime >= startTime){
+          let span = job.StartTime - startTime
+          i = Math.floor(span / 86400000)  //1天
+        }
+        for (; i < 42; i++) {
+          let arr = [5, 6, 12, 13, 19, 20, 26, 27, 33, 34, 40, 41];
+          if (arr.includes(i)) {
+            continue;
+          }
+          hasJob[i] = true;
+        }
+        if(hasJob.findIndex(v=>v===false) < 0) return hasJob;
+      } else if (job.RepeatType === 3) {
+        //每周几
+        let i = new Date(job.StartTime).getDay();
+        if(job.StartTime >= startTime){
+          let span = job.StartTime - startTime
+          i = Math.floor(span / 86400000)  //1天
+        }
+        while(i<42){
+          hasJob[i] = true;
+          i = i+7
+        }
+        if(hasJob.findIndex(v=>v===false) < 0) return hasJob;
+      } else if (job.RepeatType === 4) {
+        //每月第几天
+        let temp = new Date(startTime);
+        let jobDate = new Date(job.StartTime).getDate();
+        let i = 0;
+        while(i<42){
+          if(temp.getDate() === jobDate){
+            hasJob[i] = true
+          }
+          temp.setDate(temp.getDate()+1)
+          i+=1;
+        }
+        if(hasJob.findIndex(v=>v===false) < 0) return hasJob;
+      } else if (job.RepeatType === 5) {
+        //每年几月几日
+        let temp = new Date(startTime);
+        let jobDate = new Date(job.StartTime);
+        let i = 0;
+        while(i<42){
+          if(temp.getDate() === jobDate.getDate() && temp.getMonth() === jobDate.getMonth()){
+            hasJob[i] = true
+          }
+          temp.setDate(temp.getDate()+1)
+          i+=1;
+        }
+        if(hasJob.findIndex(v=>v===false) < 0) return hasJob;
+      }
+    }
+    let sql = `SELECT * FROM Job WHERE StartTime >= ? and EndTime <= ? and RepeatType == 0 order by StartTime asc`;
+    let result = this.db.prepare(sql).all(startTime, endTime) as ModelJob[];
+    for (let j = 0; j < result.length; j++) {
+      let job = result[j]
+      let span = job.StartTime - startTime
+      let i = Math.floor(span / 86400000)  //1天
+      hasJob[i] = true
+    }
+    return hasJob;
+  }
+
   excuteSQL(sql: string, ...params) {
     try {
       this.db.prepare(sql).run(params);

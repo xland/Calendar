@@ -41,6 +41,9 @@ let initHook = ()=>{
     ipcMain.handle("getDataOneMonth",(e,startTime:number,endTime:number)=>{
         return db.getDataOneMonth(startTime,endTime)
     })
+    ipcMain.handle("hasDataOneMonth",(e,startTime:number,endTime:number)=>{
+        return db.getDataOneMonth(startTime,endTime)
+    })
     ipcMain.handle("setOpenAtLogin",(e,flag:boolean)=>{
         app.setLoginItemSettings({openAtLogin:flag});
     })
