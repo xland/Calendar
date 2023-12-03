@@ -332,6 +332,8 @@ CREATE TABLE Setting(ViewDefault INT DEFAULT 0,LangDefault INT DEFAULT 0,SkinDef
       } else if (job.RepeatType === 3) {
         //每周几
         let i = new Date(job.StartTime).getDay();
+        i = i===0?7:i
+        i = i-1;
         if(job.StartTime >= startTime){
           let span = job.StartTime - startTime
           i = Math.floor(span / 86400000)  //1天
