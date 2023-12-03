@@ -5,6 +5,10 @@ export class Helper{
     static $select(name:string){
         return document.querySelector(name)
     }
+    static isCurrentDate(date:Date){
+        let now = new Date();
+        return now.getFullYear() === date.getFullYear() && now.getMonth() === date.getMonth() && now.getDate() === date.getDate()
+    }
     static getOneMonthDate(tarDate:Date){
         let result = [];
         let year = tarDate.getFullYear();

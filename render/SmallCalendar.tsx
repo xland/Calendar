@@ -73,20 +73,24 @@ export default function () {
       dataMonth.dateArr = Helper.getOneMonthDate(dataMonth.curDate);
       await dataMonth.initJobArr();
     }
-    switchLabel.parentElement.nextElementSibling.classList.add("todaySelected");
     switchLabel.innerHTML = `${nowDate.year}-${nowDate.month}-${nowDate.day}`;
     dispatchEvent(new Event("refreshView"));
     Helper.$id("ViewWeek").style.zIndex = "0";
     Helper.$id("ViewMonth").style.zIndex = "0";
     Helper.$id("ViewDay").style.zIndex = "20";
-    let dom = switchLabel.parentElement.previousElementSibling;
+    let prevTarget = target.parentElement.parentElement.querySelector(".selected");
+    prevTarget?.classList.remove("selected");
+    target.firstElementChild.classList.add("selected");
+    let parent = switchLabel.parentElement;
+    let dom = parent.previousElementSibling;
     dom.children[0].classList.add("selected");
     dom.children[1].classList.remove("selected");
     dom.children[2].classList.remove("selected");
-    let prevTarget = target.parentElement.parentElement.querySelector(".selected");
-    prevTarget.classList.remove("selected");
-    target.firstElementChild.classList.add("selected");
-    console.log(dataMonth.curDate);
+    if (Helper.isCurrentDate(dataMonth.curDate)) {
+      parent.nextElementSibling.classList.add("todaySelected");
+    } else {
+      parent.nextElementSibling.classList.remove("todaySelected");
+    }
   };
   return (
     <div id="SmallCalendar">

@@ -9,9 +9,7 @@ export default function () {
     let target = e.target as HTMLElement;
     if (target.classList.contains("selected")) return;
     let selectedDom = target.parentElement.querySelector(".selected") as HTMLElement;
-    if (selectedDom) {
-      selectedDom.classList.remove("selected");
-    }
+    selectedDom?.classList.remove("selected");
     let arr = ["ViewDay", "ViewWeek", "ViewMonth"];
     arr.forEach((v) => {
       Helper.$id(v).style.zIndex = "0";
