@@ -29,6 +29,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   eventer.emit("dataReady");
   window.addEventListener("refreshView", async (e) => {
     await dataMonth.initJobArr();
+    await dataMonthSmall.init();
     eventer.emit("dataReady");
   });
 });

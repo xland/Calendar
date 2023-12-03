@@ -37,7 +37,7 @@ export default function () {
       dom.innerHTML = `${dataMonthSmall.curDate.getFullYear()}年${dataMonthSmall.curDate.getMonth() + 1}月`;
     }
   };
-  eventer.once("dataReady", async () => {
+  eventer.on("dataReady", async () => {
     initDataDom();
   });
   let goPrevOrNextMonth = async (target: HTMLElement, val: number) => {
