@@ -45,7 +45,10 @@ function App(props) {
       let sql = `Update Job set JobInfo = ? ,StartTime = ? ,EndTime = ? where Id = ?`;
       await ipcRenderer.invoke("excuteSQL", sql, job.JobInfo, job.StartTime, job.EndTime, job.Id);
     } else {
-      await ipcRenderer.invoke("saveToDb", "Job", job);
+      let crypto = require("crypto");
+      job.Id = crypto.randomUUID();
+      let sql = `INSERT INTO Job (Id,JobInfo,StartTime,EndTime,RepeatType,ColorIndex) VALUES (?,?,?,?,?,?)`;
+      await ipcRenderer.invoke("excuteSQL", sql, job.Id, job.JobInfo, job.StartTime, job.EndTime, job.RepeatType, job.ColorIndex);
     }
     let win = window.opener as Window;
     win.dispatchEvent(new Event("refreshView"));

@@ -18,14 +18,6 @@ export class ModelJob extends ModelBase{
      */
     RepeatType:number = 0
     /**
-     * 重复次数
-     */
-    RepeatTimes:number
-    /**
-     * 重复结束时间
-     */
-    RepeatEndDay:number
-    /**
      * 任务开始时间
      */
     StartTime:number

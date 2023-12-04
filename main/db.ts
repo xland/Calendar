@@ -16,9 +16,10 @@ export class Db {
     }
   }
   createDb(dbPath: string) {
-    let sql = `CREATE TABLE Job(Id VARCHAR2(36) NOT NULL ON CONFLICT FAIL UNIQUE ON CONFLICT FAIL, CreateTime BIGINT,UpdateTime BIGINT,DeleteTime BIGINT,IsDelete BOOLEAN, 
-JobInfo TEXT,RepeatType INT,RepeatTimes INT,RepeatEndDay INT,StartTime BIGINT,EndTime BIGINT,ColorIndex INT);CREATE INDEX JobInfo_Index ON Job(JobInfo);
-CREATE TABLE Setting(ViewDefault INT DEFAULT 0,LangDefault INT DEFAULT 0,SkinDefault INT DEFAULT 0,AlertBefore INT);INSERT INTO Setting (ViewDefault,LangDefault,SkinDefault,AlertBefore) VALUES (0,0,0,5);`;
+    let sql = `CREATE TABLE Job(Id VARCHAR2(36) NOT NULL ON CONFLICT FAIL UNIQUE ON CONFLICT FAIL,JobInfo TEXT,RepeatType INT,RepeatTimes INT,RepeatEndDay INT,StartTime BIGINT,EndTime BIGINT,ColorIndex INT);
+CREATE INDEX JobInfo_Index ON Job(JobInfo);
+CREATE TABLE Setting(ViewDefault INT DEFAULT 0,LangDefault INT DEFAULT 0,SkinDefault INT DEFAULT 0,AlertBefore INT);
+INSERT INTO Setting (ViewDefault,LangDefault,SkinDefault,AlertBefore) VALUES (0,0,0,5);`;
     try {
       this.db = new Database(dbPath, { timeout: 8000 });
       this.db.pragma("journal_mode = WAL");
@@ -27,30 +28,16 @@ CREATE TABLE Setting(ViewDefault INT DEFAULT 0,LangDefault INT DEFAULT 0,SkinDef
       console.log(ex);
     }
   }
-  saveToDb(type: string, data: any) {
-    if (type === "Job") {
-      data = data as ModelJob;
-      data.Id = crypto.randomUUID();
-      data.CreateTime = Date.now();
-      data.UpdateTime = data.CreateTime;
-      data.IsDelete = 0;
-      let columnNames: string[] = [];
-      for (let key in data) {
-        columnNames.push(key);
-      }
-      let insertSql = `INSERT INTO Job (${columnNames.join(",")}) VALUES (@${columnNames.join(",@")})`;
-      try {
-        let insert = this.db.prepare(insertSql);
-        insert.run(data);
-      } catch (ex) {
-        console.log(ex);
-      }
-    } else if (type == "") {
-    }
-  }
   getData(sql: string, ...params) {
     let objs = this.db.prepare(sql).all(params);
     return objs;
+  }
+  excuteSQL(sql: string, ...params) {
+    try {
+      this.db.prepare(sql).run(params);
+    } catch (ex) {
+      console.log(ex);
+    }
   }
 
   getDataRecent() {
@@ -412,23 +399,7 @@ CREATE TABLE Setting(ViewDefault INT DEFAULT 0,LangDefault INT DEFAULT 0,SkinDef
     return hasJob;
   }
 
-  excuteSQL(sql: string, ...params) {
-    try {
-      this.db.prepare(sql).run(params);
-    } catch (ex) {
-      console.log(ex);
-    }
-  }
-  getDataNearby() {
-    let repeatJobs = this.getData("SELECT * FROM Job where RepeatType > 0") as ModelJob[];
-    let now = Date.now();
-    let recentJobs = this.getData(`SELECT * FROM Job where StartTime > ${now}`) as ModelJob[];
-    for (let i = 0; i < recentJobs.length; i++) {
-      let job = recentJobs[i];
-      if (job.RepeatType === 1) {
-      }
-    }
-  }
+
   init() {
     let dbPath = path.join(app.getPath("userData"), "db");
     let exist = fsex.pathExistsSync(dbPath);

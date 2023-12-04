@@ -19,10 +19,6 @@ let initHook = ()=>{
         let win = BrowserWindow.fromWebContents(e.sender) as BrowserWindow;
         return win.isMaximized();
     })
-    ipcMain.handle("saveToDb",(e,type,data)=>{
-        db.saveToDb(type,data);
-        win.show();
-    })
     ipcMain.handle("getData",(e,sql:string,...params)=>{
         return db.getData(sql,...params);
     })
