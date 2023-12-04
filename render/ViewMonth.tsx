@@ -17,15 +17,6 @@ export default function () {
     Helper.$id("ModalMask").style.display = "block";
     return false;
   };
-  let jobMouseDown = (e: MouseEvent) => {
-    if (e.button != 2) return;
-    e.preventDefault();
-    e.stopPropagation();
-    let target = e.currentTarget as HTMLElement;
-    let evt = new CustomEvent("show", { detail: { x: e.x, y: e.y, id: target.dataset.id } });
-    let menu = Helper.$id("Menu");
-    menu.dispatchEvent(evt);
-  };
   let addJob = (e) => {
     let target = e.target as HTMLElement;
     let index = Number(target.dataset.index);
@@ -66,7 +57,7 @@ export default function () {
         let cellContent = <div class="cellContent" data-index={index} onClick={addJob}></div>;
         dayObj.jobs.forEach((job) => {
           cellContent.appendChild(
-            <div class="cellItem" data-id={job.Id} title={job.JobInfo} onMouseDown={jobMouseDown} onDblClick={jobDbClick} style={`--color:${ColorGet(job.ColorIndex)};`}>
+            <div class="cellItem" data-id={job.Id} title={job.JobInfo} onMouseDown={(e) => Helper.showJobMenu(e)} onDblClick={jobDbClick} style={`--color:${ColorGet(job.ColorIndex)};`}>
               {job.JobInfo}
             </div>
           );

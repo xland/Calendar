@@ -13,23 +13,12 @@ export default function (props) {
     window.open(`/IndexJob.html?editId=${id}`, "_blank", JSON.stringify(config));
     Helper.$id("ModalMask").style.display = "block";
   };
-  let jobMouseDown = (e: MouseEvent) => {
-    if (e.button != 2) return;
-    e.preventDefault();
-    e.stopPropagation();
-    let target = e.target as HTMLElement;
-    target = target.parentElement;
-    let evt = new CustomEvent("show", { detail: { x: e.x, y: e.y, id: target.dataset.id } });
-    let menu = Helper.$id("Menu");
-    menu.dispatchEvent(evt);
-    return false;
-  };
   return (
     <div
       class="Job"
       data-id={props.data.Id}
       style={props.style}
-      onMouseDown={jobMouseDown}
+      onMouseDown={(e) => Helper.showJobMenu(e)}
       onDblClick={jobDbClick}
       data-text={props.data.JobInfo}
       data-start={props.data.StartTime}

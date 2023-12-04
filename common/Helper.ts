@@ -9,6 +9,14 @@ export class Helper{
         let now = new Date();
         return now.getFullYear() === date.getFullYear() && now.getMonth() === date.getMonth() && now.getDate() === date.getDate()
     }
+    static showJobMenu(e:MouseEvent){
+        if (e.button != 2) return;
+        let target = e.currentTarget as HTMLElement;
+        let evt = new CustomEvent("show", { detail: { x: e.x, y: e.y, id: target.dataset.id } });
+        let menu = Helper.$id("Menu");
+        menu.dispatchEvent(evt);
+        return false;
+    }
     static getOneMonthDate(tarDate:Date){
         let result = [];
         let year = tarDate.getFullYear();
