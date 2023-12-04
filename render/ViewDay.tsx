@@ -22,8 +22,7 @@ export default function () {
     let hour = parseInt(startHour.split(":")[0]);
     let startTime = new Date(dateObj.year, dateObj.month - 1, dateObj.day, hour, 0, 0, 0);
     let config = {
-      winConfig: { width: 480, height: 380, title: "增加日程", minHeight: 380, minWidth: 480 },
-      extraConfig: {},
+      title: "增加日程",
     };
     window.open(`/IndexJob.html?colorIndex=${colorIndex}&startTime=${startTime.getTime()}`, "_blank", JSON.stringify(config));
     Helper.$id("ModalMask").style.display = "block";
@@ -154,17 +153,17 @@ export default function () {
       addNewJob(target);
       return;
     } else if (target.classHas("dragger")) {
-      document.querySelectorAll(".jobSelected").forEach((v) => v.classDel("jobSelected"));
+      document.querySelectorAll(".jobSelected").forEach((v: HTMLElement) => v.classDel("jobSelected"));
       target.dad().classAdd("jobSelected");
       if (target.classHas("draggerSelected")) {
         target.classDel("draggerSelected");
       } else {
-        document.querySelectorAll(".draggerSelected").forEach((v) => v.classDel("draggerSelected"));
+        document.querySelectorAll(".draggerSelected").forEach((v: HTMLElement) => v.classDel("draggerSelected"));
         target.classAdd("draggerSelected");
       }
     } else if (target.classHas("jobInfo")) {
-      document.querySelectorAll(".jobSelected").forEach((v) => v.classDel("jobSelected"));
-      document.querySelectorAll(".draggerSelected").forEach((v) => v.classDel("draggerSelected"));
+      document.querySelectorAll(".jobSelected").forEach((v: HTMLElement) => v.classDel("jobSelected"));
+      document.querySelectorAll(".draggerSelected").forEach((v: HTMLElement) => v.classDel("draggerSelected"));
       target.dad().classAdd("jobSelected");
     } else {
       return;

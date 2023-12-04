@@ -82,16 +82,20 @@ let getWinOptions:()=>Electron.BrowserWindowConstructorOptions = ()=>{
 
 let winOpenHandler = (e:HandlerDetails)=>{
     let config = JSON.parse(e.features)
-    let overrideBrowserWindowOptions = getWinOptions()
-    Object.assign(overrideBrowserWindowOptions,config.winConfig);
+    let options = getWinOptions()
+    Object.assign(options,config);
     if(win){        
-        config.winConfig.modal = true;
-        config.winConfig.parent = win
+        options.modal = true;
+        options.parent = win
+        options.width = 480
+        options.height = 380        
+        options.minHeight = 380
+        options.minWidth = 480
     }
     return {
         action: 'allow', 
         outlivesOpener: false, 
-        overrideBrowserWindowOptions
+        overrideBrowserWindowOptions:options
     };
 }
 

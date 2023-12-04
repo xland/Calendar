@@ -9,8 +9,7 @@ export default function (props) {
       let id = target.dad().dataset.id;
       if (target.innerHTML === "增加") {
         let config = {
-          winConfig: { width: 480, height: 380, title: "增加日程", minHeight: 380, minWidth: 480 },
-          extraConfig: {},
+          title: "增加日程",
         };
         let data = dataMonth.dateArr[dataMonth.getCurDateIndex()].jobs;
         let colorIndex = 0;
@@ -24,8 +23,7 @@ export default function (props) {
         Helper.$id("ModalMask").style.display = "block";
       } else if (target.innerHTML === "修改") {
         let config = {
-          winConfig: { width: 480, height: 380, title: "修改日程", minHeight: 380, minWidth: 480 },
-          extraConfig: {},
+          title: "修改日程",
         };
         window.open(`/IndexJob.html?editId=${id}`, "_blank", JSON.stringify(config));
         Helper.$id("ModalMask").style.display = "block";

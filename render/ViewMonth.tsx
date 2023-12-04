@@ -10,8 +10,7 @@ export default function () {
     let id = target.dataset.id;
     if (!id) return;
     let config = {
-      winConfig: { width: 480, height: 380, title: "修改日程", minHeight: 380, minWidth: 480 },
-      extraConfig: {},
+      title: "修改日程",
     };
     window.open(`/IndexJob.html?editId=${id}`, "_blank", JSON.stringify(config));
     Helper.$id("ModalMask").style.display = "block";
@@ -28,8 +27,7 @@ export default function () {
     }
     let startTime = new Date(dateObj.year, dateObj.month - 1, dateObj.day, 8, 0, 0, 0);
     let config = {
-      winConfig: { width: 480, height: 380, title: "增加日程", minHeight: 380, minWidth: 480 },
-      extraConfig: {},
+      title: "增加日程",
     };
     window.open(`/IndexJob.html?colorIndex=${colorIndex}&startTime=${startTime.getTime()}`, "_blank", JSON.stringify(config));
     Helper.$id("ModalMask").style.display = "block";

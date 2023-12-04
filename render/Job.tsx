@@ -7,8 +7,7 @@ export default function (props) {
     let id = target.dataset.id;
     if (!id) return;
     let config = {
-      winConfig: { width: 480, height: 380, title: "修改日程", minHeight: 380, minWidth: 480 },
-      extraConfig: {},
+      title: "修改日程",
     };
     window.open(`/IndexJob.html?editId=${id}`, "_blank", JSON.stringify(config));
     Helper.$id("ModalMask").style.display = "block";
