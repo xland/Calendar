@@ -81,7 +81,7 @@ export default function () {
     prevTarget?.classList.remove("selected");
     target.firstElementChild.classList.add("selected");
     let parent = switchLabel.parentElement;
-    let dom = parent.previousElementSibling;
+    let dom = parent.prev();
     dom.children[0].classList.add("selected");
     dom.children[1].classList.remove("selected");
     dom.children[2].classList.remove("selected");

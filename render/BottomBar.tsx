@@ -9,7 +9,7 @@ export default function () {
   let closeDrawerBtnClick = () => {
     let drawer = Helper.$id("SettingDrawer");
     drawer.style.display = "none";
-    let btn = drawer.previousElementSibling.querySelector(".bottomBtnSelected") as HTMLElement;
+    let btn = drawer.prev().querySelector(".bottomBtnSelected") as HTMLElement;
     btn.classList.remove("bottomBtnSelected");
   };
   let settingBtnClick = (e) => {

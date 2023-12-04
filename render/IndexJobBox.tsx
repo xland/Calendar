@@ -23,11 +23,11 @@ export default function () {
     let inputId = taEle.nextElementSibling as HTMLInputElement;
     inputId.value = job.Id;
     let arr = ["日", "一", "二", "三", "四", "五", "六"];
-    dom = taEle.parentElement.previousElementSibling as HTMLElement;
+    dom = taEle.parentElement.prev() as HTMLElement;
     dom.children[3].innerHTML = `每周${arr[startTime.getDay()]}`;
     dom.children[4].innerHTML = `每月第${startTime.getDate()}天`;
     dom.children[5].innerHTML = `每年${startTime.getMonth() + 1}月${startTime.getDate()}日`;
-    dom.previousElementSibling.innerHTML = dom.children[job.RepeatType].innerHTML;
+    dom.prev().innerHTML = dom.children[job.RepeatType].innerHTML;
   };
   let timeItemClick = (e: MouseEvent) => {
     let target = e.target as HTMLElement;
@@ -93,7 +93,7 @@ export default function () {
     let val = target.innerHTML;
     target = e.currentTarget as HTMLElement;
     target.style.display = "none";
-    target.previousElementSibling.innerHTML = val;
+    target.prev().innerHTML = val;
   };
   let selectOptionBlur = (e: MouseEvent) => {
     let target = e.currentTarget as HTMLElement;

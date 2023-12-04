@@ -13,7 +13,7 @@ export default function (props) {
     }
   };
   let setDefaultView = (target: HTMLElement) => {
-    let icon = target.parentElement.querySelector(".icon-woderilixuanzhong") as HTMLElement;
+    let icon = target.dad().querySelector(".icon-woderilixuanzhong") as HTMLElement;
     icon.classList.remove("icon-woderilixuanzhong");
     icon.classList.add("icon-jietutubiao_yuan");
     target.firstElementChild.firstElementChild.classList.add("icon-woderilixuanzhong");
@@ -21,14 +21,14 @@ export default function (props) {
   let checkOneItem = (e: MouseEvent) => {
     let target = e.target as HTMLElement;
     if (target.tagName === "I") {
-      target = target.parentElement.parentElement;
+      target = target.dad().dad();
     } else if (target.tagName === "DIV") {
-      target = target.parentElement;
+      target = target.dad();
     }
     if (!target.classList.contains("radioItem")) {
       return;
     }
-    if (target.firstElementChild.firstElementChild.classList.contains("icon-woderilixuanzhong")) {
+    if (target.son0().son0().classList.contains("icon-woderilixuanzhong")) {
       return;
     }
     setDefaultView(target);

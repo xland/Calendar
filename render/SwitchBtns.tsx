@@ -48,7 +48,7 @@ export default function () {
     Helper.$id("ViewWeek").style.zIndex = "0";
     Helper.$id("ViewMonth").style.zIndex = "0";
     Helper.$id("ViewDay").style.zIndex = "20";
-    let dom = switchLabel.parentElement.previousElementSibling;
+    let dom = switchLabel.parentElement.prev();
     dom.children[0].classList.add("selected");
     dom.children[1].classList.remove("selected");
     dom.children[2].classList.remove("selected");
