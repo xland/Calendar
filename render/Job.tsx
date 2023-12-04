@@ -3,9 +3,8 @@ import "./Job.scss";
 import { Helper } from "../common/Helper";
 export default function (props) {
   let jobDbClick = (e: MouseEvent) => {
-    let target = e.target as HTMLElement;
-    target = target.parentElement;
-    let id = target.getAttribute("id");
+    let target = e.currentTarget as HTMLElement;
+    let id = target.dataset.id;
     if (!id) return;
     let config = {
       winConfig: { width: 480, height: 380, title: "修改日程", minHeight: 380, minWidth: 480 },
@@ -20,7 +19,7 @@ export default function (props) {
     e.stopPropagation();
     let target = e.target as HTMLElement;
     target = target.parentElement;
-    let evt = new CustomEvent("show", { detail: { x: e.x, y: e.y, id: target.getAttribute("id") } });
+    let evt = new CustomEvent("show", { detail: { x: e.x, y: e.y, id: target.dataset.id } });
     let menu = Helper.$id("Menu");
     menu.dispatchEvent(evt);
     return false;
@@ -28,7 +27,7 @@ export default function (props) {
   return (
     <div
       class="Job"
-      id={props.data.Id}
+      data-id={props.data.Id}
       style={props.style}
       onMouseDown={jobMouseDown}
       onDblClick={jobDbClick}

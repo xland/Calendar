@@ -63,7 +63,7 @@ export default function () {
     if (colorIndex > 5) colorIndex = 0;
   };
   let updateItem = async (targeDom: HTMLElement) => {
-    let Id = targeDom.getAttribute("id");
+    let Id = targeDom.dataset.id;
     let StartTime = Number(targeDom.dataset.start);
     let EndTime = Number(targeDom.dataset.end);
     let job = dataMonth.getJobById(Id);
