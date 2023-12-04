@@ -78,7 +78,7 @@ export default function () {
   let setJobTime = (target: HTMLElement) => {
     let height = target.parentElement.clientHeight;
     let ms = (target.offsetTop / height) * 86400000;
-    let now = new Date();
+    let now = new Date(parseInt(target.dataset.start));
     now.setHours(0, 0, 0, 0);
     now.setMilliseconds(ms);
     target.dataset.start = now.getTime().toString();
