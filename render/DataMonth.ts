@@ -2,7 +2,7 @@ import { Helper } from '../common/Helper';
 import { ModelJob } from './../model/ModelJob';
 class DataMonth{
     curDate:Date;
-    dateArr:{year:number,month:number,day:number,isCurMonth:boolean,isCurDay:boolean,jobs:ModelJob[]}[];
+    dateArr:{year:number,month:number,day:number,isCurMonth:boolean,jobs:ModelJob[]}[];
     async initJobArr(){
         let startDate = this.dateArr[0];
         let endDate = this.dateArr[this.dateArr.length-1];

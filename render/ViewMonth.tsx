@@ -50,9 +50,10 @@ export default function () {
         if (!dayObj.isCurMonth) {
           cell.classList.add("notCurMonth");
         }
-        if (dayObj.isCurDay) {
-          cell.classList.add("selected");
-        }
+        //todo
+        // if (dayObj.isCurDay) {
+        //   cell.classList.add("selected");
+        // }
         let cellContent = <div class="cellContent" data-index={index} onClick={addJob}></div>;
         dayObj.jobs.forEach((job) => {
           cellContent.appendChild(

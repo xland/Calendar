@@ -22,8 +22,7 @@ export class Helper{
                 year:preMonthLastDay.getFullYear(),
                 month:preMonthLastDay.getMonth()+1,
                 day:i,
-                isCurMonth:false,
-                isCurDay:false,
+                isCurMonth:false
             })
         }
         let curMonthLastDay = new Date(year,month+1,0);
@@ -32,8 +31,7 @@ export class Helper{
                 year:curMonthLastDay.getFullYear(),
                 month:curMonthLastDay.getMonth()+1,
                 day:i,
-                isCurMonth:true,
-                isCurDay:i === date,
+                isCurMonth:true
             })
         }    
         let lastDayCount = 42 - result.length;
@@ -44,8 +42,7 @@ export class Helper{
                     year:nextMonthLastDay.getFullYear(),
                     month:nextMonthLastDay.getMonth()+1,
                     day:i,
-                    isCurMonth:false,
-                    isCurDay:false,
+                    isCurMonth:false
                 })
             }
         }
