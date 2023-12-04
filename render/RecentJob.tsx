@@ -28,6 +28,13 @@ export default function () {
       }
     }
   };
+  let mouseDown = (e: MouseEvent) => {
+    if (e.button === 1) {
+      return;
+    }
+    Helper.showJobMenu(e);
+  };
+  let jobDbClick = (e: MouseEvent) => {};
   eventer.on("dataReady", async () => {
     let { ipcRenderer } = require("electron");
     let jobs: ModelJob[] = await ipcRenderer.invoke("getDataRecent");
@@ -35,7 +42,7 @@ export default function () {
     dom.innerHTML = "";
     for (let i = 0; i < jobs.length; i++) {
       dom.append(
-        <div class="item">
+        <div class="item" data-id={jobs[i].Id} onMouseDown={mouseDown} onDblClick={jobDbClick}>
           <div class="title">{jobs[i].JobInfo}</div>
           <div class="time">{getStartTimeStr(jobs[i].StartTime)}</div>
         </div>

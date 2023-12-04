@@ -17,6 +17,17 @@ class DataMonth{
             this.dateArr[index].jobs.push(jobArr[i]); 
         }
     }
+    isInCurMonth(dateObj:Date){
+        let startDate = this.dateArr[0];
+        let endDate = this.dateArr[this.dateArr.length-1];
+        let start = new Date(startDate.year,startDate.month-1,startDate.day,0,0,0,0);
+        let end = new Date(endDate.year,endDate.month-1,endDate.day,23,59,59,999);
+        if(dateObj>start && dateObj < end){
+            return true
+        }else {
+            return false
+        }
+    }
     
     getCurWeekFirstDayIndex(){
         let start = new Date(this.curDate.getTime());

@@ -58,38 +58,15 @@ export default function () {
   };
   let cellClick = async (e: MouseEvent) => {
     let target = e.currentTarget as HTMLElement;
-    let index = parseInt(target.dataset.index);
-    let switchLabel = Helper.$id("switchLabel");
-    let nowDate = dataMonthSmall.dateArr[index];
-    if (nowDate.year === dataMonth.curDate.getFullYear() && nowDate.month === dataMonth.curDate.getMonth()) {
-      if (nowDate.day === dataMonth.curDate.getDate()) {
-        return;
-      } else {
-        dataMonth.curDate = new Date(nowDate.year, nowDate.month - 1, nowDate.day, 0, 0, 0, 0);
-      }
-    } else {
-      dataMonth.curDate = new Date(nowDate.year, nowDate.month - 1, nowDate.day, 0, 0, 0, 0);
-      dataMonth.dateArr = Helper.getOneMonthDate(dataMonth.curDate);
-      await dataMonth.initJobArr();
-    }
-    switchLabel.innerHTML = `${nowDate.year}-${nowDate.month}-${nowDate.day}`;
-    dispatchEvent(new Event("refreshView"));
-    Helper.$id("ViewWeek").style.zIndex = "0";
-    Helper.$id("ViewMonth").style.zIndex = "0";
-    Helper.$id("ViewDay").style.zIndex = "20";
+    if (target.classHas("selected")) return;
     let prevTarget = target.dad().dad().querySelector(".selected") as HTMLElement;
     prevTarget?.classDel("selected");
     target.son0().classAdd("selected");
-    let parent = switchLabel.dad();
-    let dom = parent.prev();
-    (dom.children[0] as HTMLElement).classAdd("selected");
-    (dom.children[1] as HTMLElement).classDel("selected");
-    (dom.children[2] as HTMLElement).classDel("selected");
-    if (Helper.isCurrentDate(dataMonth.curDate)) {
-      parent.next().classAdd("todaySelected");
-    } else {
-      parent.next().classDel("todaySelected");
-    }
+    let index = parseInt(target.dataset.index);
+    let nowDate = dataMonthSmall.dateArr[index];
+    let dateObj = new Date(nowDate.year, nowDate.month - 1, nowDate.day, 0, 0, 0, 0);
+    let event = new CustomEvent("gotodateview", { detail: dateObj });
+    Helper.$id("SwitchBtns").dispatchEvent(event);
   };
   return (
     <div id="SmallCalendar">

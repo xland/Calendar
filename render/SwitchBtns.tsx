@@ -30,28 +30,34 @@ export default function () {
     }
     Helper.$id(arr[index]).style.zIndex = "20";
   };
-  let gotoCurDay = async () => {
+
+  let goToDateView = async (dateObj: Date) => {
     let switchLabel = Helper.$id("switchLabel");
-    let nowDate = new Date();
-    if (nowDate.getFullYear() === dataMonth.curDate.getFullYear() && nowDate.getMonth() === dataMonth.curDate.getMonth()) {
-      if (nowDate.getDate() === dataMonth.curDate.getDate()) {
-        return;
-      } else {
-        dataMonth.curDate = nowDate;
-      }
-    } else {
-      await dataMonth.init();
+    dataMonth.curDate = dateObj;
+    if (!dataMonth.isInCurMonth(dateObj)) {
+      dataMonth.dateArr = Helper.getOneMonthDate(dataMonth.curDate);
+      await dataMonth.initJobArr();
     }
-    switchLabel.dad().next().classAdd("todaySelected");
-    switchLabel.innerHTML = `${nowDate.getFullYear()}-${nowDate.getMonth() + 1}-${nowDate.getDate()}`;
+    switchLabel.innerHTML = `${dateObj.getFullYear()}-${dateObj.getMonth() + 1}-${dateObj.getDate()}`;
     dispatchEvent(new Event("refreshView"));
     Helper.$id("ViewWeek").style.zIndex = "0";
     Helper.$id("ViewMonth").style.zIndex = "0";
     Helper.$id("ViewDay").style.zIndex = "20";
-    let dom = switchLabel.dad().prev();
-    dom.children[0].classAdd("selected");
-    dom.children[1].classDel("selected");
-    dom.children[2].classDel("selected");
+    let parent = switchLabel.dad();
+    let dom = parent.prev();
+    (dom.children[0] as HTMLElement).classAdd("selected");
+    (dom.children[1] as HTMLElement).classDel("selected");
+    (dom.children[2] as HTMLElement).classDel("selected");
+    if (Helper.isCurrentDate(dataMonth.curDate)) {
+      parent.next().classAdd("todaySelected");
+    } else {
+      parent.next().classDel("todaySelected");
+    }
+  };
+
+  let goToDateViewEvent = async (e: CustomEvent) => {
+    let dateObj = e.detail as Date;
+    goToDateView(dateObj);
   };
 
   let goPrevOrNext = async (val) => {
@@ -89,6 +95,13 @@ export default function () {
   let nextBtnClick = () => {
     goPrevOrNext(1);
   };
+  let gotoToday = (e: MouseEvent) => {
+    let target = e.currentTarget as HTMLElement;
+    if (target.classHas("todaySelected")) {
+      return;
+    }
+    goToDateView(new Date());
+  };
   eventer.once("dataReady", () => {
     let index = dataSetting.setting.ViewDefault;
     let dom = Helper.$id("SwitchBtns").son0();
@@ -96,7 +109,7 @@ export default function () {
   });
 
   return (
-    <div id="SwitchBtns">
+    <div id="SwitchBtns" onGoToDateView={goToDateViewEvent}>
       <div class="btns navigateBtns" onClick={switchBtnClick}>
         <div>日</div>
         <div>周</div>
@@ -111,7 +124,7 @@ export default function () {
           <i class="iconfont icon-youjiantou"></i>
         </div>
       </div>
-      <div onClick={gotoCurDay} class="btns today todaySelected">
+      <div onClick={gotoToday} class="btns today todaySelected">
         今
       </div>
     </div>
