@@ -69,6 +69,7 @@ let initListener = (win:BrowserWindow)=>{
 let getWinOptions:()=>Electron.BrowserWindowConstructorOptions = ()=>{
     return {
         frame:false,
+        show:false,
         webPreferences:{
             allowRunningInsecureContent: true,
             contextIsolation: false,
@@ -94,20 +95,19 @@ let winOpenHandler = (e:HandlerDetails)=>{
     };
 }
 
-let creatreWindow = async ()=>{
+let createMainWindow = ()=>{
     let options = getWinOptions();
     options.title = "日历";    
     options.minHeight = 800;
     options.minWidth = 1100;
     win = new BrowserWindow(options);
     let serverUrl = process.argv[2]
-    console.log(serverUrl)
     if(serverUrl){
-        await win.loadURL(serverUrl);
+        console.log(serverUrl)
+        win.loadURL(serverUrl);
     }else{
-        await win.loadURL(`liulun://./index.html`)
-    }    
-    win.show();
+        win.loadURL(`liulun://./index.html`)
+    }
 }
 let winCreatedHandler = (e,target:BrowserWindow)=>{
     // @ts-ignore
@@ -132,6 +132,6 @@ let init = async ()=>{
     initDb();
     initHook();
     app.addListener("browser-window-created",winCreatedHandler)
-    await creatreWindow();
+    await createMainWindow();
 }
 app.whenReady().then(init)

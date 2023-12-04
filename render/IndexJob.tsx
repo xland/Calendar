@@ -105,4 +105,6 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
   let event = new CustomEvent("loaded", { detail: job });
   Helper.$id("IndexJobBox").dispatchEvent(event);
+  let { ipcRenderer } = require("electron");
+  ipcRenderer.invoke("changeWindowState", "show");
 });

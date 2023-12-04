@@ -27,6 +27,8 @@ document.addEventListener("DOMContentLoaded", async () => {
   dataMonthSmall.initFirst();
   await dataSetting.init();
   eventer.emit("dataReady");
+  let { ipcRenderer } = require("electron");
+  ipcRenderer.invoke("changeWindowState", "show");
   window.addEventListener("refreshView", async (e) => {
     await dataMonth.initJobArr();
     await dataMonthSmall.init();
