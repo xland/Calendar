@@ -6,7 +6,6 @@ import { dataMonthSmall } from "./DataMonthSmall";
 import { dataMonth } from "./DataMonth";
 
 export default function () {
-  //once("dataReady" todo
   let initDataDom = () => {
     let target = Helper.$id("smallCalendarBox");
     target.innerHTML = "";
