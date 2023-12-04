@@ -37,6 +37,15 @@ export default function () {
     window.open(`/IndexJob.html?editId=${id}`, "_blank", JSON.stringify(config));
     Helper.$id("ModalMask").style.display = "block";
   };
+  let jobMouseDown = (e: MouseEvent) => {
+    if (e.button != 2) return;
+    e.preventDefault();
+    e.stopPropagation();
+    let target = e.currentTarget as HTMLElement;
+    let evt = new CustomEvent("show", { detail: { x: e.x, y: e.y, id: target.dataset.id } });
+    let menu = Helper.$id("Menu");
+    menu.dispatchEvent(evt);
+  };
   eventer.on("dataReady", () => {
     let container = Helper.$id("ViewWeek").lastElementChild;
     container.innerHTML = "";
@@ -45,7 +54,7 @@ export default function () {
       let dayDom: HTMLElement = <div class="column" data-index={i}></div>;
       dataMonth.dateArr[index].jobs.forEach((job) => {
         let jobEle = (
-          <div class="weekJob" title={job.JobInfo} data-id={job.Id} style={`--color:${ColorGet(job.ColorIndex)}`} onDblClick={jobDbClick}>
+          <div class="weekJob" title={job.JobInfo} data-id={job.Id} style={`--color:${ColorGet(job.ColorIndex)}`} onDblClick={jobDbClick} onMouseDown={jobMouseDown}>
             {job.JobInfo}
           </div>
         );

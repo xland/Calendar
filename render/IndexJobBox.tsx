@@ -17,8 +17,7 @@ export default function () {
     dom.children[4].innerHTML = startTime.getMinutes().toString().padStart(2, "0") + "分";
     dom.children[6].innerHTML = endTime.getHours().toString().padStart(2, "0") + "时";
     dom.children[7].innerHTML = endTime.getMinutes().toString().padStart(2, "0") + "分";
-    dom = dom.nextElementSibling as HTMLElement;
-    dom.innerHTML = dom.nextElementSibling.children[job.RepeatType].innerHTML;
+
     let taEle = Helper.$id("jobInfo") as HTMLTextAreaElement;
     taEle.value = job.JobInfo;
     let inputId = taEle.nextElementSibling as HTMLInputElement;
@@ -28,6 +27,7 @@ export default function () {
     dom.children[3].innerHTML = `每周${arr[startTime.getDay()]}`;
     dom.children[4].innerHTML = `每月第${startTime.getDate()}天`;
     dom.children[5].innerHTML = `每年${startTime.getMonth() + 1}月${startTime.getDate()}日`;
+    dom.previousElementSibling.innerHTML = dom.children[job.RepeatType].innerHTML;
   };
   let timeItemClick = (e: MouseEvent) => {
     let target = e.target as HTMLElement;

@@ -96,6 +96,10 @@ document.addEventListener("DOMContentLoaded", async () => {
     job.Id = "";
   }
   document.body.appendChild(<App colorIndex={job.ColorIndex} />);
+  if (job.Id) {
+    let title = document.querySelector(".title") as HTMLElement;
+    title.innerHTML = "修改日程";
+  }
   let event = new CustomEvent("loaded", { detail: job });
   Helper.$id("IndexJobBox").dispatchEvent(event);
 });

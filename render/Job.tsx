@@ -16,12 +16,12 @@ export default function (props) {
   };
   let jobMouseDown = (e: MouseEvent) => {
     if (e.button != 2) return;
-    let target = e.target as HTMLElement;
-    target = target.parentElement;
-    let menu = Helper.$id("Menu");
-    let evt = new CustomEvent("show", { detail: { x: e.x, y: e.y, id: target.getAttribute("id") } });
     e.preventDefault();
     e.stopPropagation();
+    let target = e.target as HTMLElement;
+    target = target.parentElement;
+    let evt = new CustomEvent("show", { detail: { x: e.x, y: e.y, id: target.getAttribute("id") } });
+    let menu = Helper.$id("Menu");
     menu.dispatchEvent(evt);
     return false;
   };
