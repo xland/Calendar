@@ -11,10 +11,10 @@ export default function () {
   let colorIndex = 0;
   let addNewJob = (target: HTMLElement) => {
     let startHour: string;
-    if (target.classList.contains("hourTag")) {
+    if (target.classHas("hourTag")) {
       startHour = target.innerHTML;
-    } else if (target.firstElementChild.classList.contains("hourTag")) {
-      startHour = target.firstElementChild.innerHTML;
+    } else if (target.son0().classHas("hourTag")) {
+      startHour = target.son0().innerHTML;
     }
     if (!startHour) return;
     let dateObj = dataMonth.dateArr[dataMonth.getCurDateIndex()];
@@ -30,12 +30,12 @@ export default function () {
   };
   let bgLineMouseOver = (e) => {
     let target = e.target as HTMLElement;
-    if (target.classList.contains("hourTag")) target = target.parentElement;
+    if (target.classHas("hourTag")) target = target.dad();
     target.style.background = `rgba(${ColorGet(colorIndex)},0.1)`;
   };
   let bgLineMouseOut = (e) => {
     let target = e.target as HTMLElement;
-    if (target.classList.contains("hourTag")) target = target.parentElement;
+    if (target.classHas("hourTag")) target = target.dad();
     target.style.background = ``;
   };
   let setJobsToView = async () => {
@@ -76,7 +76,7 @@ export default function () {
     dispatchEvent(new Event("refreshView"));
   };
   let setJobTime = (target: HTMLElement) => {
-    let height = target.parentElement.clientHeight;
+    let height = target.dad().clientHeight;
     let ms = (target.offsetTop / height) * 86400000;
     let now = new Date(parseInt(target.dataset.start));
     now.setHours(0, 0, 0, 0);
@@ -107,13 +107,13 @@ export default function () {
   };
   let onMouseOver = (e) => {
     let target = e.target as HTMLElement;
-    if (target.classList.contains("dragger")) {
+    if (target.classHas("dragger")) {
       target.style.background = `rgb(var(--color))`;
     }
   };
   let onMouseOut = (e) => {
     let target = e.target as HTMLElement;
-    if (target.classList.contains("dragger")) {
+    if (target.classHas("dragger")) {
       target.style.background = `none`;
     }
   };
@@ -125,76 +125,76 @@ export default function () {
     }
     target.style.top = top + "px";
     if (height < 28) {
-      target.lastElementChild.innerHTML = "";
+      target.son1().innerHTML = "";
       target.querySelectorAll(".time").forEach((v) => (v.innerHTML = ""));
       return 1;
     }
-    target.lastElementChild.innerHTML = target.dataset.text;
+    target.son1().innerHTML = target.dataset.text;
     return 2;
   };
   let draggerBottomMove = (target: HTMLElement, bottom: number) => {
     if (bottom < 0) bottom = 0;
-    let height = target.parentElement.clientHeight - target.offsetTop - bottom;
+    let height = target.dad().clientHeight - target.offsetTop - bottom;
     if (height < 12) {
       return 0;
     }
     target.style.bottom = bottom + "px";
     if (height < 28) {
-      target.lastElementChild.innerHTML = "";
+      target.son1().innerHTML = "";
       target.querySelectorAll(".time").forEach((v) => (v.innerHTML = ""));
       return 1;
     }
-    target.lastElementChild.innerHTML = target.dataset.text;
+    target.son1().innerHTML = target.dataset.text;
     return 2;
   };
   let onMouseDown = (e: MouseEvent) => {
     if (e.button != 0) return;
     let target = e.target as HTMLElement;
-    if (target.classList.contains("bgLine")) {
+    if (target.classHas("bgLine")) {
       addNewJob(target);
       return;
-    } else if (target.classList.contains("dragger")) {
-      document.querySelectorAll(".jobSelected").forEach((v) => v.classList.remove("jobSelected"));
-      target.parentElement.classList.add("jobSelected");
-      if (target.classList.contains("draggerSelected")) {
-        target.classList.remove("draggerSelected");
+    } else if (target.classHas("dragger")) {
+      document.querySelectorAll(".jobSelected").forEach((v) => v.classDel("jobSelected"));
+      target.dad().classAdd("jobSelected");
+      if (target.classHas("draggerSelected")) {
+        target.classDel("draggerSelected");
       } else {
-        document.querySelectorAll(".draggerSelected").forEach((v) => v.classList.remove("draggerSelected"));
-        target.classList.add("draggerSelected");
+        document.querySelectorAll(".draggerSelected").forEach((v) => v.classDel("draggerSelected"));
+        target.classAdd("draggerSelected");
       }
-    } else if (target.classList.contains("jobInfo")) {
-      document.querySelectorAll(".jobSelected").forEach((v) => v.classList.remove("jobSelected"));
-      document.querySelectorAll(".draggerSelected").forEach((v) => v.classList.remove("draggerSelected"));
-      target.parentElement.classList.add("jobSelected");
+    } else if (target.classHas("jobInfo")) {
+      document.querySelectorAll(".jobSelected").forEach((v) => v.classDel("jobSelected"));
+      document.querySelectorAll(".draggerSelected").forEach((v) => v.classDel("draggerSelected"));
+      target.dad().classAdd("jobSelected");
     } else {
       return;
     }
     let oldY = e.y;
-    let oldHeight = target.parentElement.clientHeight;
+    let oldHeight = target.dad().clientHeight;
     let documentMouseMove = (e) => {
-      if (target.classList.contains("draggerTop")) {
-        target.style.background = target.parentElement.style.borderColor;
-        let ppE = target.parentElement.parentElement;
+      if (target.classHas("draggerTop")) {
+        target.style.background = target.dad().style.borderColor;
+        let ppE = target.dad().dad();
         ppE.style.cursor = "ns-resize";
-        draggerTopMove(target.parentElement, e.y - ppE.offsetTop);
-        setJobTime(target.parentElement);
-        updateTimeDom(target.parentElement);
-      } else if (target.classList.contains("draggerBottom")) {
-        target.style.background = target.parentElement.style.borderColor;
-        let ppE = target.parentElement.parentElement;
+        draggerTopMove(target.dad(), e.y - ppE.offsetTop);
+        setJobTime(target.dad());
+        updateTimeDom(target.dad());
+      } else if (target.classHas("draggerBottom")) {
+        target.style.background = target.dad().style.borderColor;
+        let ppE = target.dad().dad();
         ppE.style.cursor = "ns-resize";
-        draggerBottomMove(target.parentElement, ppE.clientHeight + ppE.offsetTop - e.y);
-        setJobTime(target.parentElement);
-        updateTimeDom(target.parentElement);
-      } else if (target.classList.contains("jobInfo")) {
+        draggerBottomMove(target.dad(), ppE.clientHeight + ppE.offsetTop - e.y);
+        setJobTime(target.dad());
+        updateTimeDom(target.dad());
+      } else if (target.classHas("jobInfo")) {
         let span = e.y - oldY;
-        let pE = target.parentElement;
+        let pE = target.dad();
         let top = pE.offsetTop + span;
         oldY = e.y;
         if (top < 0) return;
-        if (pE.parentElement.clientHeight - oldHeight - top - 1 < 0) return;
+        if (pE.dad().clientHeight - oldHeight - top - 1 < 0) return;
         pE.style.top = top + "px";
-        let bottom = pE.parentElement.clientHeight - oldHeight - pE.offsetTop - 1;
+        let bottom = pE.dad().clientHeight - oldHeight - pE.offsetTop - 1;
         pE.style.bottom = bottom + "px";
         setJobTime(pE);
         updateTimeDom(pE);
@@ -203,12 +203,12 @@ export default function () {
     let documentMouseUp = (e) => {
       document.removeEventListener("mousemove", documentMouseMove);
       document.removeEventListener("mouseup", documentMouseUp);
-      if (target.classList.contains("dragger")) {
+      if (target.classHas("dragger")) {
         target.style.background = `none`;
-        target.parentElement.parentElement.style.cursor = "pointer";
-        updateItem(target.parentElement);
+        target.dad().dad().style.cursor = "pointer";
+        updateItem(target.dad());
       } else {
-        updateItem(target.parentElement);
+        updateItem(target.dad());
       }
       target = null;
     };
@@ -224,18 +224,18 @@ export default function () {
    */
   let moveJobByKey = (e: KeyboardEvent) => {
     if (e.key === "Escape") {
-      document.querySelectorAll(".draggerSelected").forEach((v) => v.classList.remove("draggerSelected"));
-      document.querySelectorAll(".jobSelected").forEach((v) => v.classList.remove("jobSelected"));
+      document.querySelectorAll(".draggerSelected").forEach((v) => v.classDel("draggerSelected"));
+      document.querySelectorAll(".jobSelected").forEach((v) => v.classDel("jobSelected"));
       return;
     }
     if (e.ctrlKey && (e.key === "ArrowUp" || e.key === "ArrowDown")) {
       let stepVal = e.key === "ArrowUp" ? -1 : 1;
       let dragger = document.querySelector(".draggerSelected") as HTMLDivElement;
       if (dragger) {
-        let job = dragger.parentElement;
+        let job = dragger.dad();
         let t = new Date(); //todo
-        let msHeight = job.parentElement.clientHeight / 86400000;
-        if (dragger.classList.contains("draggerTop")) {
+        let msHeight = job.dad().clientHeight / 86400000;
+        if (dragger.classHas("draggerTop")) {
           let start = Number(job.dataset.start);
           let startTime = new Date(start);
           startTime.setMinutes(startTime.getMinutes() + stepVal, 0, 0);
@@ -273,7 +273,7 @@ export default function () {
       } else {
         let job = document.querySelector(".jobSelected") as HTMLDivElement;
         if (!job) return;
-        let msHeight = job.parentElement.clientHeight / 86400000;
+        let msHeight = job.dad().clientHeight / 86400000;
         let start = Number(job.dataset.start);
         let startTime = new Date(start);
         let end = Number(job.dataset.end);

@@ -8,7 +8,7 @@ export default function () {
   let addNewJob = (e) => {
     let target = e.target as HTMLElement;
     if (!target.dataset.index) {
-      target = target.parentElement;
+      target = target.dad();
     }
     if (!target.dataset.index) {
       return;
@@ -38,7 +38,7 @@ export default function () {
     Helper.$id("ModalMask").style.display = "block";
   };
   eventer.on("dataReady", () => {
-    let container = Helper.$id("ViewWeek").lastElementChild;
+    let container = Helper.$id("ViewWeek").son1();
     container.innerHTML = "";
     let index = dataMonth.getCurWeekFirstDayIndex();
     for (let i = 0; i < 7; i++) {

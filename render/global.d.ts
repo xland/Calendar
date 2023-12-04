@@ -7,6 +7,9 @@ declare global {
         son0(): HTMLElement;
         son1(): HTMLElement;
         dad():HTMLElement;
+        classAdd(name:string);
+        classDel(name:string);
+        classHas(name:string):boolean;
     }
 }
 

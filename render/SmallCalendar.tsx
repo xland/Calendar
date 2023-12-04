@@ -16,13 +16,13 @@ export default function () {
         let dateObj = dataMonthSmall.dateArr[index];
         let cell: HTMLElement = <div class="dayItem">{dateObj.day}</div>;
         if (!dateObj.isCurMonth) {
-          cell.classList.add("notCurMonth");
+          cell.classAdd("notCurMonth");
         }
         if (dateObj.year === dataMonth.curDate.getFullYear() && dateObj.month === dataMonth.curDate.getMonth() + 1 && dateObj.day === dataMonth.curDate.getDate()) {
-          cell.classList.add("selected");
+          cell.classAdd("selected");
         }
         if (dateObj.hasJob) {
-          cell.classList.add("hasEvent");
+          cell.classAdd("hasEvent");
         }
         row.appendChild(
           <div class="dayBox" onClick={cellClick} data-index={index}>
@@ -32,7 +32,7 @@ export default function () {
         index += 1;
       }
       target.append(row);
-      let dom = target.parentElement.firstElementChild.firstElementChild;
+      let dom = target.dad().son0().son0();
       dom.innerHTML = `${dataMonthSmall.curDate.getFullYear()}年${dataMonthSmall.curDate.getMonth() + 1}月`;
     }
   };
@@ -40,7 +40,7 @@ export default function () {
     initDataDom();
   });
   let goPrevOrNextMonth = async (target: HTMLElement, val: number) => {
-    let titleDom = target.parentElement.firstElementChild as HTMLElement;
+    let titleDom = target.dad().son0() as HTMLElement;
     let oldMonthIndex = dataMonthSmall.curDate.getMonth();
     dataMonthSmall.curDate.setMonth(oldMonthIndex + val);
     titleDom.innerHTML = `${dataMonthSmall.curDate.getFullYear()}年${dataMonthSmall.curDate.getMonth() + 1}月`;
@@ -77,18 +77,18 @@ export default function () {
     Helper.$id("ViewWeek").style.zIndex = "0";
     Helper.$id("ViewMonth").style.zIndex = "0";
     Helper.$id("ViewDay").style.zIndex = "20";
-    let prevTarget = target.parentElement.parentElement.querySelector(".selected");
-    prevTarget?.classList.remove("selected");
-    target.firstElementChild.classList.add("selected");
-    let parent = switchLabel.parentElement;
+    let prevTarget = target.dad().dad().querySelector(".selected") as HTMLElement;
+    prevTarget?.classDel("selected");
+    target.son0().classAdd("selected");
+    let parent = switchLabel.dad();
     let dom = parent.prev();
-    dom.children[0].classList.add("selected");
-    dom.children[1].classList.remove("selected");
-    dom.children[2].classList.remove("selected");
+    (dom.children[0] as HTMLElement).classAdd("selected");
+    (dom.children[1] as HTMLElement).classDel("selected");
+    (dom.children[2] as HTMLElement).classDel("selected");
     if (Helper.isCurrentDate(dataMonth.curDate)) {
-      parent.nextElementSibling.classList.add("todaySelected");
+      parent.next().classAdd("todaySelected");
     } else {
-      parent.nextElementSibling.classList.remove("todaySelected");
+      parent.next().classDel("todaySelected");
     }
   };
   return (

@@ -7,14 +7,14 @@ import "./SwitchBtns.scss";
 export default function () {
   let switchBtnClick = (e) => {
     let target = e.target as HTMLElement;
-    if (target.classList.contains("selected")) return;
-    let selectedDom = target.parentElement.querySelector(".selected") as HTMLElement;
-    selectedDom?.classList.remove("selected");
+    if (target.classHas("selected")) return;
+    let selectedDom = target.dad().querySelector(".selected") as HTMLElement;
+    selectedDom?.classDel("selected");
     let arr = ["ViewDay", "ViewWeek", "ViewMonth"];
     arr.forEach((v) => {
       Helper.$id(v).style.zIndex = "0";
     });
-    target.classList.add("selected");
+    target.classAdd("selected");
     let switchLabel = Helper.$id("switchLabel");
     let index = 0;
     if (target.innerHTML === "日") {
@@ -42,16 +42,16 @@ export default function () {
     } else {
       await dataMonth.init();
     }
-    switchLabel.parentElement.nextElementSibling.classList.add("todaySelected");
+    switchLabel.dad().next().classAdd("todaySelected");
     switchLabel.innerHTML = `${nowDate.getFullYear()}-${nowDate.getMonth() + 1}-${nowDate.getDate()}`;
     dispatchEvent(new Event("refreshView"));
     Helper.$id("ViewWeek").style.zIndex = "0";
     Helper.$id("ViewMonth").style.zIndex = "0";
     Helper.$id("ViewDay").style.zIndex = "20";
-    let dom = switchLabel.parentElement.prev();
-    dom.children[0].classList.add("selected");
-    dom.children[1].classList.remove("selected");
-    dom.children[2].classList.remove("selected");
+    let dom = switchLabel.dad().prev();
+    dom.children[0].classAdd("selected");
+    dom.children[1].classDel("selected");
+    dom.children[2].classDel("selected");
   };
 
   let goPrevOrNext = async (val) => {
@@ -72,9 +72,9 @@ export default function () {
     }
     let nowDate = new Date();
     if (nowDate.getFullYear() === dataMonth.curDate.getFullYear() && nowDate.getMonth() === dataMonth.curDate.getMonth() && nowDate.getDate() === dataMonth.curDate.getDate()) {
-      SwitchBtns.lastElementChild.classList.add("todaySelected");
+      SwitchBtns.son1().classAdd("todaySelected");
     } else {
-      SwitchBtns.lastElementChild.classList.remove("todaySelected");
+      SwitchBtns.son1().classDel("todaySelected");
       if (oldMonthIndex != dataMonth.curDate.getMonth()) {
         dataMonth.dateArr = Helper.getOneMonthDate(dataMonth.curDate);
         await dataMonth.initJobArr();
@@ -91,7 +91,7 @@ export default function () {
   };
   eventer.once("dataReady", () => {
     let index = dataSetting.setting.ViewDefault;
-    let dom = Helper.$id("SwitchBtns").firstElementChild;
+    let dom = Helper.$id("SwitchBtns").son0();
     switchBtnClick({ target: dom.children[index] });
   });
 

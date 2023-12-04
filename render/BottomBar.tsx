@@ -10,28 +10,28 @@ export default function () {
     let drawer = Helper.$id("SettingDrawer");
     drawer.style.display = "none";
     let btn = drawer.prev().querySelector(".bottomBtnSelected") as HTMLElement;
-    btn.classList.remove("bottomBtnSelected");
+    btn.classDel("bottomBtnSelected");
   };
   let settingBtnClick = (e) => {
     let target = e.target as HTMLElement;
     if (target.tagName === "I") {
-      target = target.parentElement;
+      target = target.dad();
     }
     let prevSelectedDom = document.querySelector(".bottomBtnSelected") as HTMLElement;
     if (prevSelectedDom) {
-      prevSelectedDom.classList.remove("bottomBtnSelected");
+      prevSelectedDom.classDel("bottomBtnSelected");
     }
     let drawer = Helper.$id("SettingDrawer");
     if (drawer.style.display === "block") {
-      if (drawer.firstElementChild.firstElementChild.innerHTML === target.title) {
+      if (drawer.son0().son0().innerHTML === target.title) {
         drawer.style.display = "none";
         return;
       }
     }
-    target.classList.add("bottomBtnSelected");
-    drawer.firstElementChild.firstElementChild.innerHTML = target.title;
+    target.classAdd("bottomBtnSelected");
+    drawer.son0().son0().innerHTML = target.title;
     if (drawer.children.length > 1) {
-      drawer.lastElementChild.remove();
+      drawer.son1().remove();
     }
     if (target.title === "设置") {
       drawer.appendChild(<SettingDefault></SettingDefault>);

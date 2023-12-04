@@ -13,6 +13,15 @@ HTMLElement.prototype.son1 = function(): HTMLElement {
 HTMLElement.prototype.dad = function(): HTMLElement {
     return this.parentElement
 }
+HTMLElement.prototype.classAdd = function(name) {
+    this.classList.add(name)
+}
+HTMLElement.prototype.classDel = function(name) {
+    this.classList.remove(name)
+}
+HTMLElement.prototype.classHas = function(name) {
+    return this.classList.contains(name)
+}
 export class Helper{
     static $id(id:string){
         return document.getElementById(id)

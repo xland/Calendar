@@ -9,7 +9,7 @@ export default function () {
     let startTime = new Date(job.StartTime);
     let endTime = new Date(job.EndTime);
 
-    let dom = Helper.$id("IndexJobBox").firstElementChild as HTMLElement;
+    let dom = Helper.$id("IndexJobBox").son0() as HTMLElement;
     dom.children[0].innerHTML = startTime.getFullYear().toString() + "年";
     dom.children[1].innerHTML = (startTime.getMonth() + 1).toString() + "月";
     dom.children[2].innerHTML = startTime.getDate().toString() + "日";
@@ -20,10 +20,10 @@ export default function () {
 
     let taEle = Helper.$id("jobInfo") as HTMLTextAreaElement;
     taEle.value = job.JobInfo;
-    let inputId = taEle.nextElementSibling as HTMLInputElement;
+    let inputId = taEle.next() as HTMLInputElement;
     inputId.value = job.Id;
     let arr = ["日", "一", "二", "三", "四", "五", "六"];
-    dom = taEle.parentElement.prev() as HTMLElement;
+    dom = taEle.dad().prev() as HTMLElement;
     dom.children[3].innerHTML = `每周${arr[startTime.getDay()]}`;
     dom.children[4].innerHTML = `每月第${startTime.getDate()}天`;
     dom.children[5].innerHTML = `每年${startTime.getMonth() + 1}月${startTime.getDate()}日`;
@@ -31,7 +31,7 @@ export default function () {
   };
   let timeItemClick = (e: MouseEvent) => {
     let target = e.target as HTMLElement;
-    if (!target.classList.contains("timeItem")) return;
+    if (!target.classHas("timeItem")) return;
     //todo 显示输入框
   };
   let getCurMonthMaxDate = (dom: HTMLElement) => {
@@ -52,7 +52,7 @@ export default function () {
   };
   let timeItemWheel = (e: WheelEvent) => {
     let target = e.target as HTMLElement;
-    if (!target.classList.contains("timeItem")) return;
+    if (!target.classHas("timeItem")) return;
     let id = target.getAttribute("id");
     let val = e.deltaY < 0 ? -1 : 1;
     let str = target.innerHTML;
@@ -84,7 +84,7 @@ export default function () {
   };
   let repeatBtnClick = (e: MouseEvent) => {
     let target = e.currentTarget as HTMLElement;
-    target = target.nextElementSibling as HTMLElement;
+    target = target.next() as HTMLElement;
     target.style.display = "block";
     target.focus();
   };

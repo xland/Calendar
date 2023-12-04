@@ -5,18 +5,18 @@ import { Helper } from "../common/Helper";
 export default function (props) {
   let setCheckBox = (icon: HTMLElement, flag: boolean) => {
     if (flag) {
-      icon.classList.remove("icon-uncheck");
-      icon.classList.add("icon-check");
+      icon.classDel("icon-uncheck");
+      icon.classAdd("icon-check");
     } else {
-      icon.classList.remove("icon-check");
-      icon.classList.add("icon-uncheck");
+      icon.classDel("icon-check");
+      icon.classAdd("icon-uncheck");
     }
   };
   let setDefaultView = (target: HTMLElement) => {
     let icon = target.dad().querySelector(".icon-woderilixuanzhong") as HTMLElement;
-    icon.classList.remove("icon-woderilixuanzhong");
-    icon.classList.add("icon-jietutubiao_yuan");
-    target.firstElementChild.firstElementChild.classList.add("icon-woderilixuanzhong");
+    icon.classDel("icon-woderilixuanzhong");
+    icon.classAdd("icon-jietutubiao_yuan");
+    target.son0().son0().classAdd("icon-woderilixuanzhong");
   };
   let checkOneItem = (e: MouseEvent) => {
     let target = e.target as HTMLElement;
@@ -25,10 +25,10 @@ export default function (props) {
     } else if (target.tagName === "DIV") {
       target = target.dad();
     }
-    if (!target.classList.contains("radioItem")) {
+    if (!target.classHas("radioItem")) {
       return;
     }
-    if (target.son0().son0().classList.contains("icon-woderilixuanzhong")) {
+    if (target.son0().son0().classHas("icon-woderilixuanzhong")) {
       return;
     }
     setDefaultView(target);
@@ -36,7 +36,7 @@ export default function (props) {
   };
   let openAtLoginClick = async (e: MouseEvent) => {
     let icon = Helper.$id("openAtLoginIcon");
-    let flag = !icon.classList.contains("icon-check");
+    let flag = !icon.classHas("icon-check");
     let { ipcRenderer } = require("electron");
     await ipcRenderer.invoke("setOpenAtLogin", flag);
     dataSetting.setting.OpenAtLogin = flag;
@@ -82,15 +82,15 @@ export default function (props) {
     let dom = row.children[dataSetting.setting.ViewDefault + 1] as HTMLElement;
     setDefaultView(dom);
 
-    row = row.nextElementSibling as HTMLElement;
+    row = row.next() as HTMLElement;
     dom = row.children[dataSetting.setting.LangDefault + 1] as HTMLElement;
     setDefaultView(dom);
 
-    row = row.nextElementSibling as HTMLElement;
+    row = row.next() as HTMLElement;
     dom = row.children[dataSetting.setting.AlertBefore + 1] as HTMLElement;
     setDefaultView(dom);
 
-    row = row.nextElementSibling as HTMLElement;
+    row = row.next() as HTMLElement;
     dom = row.children[dataSetting.setting.SkinDefault + 1] as HTMLElement;
     setDefaultView(dom);
   };
