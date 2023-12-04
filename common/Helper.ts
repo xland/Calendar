@@ -13,17 +13,18 @@ export class Helper{
         let result = [];
         let year = tarDate.getFullYear();
         let month =tarDate.getMonth();
-        let date = tarDate.getDate();
         let preMonthLastDay = new Date(year,month,0);
         let weekIndex = preMonthLastDay.getDay();
         weekIndex = weekIndex===0?7:weekIndex;
-        for(let i=preMonthLastDay.getDate() - weekIndex+1;i<=preMonthLastDay.getDate();i++){
-            result.push({
-                year:preMonthLastDay.getFullYear(),
-                month:preMonthLastDay.getMonth()+1,
-                day:i,
-                isCurMonth:false
-            })
+        if(weekIndex < 7){
+            for(let i=preMonthLastDay.getDate() - weekIndex+1;i<=preMonthLastDay.getDate();i++){
+                result.push({
+                    year:preMonthLastDay.getFullYear(),
+                    month:preMonthLastDay.getMonth()+1,
+                    day:i,
+                    isCurMonth:false
+                })
+            }
         }
         let curMonthLastDay = new Date(year,month+1,0);
         for(let i=1;i<=curMonthLastDay.getDate();i++){
