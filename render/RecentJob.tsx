@@ -29,7 +29,11 @@ export default function () {
     }
   };
   let mouseDown = (e: MouseEvent) => {
-    if (e.button === 1) {
+    if (e.button === 0) {
+      let target = e.currentTarget as HTMLElement;
+      let dateObj = new Date(parseInt(target.dataset.start));
+      let event = new CustomEvent("gotodateview", { detail: dateObj });
+      Helper.$id("SwitchBtns").dispatchEvent(event);
       return;
     }
     Helper.showJobMenu(e);
@@ -42,7 +46,7 @@ export default function () {
     dom.innerHTML = "";
     for (let i = 0; i < jobs.length; i++) {
       dom.append(
-        <div class="item" data-id={jobs[i].Id} onMouseDown={mouseDown} onDblClick={jobDbClick}>
+        <div class="item" data-id={jobs[i].Id} data-start={jobs[i].StartTime} onMouseDown={mouseDown} onDblClick={jobDbClick}>
           <div class="title">{jobs[i].JobInfo}</div>
           <div class="time">{getStartTimeStr(jobs[i].StartTime)}</div>
         </div>
