@@ -186,65 +186,87 @@ CREATE TABLE Setting(ViewDefault INT DEFAULT 0,LangDefault INT DEFAULT 0,SkinDef
     let monthStart = new Date(startTime);
     for (let j = 0; j < repeatJobs.length; j++) {
       let job = repeatJobs[j];
+      if(job.StartTime > endTime){
+        continue;
+      }
       if (job.RepeatType === 1) {
-        //每天     
-        let start = new Date(job.StartTime);
-        let end = new Date(job.EndTime);  
-        for (let i = 0; i < 42; i++) {
-          start.setDate(1);
-          end.setDate(1);
+        //每天 
+        let dayIndex = 0;
+        if(job.StartTime > startTime){
+          let span = job.StartTime - startTime
+          dayIndex = Math.floor(span / 86400000)  //1天
+        }
+        while(dayIndex < 42){
+          let start = new Date(job.StartTime);
+          let end = new Date(job.EndTime);
           start.setFullYear(monthStart.getFullYear());
           start.setMonth(monthStart.getMonth());
           end.setFullYear(monthStart.getFullYear());
           end.setMonth(monthStart.getMonth());
-          start.setDate(monthStart.getDate() + i);          
-          end.setDate(monthStart.getDate() + i);
+          start.setDate(monthStart.getDate() + dayIndex);          
+          end.setDate(monthStart.getDate() + dayIndex);
           job.StartTime = start.getTime();
           job.EndTime = end.getTime();
           result.push({ ...job });
+          dayIndex+=1;
         }
       } else if (job.RepeatType === 2) {
         //工作日
-        for (let i = 0; i < 42; i++) {
-          let arr = [5, 6, 12, 13, 19, 20, 26, 27, 33, 34, 40, 41];
-          if (arr.includes(i)) {
+        let dayIndex = 0;
+        if(job.StartTime >= startTime){
+          let span = job.StartTime - startTime
+          dayIndex = Math.floor(span / 86400000)  //1天
+        }
+        let arr = [5, 12, 19, 26, 33, 40];
+        while(dayIndex < 42){
+          if (arr.includes(dayIndex)) {
+            dayIndex+=2;
             continue;
           }
           let start = new Date(job.StartTime);
           let end = new Date(job.EndTime);
           start.setFullYear(monthStart.getFullYear());
           start.setMonth(monthStart.getMonth());
-          start.setDate(monthStart.getDate() + i);
+          start.setDate(monthStart.getDate() + dayIndex);
           end.setFullYear(monthStart.getFullYear());
           end.setMonth(monthStart.getMonth());
-          end.setDate(monthStart.getDate() + i);
+          end.setDate(monthStart.getDate() + dayIndex);
           job.StartTime = start.getTime();
           job.EndTime = end.getTime();
           result.push({ ...job });
+          dayIndex+=1;
         }
       } else if (job.RepeatType === 3) {
         //每周几
-        for (let i = 0; i < 6; i++) {
+        let dayIndex = 0;
+        if(job.StartTime > startTime){
+          let span = job.StartTime - startTime
+          dayIndex = Math.floor(span / 86400000)  //1天
+        }else{
+          dayIndex = new Date(job.StartTime).getDay();
+          dayIndex = dayIndex===0?7:dayIndex
+          dayIndex = dayIndex-1;
+        }
+        while(dayIndex<42){
           let start = new Date(job.StartTime);
           let end = new Date(job.EndTime);
-          let num = start.getDay() === 0 ? 6 : start.getDay() - 1;
           start.setFullYear(monthStart.getFullYear());
           start.setMonth(monthStart.getMonth());
-          start.setDate(monthStart.getDate() + num + i * 7);
+          start.setDate(monthStart.getDate() + dayIndex);
           end.setFullYear(monthStart.getFullYear());
           end.setMonth(monthStart.getMonth());
-          end.setDate(monthStart.getDate() + num + i * 7);
+          end.setDate(monthStart.getDate() + dayIndex);
           job.StartTime = start.getTime();
           job.EndTime = end.getTime();
-          result.push({ ...job });
+          result.push({ ...job });          
+          dayIndex = dayIndex+7
         }
       } else if (job.RepeatType === 4) {
         //每月第几天
         let start = new Date(job.StartTime);
         start.setFullYear(monthStart.getFullYear());
         start.setMonth(monthStart.getMonth());
-
-        if (start.getTime() < endTime && start.getTime() > startTime) {
+        if (start.getTime() < endTime && start.getTime() > startTime && job.StartTime < start.getTime()) { //确保任务创建时间比选中时间早
           let end = new Date(job.EndTime);
           end.setFullYear(monthStart.getFullYear());
           end.setMonth(monthStart.getMonth());
@@ -253,7 +275,7 @@ CREATE TABLE Setting(ViewDefault INT DEFAULT 0,LangDefault INT DEFAULT 0,SkinDef
           result.push({ ...job });
         }
         start.setMonth(start.getMonth() + 1);
-        if (start.getTime() < endTime && start.getTime() > startTime) {
+        if (start.getTime() < endTime && start.getTime() > startTime && job.StartTime < start.getTime()) { // 42天里可能右两个选中日
           let end = new Date(job.EndTime);
           end.setFullYear(start.getFullYear());
           end.setMonth(start.getMonth());
@@ -265,7 +287,7 @@ CREATE TABLE Setting(ViewDefault INT DEFAULT 0,LangDefault INT DEFAULT 0,SkinDef
         //每年几月几日
         let start = new Date(job.StartTime);
         start.setFullYear(monthStart.getFullYear());
-        if (start.getMonth() === monthStart.getMonth()) {
+        if (start.getMonth() === monthStart.getMonth()) { 
           if (start.getTime() > monthStart.getTime()) {
             let end = new Date(job.EndTime);
             end.setFullYear(start.getFullYear());
@@ -316,31 +338,35 @@ CREATE TABLE Setting(ViewDefault INT DEFAULT 0,LangDefault INT DEFAULT 0,SkinDef
         if(hasJob.findIndex(v=>v===false) < 0) return hasJob;
       } else if (job.RepeatType === 2) {
         //工作日
-        let i = 0;
+        let dayIndex = 0;
         if(job.StartTime >= startTime){
           let span = job.StartTime - startTime
-          i = Math.floor(span / 86400000)  //1天
+          dayIndex = Math.floor(span / 86400000)  //1天
         }
-        for (; i < 42; i++) {
-          let arr = [5, 6, 12, 13, 19, 20, 26, 27, 33, 34, 40, 41];
-          if (arr.includes(i)) {
+        let arr = [5, 12, 19, 26, 33, 40];
+        while (dayIndex < 42) {
+          if (arr.includes(dayIndex)) {
+            dayIndex += 2;
             continue;
           }
-          hasJob[i] = true;
+          hasJob[dayIndex] = true;
+          dayIndex += 1;
         }
         if(hasJob.findIndex(v=>v===false) < 0) return hasJob;
       } else if (job.RepeatType === 3) {
         //每周几
-        let i = new Date(job.StartTime).getDay();
-        i = i===0?7:i
-        i = i-1;
-        if(job.StartTime >= startTime){
+        let dayIndex = 0;
+        if(job.StartTime > startTime){
           let span = job.StartTime - startTime
-          i = Math.floor(span / 86400000)  //1天
+          dayIndex = Math.floor(span / 86400000)  //1天
+        }else{
+          dayIndex = new Date(job.StartTime).getDay();
+          dayIndex = dayIndex===0?7:dayIndex
+          dayIndex = dayIndex-1;
         }
-        while(i<42){
-          hasJob[i] = true;
-          i = i+7
+        while(dayIndex<42){
+          hasJob[dayIndex] = true;
+          dayIndex = dayIndex+7
         }
         if(hasJob.findIndex(v=>v===false) < 0) return hasJob;
       } else if (job.RepeatType === 4) {
@@ -349,11 +375,15 @@ CREATE TABLE Setting(ViewDefault INT DEFAULT 0,LangDefault INT DEFAULT 0,SkinDef
         let jobDate = new Date(job.StartTime).getDate();
         let i = 0;
         while(i<42){
+          let step = 1;
           if(temp.getDate() === jobDate){
             hasJob[i] = true
+            step = 28
+          }else {
+            step = 1;
           }
-          temp.setDate(temp.getDate()+1)
-          i+=1;
+          temp.setDate(temp.getDate()+step)
+          i+=step;
         }
         if(hasJob.findIndex(v=>v===false) < 0) return hasJob;
       } else if (job.RepeatType === 5) {
