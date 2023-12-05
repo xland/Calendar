@@ -1,61 +1,6 @@
-html,
-body {
-  margin: 0px;
-  padding: 0px;
-}
-body {
-  display: flex;
-  height: 100%;
-  width: 100%;
-  user-select: none;
-  overflow: hidden;
-  font-size: 12px;
-  flex-direction: column;
-}
-div {
-  box-sizing: border-box;
-}
-/* width */
-::-webkit-scrollbar {
-  width: 6px;
-}
-
-/* Track */
-::-webkit-scrollbar-track {
-  background: #f6f6f6;
-  cursor: pointer;
-}
-
-/* Handle */
-::-webkit-scrollbar-thumb {
-  background: #ddd;
-}
-
-/* Handle on hover */
-::-webkit-scrollbar-thumb:hover {
-  background: #aaa;
-}
-.titleBar {
-  display: flex;
-  height: 32px;
-  line-height: 32px;
-  .title {
-    -webkit-app-region: drag;
-    padding-left: 8px;
-    flex: 1;
-  }
-}
-.btnBox {
-  display: flex;
-  justify-content: flex-end;
-  padding-right: 18px;
-  padding-bottom: 18px;
-  .btnSave {
-    padding-left: 22px;
-    padding-right: 22px;
-    padding-top: 8px;
-    padding-bottom: 8px;
-    cursor: pointer;
-    border-radius: 3px;
-  }
+@import url("./IndexSubWin.scss");
+.content {
+  flex: 1;
+  padding: 16px;
+  font-size: 14px;
 }

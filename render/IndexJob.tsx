@@ -6,10 +6,6 @@ import ColorGet from "./ColorGet";
 import { ModelJob } from "../model/ModelJob";
 import { Helper } from "../common/Helper";
 function App(props) {
-  let getStyle = (alpha = 1) => {
-    return `background:rgba(${ColorGet(props.colorIndex)},${alpha});`;
-  };
-
   let getJob = () => {
     let timeBox = Helper.$id("IndexJobBox").son0();
     let year = parseInt(timeBox.children[0].innerHTML);
@@ -56,21 +52,13 @@ function App(props) {
   };
   return (
     <>
-      <div class="titleBar" style={getStyle(0.1)}>
+      <div class="titleBar">
         <div class="title">增加日程</div>
         <TitleBarBtns></TitleBarBtns>
       </div>
       <IndexJobBox></IndexJobBox>
       <div class="btnBox">
-        <div
-          class="btnSave"
-          style={`${getStyle()}color:#fff`}
-          //@ts-ignore
-          onMouseOver={(e) => (e.target.style = `${getStyle(0.9)}color:#fff;`)}
-          //@ts-ignore
-          onMouseOut={(e) => (e.target.style = `${getStyle()}color:#fff;`)}
-          onClick={save}
-        >
+        <div class="btnSave" onClick={save}>
           保存
         </div>
       </div>
@@ -98,6 +86,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     job.JobInfo = "";
     job.Id = "";
   }
+  document.body.style.setProperty("--color", ColorGet(job.ColorIndex));
   document.body.appendChild(<App colorIndex={job.ColorIndex} />);
   if (job.Id) {
     let title = document.querySelector(".title") as HTMLElement;
