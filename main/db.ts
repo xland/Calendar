@@ -2,7 +2,6 @@ import Database from "better-sqlite3";
 import { app } from "electron";
 import fsex from "fs-extra";
 import path from "path";
-import crypto from "crypto";
 import { ModelJob } from "../model/ModelJob";
 
 export class Db {

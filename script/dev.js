@@ -2,6 +2,7 @@ let esbuild = require("esbuild")
 let {sassPlugin} = require("esbuild-sass-plugin")
 let fs = require("fs-extra")
 let devServerAddr = "";
+
 /**
  * 编译主进程代码
  */

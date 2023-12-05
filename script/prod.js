@@ -3,17 +3,20 @@ let {sassPlugin} = require("esbuild-sass-plugin")
 let fs = require("fs-extra")
 
 let buildMain = async ()=>{
+  await fs.copy("./build/","./prod/build/")
   await esbuild.build({
     entryPoints: ['./main/index.ts'],
     bundle: true,
     outfile:"./prod/main.js",
     platform:"node",
     external:["electron"],
+    minify: true,
     sourcemap:true
   }) 
 }
 
 let buildRender = async ()=>{
+  await fs.copy("./dev/res/","./prod/res")
   let arr = ["Index","IndexJob","IndexAlert"];
   for(let item of arr){
     let content = `<html><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
