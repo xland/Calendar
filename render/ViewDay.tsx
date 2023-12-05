@@ -220,8 +220,8 @@ export default function () {
    */
   let moveJobByKey = (e: KeyboardEvent) => {
     if (e.key === "Escape") {
-      document.querySelectorAll(".draggerSelected").forEach((v) => v.classDel("draggerSelected"));
-      document.querySelectorAll(".jobSelected").forEach((v) => v.classDel("jobSelected"));
+      document.querySelectorAll(".draggerSelected").forEach((v: HTMLElement) => v.classDel("draggerSelected"));
+      document.querySelectorAll(".jobSelected").forEach((v: HTMLElement) => v.classDel("jobSelected"));
       return;
     }
     if (e.ctrlKey && (e.key === "ArrowUp" || e.key === "ArrowDown")) {

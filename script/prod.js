@@ -2,16 +2,28 @@ let esbuild = require("esbuild")
 let {sassPlugin} = require("esbuild-sass-plugin")
 let fs = require("fs-extra")
 
-let release = async ()=>{
-    let content = `<html><head>
-<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
-<link rel="stylesheet" href="./Index.css">
-</head><body><script src="./Index.js"></script></body></html>`;
-    await fs.writeFile(`./release/Index.html`,content)
-    let ctx = await esbuild.build({
-      entryPoints: [`./render/Index.tsx`],
+let buildMain = async ()=>{
+  await esbuild.build({
+    entryPoints: ['./main/index.ts'],
+    bundle: true,
+    outfile:"./prod/main.js",
+    platform:"node",
+    external:["electron"],
+    sourcemap:true
+  }) 
+}
+
+let buildRender = async ()=>{
+  let arr = ["Index","IndexJob","IndexAlert"];
+  for(let item of arr){
+    let content = `<html><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<link rel="stylesheet" href="./${item}.css"></head><body><script src="./${item}.js"></script></body></html>`;
+    await fs.writeFile(`./prod/${item}.html`,content)
+  }
+  await esbuild.build({
+      entryPoints: arr.map(v=> `./render/${v}.tsx`),
       bundle: true,
-      outdir: 'release',
+      outdir: 'prod',
       plugins: [sassPlugin()],
       platform:"node",
       external:["electron"],
@@ -19,5 +31,6 @@ let release = async ()=>{
       sourcemap:false
     })
     console.log("build ok")
-    }
-release();
+}
+buildMain()
+buildRender();

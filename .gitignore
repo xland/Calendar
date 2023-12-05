@@ -1,8 +1,7 @@
 /node_modules/
-/dist/*.*
-/dist/server/
-Calendar/obj/Debug/
-Calendar/bin/
+/dev/*.*
+/prod/
+/dist/
 .vs/
 Calendar/obj/
 /release/
