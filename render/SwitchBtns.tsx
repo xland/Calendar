@@ -5,30 +5,39 @@ import { Helper } from "../common/Helper";
 import React from "./React";
 import "./SwitchBtns.scss";
 export default function () {
+  let switchView = async (name: string, dom: HTMLElement) => {
+    let arr = ["ViewDay", "ViewWeek", "ViewMonth"];
+    let val = 0;
+    for (let i = 0; i < arr.length; i++) {
+      if (arr[i] === name) {
+        (dom.children[i] as HTMLElement).classAdd("selected");
+        Helper.$id(name).style.zIndex = "20";
+        val = i;
+      } else {
+        (dom.children[i] as HTMLElement).classDel("selected");
+        Helper.$id(arr[i]).style.zIndex = "0";
+      }
+    }
+    let sql = `Update Setting set ViewVal = ?`;
+    let { ipcRenderer } = require("electron");
+    await ipcRenderer.invoke("excuteSQL", sql, val);
+  };
   let switchBtnClick = (e) => {
     let target = e.target as HTMLElement;
     if (target.classHas("selected")) return;
-    let selectedDom = target.dad().querySelector(".selected") as HTMLElement;
-    selectedDom?.classDel("selected");
-    let arr = ["ViewDay", "ViewWeek", "ViewMonth"];
-    arr.forEach((v) => {
-      Helper.$id(v).style.zIndex = "0";
-    });
-    target.classAdd("selected");
-    let switchLabel = Helper.$id("switchLabel");
-    let index = 0;
+    let switchLabel = target.dad().next().son0().next();
     if (target.innerHTML === "日") {
       switchLabel.innerHTML = `${dataMonth.curDate.getFullYear()}-${dataMonth.curDate.getMonth() + 1}-${dataMonth.curDate.getDate()}`;
+      switchView("ViewDay", target.dad());
     }
     if (target.innerHTML === "周") {
-      index = 1;
-      let index2 = dataMonth.getCurWeekFirstDayIndex();
-      switchLabel.innerHTML = `${dataMonth.dateArr[index2].month}-${dataMonth.dateArr[index2].day}~${dataMonth.dateArr[index2 + 6].month}-${dataMonth.dateArr[index2 + 6].day}`;
+      let index = dataMonth.getCurWeekFirstDayIndex();
+      switchLabel.innerHTML = `${dataMonth.dateArr[index].month}-${dataMonth.dateArr[index].day}~${dataMonth.dateArr[index + 6].month}-${dataMonth.dateArr[index + 6].day}`;
+      switchView("ViewWeek", target.dad());
     } else if (target.innerHTML === "月") {
-      index = 2;
       switchLabel.innerHTML = `${dataMonth.curDate.getFullYear()}年${dataMonth.curDate.getMonth() + 1}月`;
+      switchView("ViewMonth", target.dad());
     }
-    Helper.$id(arr[index]).style.zIndex = "20";
   };
 
   let goToDateView = async (dateObj: Date) => {
@@ -40,14 +49,8 @@ export default function () {
     }
     switchLabel.innerHTML = `${dateObj.getFullYear()}-${dateObj.getMonth() + 1}-${dateObj.getDate()}`;
     dispatchEvent(new Event("refreshView"));
-    Helper.$id("ViewWeek").style.zIndex = "0";
-    Helper.$id("ViewMonth").style.zIndex = "0";
-    Helper.$id("ViewDay").style.zIndex = "20";
     let parent = switchLabel.dad();
-    let dom = parent.prev();
-    (dom.children[0] as HTMLElement).classAdd("selected");
-    (dom.children[1] as HTMLElement).classDel("selected");
-    (dom.children[2] as HTMLElement).classDel("selected");
+    switchView("ViewDay", parent.prev());
     if (Helper.isCurrentDate(dataMonth.curDate)) {
       parent.next().classAdd("todaySelected");
     } else {
@@ -104,6 +107,9 @@ export default function () {
   };
   eventer.once("dataReady", () => {
     let index = dataSetting.setting.ViewDefault;
+    if (index === 3) {
+      index = dataSetting.setting.ViewVal;
+    }
     let dom = Helper.$id("SwitchBtns").son0();
     switchBtnClick({ target: dom.children[index] });
   });
