@@ -1,96 +1,50 @@
 #RecentJob {
-  padding-top: 28px;
+  line-height: 28px;
+  color: #666;
   flex: 1;
-  display: flex;
-  flex-direction: column;
-  position: relative;
-  #searchBox {
-    display: flex;
-    padding-left: 20px;
-    padding-right: 20px;
-    line-height: 28px;
-    input {
-      flex: 1;
-      display: block;
-      margin: 0px;
-      padding: 0px;
-      border: none;
-      outline: none;
-      height: 28px;
-      padding-left: 6px;
-      padding-right: 6px;
-      color: #f02c38;
-      background: #f02c3811;
-      font-size: 12px;
-      &:focus {
-        background: #fff;
-      }
-    }
-    .searchBtn {
-      width: 32px;
-      height: 28px;
-      text-align: center;
-      cursor: pointer;
-      background: #f02c3811;
-      i {
-        font-size: 14px;
-        color: #f02c38;
-      }
-      &:hover {
-        background: #f02c3844 !important;
-      }
-    }
+  overflow: hidden;
+  overflow-y: auto;
+  left: 12px;
+  right: 0px;
+  margin-top: 6px;
+  padding-right: 12px;
+  padding-left: 12px;
+  /* width */
+  &::-webkit-scrollbar {
+    width: 2px;
   }
-  #recentJobBox {
-    line-height: 28px;
-    color: #666;
+  &::-webkit-scrollbar-track {
+    background: transparent !important;
+    cursor: pointer;
+  }
+  &::-webkit-scrollbar-thumb {
     position: absolute;
-    top: 62px;
-    bottom: 0px;
-    padding-top: 0px;
-    padding-bottom: 0px;
-    overflow: hidden;
-    overflow-y: auto;
-    left: 12px;
-    right: 0px;
-    padding-right: 12px;
-    /* width */
-    &::-webkit-scrollbar {
-      width: 2px;
+    background: #f02c3844;
+  }
+  .item {
+    border-radius: 3px;
+    cursor: pointer;
+    display: flex;
+    padding-left: 8px;
+    padding-right: 8px;
+    &:last-child {
+      margin-bottom: 6px;
     }
-    &::-webkit-scrollbar-track {
-      background: transparent !important;
-      cursor: pointer;
+    .title {
+      flex: 1;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      height: 28px;
     }
-    &::-webkit-scrollbar-thumb {
-      position: absolute;
-      background: #f02c3844;
+    .time {
+      height: 28px;
+      width: 68px;
+      text-align: right;
     }
-    .item {
-      border-radius: 3px;
-      cursor: pointer;
-      display: flex;
-      padding-left: 8px;
-      padding-right: 8px;
-      &:last-child {
-        margin-bottom: 6px;
-      }
-      .title {
-        flex: 1;
-        overflow: hidden;
-        white-space: nowrap;
-        text-overflow: ellipsis;
-        height: 28px;
-      }
-      .time {
-        height: 28px;
-        width: 68px;
-        text-align: right;
-      }
-      &:hover {
-        background: #f02c3822;
-        color: #333 !important;
-      }
+    &:hover {
+      background: #f02c3822;
+      color: #333 !important;
     }
   }
 }

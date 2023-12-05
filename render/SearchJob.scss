@@ -1,0 +1,42 @@
+#SearchJob {
+  padding-top: 28px;
+  display: flex;
+  padding-left: 20px;
+  padding-right: 20px;
+  line-height: 28px;
+  input {
+    flex: 1;
+    display: block;
+    margin: 0px;
+    padding: 0px;
+    border: none;
+    outline: none;
+    height: 28px;
+    padding-left: 6px;
+    padding-right: 6px;
+    color: #f02c38;
+    background: #f02c3811;
+    font-size: 12px;
+    &:focus {
+      background: #fff;
+    }
+    border-top-left-radius: 3px;
+    border-bottom-left-radius: 3px;
+  }
+  .searchBtn {
+    width: 32px;
+    height: 28px;
+    text-align: center;
+    cursor: pointer;
+    background: #f02c3811;
+    border-top-right-radius: 3px;
+    border-bottom-right-radius: 3px;
+    i {
+      font-size: 14px;
+      color: #f02c38;
+    }
+    &:hover {
+      background: #f02c3844 !important;
+    }
+  }
+}

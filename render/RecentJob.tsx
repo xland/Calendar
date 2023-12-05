@@ -42,7 +42,7 @@ export default function () {
   eventer.on("dataReady", async () => {
     let { ipcRenderer } = require("electron");
     let jobs: ModelJob[] = await ipcRenderer.invoke("getDataRecent");
-    let dom = Helper.$id("recentJobBox");
+    let dom = Helper.$id("RecentJob");
     dom.innerHTML = "";
     for (let i = 0; i < jobs.length; i++) {
       dom.append(
@@ -58,15 +58,5 @@ export default function () {
     }, firstJob.StartTime - Date.now());
   });
 
-  return (
-    <div id="RecentJob">
-      <div id="searchBox">
-        <input type="text" placeholder="搜索代办事项..." />
-        <div class="searchBtn">
-          <i class="iconfont icon-sousuo"></i>
-        </div>
-      </div>
-      <div id="recentJobBox"></div>
-    </div>
-  );
+  return <div id="RecentJob"></div>;
 }
