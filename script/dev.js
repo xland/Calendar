@@ -19,7 +19,7 @@ let buildMain = async ()=>{
  * 启动Dev服务器
  */
 let startDevServer = async ()=>{
-  let arr = ["Index","IndexJob"];
+  let arr = ["Index","IndexJob","IndexAlert"];
   for(let item of arr){
     let content = `<html><head>
         <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">        

@@ -21,10 +21,7 @@ export default function () {
 
     let hour = parseInt(startHour.split(":")[0]);
     let startTime = new Date(dateObj.year, dateObj.month - 1, dateObj.day, hour, 0, 0, 0);
-    let config = {
-      title: "增加日程",
-    };
-    window.open(`/IndexJob.html?colorIndex=${colorIndex}&startTime=${startTime.getTime()}`, "_blank", JSON.stringify(config));
+    window.open(`/IndexJob.html?colorIndex=${colorIndex}&startTime=${startTime.getTime()}`, "_blank", `{ "title": "增加日程" }`);
     Helper.$id("ModalMask").style.display = "block";
   };
   let bgLineMouseOver = (e) => {

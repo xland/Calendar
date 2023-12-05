@@ -8,9 +8,6 @@ export default function (props) {
     if (target.dad().getAttribute("id") === "Menu") {
       let id = target.dad().dataset.id;
       if (target.innerHTML === "增加") {
-        let config = {
-          title: "增加日程",
-        };
         let data = dataMonth.dateArr[dataMonth.getCurDateIndex()].jobs;
         let colorIndex = 0;
         if (data.length) {
@@ -19,13 +16,10 @@ export default function (props) {
         if (colorIndex > 5) colorIndex = 0;
         let startTime = new Date(data[0].StartTime);
         startTime.setHours(8, 0, 0, 0);
-        window.open(`/IndexJob.html?colorIndex=${colorIndex}&startTime=${startTime.getTime()}`, "_blank", JSON.stringify(config));
+        window.open(`/IndexJob.html?colorIndex=${colorIndex}&startTime=${startTime.getTime()}`, "_blank", `{ "title": "增加日程" }`);
         Helper.$id("ModalMask").style.display = "block";
       } else if (target.innerHTML === "修改") {
-        let config = {
-          title: "修改日程",
-        };
-        window.open(`/IndexJob.html?editId=${id}`, "_blank", JSON.stringify(config));
+        window.open(`/IndexJob.html?editId=${id}`, "_blank", `{ title: "修改日程" }`);
         Helper.$id("ModalMask").style.display = "block";
       } else {
         let { ipcRenderer } = require("electron");

@@ -21,9 +21,9 @@ function App(props) {
 }
 document.addEventListener("DOMContentLoaded", async () => {
   let url = new URL(window.location.href);
-  let id = url.searchParams.get("editId");
+  let id = url.searchParams.get("id");
   let { ipcRenderer } = require("electron");
-  let [job] = await ipcRenderer.invoke("getData", "SELECT * FROM Job WHERE Id = ?", id);
+  let [job]: ModelJob[] = await ipcRenderer.invoke("getData", "SELECT * FROM Job WHERE Id = ?", id);
   document.body.appendChild(<App colorIndex={job.ColorIndex} />);
   ipcRenderer.invoke("changeWindowState", "show");
 });

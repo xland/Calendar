@@ -6,10 +6,7 @@ export default function (props) {
     let target = e.currentTarget as HTMLElement;
     let id = target.dataset.id;
     if (!id) return;
-    let config = {
-      title: "修改日程",
-    };
-    window.open(`/IndexJob.html?editId=${id}`, "_blank", JSON.stringify(config));
+    window.open(`/IndexJob.html?editId=${id}`, "_blank", `{ "title": "修改日程" }`);
     Helper.$id("ModalMask").style.display = "block";
   };
   return (

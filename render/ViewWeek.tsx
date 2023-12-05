@@ -21,18 +21,12 @@ export default function () {
       if (colorIndex > 5) colorIndex = 0;
     }
     let startTime = new Date(dateObj.year, dateObj.month - 1, dateObj.day, 8, 0, 0, 0);
-    let config = {
-      title: "增加日程",
-    };
-    window.open(`/IndexJob.html?colorIndex=${colorIndex}&startTime=${startTime.getTime()}`, "_blank", JSON.stringify(config));
+    window.open(`/IndexJob.html?colorIndex=${colorIndex}&startTime=${startTime.getTime()}`, "_blank", `{ "title": "增加日程" }`);
     Helper.$id("ModalMask").style.display = "block";
   };
   let jobDbClick = (e: MouseEvent) => {
     let id = (e.target as HTMLElement).dataset.id;
-    let config = {
-      title: "修改日程",
-    };
-    window.open(`/IndexJob.html?editId=${id}`, "_blank", JSON.stringify(config));
+    window.open(`/IndexJob.html?editId=${id}`, "_blank", `{ "title": "修改日程" }`);
     Helper.$id("ModalMask").style.display = "block";
   };
   eventer.on("dataReady", () => {

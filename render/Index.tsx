@@ -34,4 +34,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     await dataMonthSmall.init();
     eventer.emit("dataReady");
   });
+
+  window.open(`/IndexAlert.html?id=9b0eb345-963f-4288-956d-dc6f5b399504`, "_blank", `{"title": "日程提醒" }`);
 });
