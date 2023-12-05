@@ -2,6 +2,16 @@ let esbuild = require("esbuild")
 let {sassPlugin} = require("esbuild-sass-plugin")
 let fs = require("fs-extra")
 
+let preparePackageJson = async()=>{
+  let json = require("../package.json")
+  delete json.author
+  delete json.description
+  delete json.scripts
+  delete json.license
+  delete json.devDependencies
+  console.log(JSON.stringify(json))
+}
+
 let buildMain = async ()=>{
   await fs.copy("./build/","./prod/build/")
   await esbuild.build({
@@ -35,5 +45,10 @@ let buildRender = async ()=>{
     })
     console.log("build ok")
 }
-buildMain()
-buildRender();
+
+let start = async ()=>{  
+  await preparePackageJson()
+  await buildMain()
+  await buildRender();
+}
+start()
