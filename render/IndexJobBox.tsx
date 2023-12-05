@@ -72,14 +72,68 @@ export default function () {
       if (num < 1) num = max;
       if (num > max) num = 1;
       target.innerHTML = num.toString() + "日";
-    } else if (id.startsWith("hour")) {
+    } else if (id === "hour0") {
       if (num < 0) num = 59;
       if (num > 59) num = 0;
       target.innerHTML = num.toString().padStart(2, "0") + "时";
-    } else if (id.startsWith("minute")) {
+      let minute0 = target.next();
+      let minute0Num = parseInt(minute0.innerHTML);
+      let hour1 = minute0.next().next();
+      let hour1Num = parseInt(hour1.innerHTML);
+      if (hour1Num < num) {
+        hour1.innerHTML = num.toString().padStart(2, "0") + "时";
+        let minute1 = hour1.next();
+        let minute1Num = parseInt(minute1.innerHTML);
+        if (minute1Num < minute0Num) {
+          minute1.innerHTML = minute0Num.toString().padStart(2, "0") + "分";
+        }
+      }
+    } else if (id === "minute0") {
       if (num < 0) num = 59;
       if (num > 59) num = 0;
       target.innerHTML = num.toString().padStart(2, "0") + "分";
+      let hour0 = target.prev();
+      let hour0Num = parseInt(hour0.innerHTML);
+      let hour1 = target.next().next();
+      let hour1Num = parseInt(hour1.innerHTML);
+      if (hour1Num === hour0Num) {
+        let minute1 = hour1.next();
+        let minute1Num = parseInt(minute1.innerHTML);
+        if (num > minute1Num) {
+          minute1.innerHTML = num.toString().padStart(2, "0") + "分";
+        }
+      }
+    } else if (id === "hour1") {
+      if (num < 0) num = 59;
+      if (num > 59) num = 0;
+      target.innerHTML = num.toString().padStart(2, "0") + "时";
+      let minute0 = target.prev().prev();
+      let minute0Num = parseInt(minute0.innerHTML);
+      let hour0 = minute0.prev();
+      let hour0Num = parseInt(hour0.innerHTML);
+      if (hour0Num > num) {
+        hour0.innerHTML = num.toString().padStart(2, "0") + "时";
+        let minute1 = target.next();
+        let minute1Num = parseInt(minute1.innerHTML);
+        if (minute1Num < minute0Num) {
+          minute1.innerHTML = minute0Num.toString().padStart(2, "0") + "分";
+        }
+      }
+    } else if (id === "minute1") {
+      if (num < 0) num = 59;
+      if (num > 59) num = 0;
+      target.innerHTML = num.toString().padStart(2, "0") + "分";
+      let hour1 = target.prev();
+      let hour1Num = parseInt(hour1.innerHTML);
+      let minute0 = hour1.prev().prev();
+      let minute0Num = parseInt(minute0.innerHTML);
+      let hour0 = minute0.prev();
+      let hour0Num = parseInt(hour0.innerHTML);
+      if (hour1Num === hour0Num) {
+        if (num < minute0Num) {
+          minute0.innerHTML = num.toString().padStart(2, "0") + "分";
+        }
+      }
     }
   };
   let repeatBtnClick = (e: MouseEvent) => {

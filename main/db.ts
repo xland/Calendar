@@ -1,6 +1,6 @@
 import Database from "better-sqlite3";
 import { app } from "electron";
-import fsex from "fs-extra";
+import fs from "fs";
 import path from "path";
 import { ModelJob } from "../model/ModelJob";
 
@@ -397,21 +397,27 @@ INSERT INTO Setting (ViewDefault,ViewVal,LangDefault,SkinDefault,AlertBefore) VA
     }
     return hasJob;
   }
-
-
+  pathExist(pathStr:string){
+    try {
+      fs.accessSync(pathStr, fs.constants.R_OK | fs.constants.W_OK);
+      return true;
+    } catch (err) {
+      return false
+    } 
+  }
   init() {
     let dbPath = path.join(app.getPath("userData"), "db");
-    let exist = fsex.pathExistsSync(dbPath);
+    let exist = this.pathExist(dbPath);
     if (exist) {
       dbPath = path.join(dbPath, "db.db");
-      exist = fsex.pathExistsSync(dbPath);
+      exist = this.pathExist(dbPath);
       if (exist) {
         this.openDb(dbPath);
       } else {
         this.createDb(dbPath);
       }
     } else {
-      fsex.mkdirSync(dbPath);
+      fs.mkdirSync(dbPath);
       dbPath = path.join(dbPath, "db.db");
       this.createDb(dbPath);
     }

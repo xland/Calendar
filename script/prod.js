@@ -11,7 +11,7 @@ let buildMain = async ()=>{
     platform:"node",
     external:["electron"],
     minify: true,
-    sourcemap:true
+    sourcemap:false
   }) 
 }
 

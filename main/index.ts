@@ -130,7 +130,7 @@ let init = async ()=>{
         let pathName = new URL(url).pathname
         pathName = decodeURI(pathName)
         let filePath = path.join(__dirname, pathName)
-        let data = fs.readFileSync(filePath)
+        let data = fs.readFileSync(filePath) //todo
         return new Response(data)
     })
     initDb();
