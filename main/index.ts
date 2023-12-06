@@ -1,6 +1,6 @@
 import path  from 'path';
 import fs from  "fs"
-import { app,BrowserWindow,HandlerDetails,ipcMain,protocol } from "electron";
+import { app,BrowserWindow,HandlerDetails,ipcMain,protocol,dialog } from "electron";
 import { Db } from "./db";
 import { ModelSetting } from "../model/ModelSetting";
 
@@ -104,14 +104,17 @@ let createMainWindow = ()=>{
     options.title = "日历";    
     options.minHeight = 800;
     options.minWidth = 1100;
+    fs.appendFileSync(path.join(app.getPath("userData"), "log.txt"),"start create window /n")
     win = new BrowserWindow(options);
     let serverUrl = process.argv[2]
     if(serverUrl){
         console.log(serverUrl)
         win.loadURL(serverUrl);
     }else{
-        win.loadURL(`liulun://./index.html`)
+        fs.appendFileSync(path.join(app.getPath("userData"), "log.txt"),"load url /n")
+        win.loadURL(`liulun://./Index.html`)
     }
+    fs.appendFileSync(path.join(app.getPath("userData"), "log.txt"),"created window /n")
 }
 let winCreatedHandler = (e,target:BrowserWindow)=>{
     // @ts-ignore
@@ -130,7 +133,9 @@ let init = async ()=>{
         let pathName = new URL(url).pathname
         pathName = decodeURI(pathName)
         let filePath = path.join(__dirname, pathName)
+        fs.appendFileSync(path.join(app.getPath("userData"), "log.txt"),"url to path:"+filePath)
         let data = fs.readFileSync(filePath) //todo
+        fs.appendFileSync(path.join(app.getPath("userData"), "log.txt"),"data:"+data)
         return new Response(data)
     })
     initDb();

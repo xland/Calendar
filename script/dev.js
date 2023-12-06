@@ -69,6 +69,22 @@ let startElectron = async ()=>{
         process.exit();
       });
 }
+let startElectron2 = async ()=>{
+  let electron = require("electron")
+  let spawn = require("child_process").spawn;
+  let child = spawn(electron,["./main.js"],{
+      cwd:"./dist/win-unpacked/resources/app"
+  })
+  child.stdout.on('data', (data) => {
+      console.log(data.toString("utf8"));
+  });
+  child.stdout.on('error', (data) => {
+      console.log(data.toString("utf8"));
+  });
+  child.on("close", () => {
+      process.exit();
+    });
+}
 /**
  * 开始编译
  */
@@ -76,6 +92,7 @@ let start = async ()=>{
     await buildMain();
     await startDevServer();
     await startElectron();
+    // await startElectron2();
 }
 
 start();

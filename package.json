@@ -6,9 +6,10 @@
   "scripts": {
     "dev": "node ./script/dev.js",
     "prod": "node ./script/prod.js",
-    "rebuild": "electron-rebuild -f -w ./node_modules/better-sqlite3"
+    "rebuild": "electron-rebuild -f -w ./node_modules/better-sqlite3",
+    "devMain": "node ./script/devMain.js"
   },
-  "author": "",
+  "author": "xland",
   "license": "ISC",
   "devDependencies": {
     "@types/better-sqlite3": "^7.6.6",
