@@ -8,7 +8,6 @@ let preparePackageJson = async()=>{
   let electronConfig = json.devDependencies.electron.replace('^', '')
   delete json.devDependencies
   json.devDependencies = { electron: electronConfig }
-  console.log(json)
   fs.writeFileSync("./prod/package.json", JSON.stringify(json))
   //防止electron-builder再安装一次依赖
   fs.mkdirSync("./prod/node_modules")
@@ -17,7 +16,7 @@ let preparePackageJson = async()=>{
 let buildMain = async ()=>{
   await fs.copy("./build/","./prod/build/")
   await esbuild.build({
-    entryPoints: ['./main/index.ts'],
+    entryPoints: ['./main/entry.ts'],
     bundle: true,
     outfile:"./prod/main.js",
     platform:"node",

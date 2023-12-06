@@ -3,7 +3,7 @@ let {sassPlugin} = require("esbuild-sass-plugin")
 let fs = require("fs-extra")
 let start = async ()=>{
     esbuild.buildSync({
-        entryPoints: ['./main/index.ts'],
+        entryPoints: ['./main/entry.ts'],
         bundle: true,
         outfile:"./dist/main.js",
         platform:"node",

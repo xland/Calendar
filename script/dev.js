@@ -8,7 +8,7 @@ let devServerAddr = "";
  */
 let buildMain = async ()=>{
     await esbuild.build({
-      entryPoints: ['./main/index.ts'],
+      entryPoints: ['./main/entry.ts'],
       bundle: true,
       outfile:"./dev/main.js",
       platform:"node",

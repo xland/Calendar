@@ -450,3 +450,4 @@ INSERT INTO Setting (ViewDefault,ViewVal,LangDefault,SkinDefault,AlertBefore) VA
     this.initHandle()
   }
 }
+export let db = new Db()
