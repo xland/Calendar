@@ -2,7 +2,6 @@ import path  from 'path';
 import fs from  "fs"
 import { app,BrowserWindow,HandlerDetails,ipcMain,protocol,dialog } from "electron";
 import { Db } from "./db";
-import { ModelSetting } from "../model/ModelSetting";
 
 process.env.ELECTRON_DISABLE_SECURITY_WARNINGS = "true";
 protocol.registerSchemesAsPrivileged([{ scheme:'liulun', privileges: { standard: true, supportFetchAPI: true, secure: true, corsEnabled: true } }])
@@ -18,27 +17,6 @@ let initHook = ()=>{
     ipcMain.handle("getWindowState",(e)=>{
         let win = BrowserWindow.fromWebContents(e.sender) as BrowserWindow;
         return win.isMaximized();
-    })
-    ipcMain.handle("getData",(e,sql:string,...params)=>{
-        return db.getData(sql,...params);
-    })
-    ipcMain.handle("excuteSQL",(e,sql:string,...params)=>{
-        db.excuteSQL(sql,...params);
-        win.show();
-    })
-    ipcMain.handle("getSetting",()=>{
-        let setting:ModelSetting = db.getData(`SELECT * FROM Setting`)[0] as ModelSetting
-        setting.OpenAtLogin = app.getLoginItemSettings().openAtLogin
-        return setting;
-    })
-    ipcMain.handle("getDataRecent",(e)=>{
-        return db.getDataRecent()
-    })
-    ipcMain.handle("getDataOneMonth",(e,startTime:number,endTime:number)=>{
-        return db.getDataOneMonth(startTime,endTime)
-    })
-    ipcMain.handle("hasDataOneMonth",(e,startTime:number,endTime:number)=>{
-        return db.hasDataOneMonth(startTime,endTime)
     })
     ipcMain.handle("setOpenAtLogin",(e,flag:boolean)=>{
         app.setLoginItemSettings({openAtLogin:flag});
@@ -104,17 +82,17 @@ let createMainWindow = ()=>{
     options.title = "日历";    
     options.minHeight = 800;
     options.minWidth = 1100;
-    fs.appendFileSync(path.join(app.getPath("userData"), "log.txt"),"start create window /n")
+    // fs.appendFileSync(path.join(app.getPath("userData"), "log.txt"),"start create window /n")
     win = new BrowserWindow(options);
     let serverUrl = process.argv[2]
     if(serverUrl){
         console.log(serverUrl)
         win.loadURL(serverUrl);
     }else{
-        fs.appendFileSync(path.join(app.getPath("userData"), "log.txt"),"load url /n")
+        // fs.appendFileSync(path.join(app.getPath("userData"), "log.txt"),"load url /n")
         win.loadURL(`liulun://./Index.html`)
     }
-    fs.appendFileSync(path.join(app.getPath("userData"), "log.txt"),"created window /n")
+    // fs.appendFileSync(path.join(app.getPath("userData"), "log.txt"),"created window /n")
 }
 let winCreatedHandler = (e,target:BrowserWindow)=>{
     // @ts-ignore

@@ -3,7 +3,8 @@ import { app } from "electron";
 import fs from "fs";
 import path from "path";
 import { ModelJob } from "../model/ModelJob";
-
+import { ModelSetting } from "../model/ModelSetting";
+import {ipcMain} from "electron"
 export class Db {
   db: Database.Database;
   openDb(dbPath: string) {
@@ -405,7 +406,7 @@ INSERT INTO Setting (ViewDefault,ViewVal,LangDefault,SkinDefault,AlertBefore) VA
       return false
     } 
   }
-  init() {
+  initDb(){
     let dbPath = path.join(app.getPath("userData"), "db");
     let exist = this.pathExist(dbPath);
     if (exist) {
@@ -421,5 +422,31 @@ INSERT INTO Setting (ViewDefault,ViewVal,LangDefault,SkinDefault,AlertBefore) VA
       dbPath = path.join(dbPath, "db.db");
       this.createDb(dbPath);
     }
+  }
+  initHandle(){
+    ipcMain.handle("getData",(e,sql:string,...params)=>{
+      return this.getData(sql,...params);
+    })
+    ipcMain.handle("excuteSQL",(e,sql:string,...params)=>{
+        this.excuteSQL(sql,...params);
+    })
+    ipcMain.handle("getSetting",()=>{
+        let setting:ModelSetting = this.getData(`SELECT * FROM Setting`)[0] as ModelSetting
+        setting.OpenAtLogin = app.getLoginItemSettings().openAtLogin
+        return setting;
+    })
+    ipcMain.handle("getDataRecent",(e)=>{
+        return this.getDataRecent()
+    })
+    ipcMain.handle("getDataOneMonth",(e,startTime:number,endTime:number)=>{
+        return this.getDataOneMonth(startTime,endTime)
+    })
+    ipcMain.handle("hasDataOneMonth",(e,startTime:number,endTime:number)=>{
+        return this.hasDataOneMonth(startTime,endTime)
+    })
+  }
+  init() {
+    this.initDb()
+    this.initHandle()
   }
 }
