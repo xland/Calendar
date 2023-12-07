@@ -4,23 +4,23 @@ import { eventer } from "../common/eventer";
 import { ModelJob } from "../model/ModelJob";
 import { Helper } from "../common/Helper";
 export default function () {
-  let jobs: ModelJob[];
   let timeOutId;
-  let initAlert = (job: ModelJob) => {
+  let initAlert = (id: string, startTime: number) => {
     timeOutId = setTimeout(async () => {
-      console.log(job);
+      window.open(`/IndexAlert.html?id=${id}`, "_blank", `{"title": "日程提醒" }`);
+      Helper.$id("ModalMask").style.display = "block";
       await initData();
-    }, job.StartTime - Date.now() + 1);
+    }, startTime - Date.now() + 1);
   };
   let initData = async () => {
     clearTimeout(timeOutId);
     let { ipcRenderer } = require("electron");
-    jobs = await ipcRenderer.invoke("getDataRecent");
+    let jobs: ModelJob[] = await ipcRenderer.invoke("getDataRecent");
     let dom = Helper.$id("RecentJob");
     dom.innerHTML = "";
     for (let i = 0; i < jobs.length; i++) {
       if (i === 0) {
-        initAlert(jobs[i]);
+        initAlert(jobs[i].Id, jobs[i].StartTime);
       }
       dom.append(
         <div class="item" data-id={jobs[i].Id} data-start={jobs[i].StartTime} onMouseDown={Helper.jobMouseDown} onDblClick={Helper.jobDbClick}>

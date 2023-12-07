@@ -6,7 +6,10 @@ import { ModelJob } from "../model/ModelJob";
 import { Helper } from "../common/Helper";
 function App(props) {
   let job = props.job as ModelJob;
-  let save = () => {};
+  let save = () => {
+    let { ipcRenderer } = require("electron");
+    ipcRenderer.invoke("changeWindowState", "close");
+  };
   return (
     <>
       <div class="titleBar">
@@ -16,10 +19,7 @@ function App(props) {
       <div class="content">{job.JobInfo}</div>
       <div class="btnBox">
         <div class="btnSave" onClick={save}>
-          5分钟后再提醒
-        </div>
-        <div class="btnSave" onClick={save}>
-          不再提醒
+          知道了
         </div>
       </div>
     </>
