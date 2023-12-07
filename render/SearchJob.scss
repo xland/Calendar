@@ -1,4 +1,4 @@
-#SearchJob {
+#SearchBox {
   padding-top: 28px;
   display: flex;
   padding-left: 20px;
@@ -39,4 +39,15 @@
       background: #f02c3844 !important;
     }
   }
+}
+#SearchResult {
+  line-height: 28px;
+  color: #666;
+  flex: 1;
+  overflow: hidden;
+  overflow-y: auto;
+  margin-top: 6px;
+  padding-right: 12px;
+  padding-left: 12px;
+  display: none;
 }
