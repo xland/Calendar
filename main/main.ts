@@ -1,25 +1,6 @@
-import path from 'path';
-import url from "url"
-import { app,BrowserWindow,ipcMain,protocol,net ,HandlerDetails} from "electron";
+import { app,BrowserWindow,ipcMain ,HandlerDetails} from "electron";
 class Main {
     win:BrowserWindow;
-    initProtocal(){
-        protocol.handle('lun', (request) => {
-            let filePath = request.url.slice('lun://'.length)
-            console.log(filePath)
-            let fetchPath = url.pathToFileURL(path.join(__dirname, filePath)).toString();
-            fetchPath = decodeURIComponent(fetchPath)
-            return net.fetch(fetchPath)
-            // let url = request.url
-            // let pathName = new URL(url).pathname
-            // pathName = decodeURI(pathName)
-            // let filePath = path.join(__dirname, pathName)
-            // let fileStr = `file://${filePath}`
-            // return net.fetch(fileStr)
-            // let data = fs.readFileSync(filePath) //todo
-            // return new Response(data)
-        })
-    }
     initHook(){ 
         ipcMain.handle("changeWindowState",(e,state)=>{
             let win = BrowserWindow.fromWebContents(e.sender) as BrowserWindow;
@@ -111,7 +92,6 @@ class Main {
     }
     init(){
         this.initHook()
-        this.initProtocal()
         this.handleWindowCreated()
         this.createMainWindow()
     }
