@@ -17,9 +17,12 @@
     color: var(--fore);
     background: var(--fore-lighter3);
     font-size: 12px;
+    border: 1px solid var(--fore-lighter3);
     &:focus {
       background: #fff;
-      border: 1px solid var(--fore-lighter3);
+    }
+    &::placeholder {
+      color: var(--fore-lighter0);
     }
     border-top-left-radius: 3px;
     border-bottom-left-radius: 3px;

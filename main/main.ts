@@ -30,7 +30,12 @@ class Main {
     win.addListener("unmaximize", () => {
       win.webContents.send("windowStateChanged", "unmaximize");
     });
-    if (this.win != win) {
+    if (!this.win || this.win.id === win.id) {
+      win.on("close", (e) => {
+        e.preventDefault();
+        win.hide();
+      });
+    } else {
       win.once("close", () => {
         this.win.webContents.send("modalWindowClosed");
       });
@@ -85,7 +90,7 @@ class Main {
     // fs.appendFileSync(path.join(app.getPath("userData"), "log.txt"),"start create window /n")
     this.win = new BrowserWindow(options);
     let serverUrl = process.argv[2];
-    if (serverUrl) {
+    if (serverUrl && !app.isPackaged) {
       console.log(serverUrl);
       this.win.loadURL(serverUrl);
     } else {

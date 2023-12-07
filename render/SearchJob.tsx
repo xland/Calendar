@@ -29,7 +29,7 @@ export default function () {
   return (
     <>
       <div id="SearchBox">
-        <input type="text" placeholder="搜索代办事项..." onKeyUp={keyUp} />
+        <input type="text" placeholder="搜索待办事项..." onKeyUp={keyUp} />
         <div class="searchBtn" onClick={searchBtnClick}>
           <i class="iconfont icon-sousuo"></i>
         </div>
