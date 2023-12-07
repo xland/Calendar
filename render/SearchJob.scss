@@ -19,6 +19,7 @@
     font-size: 12px;
     &:focus {
       background: #fff;
+      border: 1px solid var(--fore-lighter3);
     }
     border-top-left-radius: 3px;
     border-bottom-left-radius: 3px;
