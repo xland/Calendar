@@ -81,4 +81,43 @@ export class Helper{
         }
         return result;
     }
+    static timeStr(startTime: number){
+        let span = startTime - Date.now();
+        if (span < 3600000) {
+          //1个小时
+          let min = Math.floor(span / 60000);
+          if (min < 1) {
+            return `马上`;
+          }
+          return `${min}分钟后`;
+        } else if (span < 86400000) {
+          //1天
+          return `${Math.floor(span / 3600000)}小时后`;
+        } else {
+          let startObj = new Date(startTime);
+          let now = new Date();
+          if (startObj.getMonth() === now.getMonth() && startObj.getFullYear() === now.getFullYear()) {
+            return `${startObj.getDate() - now.getDate()}天后`;
+          } else if (startObj.getFullYear() === now.getFullYear()) {
+            return `${startObj.getMonth() + 1}月${startObj.getDate()}日`;
+          } else {
+            return `${startObj.getFullYear()}-${startObj.getMonth() + 1}-${startObj.getDate()}`;
+          }
+        }
+      }
+    static jobDbClick(e: MouseEvent){
+        let id = (e.currentTarget as HTMLElement).dataset.id;
+        window.open(`/IndexJob.html?editId=${id}`, "_blank", `{ "title": "修改日程" }`);
+        Helper.$id("ModalMask").style.display = "block";
+      };
+    static jobMouseDown(e: MouseEvent){
+        if (e.button === 0) {
+            let target = e.currentTarget as HTMLElement;
+            let dateObj = new Date(parseInt(target.dataset.start));
+            let event = new CustomEvent("gotodateview", { detail: dateObj });
+            Helper.$id("SwitchBtns").dispatchEvent(event);
+            return;
+          }
+          Helper.showJobMenu(e);
+    }
 }

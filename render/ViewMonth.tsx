@@ -5,14 +5,6 @@ import { dataMonth } from "./DataMonth";
 import React from "./React";
 import "./ViewMonth.scss";
 export default function () {
-  let jobDbClick = (e: MouseEvent) => {
-    let target = e.currentTarget as HTMLElement;
-    let id = target.dataset.id;
-    if (!id) return;
-    window.open(`/IndexJob.html?editId=${id}`, "_blank", `{ title: "修改日程" }`);
-    Helper.$id("ModalMask").style.display = "block";
-    return false;
-  };
   let addJob = (e) => {
     let target = e.target as HTMLElement;
     let index = Number(target.dataset.index);
@@ -49,7 +41,7 @@ export default function () {
         let cellContent = <div class="cellContent" data-index={index} onClick={addJob}></div>;
         dayObj.jobs.forEach((job) => {
           cellContent.appendChild(
-            <div class="cellItem" data-id={job.Id} title={job.JobInfo} onMouseDown={(e) => Helper.showJobMenu(e)} onDblClick={jobDbClick} style={`--color:${ColorGet(job.ColorIndex)};`}>
+            <div class="cellItem" data-id={job.Id} title={job.JobInfo} onMouseDown={Helper.showJobMenu} onDblClick={Helper.jobDbClick} style={`--color:${ColorGet(job.ColorIndex)};`}>
               {job.JobInfo}
             </div>
           );

@@ -5,7 +5,7 @@
         "name": "Debug Main Process",
         "type": "node",
         "request": "launch",
-        "cwd": "${workspaceFolder}/dist",
+        "cwd": "${workspaceFolder}/prod",
         "runtimeExecutable": "${workspaceFolder}/node_modules/.bin/electron",
         "windows": {
           "runtimeExecutable": "${workspaceFolder}/node_modules/.bin/electron.cmd"

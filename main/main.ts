@@ -57,7 +57,7 @@ class Main {
     handleWindowCreated(){
         app.addListener("browser-window-created",(e,target:BrowserWindow)=>{
             // @ts-ignore
-            target.webContents.setWindowOpenHandler(this.winOpenHandler);
+            target.webContents.setWindowOpenHandler(e=>this.winOpenHandler(e));
             target.webContents.openDevTools({mode:"undocked"});
             this.listenWinEvent(target)
         })
