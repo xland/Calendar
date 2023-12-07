@@ -5,7 +5,7 @@ export default function () {
   let searchBtnClick = (e: MouseEvent) => {
     window.open(`/IndexAlert.html?id=9b0eb345-963f-4288-956d-dc6f5b399504`, "_blank", `{"title": "日程提醒" }`);
   };
-  let textChange = (e: KeyboardEvent) => {
+  let keyUp = (e: KeyboardEvent) => {
     let target = e.currentTarget as HTMLInputElement;
     if (target.value) {
       Helper.$id("SearchResult").style.display = "block";
@@ -18,7 +18,7 @@ export default function () {
   return (
     <>
       <div id="SearchBox">
-        <input type="text" placeholder="搜索代办事项..." onKeyUp={textChange} />
+        <input type="text" placeholder="搜索代办事项..." onKeyUp={keyUp} />
         <div class="searchBtn" onClick={searchBtnClick}>
           <i class="iconfont icon-sousuo"></i>
         </div>
