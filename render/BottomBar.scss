@@ -1,26 +1,26 @@
 #BottomBar {
   height: 36px;
   line-height: 36px;
-  background: #f02c3810;
+  background: var(--fore-lighter2);
   display: flex;
-  border-top: 1px solid #f02c3822;
+  border-top: 1px solid var(--fore-lighter0);
   .bottomBtn {
     flex: 1;
     cursor: pointer;
     text-align: center;
     i {
       font-size: 16px !important;
-      color: #f02c3877;
+      color: var(--fore-lighter1);
     }
     &:hover {
       i {
-        color: #f02c38 !important;
+        color: var(--fore) !important;
       }
     }
   }
   .bottomBtnSelected {
     i {
-      color: #f02c38;
+      color: var(--fore);
     }
   }
 }
@@ -31,9 +31,9 @@
   left: 0px;
   z-index: 2;
   padding-bottom: 8px;
-  background: #fcdde0;
+  background: var(--bg);
   text-align: center;
-  border-top: 1px solid #f02c3822;
+  border-top: 1px solid var(--fore-lighter3);
   .drawerTitle {
     height: 26px;
     line-height: 26px;
@@ -53,7 +53,7 @@
       }
       &:hover {
         i {
-          color: #f02c38 !important;
+          color: var(--fore) !important;
         }
       }
     }

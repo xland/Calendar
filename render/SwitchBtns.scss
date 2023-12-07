@@ -2,8 +2,8 @@
   display: flex;
   .navigateBtns {
     .selected {
-      background: #fde9eb;
-      color: #f02c38;
+      background: var(--fore-lighter2);
+      color: var(--fore);
     }
   }
   .btns {
@@ -23,7 +23,7 @@
       cursor: pointer;
       flex: 1;
       &:hover {
-        color: #f02c38;
+        color: var(--fore);
       }
     }
   }
@@ -45,11 +45,11 @@
     display: block;
     cursor: pointer;
     &:hover {
-      color: #f02c38;
+      color: var(--fore);
     }
   }
   .todaySelected {
-    color: #f02c38;
+    color: var(--fore);
   }
   #switchLabel {
     &:hover {

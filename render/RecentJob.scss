@@ -16,7 +16,7 @@
   }
   &::-webkit-scrollbar-thumb {
     position: absolute;
-    background: #f02c3844;
+    background: var(--fore-lighter3);
   }
   .item {
     border-radius: 3px;
@@ -40,7 +40,7 @@
       text-align: right;
     }
     &:hover {
-      background: #f02c3822;
+      background: var(--fore-lighter2);
       color: #333 !important;
     }
   }

@@ -26,10 +26,10 @@ export default function (props) {
       target = target.dad();
     }
     if (!target.classHas("radioItem")) {
-      return;
+      return false;
     }
     if (target.son0().son0().classHas("icon-woderilixuanzhong")) {
-      return;
+      return false;
     }
     setDefaultView(target);
     return target;
@@ -45,6 +45,7 @@ export default function (props) {
   };
   let defaultViewClick = async (e: MouseEvent) => {
     let target = checkOneItem(e);
+    if (!target) return;
     let val = Number(target.dataset.index);
     let { ipcRenderer } = require("electron");
     let sql = `Update Setting set ViewDefault = ?`;
@@ -53,6 +54,7 @@ export default function (props) {
   };
   let defaultLangClick = async (e: MouseEvent) => {
     let target = checkOneItem(e);
+    if (!target) return;
     let val = Number(target.dataset.index);
     let { ipcRenderer } = require("electron");
     let sql = `Update Setting set LangDefault = ?`;
@@ -61,6 +63,7 @@ export default function (props) {
   };
   let alertBeforeClick = async (e: MouseEvent) => {
     let target = checkOneItem(e);
+    if (!target) return;
     let val = Number(target.dataset.index);
     let { ipcRenderer } = require("electron");
     let sql = `Update Setting set AlertBefore = ?`;
@@ -69,11 +72,13 @@ export default function (props) {
   };
   let defaultSkinClick = async (e: MouseEvent) => {
     let target = checkOneItem(e);
+    if (!target) return;
     let val = Number(target.dataset.index);
     let { ipcRenderer } = require("electron");
     let sql = `Update Setting set SkinDefault = ?`;
     await ipcRenderer.invoke("excuteSQL", sql, val);
     dataSetting.setting.SkinDefault = val;
+    document.body.setAttribute("class", dataSetting.getSkinName(val));
   };
   let loaded = async () => {
     let icon = Helper.$id("openAtLoginIcon");
@@ -184,6 +189,18 @@ export default function (props) {
             <i class="iconfont icon-jietutubiao_yuan"></i>
           </div>
           <div>蓝</div>
+        </div>
+        <div class="radioItem" data-index="3">
+          <div>
+            <i class="iconfont icon-jietutubiao_yuan"></i>
+          </div>
+          <div>紫</div>
+        </div>
+        <div class="radioItem" data-index="4">
+          <div>
+            <i class="iconfont icon-jietutubiao_yuan"></i>
+          </div>
+          <div>黄</div>
         </div>
       </div>
       <div class="settingRow" onClick={openAtLoginClick}>

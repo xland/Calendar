@@ -22,9 +22,9 @@
       text-align: center;
       cursor: pointer;
       &:hover {
-        background: #f02c3811;
+        background: var(--fore-lighter2);
         i {
-          color: #f02c38 !important;
+          color: var(--fore) !important;
         }
       }
       i {
@@ -66,17 +66,17 @@
         line-height: 22px;
         color: #444;
         &:hover {
-          background: #f02c3822;
+          background: var(--fore-lighter2);
         }
       }
       .hasEvent {
-        background: #f02c3811;
+        background: var(--fore-lighter3);
       }
       .notCurMonth {
         color: #888;
       }
       .selected {
-        background: #f02c38 !important;
+        background: var(--fore) !important;
         color: #fff !important;
         border-radius: 2px;
       }

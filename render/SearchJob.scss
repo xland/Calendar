@@ -14,8 +14,8 @@
     height: 28px;
     padding-left: 6px;
     padding-right: 6px;
-    color: #f02c38;
-    background: #f02c3811;
+    color: var(--fore);
+    background: var(--fore-lighter3);
     font-size: 12px;
     &:focus {
       background: #fff;
@@ -28,15 +28,15 @@
     height: 28px;
     text-align: center;
     cursor: pointer;
-    background: #f02c3811;
+    background: var(--fore-lighter3);
     border-top-right-radius: 3px;
     border-bottom-right-radius: 3px;
     i {
       font-size: 14px;
-      color: #f02c38;
+      color: var(--fore);
     }
     &:hover {
-      background: #f02c3844 !important;
+      background: var(--fore-lighter3) !important;
     }
   }
 }
