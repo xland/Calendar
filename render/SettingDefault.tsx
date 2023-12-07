@@ -203,17 +203,13 @@ export default function (props) {
           <div>黄</div>
         </div>
       </div>
-      <div class="settingRow" onClick={openAtLoginClick}>
-        <div>
-          <i id="openAtLoginIcon" class="iconfont icon-uncheck"></i>
+      <div id="langRow" class="settingRow" onClick={openAtLoginClick}>
+        <div>开机自启：</div>
+        <div class="radioItem" data-index="0">
+          <div>
+            <i id="openAtLoginIcon" class="iconfont icon-uncheck"></i>
+          </div>
         </div>
-        <div>开机自启动</div>
-      </div>
-      <div class="settingRow">
-        <div>
-          <i class="iconfont icon-uncheck"></i>
-        </div>
-        <div>显示农历</div>
       </div>
     </div>
   );
