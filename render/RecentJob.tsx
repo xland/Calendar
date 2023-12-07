@@ -58,5 +58,5 @@ export default function () {
     }, firstJob.StartTime - Date.now());
   });
 
-  return <div id="RecentJob"></div>;
+  return <div id="RecentJob" class="jobList"></div>;
 }

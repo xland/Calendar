@@ -23,7 +23,12 @@ export default function () {
           <i class="iconfont icon-sousuo"></i>
         </div>
       </div>
-      <div id="SearchResult">123</div>
+      <div id="SearchResult" class="jobList">
+        <div class="item">
+          <div class="title">123</div>
+          <div class="time">234</div>
+        </div>
+      </div>
     </>
   );
 }
