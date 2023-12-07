@@ -23,7 +23,7 @@ export default function () {
         initAlert(jobs[i].Id, jobs[i].StartTime);
       }
       dom.append(
-        <div class="item" data-id={jobs[i].Id} data-start={jobs[i].StartTime} onMouseDown={Helper.jobMouseDown} onDblClick={Helper.jobDbClick}>
+        <div class="item" data-id={jobs[i].Id} data-start={jobs[i].StartTime} onMouseDown={Helper.jobItemMouseDown}>
           <div class="title">{jobs[i].JobInfo}</div>
           <div class="time">{Helper.timeStr(jobs[i].StartTime)}</div>
         </div>

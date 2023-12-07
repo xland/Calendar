@@ -13,7 +13,7 @@ export default function () {
       let jobs: ModelJob[] = await ipcRenderer.invoke("getData", "SELECT * FROM Job WHERE JobInfo like ? order by StartTime asc", `%${target.value}%`);
       for (let i = 0; i < jobs.length; i++) {
         dest.append(
-          <div class="item" data-id={jobs[i].Id} data-start={jobs[i].StartTime} onMouseDown={Helper.jobMouseDown} onDblClick={Helper.jobDbClick}>
+          <div class="item" data-id={jobs[i].Id} data-start={jobs[i].StartTime} onMouseDown={Helper.jobItemMouseDown}>
             <div class="title">{jobs[i].JobInfo}</div>
             <div class="time">{Helper.timeStr(jobs[i].StartTime)}</div>
           </div>
