@@ -99,9 +99,9 @@ export class Helper {
       if (startObj.getMonth() === now.getMonth() && startObj.getFullYear() === now.getFullYear()) {
         return `${startObj.getDate() - now.getDate()}天后`;
       } else if (startObj.getFullYear() === now.getFullYear()) {
-        return `${startObj.getMonth() + 1}月${startObj.getDate()}日`;
+        return `${(startObj.getMonth() + 1).toString().padStart(2, "0")}月${startObj.getDate().toString().padStart(2, "0")}日`;
       } else {
-        return `${startObj.getFullYear()}-${startObj.getMonth() + 1}-${startObj.getDate()}`;
+        return `${startObj.getFullYear()}-${(startObj.getMonth() + 1).toString().padStart(2, "0")}-${startObj.getDate().toString().padStart(2, "0")}`;
       }
     }
   }

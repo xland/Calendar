@@ -36,7 +36,7 @@ class Tray {
     this.tray.popUpContextMenu(contextMenu);
   }
   async init() {
-    this.tray = new TrayObj(path.join(__dirname, "res/icon.png"));
+    this.tray = new TrayObj(path.join(__dirname, "res/logo.png"));
     this.tray.addListener("click", () => this.trayClick());
     this.tray.on("right-click", () => this.showMenu());
   }

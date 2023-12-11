@@ -92,7 +92,7 @@ export default function (props) {
     setDefaultView(dom);
 
     row = row.next() as HTMLElement;
-    dom = row.children[dataSetting.setting.SkinDefault + 1] as HTMLElement;
+    dom = row.children[dataSetting.setting.AlertBefore + 1] as HTMLElement;
     setDefaultView(dom);
 
     row = row.next() as HTMLElement;
