@@ -3,14 +3,23 @@ import "./RecentJob.scss";
 import { eventer } from "../common/eventer";
 import { ModelJob } from "../model/ModelJob";
 import { Helper } from "../common/Helper";
+import { dataSetting } from "./DataSetting";
 export default function () {
   let timeOutId;
   let initAlert = (id: string, startTime: number) => {
+    let now = Date.now();
+    let beforeSpan = dataSetting.setting.AlertBefore * 60;
+    if (startTime - beforeSpan < now) {
+      window.open(`/IndexAlert.html?id=${id}`, "_blank", `{"title": "日程提醒" }`);
+      Helper.$id("ModalMask").style.display = "block";
+      return false;
+    }
     timeOutId = setTimeout(async () => {
       window.open(`/IndexAlert.html?id=${id}`, "_blank", `{"title": "日程提醒" }`);
       Helper.$id("ModalMask").style.display = "block";
       await initData();
-    }, startTime - Date.now() + 1);
+    }, startTime - now - beforeSpan);
+    return true;
   };
   let initData = async () => {
     clearTimeout(timeOutId);
@@ -18,9 +27,10 @@ export default function () {
     let jobs: ModelJob[] = await ipcRenderer.invoke("getDataRecent");
     let dom = Helper.$id("RecentJob");
     dom.innerHTML = "";
+    let isAlertWaiting = false;
     for (let i = 0; i < jobs.length; i++) {
-      if (i === 0) {
-        initAlert(jobs[i].Id, jobs[i].StartTime);
+      if (!isAlertWaiting) {
+        isAlertWaiting = initAlert(jobs[i].Id, jobs[i].StartTime);
       }
       dom.append(
         <div class="item" data-id={jobs[i].Id} data-start={jobs[i].StartTime} onMouseDown={Helper.jobItemMouseDown}>
