@@ -1,9 +1,11 @@
 # Calendar
 A easy to use calendar desktop software
 
-# download
+# Download
 
 [Release](https://github.com/xland/Calendar/releases)
+
+# Screenshot
 
 ![](./doc/dayView1.png)
 
