@@ -22,8 +22,9 @@ export default function () {
     taEle.value = job.JobInfo;
     let inputId = taEle.next() as HTMLInputElement;
     inputId.value = job.Id;
-    let arr = ["日", "一", "二", "三", "四", "五", "六"];
+
     dom = taEle.dad().prev() as HTMLElement;
+    let arr = ["日", "一", "二", "三", "四", "五", "六"];
     dom.children[3].innerHTML = `每周${arr[startTime.getDay()]}`;
     dom.children[4].innerHTML = `每月第${startTime.getDate()}天`;
     dom.children[5].innerHTML = `每年${startTime.getMonth() + 1}月${startTime.getDate()}日`;
@@ -137,6 +138,17 @@ export default function () {
     }
   };
   let repeatBtnClick = (e: MouseEvent) => {
+    let dom = Helper.$id("selectOption");
+    let arr = ["日", "一", "二", "三", "四", "五", "六"];
+    let timeBox = Helper.$id("IndexJobBox").son0();
+    let year = parseInt(timeBox.children[0].innerHTML);
+    let month = parseInt(timeBox.children[1].innerHTML);
+    let date = parseInt(timeBox.children[2].innerHTML);
+    let startTime = new Date(year, month - 1, date);
+    dom.children[3].innerHTML = `每周${arr[startTime.getDay()]}`;
+    dom.children[4].innerHTML = `每月第${startTime.getDate()}天`;
+    dom.children[5].innerHTML = `每年${startTime.getMonth() + 1}月${startTime.getDate()}日`;
+
     let target = e.currentTarget as HTMLElement;
     target = target.next() as HTMLElement;
     target.style.display = "block";

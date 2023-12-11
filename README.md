@@ -1,5 +1,10 @@
 # Calendar
 A easy to use calendar desktop software
 
-- Work in progress...
-- Not yet released...
+![](./doc/dayview.png)
+
+![](./doc/weekview.png)
+
+![](./doc/monthview.png)
+
+![](./doc/edit.png)
