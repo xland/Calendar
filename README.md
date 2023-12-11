@@ -3,8 +3,8 @@ A easy to use calendar desktop software
 
 ![](./doc/dayview.png)
 
-![](./doc/weekview.png)
+![](./doc/weekview1.png)
 
-![](./doc/monthview.png)
+![](./doc/monthview1.png)
 
 ![](./doc/edit.png)
