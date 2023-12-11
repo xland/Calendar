@@ -1,7 +1,7 @@
 # Calendar
 A easy to use calendar desktop software
 
-![](./doc/dayView.png)
+![](./doc/dayView1.png)
 
 ![](./doc/weekView.png)
 
