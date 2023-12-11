@@ -44,12 +44,15 @@
     text-align: center;
     display: block;
     cursor: pointer;
+    border: 1px solid #f6f6f6;
     &:hover {
       color: var(--fore);
     }
   }
   .todaySelected {
     color: var(--fore);
+    background: var(--fore-lighter2);
+    border: 1px solid var(--fore-lighter3);
   }
   #switchLabel {
     &:hover {

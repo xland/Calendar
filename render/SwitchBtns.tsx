@@ -123,11 +123,11 @@ export default function () {
       </div>
       <div class="btns dayBtns">
         <div onClick={prevBtnClick}>
-          <i class="iconfont icon-zuojiantou"></i>
+          <i class="iconfont icon-left"></i>
         </div>
         <div id="switchLabel"></div>
         <div onClick={nextBtnClick}>
-          <i class="iconfont icon-youjiantou"></i>
+          <i class="iconfont icon-right"></i>
         </div>
       </div>
       <div onClick={gotoToday} class="btns today todaySelected">

@@ -31,7 +31,7 @@ export default function () {
       <div id="SearchBox">
         <input type="text" placeholder="搜索待办事项..." onKeyUp={keyUp} />
         <div class="searchBtn" onClick={searchBtnClick}>
-          <i class="iconfont icon-sousuo"></i>
+          <i class="iconfont icon-search"></i>
         </div>
       </div>
       <div id="SearchResult" class="jobList"></div>

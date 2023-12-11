@@ -50,7 +50,7 @@ export default function () {
           <i class="iconfont icon-setting"></i>
         </div>
         <div class="bottomBtn" title="作者（微信）">
-          <i class="iconfont icon-face-smile-wink"></i>
+          <i class="iconfont icon-author"></i>
         </div>
         <div class="bottomBtn" title="捐赠（微信）">
           <i class="iconfont icon-heart"></i>

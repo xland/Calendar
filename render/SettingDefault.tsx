@@ -13,10 +13,10 @@ export default function (props) {
     }
   };
   let setDefaultView = (target: HTMLElement) => {
-    let icon = target.dad().querySelector(".icon-woderilixuanzhong") as HTMLElement;
-    icon.classDel("icon-woderilixuanzhong");
-    icon.classAdd("icon-jietutubiao_yuan");
-    target.son0().son0().classAdd("icon-woderilixuanzhong");
+    let icon = target.dad().querySelector(".icon-check0") as HTMLElement;
+    icon.classDel("icon-check0");
+    icon.classAdd("icon-uncheck0");
+    target.son0().son0().classAdd("icon-check0");
   };
   let checkOneItem = (e: MouseEvent) => {
     let target = e.target as HTMLElement;
@@ -28,7 +28,7 @@ export default function (props) {
     if (!target.classHas("radioItem")) {
       return false;
     }
-    if (target.son0().son0().classHas("icon-woderilixuanzhong")) {
+    if (target.son0().son0().classHas("icon-check0")) {
       return false;
     }
     setDefaultView(target);
@@ -92,7 +92,7 @@ export default function (props) {
     setDefaultView(dom);
 
     row = row.next() as HTMLElement;
-    dom = row.children[dataSetting.setting.AlertBefore + 1] as HTMLElement;
+    dom = row.children[dataSetting.setting.SkinDefault + 1] as HTMLElement;
     setDefaultView(dom);
 
     row = row.next() as HTMLElement;
@@ -105,105 +105,105 @@ export default function (props) {
         <div>默认视图：</div>
         <div class="radioItem" data-index="0">
           <div>
-            <i class="iconfont icon-woderilixuanzhong"></i>
+            <i class="iconfont icon-check0"></i>
           </div>
           <div>日</div>
         </div>
         <div class="radioItem" data-index="1">
           <div>
-            <i class="iconfont icon-jietutubiao_yuan"></i>
+            <i class="iconfont icon-uncheck0"></i>
           </div>
           <div>周</div>
         </div>
         <div class="radioItem" data-index="2">
           <div>
-            <i class="iconfont icon-jietutubiao_yuan"></i>
+            <i class="iconfont icon-uncheck0"></i>
           </div>
           <div>月</div>
         </div>
         <div class="radioItem" data-index="3">
           <div>
-            <i class="iconfont icon-jietutubiao_yuan"></i>
+            <i class="iconfont icon-uncheck0"></i>
           </div>
           <div>记住上次视图</div>
         </div>
       </div>
-      <div id="langRow" class="settingRow" onClick={defaultLangClick}>
+      <div class="settingRow" onClick={defaultLangClick}>
         <div>默认语言：</div>
         <div class="radioItem" data-index="0">
           <div>
-            <i class="iconfont icon-woderilixuanzhong"></i>
+            <i class="iconfont icon-check0"></i>
           </div>
           <div>简体中文</div>
         </div>
         <div class="radioItem" data-index="1">
           <div>
-            <i class="iconfont icon-jietutubiao_yuan"></i>
+            <i class="iconfont icon-uncheck0"></i>
           </div>
           <div>繁体中文</div>
         </div>
         <div class="radioItem" data-index="2">
           <div>
-            <i class="iconfont icon-jietutubiao_yuan"></i>
+            <i class="iconfont icon-uncheck0"></i>
           </div>
           <div>英文</div>
         </div>
       </div>
-      <div id="langRow" class="settingRow" onClick={alertBeforeClick}>
+      <div class="settingRow" onClick={alertBeforeClick}>
         <div>提前提醒：</div>
         <div class="radioItem" data-index="0">
           <div>
-            <i class="iconfont icon-jietutubiao_yuan"></i>
+            <i class="iconfont icon-uncheck0"></i>
           </div>
           <div>5分钟</div>
         </div>
         <div class="radioItem" data-index="1">
           <div>
-            <i class="iconfont icon-woderilixuanzhong"></i>
+            <i class="iconfont icon-check0"></i>
           </div>
           <div>15分钟</div>
         </div>
         <div class="radioItem" data-index="2">
           <div>
-            <i class="iconfont icon-jietutubiao_yuan"></i>
+            <i class="iconfont icon-uncheck0"></i>
           </div>
           <div>30分钟</div>
         </div>
       </div>
-      <div id="langRow" class="settingRow" onClick={defaultSkinClick}>
+      <div class="settingRow" onClick={defaultSkinClick}>
         <div>系统皮肤：</div>
         <div class="radioItem" data-index="0">
           <div>
-            <i class="iconfont icon-jietutubiao_yuan"></i>
+            <i class="iconfont icon-uncheck0"></i>
           </div>
           <div>红</div>
         </div>
         <div class="radioItem" data-index="1">
           <div>
-            <i class="iconfont icon-woderilixuanzhong"></i>
+            <i class="iconfont icon-check0"></i>
           </div>
           <div>绿</div>
         </div>
         <div class="radioItem" data-index="2">
           <div>
-            <i class="iconfont icon-jietutubiao_yuan"></i>
+            <i class="iconfont icon-uncheck0"></i>
           </div>
           <div>蓝</div>
         </div>
         <div class="radioItem" data-index="3">
           <div>
-            <i class="iconfont icon-jietutubiao_yuan"></i>
+            <i class="iconfont icon-uncheck0"></i>
           </div>
           <div>紫</div>
         </div>
         <div class="radioItem" data-index="4">
           <div>
-            <i class="iconfont icon-jietutubiao_yuan"></i>
+            <i class="iconfont icon-uncheck0"></i>
           </div>
           <div>黄</div>
         </div>
       </div>
-      <div id="langRow" class="settingRow" onClick={openAtLoginClick}>
+      <div class="settingRow" onClick={openAtLoginClick}>
         <div>开机自启：</div>
         <div class="radioItem" data-index="0">
           <div>
