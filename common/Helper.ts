@@ -133,7 +133,6 @@ export class Helper {
         let dateObj = new Date(parseInt(target.dataset.start));
         Helper.clickTimer = setTimeout(() => {
           Helper.clickNum = 0;
-          console.log(dateObj);
           let event = new CustomEvent("gotodateview", { detail: dateObj });
           Helper.$id("SwitchBtns").dispatchEvent(event);
         }, 260);

@@ -92,7 +92,8 @@ export default function (props) {
     setDefaultView(dom);
 
     row = row.next() as HTMLElement;
-    dom = row.children[dataSetting.setting.AlertBefore + 1] as HTMLElement;
+    let index = [5, 15, 30].findIndex((v) => v === dataSetting.setting.AlertBefore);
+    dom = row.children[index + 1] as HTMLElement;
     setDefaultView(dom);
 
     row = row.next() as HTMLElement;
