@@ -52,7 +52,6 @@ export default function () {
       let topNum = ((tar.StartTime - start) * 100) / (end - start);
       let bottomNum = ((end - tar.EndTime) * 100) / (end - start);
       let style = `top:${topNum}%;bottom:${bottomNum}%;left:${leftNum}px;width:${itemWidth}px;--color:${ColorGet(tar.ColorIndex)};`;
-      console.log(style);
       target.append(<Job data={tar} style={style}></Job>);
     }
     if (data.length) {

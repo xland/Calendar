@@ -12,7 +12,7 @@ export class Db {
       this.db = new Database(dbPath, { timeout: 8000 });
       this.db.pragma("journal_mode = WAL");
     } catch (ex) {
-      console.log(ex);
+      console.error(ex);
     }
   }
   createDb(dbPath: string) {
@@ -36,7 +36,7 @@ INSERT INTO Setting (ViewDefault,ViewVal,LangDefault,SkinDefault,AlertBefore) VA
     try {
       this.db.prepare(sql).run(params);
     } catch (ex) {
-      console.log(ex);
+      console.error(ex);
     }
   }
 
@@ -183,18 +183,24 @@ INSERT INTO Setting (ViewDefault,ViewVal,LangDefault,SkinDefault,AlertBefore) VA
           let span = job.StartTime - startTime;
           dayIndex = Math.floor(span / 86400000); //1天
         }
+        let jobStartTime = new Date(job.StartTime);
+        let jobEndTime = new Date(job.EndTime);
+        let start = new Date(
+          monthStart.getFullYear(),
+          monthStart.getMonth(),
+          monthStart.getDate() + dayIndex,
+          jobStartTime.getHours(),
+          jobStartTime.getMinutes(),
+          jobStartTime.getSeconds(),
+          0
+        );
+        let end = new Date(monthStart.getFullYear(), monthStart.getMonth(), monthStart.getDate() + dayIndex, jobEndTime.getHours(), jobEndTime.getMinutes(), jobEndTime.getSeconds(), 0);
         while (dayIndex < 42) {
-          let start = new Date(job.StartTime);
-          let end = new Date(job.EndTime);
-          start.setFullYear(monthStart.getFullYear());
-          start.setMonth(monthStart.getMonth());
-          end.setFullYear(monthStart.getFullYear());
-          end.setMonth(monthStart.getMonth());
-          start.setDate(monthStart.getDate() + dayIndex);
-          end.setDate(monthStart.getDate() + dayIndex);
           job.StartTime = start.getTime();
           job.EndTime = end.getTime();
           result.push({ ...job });
+          start.setDate(start.getDate() + 1);
+          end.setDate(end.getDate() + 1);
           dayIndex += 1;
         }
       } else if (job.RepeatType === 2) {
