@@ -69,7 +69,7 @@ let buildInstaller = () => {
         // include: path.join(process.cwd(), 'script/common/installer32.nsh'),
         createDesktopShortcut: true,
         createStartMenuShortcut: true,
-        shortcutName: "HikLink",
+        shortcutName: "Calendar",
         installerIcon: "./script/logo.ico",
         uninstallerIcon: "./script/logo.ico",
         installerHeader: "./script/logo.ico",
