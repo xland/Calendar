@@ -8,7 +8,7 @@ export default function () {
   let timeOutId;
   let initAlert = (id: string, startTime: number) => {
     let now = Date.now();
-    let beforeSpan = dataSetting.setting.AlertBefore * 60;
+    let beforeSpan = dataSetting.setting.AlertBefore * 60000;
     if (startTime - beforeSpan < now) {
       window.open(`/IndexAlert.html?id=${id}`, "_blank", `{"title": "日程提醒" }`);
       Helper.$id("ModalMask").style.display = "block";
