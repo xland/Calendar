@@ -65,6 +65,7 @@ export default function (props) {
     let target = checkOneItem(e);
     if (!target) return;
     let val = Number(target.dataset.index);
+    val = [5, 15, 30][val];
     let { ipcRenderer } = require("electron");
     let sql = `Update Setting set AlertBefore = ?`;
     await ipcRenderer.invoke("excuteSQL", sql, val);
