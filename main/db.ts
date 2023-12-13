@@ -16,7 +16,7 @@ export class Db {
     }
   }
   createDb(dbPath: string) {
-    let sql = `CREATE TABLE Job(Id VARCHAR2(36) NOT NULL ON CONFLICT FAIL UNIQUE ON CONFLICT FAIL,JobInfo TEXT,RepeatType INT,RepeatTimes INT,RepeatEndDay INT,StartTime BIGINT,EndTime BIGINT,ColorIndex INT);
+    let sql = `CREATE TABLE Job(Id VARCHAR2(36) NOT NULL ON CONFLICT FAIL UNIQUE ON CONFLICT FAIL,JobInfo TEXT,RepeatType INT,StartTime BIGINT,EndTime BIGINT,ColorIndex INT);
 CREATE INDEX JobInfo_Index ON Job(JobInfo);
 CREATE TABLE Setting(ViewDefault INT DEFAULT 0,ViewVal Int,LangDefault INT DEFAULT 0,SkinDefault INT DEFAULT 0,AlertBefore INT);
 INSERT INTO Setting (ViewDefault,ViewVal,LangDefault,SkinDefault,AlertBefore) VALUES (0,0,0,0,5);`;
