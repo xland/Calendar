@@ -3,6 +3,7 @@ import { ModelJob } from "./../model/ModelJob";
 class DataMonth {
   curDate: Date;
   dateArr: { year: number; month: number; day: number; isCurMonth: boolean; jobs: ModelJob[] }[];
+  idTimerToTomarrow;
   async initJobArr() {
     let startDate = this.dateArr[0];
     let endDate = this.dateArr[this.dateArr.length - 1];
@@ -49,8 +50,17 @@ class DataMonth {
       }
     }
   }
+  initTimerToTomorrow(){
+    let end = new Date(this.curDate.getFullYear(), this.curDate.getMonth(), this.curDate.getDate(), 23, 59, 59, 999);
+    let span = end.getTime() - this.curDate.getTime()
+    clearTimeout(this.idTimerToTomarrow);
+    this.idTimerToTomarrow = setTimeout(()=>{
+      window.location.reload()
+    },span)
+  }
   async init() {
     this.curDate = new Date();
+    this.initTimerToTomorrow();
     this.dateArr = Helper.getOneMonthDate(this.curDate);
     await this.initJobArr();
   }

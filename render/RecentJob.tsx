@@ -14,6 +14,7 @@ export default function () {
       Helper.$id("ModalMask").style.display = "block";
       return false;
     }
+    clearTimeout(timeOutId);
     timeOutId = setTimeout(async () => {
       window.open(`/IndexAlert.html?id=${id}`, "_blank", `{"title": "日程提醒" }`);
       Helper.$id("ModalMask").style.display = "block";
@@ -22,7 +23,6 @@ export default function () {
     return true;
   };
   let initData = async () => {
-    clearTimeout(timeOutId);
     let { ipcRenderer } = require("electron");
     let jobs: ModelJob[] = await ipcRenderer.invoke("getDataRecent");
     let dom = Helper.$id("RecentJob");
@@ -43,6 +43,7 @@ export default function () {
   eventer.on("dataReady", async () => {
     await initData();
   });
+
 
   return <div id="RecentJob" class="jobList"></div>;
 }
