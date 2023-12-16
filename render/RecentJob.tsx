@@ -7,14 +7,14 @@ import { dataSetting } from "./DataSetting";
 export default function () {
   let timeOutId;
   let initAlert = (id: string, startTime: number) => {
+    clearTimeout(timeOutId);
     let now = Date.now();
     let beforeSpan = dataSetting.setting.AlertBefore * 60000;
     if (startTime - now - beforeSpan < 2000) {
-      window.open(`/IndexAlert.html?id=${id}`, "_blank", `{"title": "日程提醒" }`);
-      Helper.$id("ModalMask").style.display = "block";
+      // window.open(`/IndexAlert.html?id=${id}`, "_blank", `{"title": "日程提醒" }`);
+      // Helper.$id("ModalMask").style.display = "block";
       return false;
     }
-    clearTimeout(timeOutId);
     timeOutId = setTimeout(async () => {
       window.open(`/IndexAlert.html?id=${id}`, "_blank", `{"title": "日程提醒" }`);
       Helper.$id("ModalMask").style.display = "block";
