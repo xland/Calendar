@@ -9,7 +9,7 @@ export default function () {
   let initAlert = (id: string, startTime: number) => {
     let now = Date.now();
     let beforeSpan = dataSetting.setting.AlertBefore * 60000;
-    if (startTime - beforeSpan < now-2000) { //预留两秒，避免太快，不然可能会弹两次提醒
+    if (startTime - now - beforeSpan < 2000) {
       window.open(`/IndexAlert.html?id=${id}`, "_blank", `{"title": "日程提醒" }`);
       Helper.$id("ModalMask").style.display = "block";
       return false;
