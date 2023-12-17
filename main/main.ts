@@ -13,6 +13,10 @@ class Main {
     ipcMain.handle("setOpenAtLogin", (e, flag: boolean) => {
       app.setLoginItemSettings({ openAtLogin: flag });
     });
+    ipcMain.handle("relaunch",()=>{
+      app.relaunch();
+      app.quit();
+    })
     ipcMain.handle("activeSubWindow", (e) => {
       let wins = BrowserWindow.getAllWindows();
       for (let item of wins) {

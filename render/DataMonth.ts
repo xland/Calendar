@@ -55,7 +55,8 @@ class DataMonth {
     let span = end.getTime() - this.curDate.getTime()
     clearTimeout(this.idTimerToTomarrow);
     this.idTimerToTomarrow = setTimeout(()=>{
-      window.location.reload()
+      let { ipcRenderer } = require("electron");
+      ipcRenderer.invoke("relaunch")
     },span)
   }
   async init() {
