@@ -15,7 +15,7 @@ class DataMonth {
     for (let i = 0; i < jobArr.length; i++) {
       let jobStartDate = new Date(jobArr[i].StartTime);
       let index = this.dateArr.findIndex((v) => v.year === jobStartDate.getFullYear() && v.month === jobStartDate.getMonth() + 1 && v.day === jobStartDate.getDate());
-      //   if (index < 0) continue;
+        if (index < 0) continue;
       this.dateArr[index].jobs.push(jobArr[i]);
     }
   }
