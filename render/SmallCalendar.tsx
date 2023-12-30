@@ -73,10 +73,10 @@ export default function () {
       <div class="titlebar">
         <div class="title"></div>
         <div onClick={goPrevMonth} class="btn">
-          <i class="iconfont icon-zuojiantou"></i>
+          <i class="iconfont icon-left"></i>
         </div>
         <div onClick={goNextMonth} class="btn">
-          <i class="iconfont icon-youjiantou"></i>
+          <i class="iconfont icon-right"></i>
         </div>
       </div>
       <div class="header">
