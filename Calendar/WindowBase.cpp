@@ -148,7 +148,8 @@ WindowBase::~WindowBase() {
 void WindowBase::initWindow() {
     sf::ContextSettings setting;
     setting.antialiasingLevel = 12;
-    sfWin = new sf::RenderWindow(sf::VideoMode(sf::Vector2u(1000, 800)), L"日历",sf::Style::Default,setting);
+    sf::String title(L"日历");
+    sfWin = new sf::RenderWindow(sf::VideoMode(sf::Vector2u(1000, 800)), title);
     
     hwnd = sfWin->getNativeHandle();
     SFMLWndProc = (WNDPROC)SetWindowLongPtr(hwnd, GWLP_WNDPROC, (LONG_PTR)WndProc);
