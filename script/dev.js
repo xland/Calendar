@@ -1,5 +1,6 @@
 let esbuild = require("esbuild");
 let { sassPlugin } = require("esbuild-sass-plugin");
+const { nativeNodeModulesPlugin } = require("esbuild-native-node-modules-plugin");
 let fs = require("fs-extra");
 const template = require("./template");
 let devServerAddr = "";
@@ -14,6 +15,7 @@ let buildMain = async () => {
     outfile: "./dev/main.js",
     platform: "node",
     external: ["electron"],
+    plugins: [nativeNodeModulesPlugin],
     sourcemap: true,
   });
 };

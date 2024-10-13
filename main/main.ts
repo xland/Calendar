@@ -1,8 +1,22 @@
 import { app, BrowserWindow, ipcMain, HandlerDetails } from "electron";
 class Main {
   win: BrowserWindow;
+  isEmbed = false;
   initHook() {
     ipcMain.handle("changeWindowState", (e, state) => {
+      if (state != "show") {
+        let obj = require("D:\\project\\Calendar\\addon\\build\\Release\\native.node");
+        if (this.isEmbed) {
+          let flag = obj.unembed(this.win.getNativeWindowHandle())
+          this.isEmbed = false
+          console.log("unembed", flag)
+        } else {
+          let flag = obj.embed(this.win.getNativeWindowHandle())
+          this.isEmbed = true;
+          console.log("embed", flag)
+        }
+        return;
+      }
       let win = BrowserWindow.fromWebContents(e.sender) as BrowserWindow;
       win[state]();
     });
@@ -13,7 +27,7 @@ class Main {
     ipcMain.handle("setOpenAtLogin", (e, flag: boolean) => {
       app.setLoginItemSettings({ openAtLogin: flag });
     });
-    ipcMain.handle("relaunch",()=>{
+    ipcMain.handle("relaunch", () => {
       app.relaunch();
       app.quit();
     })
@@ -65,6 +79,9 @@ class Main {
   }
   handleWindowCreated() {
     app.addListener("browser-window-created", (e, target: BrowserWindow) => {
+
+
+
       // @ts-ignore
       target.webContents.setWindowOpenHandler((e) => this.winOpenHandler(e));
       if (!app.isPackaged) {
@@ -100,6 +117,15 @@ class Main {
     } else {
       this.win.loadURL(`lun://./Index.html`);
     }
+
+    // this.win.addListener("focus", () => {
+    //   if (!this.isEmbed) return;
+    //   let obj = require("D:\\project\\Calendar\\addon\\build\\Release\\native.node");
+    //   let flag = obj.setBottom(this.win.getNativeWindowHandle())
+    //   console.log("setBottom", flag)
+    // })
+
+
   }
   init() {
     this.initHook();
