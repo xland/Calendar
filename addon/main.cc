@@ -2,7 +2,6 @@
 #include <Windows.h>
 
 WNDPROC OldProc;
-
 LRESULT CALLBACK WindowHandler(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
     if (msg == WM_WINDOWPOSCHANGING)
@@ -48,6 +47,7 @@ Napi::Boolean Unembed(const Napi::CallbackInfo &info)
     SetForegroundWindow(hwnd);
     SetWindowPos(hwnd, HWND_TOP, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE);
     PostMessage(hwnd, WM_ACTIVATE, WA_ACTIVE, 0);
+    PostMessage(hwnd, WM_SETFOCUS, 0, 0);
     return Napi::Boolean::New(env, true);
 }
 
