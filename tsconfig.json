@@ -1,7 +1,0 @@
-{
-    "compilerOptions": {
-        "esModuleInterop": true,
-        "jsx": "preserve",
-        "moduleResolution": "node"
-    }
-}
