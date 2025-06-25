@@ -9,29 +9,29 @@ export default function () {
   let closeDrawerBtnClick = () => {
     let drawer = Helper.$id("SettingDrawer");
     drawer.style.display = "none";
-    let btn = drawer.prev().querySelector(".bottomBtnSelected") as HTMLElement;
-    btn.classDel("bottomBtnSelected");
+    let btn = drawer.previousElementSibling.querySelector(".bottomBtnSelected") as HTMLElement;
+    btn.classList.remove("bottomBtnSelected");
   };
   let settingBtnClick = (e) => {
     let target = e.target as HTMLElement;
     if (target.tagName === "I") {
-      target = target.dad();
+      target = target.parentElement;
     }
     let prevSelectedDom = document.querySelector(".bottomBtnSelected") as HTMLElement;
     if (prevSelectedDom) {
-      prevSelectedDom.classDel("bottomBtnSelected");
+      prevSelectedDom.classList.remove("bottomBtnSelected");
     }
     let drawer = Helper.$id("SettingDrawer");
     if (drawer.style.display === "block") {
-      if (drawer.son0().son0().innerHTML === target.title) {
+      if (drawer.firstElementChild.firstElementChild.innerHTML === target.title) {
         drawer.style.display = "none";
         return;
       }
     }
-    target.classAdd("bottomBtnSelected");
-    drawer.son0().son0().innerHTML = target.title;
+    target.classList.add("bottomBtnSelected");
+    drawer.firstElementChild.firstElementChild.innerHTML = target.title;
     if (drawer.children.length > 1) {
-      drawer.son1().remove();
+      drawer.lastElementChild.remove();
     }
     if (target.title === "设置") {
       drawer.appendChild(<SettingDefault></SettingDefault>);

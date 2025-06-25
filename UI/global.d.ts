@@ -1,20 +1,12 @@
 interface Win {
   startDrag: () => {};
+  on: (evtName: string, cb: (result: { state: string }) => void) => void;
+  minimize: () => void;
+  restore: () => void;
+  maximize: () => void;
+  close: () => void;
 }
 interface Horse {
   win: Win;
 }
 declare var horse: Horse;
-
-declare global {
-  interface HTMLElement {
-    prev(): HTMLElement;
-    next(): HTMLElement;
-    son0(): HTMLElement;
-    son1(): HTMLElement;
-    dad(): HTMLElement;
-    classAdd(name: string);
-    classDel(name: string);
-    classHas(name: string): boolean;
-  }
-}

@@ -6,7 +6,7 @@ export default function () {
   let searchBtnClick = (e: MouseEvent) => { };
   let keyUp = async (e: KeyboardEvent) => {
     // let target = e.currentTarget as HTMLInputElement;
-    // let dest = target.dad().next();
+    // let dest = target.parentElement.nextElementSibling;
     // dest.innerHTML = "";
     // if (target.value) {
     //   let { ipcRenderer } = require("electron");

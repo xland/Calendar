@@ -19,7 +19,7 @@ export default function () {
     Helper.$id("ModalMask").style.display = "block";
   };
   eventer.on("dataReady", () => {
-    let container = Helper.$id("ViewMonth").son1();
+    let container = Helper.$id("ViewMonth").lastElementChild;
     container.innerHTML = "";
     let index = 0;
     for (let i = 0; i < 6; i++) {
@@ -32,11 +32,11 @@ export default function () {
           </div>
         );
         if (!dayObj.isCurMonth) {
-          cell.classAdd("notCurMonth");
+          cell.classList.add("notCurMonth");
         }
         //todo
         // if (dayObj.isCurDay) {
-        //   cell.classAdd("selected");
+        //   cell.classList.add("selected");
         // }
         let cellContent = <div class="cellContent" data-index={index} onClick={addJob}></div>;
         dayObj.jobs.forEach((job) => {

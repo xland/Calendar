@@ -7,7 +7,7 @@ import { ModelJob } from "../model/ModelJob";
 import { Helper } from "../common/Helper";
 function App(props) {
   let getJob = () => {
-    let timeBox = Helper.$id("IndexJobBox").son0();
+    let timeBox = Helper.$id("IndexJobBox").firstElementChild;
     let year = parseInt(timeBox.children[0].innerHTML);
     let month = parseInt(timeBox.children[1].innerHTML);
     let date = parseInt(timeBox.children[2].innerHTML);
@@ -18,8 +18,8 @@ function App(props) {
     let job = new ModelJob();
     job.StartTime = new Date(year, month - 1, date, hour0, minute0, 0, 0).getTime();
     job.EndTime = new Date(year, month - 1, date, hour1, minute1, 0, 0).getTime();
-    let repeatDom = timeBox.next();
-    let repeatOption = repeatDom.next();
+    let repeatDom = timeBox.nextElementSibling;
+    let repeatOption = repeatDom.nextElementSibling;
     for (let i = 0; i < 5; i++) {
       if (repeatOption.children[i].innerHTML === repeatDom.innerHTML) {
         job.RepeatType = i;
@@ -27,7 +27,7 @@ function App(props) {
       }
     }
     let taEle = Helper.$id("jobInfo") as HTMLTextAreaElement;
-    let inputId = taEle.next() as HTMLInputElement;
+    let inputId = taEle.nextElementSibling as HTMLInputElement;
     job.JobInfo = taEle.value;
     job.Id = inputId.value;
     job.ColorIndex = props.colorIndex;

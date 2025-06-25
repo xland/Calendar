@@ -5,30 +5,30 @@ import { Helper } from "../common/Helper";
 export default function (props) {
   let setCheckBox = (icon: HTMLElement, flag: boolean) => {
     if (flag) {
-      icon.classDel("icon-uncheck");
-      icon.classAdd("icon-check");
+      icon.classList.remove("icon-uncheck");
+      icon.classList.add("icon-check");
     } else {
-      icon.classDel("icon-check");
-      icon.classAdd("icon-uncheck");
+      icon.classList.remove("icon-check");
+      icon.classList.add("icon-uncheck");
     }
   };
   let setDefaultView = (target: HTMLElement) => {
-    let icon = target.dad().querySelector(".icon-check0") as HTMLElement;
-    icon.classDel("icon-check0");
-    icon.classAdd("icon-uncheck0");
-    target.son0().son0().classAdd("icon-check0");
+    let icon = target.parentElement.querySelector(".icon-check0") as HTMLElement;
+    icon.classList.remove("icon-check0");
+    icon.classList.add("icon-uncheck0");
+    target.firstElementChild.firstElementChild.classList.add("icon-check0");
   };
   let checkOneItem = (e: MouseEvent) => {
     let target = e.target as HTMLElement;
     if (target.tagName === "I") {
-      target = target.dad().dad();
+      target = target.parentElement.parentElement;
     } else if (target.tagName === "DIV") {
-      target = target.dad();
+      target = target.parentElement;
     }
-    if (!target.classHas("radioItem")) {
+    if (!target.classList.contains("radioItem")) {
       return false;
     }
-    if (target.son0().son0().classHas("icon-check0")) {
+    if (target.firstElementChild.firstElementChild.classList.contains("icon-check0")) {
       return false;
     }
     setDefaultView(target);
@@ -36,7 +36,7 @@ export default function (props) {
   };
   let openAtLoginClick = async (e: MouseEvent) => {
     let icon = Helper.$id("openAtLoginIcon");
-    let flag = !icon.classHas("icon-check");
+    let flag = !icon.classList.contains("icon-check");
     // let { ipcRenderer } = require("electron");
     // await ipcRenderer.invoke("setOpenAtLogin", flag);
     dataSetting.setting.OpenAtLogin = flag;
@@ -88,16 +88,16 @@ export default function (props) {
     let dom = row.children[dataSetting.setting.ViewDefault + 1] as HTMLElement;
     setDefaultView(dom);
 
-    row = row.next() as HTMLElement;
+    row = row.nextElementSibling as HTMLElement;
     dom = row.children[dataSetting.setting.LangDefault + 1] as HTMLElement;
     setDefaultView(dom);
 
-    row = row.next() as HTMLElement;
+    row = row.nextElementSibling as HTMLElement;
     let index = [5, 15, 30].findIndex((v) => v === dataSetting.setting.AlertBefore);
     dom = row.children[index + 1] as HTMLElement;
     setDefaultView(dom);
 
-    row = row.next() as HTMLElement;
+    row = row.nextElementSibling as HTMLElement;
     dom = row.children[dataSetting.setting.SkinDefault + 1] as HTMLElement;
     setDefaultView(dom);
   };

@@ -8,7 +8,7 @@ import ViewDay from "./ViewDay";
 import ViewWeek from "./ViewWeek";
 import ViewMonth from "./ViewMonth";
 export default function () {
-  eventer.on("dataReady", async () => {
+  eventer.once("dataReady", async () => {
     Helper.$select("#SwitchBtns").addEventListener("mousedown", (e) => {
       let tar = e.target as HTMLElement
       if (tar.id === "SwitchBtns") {

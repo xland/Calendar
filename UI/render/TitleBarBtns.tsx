@@ -1,40 +1,30 @@
-import { eventer } from "../common/eventer";
 import React from "./React";
-import "./TitleBarBtns.scss";
 import { Helper } from "../common/Helper";
+import { eventer } from "../common/eventer";
+import "./TitleBarBtns.scss";
 export default function () {
-  let minimize = async () => {
-    // let { ipcRenderer } = require("electron");
-    // await ipcRenderer.invoke("changeWindowState", "minimize");
+  let minimize = () => {
+    horse.win.minimize();
   };
-  let restore = async () => {
-    // let { ipcRenderer } = require("electron");
-    // await ipcRenderer.invoke("changeWindowState", "restore");
+  let restore = () => {
+    horse.win.restore();
   };
-  let maximize = async () => {
-    // let { ipcRenderer } = require("electron");
-    // await ipcRenderer.invoke("changeWindowState", "maximize");
+  let maximize = () => {
+    horse.win.maximize();
   };
-  let close = async () => {
-    // let { ipcRenderer } = require("electron");
-    // await ipcRenderer.invoke("changeWindowState", "close");
+  let close = () => {
+    horse.win.close();
   };
-  let windowStateHandler = (e, state) => {
-    let restoreBtn = Helper.$id("restoreBtn") as HTMLElement;
-    let maximizeBtn = Helper.$id("maximizeBtn") as HTMLElement;
-    if (state === "maximize") {
-      restoreBtn.style.display = "";
-      maximizeBtn.style.display = "none";
-    } else if (state === "unmaximize") {
-      restoreBtn.style.display = "none";
-      maximizeBtn.style.display = "";
-    }
-  };
-  eventer.once("dataReady", async () => {
-    // let { ipcRenderer } = require("electron");
-    // ipcRenderer.addListener("windowStateChanged", windowStateHandler);
-    // let flag = await ipcRenderer.invoke("getWindowState");
-    // windowStateHandler(null, flag ? "maximize" : "unmaximize");
+  eventer.on("dataReady", () => {
+    horse.win.on("stateChanged", (result) => {
+      if (result.state == "maximize") {
+        Helper.$id("maximizeBtn").style.display = "none";
+        Helper.$id("restoreBtn").style.display = "";
+      } else if (result.state == "restore") {
+        Helper.$id("maximizeBtn").style.display = "";
+        Helper.$id("restoreBtn").style.display = "none";
+      }
+    });
   });
   return (
     <div id="TitleBarBtns">

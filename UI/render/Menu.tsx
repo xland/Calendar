@@ -5,8 +5,8 @@ import { Helper } from "../common/Helper";
 export default function (props) {
   let hideMenu = async (e) => {
     let target = e.target as HTMLElement;
-    if (target.dad().getAttribute("id") === "Menu") {
-      let id = target.dad().dataset.id;
+    if (target.parentElement.getAttribute("id") === "Menu") {
+      let id = target.parentElement.dataset.id;
       if (target.innerHTML === "增加") {
         let data = dataMonth.dateArr[dataMonth.getCurDateIndex()].jobs;
         let colorIndex = 0;

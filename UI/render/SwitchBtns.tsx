@@ -10,11 +10,11 @@ export default function () {
     let val = 0;
     for (let i = 0; i < arr.length; i++) {
       if (arr[i] === name) {
-        (dom.children[i] as HTMLElement).classAdd("selected");
+        (dom.children[i] as HTMLElement).classList.add("selected");
         Helper.$id(name).style.zIndex = "20";
         val = i;
       } else {
-        (dom.children[i] as HTMLElement).classDel("selected");
+        (dom.children[i] as HTMLElement).classList.add("selected");
         Helper.$id(arr[i]).style.zIndex = "0";
       }
     }
@@ -24,19 +24,19 @@ export default function () {
   };
   let switchBtnClick = (e) => {
     let target = e.target as HTMLElement;
-    if (target.classHas("selected")) return;
-    let switchLabel = target.dad().next().son0().next();
+    if (target.classList.contains("selected")) return;
+    let switchLabel = target.parentElement.nextElementSibling.firstElementChild.nextElementSibling;
     if (target.innerHTML === "日") {
       switchLabel.innerHTML = `${dataMonth.curDate.getFullYear()}-${dataMonth.curDate.getMonth() + 1}-${dataMonth.curDate.getDate()}`;
-      switchView("ViewDay", target.dad());
+      switchView("ViewDay", target.parentElement);
     }
     if (target.innerHTML === "周") {
       let index = dataMonth.getCurWeekFirstDayIndex();
       switchLabel.innerHTML = `${dataMonth.dateArr[index].month}-${dataMonth.dateArr[index].day}~${dataMonth.dateArr[index + 6].month}-${dataMonth.dateArr[index + 6].day}`;
-      switchView("ViewWeek", target.dad());
+      switchView("ViewWeek", target.parentElement);
     } else if (target.innerHTML === "月") {
       switchLabel.innerHTML = `${dataMonth.curDate.getFullYear()}年${dataMonth.curDate.getMonth() + 1}月`;
-      switchView("ViewMonth", target.dad());
+      switchView("ViewMonth", target.parentElement);
     }
   };
 
@@ -49,12 +49,12 @@ export default function () {
     }
     switchLabel.innerHTML = `${dateObj.getFullYear()}-${dateObj.getMonth() + 1}-${dateObj.getDate()}`;
     dispatchEvent(new Event("refreshView"));
-    let parent = switchLabel.dad();
-    switchView("ViewDay", parent.prev());
+    let parent = switchLabel.parentElement;
+    switchView("ViewDay", parent.previousElementSibling as HTMLElement);
     if (Helper.isCurrentDate(dataMonth.curDate)) {
-      parent.next().classAdd("todaySelected");
+      parent.nextElementSibling.classList.add("todaySelected");
     } else {
-      parent.next().classDel("todaySelected");
+      parent.nextElementSibling.classList.remove("todaySelected");
     }
   };
 
@@ -81,9 +81,9 @@ export default function () {
     }
     let nowDate = new Date();
     if (nowDate.getFullYear() === dataMonth.curDate.getFullYear() && nowDate.getMonth() === dataMonth.curDate.getMonth() && nowDate.getDate() === dataMonth.curDate.getDate()) {
-      SwitchBtns.son1().classAdd("todaySelected");
+      SwitchBtns.lastElementChild.classList.add("todaySelected");
     } else {
-      SwitchBtns.son1().classDel("todaySelected");
+      SwitchBtns.lastElementChild.classList.remove("todaySelected");
       if (oldMonthIndex != dataMonth.curDate.getMonth()) {
         dataMonth.dateArr = Helper.getOneMonthDate(dataMonth.curDate);
         await dataMonth.initJobArr();
@@ -100,7 +100,7 @@ export default function () {
   };
   let gotoToday = (e: MouseEvent) => {
     let target = e.currentTarget as HTMLElement;
-    if (target.classHas("todaySelected")) {
+    if (target.classList.contains("todaySelected")) {
       return;
     }
     goToDateView(new Date());
@@ -110,7 +110,7 @@ export default function () {
     if (index === 3) {
       index = dataSetting.setting.ViewVal;
     }
-    let dom = Helper.$id("SwitchBtns").son0();
+    let dom = Helper.$id("SwitchBtns").firstElementChild;
     switchBtnClick({ target: dom.children[index] });
   });
 

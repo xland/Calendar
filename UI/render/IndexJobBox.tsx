@@ -9,7 +9,7 @@ export default function () {
     let startTime = new Date(job.StartTime);
     let endTime = new Date(job.EndTime);
 
-    let dom = Helper.$id("IndexJobBox").son0() as HTMLElement;
+    let dom = Helper.$id("IndexJobBox").firstElementChild as HTMLElement;
     dom.children[0].innerHTML = startTime.getFullYear().toString() + "年";
     dom.children[1].innerHTML = (startTime.getMonth() + 1).toString() + "月";
     dom.children[2].innerHTML = startTime.getDate().toString() + "日";
@@ -20,19 +20,19 @@ export default function () {
 
     let taEle = Helper.$id("jobInfo") as HTMLTextAreaElement;
     taEle.value = job.JobInfo;
-    let inputId = taEle.next() as HTMLInputElement;
+    let inputId = taEle.nextElementSibling as HTMLInputElement;
     inputId.value = job.Id;
 
-    dom = taEle.dad().prev() as HTMLElement;
+    dom = taEle.parentElement.previousElementSibling as HTMLElement;
     let arr = ["日", "一", "二", "三", "四", "五", "六"];
     dom.children[3].innerHTML = `每周${arr[startTime.getDay()]}`;
     dom.children[4].innerHTML = `每月第${startTime.getDate()}天`;
     dom.children[5].innerHTML = `每年${startTime.getMonth() + 1}月${startTime.getDate()}日`;
-    dom.prev().innerHTML = dom.children[job.RepeatType].innerHTML;
+    dom.previousElementSibling.innerHTML = dom.children[job.RepeatType].innerHTML;
   };
   let timeItemClick = (e: MouseEvent) => {
     let target = e.target as HTMLElement;
-    if (!target.classHas("timeItem")) return;
+    if (!target.classList.contains("timeItem")) return;
     //todo 显示输入框
   };
   let getCurMonthMaxDate = (dom: HTMLElement) => {
@@ -53,7 +53,7 @@ export default function () {
   };
   let timeItemWheel = (e: WheelEvent) => {
     let target = e.target as HTMLElement;
-    if (!target.classHas("timeItem")) return;
+    if (!target.classList.contains("timeItem")) return;
     let id = target.getAttribute("id");
     let val = e.deltaY < 0 ? -1 : 1;
     let str = target.innerHTML;
@@ -77,13 +77,13 @@ export default function () {
       if (num < 0) num = 59;
       if (num > 59) num = 0;
       target.innerHTML = num.toString().padStart(2, "0") + "时";
-      let minute0 = target.next();
+      let minute0 = target.nextElementSibling;
       let minute0Num = parseInt(minute0.innerHTML);
-      let hour1 = minute0.next().next();
+      let hour1 = minute0.nextElementSibling.nextElementSibling;
       let hour1Num = parseInt(hour1.innerHTML);
       if (hour1Num < num) {
         hour1.innerHTML = num.toString().padStart(2, "0") + "时";
-        let minute1 = hour1.next();
+        let minute1 = hour1.nextElementSibling;
         let minute1Num = parseInt(minute1.innerHTML);
         if (minute1Num < minute0Num) {
           minute1.innerHTML = minute0Num.toString().padStart(2, "0") + "分";
@@ -93,12 +93,12 @@ export default function () {
       if (num < 0) num = 59;
       if (num > 59) num = 0;
       target.innerHTML = num.toString().padStart(2, "0") + "分";
-      let hour0 = target.prev();
+      let hour0 = target.previousElementSibling;
       let hour0Num = parseInt(hour0.innerHTML);
-      let hour1 = target.next().next();
+      let hour1 = target.nextElementSibling.nextElementSibling;
       let hour1Num = parseInt(hour1.innerHTML);
       if (hour1Num === hour0Num) {
-        let minute1 = hour1.next();
+        let minute1 = hour1.nextElementSibling;
         let minute1Num = parseInt(minute1.innerHTML);
         if (num > minute1Num) {
           minute1.innerHTML = num.toString().padStart(2, "0") + "分";
@@ -108,13 +108,13 @@ export default function () {
       if (num < 0) num = 59;
       if (num > 59) num = 0;
       target.innerHTML = num.toString().padStart(2, "0") + "时";
-      let minute0 = target.prev().prev();
+      let minute0 = target.previousElementSibling.previousElementSibling;
       let minute0Num = parseInt(minute0.innerHTML);
-      let hour0 = minute0.prev();
+      let hour0 = minute0.previousElementSibling;
       let hour0Num = parseInt(hour0.innerHTML);
       if (hour0Num > num) {
         hour0.innerHTML = num.toString().padStart(2, "0") + "时";
-        let minute1 = target.next();
+        let minute1 = target.nextElementSibling;
         let minute1Num = parseInt(minute1.innerHTML);
         if (minute1Num < minute0Num) {
           minute1.innerHTML = minute0Num.toString().padStart(2, "0") + "分";
@@ -124,11 +124,11 @@ export default function () {
       if (num < 0) num = 59;
       if (num > 59) num = 0;
       target.innerHTML = num.toString().padStart(2, "0") + "分";
-      let hour1 = target.prev();
+      let hour1 = target.previousElementSibling;
       let hour1Num = parseInt(hour1.innerHTML);
-      let minute0 = hour1.prev().prev();
+      let minute0 = hour1.previousElementSibling.previousElementSibling;
       let minute0Num = parseInt(minute0.innerHTML);
-      let hour0 = minute0.prev();
+      let hour0 = minute0.previousElementSibling;
       let hour0Num = parseInt(hour0.innerHTML);
       if (hour1Num === hour0Num) {
         if (num < minute0Num) {
@@ -140,7 +140,7 @@ export default function () {
   let repeatBtnClick = (e: MouseEvent) => {
     let dom = Helper.$id("selectOption");
     let arr = ["日", "一", "二", "三", "四", "五", "六"];
-    let timeBox = Helper.$id("IndexJobBox").son0();
+    let timeBox = Helper.$id("IndexJobBox").firstElementChild;
     let year = parseInt(timeBox.children[0].innerHTML);
     let month = parseInt(timeBox.children[1].innerHTML);
     let date = parseInt(timeBox.children[2].innerHTML);
@@ -150,7 +150,7 @@ export default function () {
     dom.children[5].innerHTML = `每年${startTime.getMonth() + 1}月${startTime.getDate()}日`;
 
     let target = e.currentTarget as HTMLElement;
-    target = target.next() as HTMLElement;
+    target = target.nextElementSibling as HTMLElement;
     target.style.display = "block";
     target.focus();
   };
@@ -159,7 +159,7 @@ export default function () {
     let val = target.innerHTML;
     target = e.currentTarget as HTMLElement;
     target.style.display = "none";
-    target.prev().innerHTML = val;
+    target.previousElementSibling.innerHTML = val;
   };
   let selectOptionBlur = (e: MouseEvent) => {
     let target = e.currentTarget as HTMLElement;

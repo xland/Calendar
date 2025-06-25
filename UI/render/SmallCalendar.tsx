@@ -1,7 +1,7 @@
-import { eventer } from "../common/eventer";
 import React from "./React";
-import "./SmallCalendar.scss";
+import { eventer } from "../common/eventer";
 import { Helper } from "../common/Helper";
+import "./SmallCalendar.scss";
 import { dataMonthSmall } from "./DataMonthSmall";
 import { dataMonth } from "./DataMonth";
 
@@ -16,13 +16,13 @@ export default function () {
         let dateObj = dataMonthSmall.dateArr[index];
         let cell: HTMLElement = <div class="dayItem">{dateObj.day}</div>;
         if (!dateObj.isCurMonth) {
-          cell.classAdd("notCurMonth");
+          cell.classList.add("notCurMonth");
         }
         if (dateObj.year === dataMonth.curDate.getFullYear() && dateObj.month === dataMonth.curDate.getMonth() + 1 && dateObj.day === dataMonth.curDate.getDate()) {
-          cell.classAdd("selected");
+          cell.classList.add("selected");
         }
         if (dateObj.hasJob) {
-          cell.classAdd("hasEvent");
+          cell.classList.add("hasEvent");
         }
         row.appendChild(
           <div class="dayBox" onClick={cellClick} data-index={index}>
@@ -32,7 +32,7 @@ export default function () {
         index += 1;
       }
       target.append(row);
-      let dom = target.dad().son0().son0();
+      let dom = target.parentElement.firstElementChild.firstElementChild;
       dom.innerHTML = `${dataMonthSmall.curDate.getFullYear()}年${dataMonthSmall.curDate.getMonth() + 1}月`;
     }
   };
@@ -40,7 +40,7 @@ export default function () {
     initDataDom();
   });
   let goPrevOrNextMonth = async (target: HTMLElement, val: number) => {
-    let titleDom = target.dad().son0() as HTMLElement;
+    let titleDom = target.parentElement.firstElementChild as HTMLElement;
     let oldMonthIndex = dataMonthSmall.curDate.getMonth();
     dataMonthSmall.curDate.setMonth(oldMonthIndex + val);
     titleDom.innerHTML = `${dataMonthSmall.curDate.getFullYear()}年${dataMonthSmall.curDate.getMonth() + 1}月`;
@@ -58,10 +58,10 @@ export default function () {
   };
   let cellClick = async (e: MouseEvent) => {
     let target = e.currentTarget as HTMLElement;
-    if (target.classHas("selected")) return;
-    let prevTarget = target.dad().dad().querySelector(".selected") as HTMLElement;
-    prevTarget?.classDel("selected");
-    target.son0().classAdd("selected");
+    if (target.classList.contains("selected")) return;
+    let prevTarget = target.parentElement.parentElement.querySelector(".selected") as HTMLElement;
+    prevTarget?.classList.remove("selected");
+    target.firstElementChild.classList.add("selected");
     let index = parseInt(target.dataset.index);
     let nowDate = dataMonthSmall.dateArr[index];
     let dateObj = new Date(nowDate.year, nowDate.month - 1, nowDate.day, 0, 0, 0, 0);
