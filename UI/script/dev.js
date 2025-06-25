@@ -31,7 +31,51 @@ let startDevServer = async () => {
   devServerAddr = `http://localhost:${port}/index.html`;
   console.log(devServerAddr);
 };
+
+let initConfig = async () => {
+  let configStr = `{
+  "appId": "Calendar",
+  "instanceWatch": true,
+  "instanceLock": true,
+  "quitWhenAllWinClosed": true,
+  "window": {
+    "resizable": true,
+    "maximizable": true,
+    "minimizable": false,
+    "alwaysOnTop": false,
+    "skipTaskbar": false,
+    "visible": true,
+    "frame": false,
+    "shadow": true,
+    "title": "日历",
+    "size": {
+      "w": 1200,
+      "h": 800
+    },
+    "minSize": {
+      "w": 250,
+      "h": 200
+    },
+    "pos": "centerScreen",
+    "scriptDialogEnable": true,
+    "scriptEnable": true,
+    "webMessageEnable": true,
+    "contextMenuEnable": true,
+    "url": "${devServerAddr}"
+}}`;
+  await fs.writeFile(`./dev/UI/config.json`, configStr);
+};
+
+let startHorseJs = async () => {
+  let spawn = require("child_process").spawn;
+  let child = spawn("../dev/HorseJs.exe", [], {
+    cwd: "./dev",
+  });
+};
+
 let start = async () => {
   await startDevServer();
+  await initConfig();
+  startHorseJs();
 };
 start();
