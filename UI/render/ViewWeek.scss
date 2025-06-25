@@ -1,0 +1,73 @@
+#ViewWeek {
+  .column {
+    flex: 1;
+    height: 100%;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+  .weekHeader {
+    height: 28px;
+    line-height: 28px;
+    display: flex;
+    border-bottom: 1px solid #888;
+    background: #f8f8f8;
+    color: #999;
+    text-align: center;
+  }
+  .weekContent {
+    flex: 1;
+    display: flex;
+    .column {
+      padding-top: 4px;
+      padding-bottom: 4px;
+      cursor: pointer;
+      border-right: 1px solid #e6e6e6;
+      position: relative;
+      &:first-child {
+        padding-left: 2px;
+      }
+      &:last-child {
+        border-right: none !important;
+      }
+      .weekJob {
+        line-height: 28px;
+        height: 28px;
+        padding-left: 8px;
+        padding-right: 8px;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        cursor: pointer;
+        flex: 1;
+        background: rgba(var(--color), 0.1);
+        border: 1px solid rgb(var(--color));
+        margin-left: 3px;
+        margin-right: 3px;
+        margin-top: 2px;
+        margin-bottom: 2px;
+        border-radius: 2px;
+        &:hover {
+          background: rgba(var(--color), 0.2);
+        }
+      }
+      .addBtn {
+        position: absolute;
+        bottom: 0px;
+        left: 0px;
+        right: 0px;
+        height: 20px;
+        background: linear-gradient(transparent, #fff);
+        cursor: pointer;
+        color: transparent;
+        text-align: center;
+        line-height: 20px;
+        &:hover {
+          background: var(--fore-lighter0);
+          color: #fff;
+          right: 0px;
+        }
+      }
+    }
+  }
+}

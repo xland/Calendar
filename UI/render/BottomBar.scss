@@ -1,0 +1,64 @@
+#BottomBar {
+  height: 36px;
+  line-height: 36px;
+  background: var(--fore-lighter2);
+  display: flex;
+  border-top: 1px solid var(--fore-lighter3);
+  .bottomBtn {
+    flex: 1;
+    cursor: pointer;
+    text-align: center;
+    i {
+      font-size: 14px !important;
+      color: var(--fore-lighter1);
+    }
+    &:hover {
+      i {
+        color: var(--fore) !important;
+      }
+    }
+  }
+  .bottomBtnSelected {
+    i {
+      color: var(--fore);
+    }
+  }
+}
+#SettingDrawer {
+  position: absolute;
+  bottom: 36px;
+  width: 300px;
+  left: 0px;
+  z-index: 2;
+  padding-bottom: 8px;
+  background: var(--bg);
+  text-align: center;
+  border-top: 1px solid var(--fore-lighter3);
+  .drawerTitle {
+    height: 26px;
+    line-height: 26px;
+    display: flex;
+    > div:first-child {
+      flex: 1;
+      text-align: left;
+      padding-left: 8px;
+      color: #666;
+    }
+    > div:last-child {
+      width: 26px;
+      cursor: pointer;
+      i {
+        font-size: 10px !important;
+        color: #888 !important;
+      }
+      &:hover {
+        i {
+          color: var(--fore) !important;
+        }
+      }
+    }
+  }
+  .settingBox {
+    color: #666;
+  }
+}

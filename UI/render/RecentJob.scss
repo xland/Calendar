@@ -1,0 +1,47 @@
+.jobList {
+  line-height: 28px;
+  color: #666;
+  flex: 1;
+  overflow: hidden;
+  overflow-y: auto;
+  margin-top: 6px;
+  padding-right: 14px;
+  padding-left: 14px;
+  &::-webkit-scrollbar {
+    width: 2px;
+  }
+  &::-webkit-scrollbar-track {
+    background: transparent !important;
+    cursor: pointer;
+  }
+  &::-webkit-scrollbar-thumb {
+    position: absolute;
+    background: var(--fore-lighter3);
+  }
+  .item {
+    border-radius: 3px;
+    cursor: pointer;
+    display: flex;
+    padding-left: 8px;
+    padding-right: 8px;
+    &:last-child {
+      margin-bottom: 6px;
+    }
+    .title {
+      flex: 1;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      height: 28px;
+    }
+    .time {
+      height: 28px;
+      width: 88px;
+      text-align: right;
+    }
+    &:hover {
+      background: var(--fore-lighter2);
+      color: #333 !important;
+    }
+  }
+}

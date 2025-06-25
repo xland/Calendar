@@ -1,0 +1,62 @@
+#SwitchBtns {
+  display: flex;
+  .navigateBtns {
+    .selected {
+      background: var(--fore-lighter2);
+      color: var(--fore);
+    }
+  }
+  .btns {
+    margin-left: 12px;
+    width: 120px;
+    display: flex;
+    height: 22px;
+    overflow: hidden;
+    -webkit-app-region: none;
+    text-align: center;
+    border-radius: 3px;
+    overflow: hidden;
+    line-height: 22px;
+    color: #999;
+    background: #f6f6f6;
+    div {
+      cursor: pointer;
+      flex: 1;
+      &:hover {
+        color: var(--fore);
+      }
+    }
+  }
+  .dayBtns {
+    i {
+      font-size: 12px;
+    }
+    div {
+      &:first-child,
+      &:last-child {
+        width: 22px;
+        flex: none !important;
+      }
+    }
+  }
+  .today {
+    width: 30px;
+    text-align: center;
+    display: block;
+    cursor: pointer;
+    border: 1px solid #f6f6f6;
+    &:hover {
+      color: var(--fore);
+    }
+  }
+  .todaySelected {
+    color: var(--fore);
+    background: var(--fore-lighter2);
+    border: 1px solid var(--fore-lighter3);
+  }
+  #switchLabel {
+    &:hover {
+      color: #999;
+    }
+  }
+}

@@ -1,0 +1,28 @@
+#ViewDay {
+  cursor: pointer;
+  .bgLine {
+    border-bottom: 1px solid #efefef;
+    flex: 1;
+    position: relative;
+    .hourTag {
+      position: absolute;
+      text-align: center;
+      left: 0px;
+      top: 0px;
+      padding-top: 2px;
+      padding-bottom: 2px;
+      font-size: 10px;
+      background: #0000000a;
+      width: 36px;
+      border-bottom-right-radius: 6px;
+      color: #666;
+    }
+  }
+  #JobContainer {
+    position: absolute;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+    top: 0px;
+  }
+}
