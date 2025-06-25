@@ -6,7 +6,11 @@ interface Win {
   maximize: () => void;
   close: () => void;
 }
+interface Db {
+  open(dbPath: string, inDataPath?: boolean): { ok: boolean; isDbFirstCreated: boolean; data: string; err?: string };
+}
 interface Horse {
   win: Win;
+  db: Db;
 }
 declare var horse: Horse;

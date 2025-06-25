@@ -18,6 +18,14 @@ let App = () => {
     </>
   );
 };
+
+let connDb = async () => {
+  let data = await horse.db.open("db.db");
+  if (data.ok && data.isDbFirstCreated) {
+
+  }
+}
+
 document.addEventListener("DOMContentLoaded", async () => {
   document.body.ondragstart = () => false;
   document.body.ondragend = () => false;
