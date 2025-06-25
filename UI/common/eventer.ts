@@ -3,7 +3,7 @@ export class Eventer {
   private dic = {};
   constructor() {}
   // 监听事件
-  protected on(eventName: string, cb: EventHandler) {
+  on(eventName: string, cb: EventHandler) {
     if (!this.dic[eventName]) {
       this.dic[eventName] = [cb];
       return true;
@@ -12,11 +12,11 @@ export class Eventer {
       return false;
     }
   }
-  protected has(eventName: string) {
+  has(eventName: string) {
     return this.dic[eventName] && this.dic[eventName].length > 0;
   }
   // 取消监听事件
-  protected off(eventName: string, cb?: EventHandler) {
+  off(eventName: string, cb?: EventHandler) {
     const handlers = this.dic[eventName];
     if (!handlers) return false;
     if (cb) {
