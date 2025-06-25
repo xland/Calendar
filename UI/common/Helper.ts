@@ -41,6 +41,11 @@ export class Helper {
     menu.dispatchEvent(evt);
     return false;
   }
+  /**
+   * 得到一个月的日期
+   * @param tarDate 当前日期
+   * @returns 返回一个数组
+   */
   static getOneMonthDate(tarDate: Date) {
     let result = [];
     let year = tarDate.getFullYear();

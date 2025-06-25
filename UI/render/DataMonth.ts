@@ -5,17 +5,17 @@ class DataMonth {
   dateArr: { year: number; month: number; day: number; isCurMonth: boolean; jobs: ModelJob[] }[];
   idTimerToTomarrow;
   async initJobArr() {
-    // let startDate = this.dateArr[0];
-    // let endDate = this.dateArr[this.dateArr.length - 1];
-    // let start = new Date(startDate.year, startDate.month - 1, startDate.day, 0, 0, 0, 0);
-    // let end = new Date(endDate.year, endDate.month - 1, endDate.day, 23, 59, 59, 999);
-    // this.dateArr.forEach((v) => (v.jobs = []));
+    let startDate = this.dateArr[0];
+    let endDate = this.dateArr[this.dateArr.length - 1];
+    let start = new Date(startDate.year, startDate.month - 1, startDate.day, 0, 0, 0, 0);
+    let end = new Date(endDate.year, endDate.month - 1, endDate.day, 23, 59, 59, 999);
+    this.dateArr.forEach((v) => (v.jobs = []));
     // let { ipcRenderer } = require("electron");
     // let jobArr: ModelJob[] = await ipcRenderer.invoke("getDataOneMonth", start.getTime(), end.getTime());
     // for (let i = 0; i < jobArr.length; i++) {
     //   let jobStartDate = new Date(jobArr[i].StartTime);
     //   let index = this.dateArr.findIndex((v) => v.year === jobStartDate.getFullYear() && v.month === jobStartDate.getMonth() + 1 && v.day === jobStartDate.getDate());
-    //     if (index < 0) continue;
+    //   if (index < 0) continue;
     //   this.dateArr[index].jobs.push(jobArr[i]);
     // }
   }
@@ -51,13 +51,12 @@ class DataMonth {
     }
   }
   initTimerToTomorrow() {
-    // let end = new Date(this.curDate.getFullYear(), this.curDate.getMonth(), this.curDate.getDate(), 23, 59, 59, 999);
-    // let span = end.getTime() - this.curDate.getTime();
-    // clearTimeout(this.idTimerToTomarrow);
-    // this.idTimerToTomarrow = setTimeout(() => {
-    //   let { ipcRenderer } = require("electron");
-    //   ipcRenderer.invoke("relaunch");
-    // }, span);
+    let end = new Date(this.curDate.getFullYear(), this.curDate.getMonth(), this.curDate.getDate(), 23, 59, 59, 999);
+    let span = end.getTime() - this.curDate.getTime();
+    clearTimeout(this.idTimerToTomarrow);
+    this.idTimerToTomarrow = setTimeout(() => {
+      //todo 第二天，应该更新，原来的逻辑是重启应用
+    }, span);
   }
   async init() {
     this.curDate = new Date();
