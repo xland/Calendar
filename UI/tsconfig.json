@@ -4,5 +4,6 @@
         "jsx": "preserve",
         "moduleResolution": "node",
         "lib": ["ESNext","DOM"]
-    }
+    },
+    "include": ["render", "global.d.ts"]
 }

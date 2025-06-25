@@ -23,10 +23,10 @@ HTMLElement.prototype.classHas = function (name) {
   return this.classList.contains(name);
 };
 export class Helper {
-  static $id(id: string) {
+  static $id(id: string): HTMLElement {
     return document.getElementById(id);
   }
-  static $select(name: string) {
+  static $select(name: string): HTMLElement {
     return document.querySelector(name);
   }
   static isCurrentDate(date: Date) {
