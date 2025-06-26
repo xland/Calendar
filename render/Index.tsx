@@ -21,13 +21,12 @@ let App = () => {
 
 let connDb = async () => {
   let data = await horse.db.open("db.db");
-  console.log(data);
   if (data.ok && data.isDbFirstCreated) {
+    console.log("init db");
     let sqlData = await horse.db.sql(`CREATE TABLE Job(Id VARCHAR2(36) NOT NULL ON CONFLICT FAIL UNIQUE ON CONFLICT FAIL,JobInfo TEXT,RepeatType INT,StartTime BIGINT,EndTime BIGINT,ColorIndex INT);
 CREATE INDEX JobInfo_Index ON Job(JobInfo);
 CREATE TABLE Setting(ViewDefault INT DEFAULT 0,ViewVal Int,LangDefault INT DEFAULT 0,SkinDefault INT DEFAULT 0,AlertBefore INT);
 INSERT INTO Setting (ViewDefault,ViewVal,LangDefault,SkinDefault,AlertBefore) VALUES (0,0,0,0,5);`, "db.db");
-    console.log(sqlData);
   }
 }
 

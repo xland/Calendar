@@ -10,14 +10,14 @@ class DataMonth {
     let start = new Date(startDate.year, startDate.month - 1, startDate.day, 0, 0, 0, 0);
     let end = new Date(endDate.year, endDate.month - 1, endDate.day, 23, 59, 59, 999);
     this.dateArr.forEach((v) => (v.jobs = []));
-    // let { ipcRenderer } = require("electron");
-    // let jobArr: ModelJob[] = await ipcRenderer.invoke("getDataOneMonth", start.getTime(), end.getTime());
-    // for (let i = 0; i < jobArr.length; i++) {
-    //   let jobStartDate = new Date(jobArr[i].StartTime);
-    //   let index = this.dateArr.findIndex((v) => v.year === jobStartDate.getFullYear() && v.month === jobStartDate.getMonth() + 1 && v.day === jobStartDate.getDate());
-    //   if (index < 0) continue;
-    //   this.dateArr[index].jobs.push(jobArr[i]);
-    // }
+    let { data } = await horse.db.sql(`SELECT * FROM Job WHERE StartTime >= ${start.getTime()} and EndTime <= ${end.getTime()} and RepeatType == 0 order by StartTime asc`, "db.db");
+    console.log(data);
+    for (let i = 0; i < data.length; i++) {
+      let jobStartDate = new Date(data[i].StartTime);
+      let index = this.dateArr.findIndex((v) => v.year === jobStartDate.getFullYear() && v.month === jobStartDate.getMonth() + 1 && v.day === jobStartDate.getDate());
+      if (index < 0) continue;
+      this.dateArr[index].jobs.push(data[i]);
+    }
   }
   isInCurMonth(dateObj: Date) {
     let startDate = this.dateArr[0];
