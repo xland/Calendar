@@ -2,7 +2,8 @@ import { ModelJob } from "./../model/ModelJob";
 class DataNearby {
   jobs: ModelJob[];
   async init() {
-    // let {ipcRenderer} = require("electron")
-    // this.setting = await ipcRenderer.invoke("getSetting")
+    // let setting: ModelSetting = this.getData(`SELECT * FROM Setting`)[0] as ModelSetting;
+    // setting.OpenAtLogin = true;
+    // this.setting = setting;
   }
 }
