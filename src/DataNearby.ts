@@ -1,4 +1,4 @@
-import { ModelJob } from "./../model/ModelJob";
+import { ModelJob } from "./model/ModelJob";
 class DataNearby {
   jobs: ModelJob[];
   async init() {

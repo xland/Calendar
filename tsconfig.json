@@ -5,5 +5,5 @@
         "moduleResolution": "node",
         "lib": ["ESNext","DOM"]
     },
-    "include": ["render", "global.d.ts"]
+    "include": ["src", "global.d.ts"]
 }

@@ -1,6 +1,6 @@
 import React from "./React";
-import { eventer } from "../common/eventer";
-import { Helper } from "../common/Helper";
+import { eventer } from "./common/eventer";
+import { Helper } from "./common/Helper";
 import TitleBarBtns from "./TitleBarBtns";
 import "./MainPanel.scss";
 import SwitchBtns from "./SwitchBtns";

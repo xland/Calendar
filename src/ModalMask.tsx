@@ -1,6 +1,6 @@
 import React from "./React";
 import "./ModalMask.scss";
-import { Helper } from "../common/Helper";
+import { Helper } from "./common/Helper";
 export default function (props) {
   // let ipcRenderer = require("electron").ipcRenderer;
   // ipcRenderer.addListener("modalWindowClosed", () => {

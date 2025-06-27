@@ -1,15 +1,14 @@
-import { Helper } from "../common/Helper";
-import { ModelJob } from "./../model/ModelJob";
+import { Helper } from "./common/Helper";
+import { ModelJob } from "./model/ModelJob";
 class DataMonth {
   curDate: Date;
   dateArr: { year: number; month: number; day: number; isCurMonth: boolean; jobs: ModelJob[] }[];
   idTimerToTomarrow;
   async getDataOneMonth(startTime: number, endTime: number) {
     let sql = `SELECT * FROM Job WHERE StartTime >= ${startTime} and EndTime <= ${endTime} and RepeatType == 0 order by StartTime asc`;
-    let data = await horse.db.sql(sql, "db.db");
-    let result = data.data as ModelJob[];
-    data = await horse.db.sql(`SELECT * FROM Job where RepeatType > 0`, "db.db");
-    let repeatJobs = data.data as ModelJob[];
+    let result = [] as ModelJob[];
+    // data = await horse.db.sql(`SELECT * FROM Job where RepeatType > 0`, "db.db");
+    let repeatJobs = [] as ModelJob[];
     let monthStart = new Date(startTime);
     for (let j = 0; j < repeatJobs.length; j++) {
       let job = repeatJobs[j];

@@ -2,8 +2,8 @@ import Database from "better-sqlite3";
 import { app } from "electron";
 import fs from "fs";
 import path from "path";
-import { ModelJob } from "../model/ModelJob";
-import { ModelSetting } from "../model/ModelSetting";
+import { ModelJob } from "../src/model/ModelJob";
+import { ModelSetting } from "../src/model/ModelSetting";
 import { ipcMain } from "electron";
 export class Db {
   db: Database.Database;

@@ -3,8 +3,8 @@ import "./IndexJob.scss";
 import TitleBarBtns from "./TitleBarBtns";
 import IndexJobBox from "./IndexJobBox";
 import ColorGet from "./ColorGet";
-import { ModelJob } from "../model/ModelJob";
-import { Helper } from "../common/Helper";
+import { ModelJob } from "./model/ModelJob";
+import { Helper } from "./common/Helper";
 function App(props) {
   let getJob = () => {
     let timeBox = Helper.$id("IndexJobBox").firstElementChild;

@@ -1,5 +1,5 @@
-import { Helper } from "../common/Helper";
-import { ModelJob } from "../model/ModelJob";
+import { Helper } from "./common/Helper";
+import { ModelJob } from "./model/ModelJob";
 import React from "./React";
 import "./SearchJob.scss";
 export default function () {

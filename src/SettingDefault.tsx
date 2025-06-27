@@ -1,7 +1,7 @@
 import { dataSetting } from "./DataSetting";
 import React from "./React";
 import "./SettingDefault.scss";
-import { Helper } from "../common/Helper";
+import { Helper } from "./common/Helper";
 export default function (props) {
   let setCheckBox = (icon: HTMLElement, flag: boolean) => {
     if (flag) {

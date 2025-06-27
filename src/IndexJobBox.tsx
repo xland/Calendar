@@ -1,7 +1,7 @@
 import React from "./React";
 import "./IndexJobBox.scss";
-import { ModelJob } from "../model/ModelJob";
-import { Helper } from "../common/Helper";
+import { ModelJob } from "./model/ModelJob";
+import { Helper } from "./common/Helper";
 
 export default function () {
   let loaded = (e: CustomEvent) => {

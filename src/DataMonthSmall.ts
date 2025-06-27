@@ -1,14 +1,14 @@
-import { Helper } from "../common/Helper";
+import { Helper } from "./common/Helper";
 import { dataMonth } from "./DataMonth";
-import { ModelJob } from "./../model/ModelJob";
+import { ModelJob } from "./model/ModelJob";
 class DataMonthSmall {
   curDate: Date;
   dateArr: { year: number; month: number; day: number; isCurMonth: boolean; hasJob: boolean }[] = [];
   async hasDataOneMonth(startTime: number, endTime: number) {
     let hasJob = Array(42).fill(false);
 
-    let data = await horse.db.sql(`SELECT * FROM Job where RepeatType > 0`, "db.db");
-    let repeatJobs = data.data as ModelJob[];
+    // let data = await horse.db.sql(`SELECT * FROM Job where RepeatType > 0`, "db.db");
+    let repeatJobs = [] as ModelJob[];
     for (let j = 0; j < repeatJobs.length; j++) {
       let job = repeatJobs[j];
       if (job.StartTime > endTime) {
@@ -91,8 +91,7 @@ class DataMonthSmall {
       }
     }
     let sql = `SELECT * FROM Job WHERE StartTime >= ${startTime} and EndTime <= ${endTime} and RepeatType == 0 order by StartTime asc`;
-    data = await horse.db.sql(sql, "db.db");
-    let result = data.data as ModelJob[];
+    let result = [] as ModelJob[];
     for (let j = 0; j < result.length; j++) {
       let job = result[j];
       let span = job.StartTime - startTime;

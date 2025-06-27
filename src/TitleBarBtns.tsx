@@ -1,9 +1,11 @@
 import React from "./React";
-import { Helper } from "../common/Helper";
-import { eventer } from "../common/eventer";
+import { Helper } from "./common/Helper";
+import { eventer } from "./common/eventer";
 import "./TitleBarBtns.scss";
+import { db } from "./common/db";
 export default function () {
   let minimize = () => {
+    db.open();
     horse.win.minimize();
   };
   let restore = () => {

@@ -2,8 +2,8 @@ import React from "./React";
 import "./IndexAlert.scss";
 import TitleBarBtns from "./TitleBarBtns";
 import ColorGet from "./ColorGet";
-import { ModelJob } from "../model/ModelJob";
-import { Helper } from "../common/Helper";
+import { ModelJob } from "./model/ModelJob";
+import { Helper } from "./common/Helper";
 function App(props) {
   let job = props.job as ModelJob;
   let save = () => {

@@ -2,10 +2,10 @@ import React from "./React";
 import "./ViewDay.scss";
 import Job from "./Job";
 import ColorGet from "./ColorGet";
-import { Helper } from "../common/Helper";
-import { eventer } from "../common/eventer";
+import { Helper } from "./common/Helper";
+import { eventer } from "./common/eventer";
 import { dataMonth } from "./DataMonth";
-import debounce from "../common/debounce";
+import debounce from "./common/debounce";
 
 export default function () {
   let colorIndex = 0;

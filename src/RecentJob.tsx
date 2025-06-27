@@ -1,8 +1,8 @@
 import React from "./React";
 import "./RecentJob.scss";
-import { eventer } from "../common/eventer";
-import { ModelJob } from "../model/ModelJob";
-import { Helper } from "../common/Helper";
+import { eventer } from "./common/eventer";
+import { ModelJob } from "./model/ModelJob";
+import { Helper } from "./common/Helper";
 import { dataSetting } from "./DataSetting";
 export default function () {
   let timeOutId;

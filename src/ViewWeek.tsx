@@ -1,9 +1,9 @@
 import React from "./React";
 import "./ViewWeek.scss";
 import ColorGet from "./ColorGet";
-import { eventer } from "../common/eventer";
+import { eventer } from "./common/eventer";
 import { dataMonth } from "./DataMonth";
-import { Helper } from "../common/Helper";
+import { Helper } from "./common/Helper";
 export default function () {
   let addNewJob = (e) => {
     let target = e.target as HTMLElement;

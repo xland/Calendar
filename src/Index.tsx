@@ -4,10 +4,12 @@ import MainPanel from "./MainPanel";
 import { dataMonth } from "./DataMonth";
 import React from "./React";
 import ModalMask from "./ModalMask";
-import { eventer } from "../common/eventer";
+import { eventer } from "./common/eventer";
 import { dataSetting } from "./DataSetting";
 import Menu from "./Menu";
 import { dataMonthSmall } from "./DataMonthSmall";
+import { db } from "./common/db";
+
 let App = () => {
   return (
     <>
@@ -23,10 +25,11 @@ let connDb = async () => {
   let data = await horse.db.open("db.db");
   if (data.ok && data.isDbFirstCreated) {
     console.log("init db");
-    let sqlData = await horse.db.sql(`CREATE TABLE Job(Id VARCHAR2(36) NOT NULL ON CONFLICT FAIL UNIQUE ON CONFLICT FAIL,JobInfo TEXT,RepeatType INT,StartTime BIGINT,EndTime BIGINT,ColorIndex INT);
-CREATE INDEX JobInfo_Index ON Job(JobInfo);
-CREATE TABLE Setting(ViewDefault INT DEFAULT 0,ViewVal Int,LangDefault INT DEFAULT 0,SkinDefault INT DEFAULT 0,AlertBefore INT);
-INSERT INTO Setting (ViewDefault,ViewVal,LangDefault,SkinDefault,AlertBefore) VALUES (0,0,0,0,5);`, "db.db");
+    //     let sqlData = await horse.db.sql(`CREATE TABLE Job(Id VARCHAR2(36) NOT NULL ON CONFLICT FAIL UNIQUE ON CONFLICT FAIL,JobInfo TEXT,RepeatType INT,StartTime BIGINT,EndTime BIGINT,ColorIndex INT);
+    // CREATE INDEX JobInfo_Index ON Job(JobInfo);
+    // CREATE TABLE Setting(ViewDefault INT DEFAULT 0,ViewVal Int,LangDefault INT DEFAULT 0,SkinDefault INT DEFAULT 0,AlertBefore INT);
+    // INSERT INTO Setting (ViewDefault,ViewVal,LangDefault,SkinDefault,AlertBefore) VALUES (0,0,0,0,5);`, "db.db");
+    //   }
   }
 }
 

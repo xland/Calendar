@@ -1,7 +1,7 @@
-import { eventer } from "../common/eventer";
+import { eventer } from "./common/eventer";
 import { dataMonth } from "./DataMonth";
 import { dataSetting } from "./DataSetting";
-import { Helper } from "../common/Helper";
+import { Helper } from "./common/Helper";
 import React from "./React";
 import "./SwitchBtns.scss";
 export default function () {

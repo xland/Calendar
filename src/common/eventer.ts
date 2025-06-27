@@ -1,5 +1,5 @@
 type EventHandler = (result: any) => void;
-export class Eventer {
+class Eventer {
   private dic = {};
   constructor() {}
   // 监听事件

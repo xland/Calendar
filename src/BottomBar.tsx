@@ -3,7 +3,7 @@ import "./BottomBar.scss";
 import SettingDefault from "./SettingDefault";
 import SettingDonate from "./SettingDonate";
 import SettingAuthor from "./SettingAuthor";
-import { Helper } from "../common/Helper";
+import { Helper } from "./common/Helper";
 
 export default function () {
   let closeDrawerBtnClick = () => {

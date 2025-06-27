@@ -1,7 +1,7 @@
 import React from "./React";
 import "./Menu.scss";
 import { dataMonth } from "./DataMonth";
-import { Helper } from "../common/Helper";
+import { Helper } from "./common/Helper";
 export default function (props) {
   let hideMenu = async (e) => {
     let target = e.target as HTMLElement;

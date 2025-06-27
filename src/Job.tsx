@@ -1,6 +1,6 @@
 import React from "./React";
 import "./Job.scss";
-import { Helper } from "../common/Helper";
+import { Helper } from "./common/Helper";
 export default function (props) {
   return (
     <div
