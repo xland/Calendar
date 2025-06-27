@@ -24,9 +24,12 @@ let startDevServer = async () => {
     sourcemap: true,
     target: "esnext",
   });
+  await ctx.rebuild();
   await ctx.watch();
 
-  const file = new statik.Server("./dev");
+  const file = new statik.Server("./dev", {
+    cache: 0,
+  });
 
   require("http")
     .createServer(function (request, response) {

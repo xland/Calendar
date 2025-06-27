@@ -8,7 +8,9 @@ class Db {
     this.promiser = await new Promise((resolve) => {
       const _promiser = sqlite3Worker1Promiser({
         worker: () => {
-          return new Worker(new URL("sqlite3-worker1-bundler-friendly.mjs", "http://localhost:8000"), {
+          let url = new URL(location.href);
+          debugger;
+          return new Worker(new URL("sqlite3-worker1-bundler-friendly.mjs", url.origin), {
             type: "module",
           });
         },
@@ -19,11 +21,12 @@ class Db {
       filename: "file:db.sqlite3?vfs=opfs",
     });
     this.id = openResponse.dbId;
-    debugger;
     await this.promiser("exec", {
       dbId: this.id,
-      sql: "INSERT INTO t(a,b) VALUES (?,?)",
-      bind: [1, 1 * 2],
+      sql: `CREATE TABLE Job(Id VARCHAR2(36) NOT NULL ON CONFLICT FAIL UNIQUE ON CONFLICT FAIL,JobInfo TEXT,RepeatType INT,StartTime BIGINT,EndTime BIGINT,ColorIndex INT);
+CREATE INDEX JobInfo_Index ON Job(JobInfo);
+CREATE TABLE Setting(ViewDefault INT DEFAULT 0,ViewVal Int,LangDefault INT DEFAULT 0,SkinDefault INT DEFAULT 0,AlertBefore INT);
+INSERT INTO Setting (ViewDefault,ViewVal,LangDefault,SkinDefault,AlertBefore) VALUES (0,0,0,0,5);`,
     });
   }
 }
