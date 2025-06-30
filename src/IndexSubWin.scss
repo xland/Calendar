@@ -8,7 +8,6 @@ body {
   line-height: 32px;
   background: rgba(var(--color), 0.1);
   .title {
-    -webkit-app-region: drag;
     padding-left: 8px;
     flex: 1;
   }

@@ -8,7 +8,7 @@ import SearchJob from "./SearchJob";
 import { Helper } from "./common/Helper";
 export default function () {
   eventer.on("dataReady", async () => {
-    Helper.$select("#LeftPanel > .title").addEventListener("mousedown", async () => {
+    Helper.$select("#LeftPanel > .title").addEventListener("mousedown", () => {
       horse.win.startDrag();
     });
   });

@@ -92,6 +92,9 @@ document.addEventListener("DOMContentLoaded", async () => {
     let title = document.querySelector(".title") as HTMLElement;
     title.innerHTML = "修改日程";
   }
+  Helper.$select(".titleBar > .title").addEventListener("mousedown", () => {
+    horse.win.startDrag();
+  });
   let event = new CustomEvent("loaded", { detail: job });
   Helper.$id("IndexJobBox").dispatchEvent(event);
   // let { ipcRenderer } = require("electron");
