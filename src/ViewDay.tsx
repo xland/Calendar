@@ -10,7 +10,7 @@ import { db } from "./common/db";
 
 export default function () {
   let colorIndex = 0;
-  let addNewJob = (target: HTMLElement) => {
+  let addNewJob = async (target: HTMLElement) => {
     let startHour: string;
     if (target.classList.contains("hourTag")) {
       startHour = target.innerHTML;
@@ -24,6 +24,30 @@ export default function () {
     let startTime = new Date(dateObj.year, dateObj.month - 1, dateObj.day, hour, 0, 0, 0);
     //todo 
     // window.open(`/IndexJob.html?colorIndex=${colorIndex}&startTime=${startTime.getTime()}`, "_blank", `{ "title": "增加日程" }`);
+
+    let proxy = await horse.createWin({
+      resizable: false,
+      maximizable: false,
+      minimizable: false,
+      alwaysOnTop: false,
+      skipTaskbar: false,
+      visible: true,
+      frame: false,
+      shadow: true,
+      title: "增加日程",
+      size: {
+        w: 800,
+        h: 600,
+      },
+      minSize: {
+        w: 250,
+        h: 200,
+      },
+      "pos": "centerScreen",
+      url: `http://localhost:8000/IndexJob.html?colorIndex=${colorIndex}&startTime=${startTime.getTime()}`,
+    });
+
+
     Helper.$id("ModalMask").style.display = "block";
   };
   let bgLineMouseOver = (e) => {
