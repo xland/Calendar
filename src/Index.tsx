@@ -21,22 +21,16 @@ let App = () => {
   );
 };
 
-let connDb = async () => {
-
-}
-
 document.addEventListener("DOMContentLoaded", async () => {
   document.body.ondragstart = () => false;
   document.body.ondragend = () => false;
   document.body.ondrop = () => false;
   document.body.appendChild(<App />);
-  await connDb();
+  await db.open();
   await dataMonth.init();
   dataMonthSmall.initFirst();
   await dataSetting.init();
   eventer.emit("dataReady");
-  // let { ipcRenderer } = require("electron");
-  // ipcRenderer.invoke("changeWindowState", "show");
   window.addEventListener("refreshView", async (e) => {
     await dataMonth.initJobArr();
     await dataMonthSmall.init();

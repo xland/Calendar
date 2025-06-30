@@ -2,6 +2,7 @@ import { dataSetting } from "./DataSetting";
 import React from "./React";
 import "./SettingDefault.scss";
 import { Helper } from "./common/Helper";
+import { db } from "./common/db";
 export default function (props) {
   let setCheckBox = (icon: HTMLElement, flag: boolean) => {
     if (flag) {
@@ -37,8 +38,7 @@ export default function (props) {
   let openAtLoginClick = async (e: MouseEvent) => {
     let icon = Helper.$id("openAtLoginIcon");
     let flag = !icon.classList.contains("icon-check");
-    // let { ipcRenderer } = require("electron");
-    // await ipcRenderer.invoke("setOpenAtLogin", flag);
+    await horse.autoStart(true);
     dataSetting.setting.OpenAtLogin = flag;
     setCheckBox(icon, flag);
     return false;
@@ -47,18 +47,16 @@ export default function (props) {
     let target = checkOneItem(e);
     if (!target) return;
     let val = Number(target.dataset.index);
-    // let { ipcRenderer } = require("electron");
-    // let sql = `Update Setting set ViewDefault = ?`;
-    // await ipcRenderer.invoke("excuteSQL", sql, val);
+    let sql = `Update Setting set ViewDefault = ${val}`;
+    await db.exec(sql);
     dataSetting.setting.ViewDefault = val;
   };
   let defaultLangClick = async (e: MouseEvent) => {
     let target = checkOneItem(e);
     if (!target) return;
     let val = Number(target.dataset.index);
-    // let { ipcRenderer } = require("electron");
-    // let sql = `Update Setting set LangDefault = ?`;
-    // await ipcRenderer.invoke("excuteSQL", sql, val);
+    let sql = `Update Setting set LangDefault = ${val}`;
+    await db.exec(sql);
     dataSetting.setting.LangDefault = val;
   };
   let alertBeforeClick = async (e: MouseEvent) => {
@@ -66,18 +64,16 @@ export default function (props) {
     if (!target) return;
     let val = Number(target.dataset.index);
     val = [5, 15, 30][val];
-    // let { ipcRenderer } = require("electron");
-    // let sql = `Update Setting set AlertBefore = ?`;
-    // await ipcRenderer.invoke("excuteSQL", sql, val);
+    let sql = `Update Setting set AlertBefore = ${val}`;
+    await db.exec(sql);
     dataSetting.setting.AlertBefore = val;
   };
   let defaultSkinClick = async (e: MouseEvent) => {
     let target = checkOneItem(e);
     if (!target) return;
     let val = Number(target.dataset.index);
-    // let { ipcRenderer } = require("electron");
-    // let sql = `Update Setting set SkinDefault = ?`;
-    // await ipcRenderer.invoke("excuteSQL", sql, val);
+    let sql = `Update Setting set SkinDefault = ${val}`;
+    await db.exec(sql);
     dataSetting.setting.SkinDefault = val;
     document.body.setAttribute("class", dataSetting.getSkinName(val));
   };

@@ -23,7 +23,6 @@ export default function () {
     return true;
   };
   let initData = async () => {
-    // let { ipcRenderer } = require("electron");
     let jobs: ModelJob[] = [];
     let dom = Helper.$id("RecentJob");
     dom.innerHTML = "";

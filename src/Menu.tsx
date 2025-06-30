@@ -2,6 +2,7 @@ import React from "./React";
 import "./Menu.scss";
 import { dataMonth } from "./DataMonth";
 import { Helper } from "./common/Helper";
+import { db } from "./common/db";
 export default function (props) {
   let hideMenu = async (e) => {
     let target = e.target as HTMLElement;
@@ -22,9 +23,8 @@ export default function (props) {
         window.open(`/IndexJob.html?editId=${id}`, "_blank", `{ title: "修改日程" }`);
         Helper.$id("ModalMask").style.display = "block";
       } else {
-        // let { ipcRenderer } = require("electron");
-        // await ipcRenderer.invoke("excuteSQL", `delete from Job where id=?`, id);
-        // dispatchEvent(new Event("refreshView"));
+        await db.exec(`delete from Job where id=${id}`);
+        dispatchEvent(new Event("refreshView"));
       }
     }
     Helper.$id("Menu").style.display = "none";

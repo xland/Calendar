@@ -2,6 +2,7 @@ import { eventer } from "./common/eventer";
 import { dataMonth } from "./DataMonth";
 import { dataSetting } from "./DataSetting";
 import { Helper } from "./common/Helper";
+import { db } from "./common/db";
 import React from "./React";
 import "./SwitchBtns.scss";
 export default function () {
@@ -18,9 +19,8 @@ export default function () {
         Helper.$id(arr[i]).style.zIndex = "0";
       }
     }
-    let sql = `Update Setting set ViewVal = ?`;
-    // let { ipcRenderer } = require("electron");
-    // await ipcRenderer.invoke("excuteSQL", sql, val);
+    let sql = `Update Setting set ViewVal = ${val}`;
+    db.exec(sql)
   };
   let switchBtnClick = (e) => {
     let target = e.target as HTMLElement;

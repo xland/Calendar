@@ -1,5 +1,5 @@
 import { ModelSetting } from "./model/ModelSetting";
-
+import { db } from "./common/db";
 class DataSetting {
   setting: ModelSetting;
   getSkinName(index: number) {
@@ -7,9 +7,10 @@ class DataSetting {
     return arr[this.setting.SkinDefault];
   }
   async init() {
-    // let data = horse.db.sql(`SELECT * FROM Setting`, "db.db");
-    // this.setting = data.data[0] as ModelSetting;
-    // document.body.setAttribute("class", this.getSkinName(this.setting.SkinDefault));
+    let sql = `SELECT * FROM Setting`;
+    let data = await db.exec(sql);
+    this.setting = data[0] as ModelSetting;
+    document.body.setAttribute("class", this.getSkinName(this.setting.SkinDefault));
   }
 }
 export let dataSetting = new DataSetting();

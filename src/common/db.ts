@@ -9,10 +9,14 @@ class Db {
         dbId: this.dbId,
         sql,
         callback: (result: { columnNames: string[]; row: any[]; rowNumber: number; type: string }) => {
-          if (!result.row) {
-            resolve(rows);
+          if (result.row) {
+            let obj = {};
+            for (let i = 0; i < result.columnNames.length; i++) {
+              obj[result.columnNames[i]] = result.row[i];
+            }
+            rows.push(obj);
           } else {
-            rows.push(...result.row);
+            resolve(rows);
           }
         },
       });
@@ -39,8 +43,8 @@ CREATE INDEX JobInfo_Index ON Job(JobInfo);
 CREATE TABLE Setting(ViewDefault INT DEFAULT 0, ViewVal INT, LangDefault INT DEFAULT 0, SkinDefault INT DEFAULT 0, AlertBefore INT);
 INSERT INTO Setting (ViewDefault, ViewVal, LangDefault, SkinDefault, AlertBefore) VALUES (0, 0, 0, 0, 5);`);
     }
-    let data = await this.exec(`select * from Setting;`);
-    console.log(data);
+    // let data = await this.exec(`select * from Setting;`);
+    // console.log(data);
   }
   async delDb() {
     const opfsRoot = await navigator.storage.getDirectory();

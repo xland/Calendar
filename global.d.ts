@@ -98,5 +98,6 @@ interface Db {
 interface Horse {
   win: Win;
   db: Db;
+  autoStart(needAutoStart: boolean);
 }
 declare var horse: Horse;

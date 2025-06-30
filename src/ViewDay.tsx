@@ -6,6 +6,7 @@ import { Helper } from "./common/Helper";
 import { eventer } from "./common/eventer";
 import { dataMonth } from "./DataMonth";
 import debounce from "./common/debounce";
+import { db } from "./common/db";
 
 export default function () {
   let colorIndex = 0;
@@ -21,7 +22,8 @@ export default function () {
 
     let hour = parseInt(startHour.split(":")[0]);
     let startTime = new Date(dateObj.year, dateObj.month - 1, dateObj.day, hour, 0, 0, 0);
-    window.open(`/IndexJob.html?colorIndex=${colorIndex}&startTime=${startTime.getTime()}`, "_blank", `{ "title": "增加日程" }`);
+    //todo 
+    // window.open(`/IndexJob.html?colorIndex=${colorIndex}&startTime=${startTime.getTime()}`, "_blank", `{ "title": "增加日程" }`);
     Helper.$id("ModalMask").style.display = "block";
   };
   let bgLineMouseOver = (e) => {
@@ -67,10 +69,9 @@ export default function () {
     if (job.StartTime === StartTime && job.EndTime === EndTime) {
       return;
     }
-    let sql = `Update Job set StartTime = ? ,EndTime = ? where id = ?`;
-    // let { ipcRenderer } = require("electron");
-    // await ipcRenderer.invoke("excuteSQL", sql, StartTime, EndTime, Id);
-    // dispatchEvent(new Event("refreshView"));
+    let sql = `Update Job set StartTime = ${StartTime} ,EndTime = ${EndTime} where id = ${Id}`;
+    await db.exec(sql);
+    dispatchEvent(new Event("refreshView"));
   };
   let setJobTime = (target: HTMLElement) => {
     let height = target.parentElement.clientHeight;
