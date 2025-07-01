@@ -32,7 +32,7 @@ export default function () {
         "pos": "centerScreen",
         url: `http://localhost:8000/IndexAlert.html?id=${id}`,
       });
-      Helper.$id("ModalMask").style.display = "block";
+      Helper.$id("ModalMask").dispatchEvent(new CustomEvent("loaded", { detail: proxy }));
       return false;
     }
     timeOutId = setTimeout(async () => {

@@ -18,6 +18,10 @@ type WinEventName = "closing" | "stateChanged";
 
 interface Win {
   /**
+   * 销毁窗口
+   */
+  destroy(): Result;
+  /**
    * 关闭窗口Y
    */
   close(): Result;
@@ -85,4 +89,5 @@ interface Horse {
    */
   createWin(config: object);
 }
+
 declare var horse: Horse;

@@ -10,5 +10,13 @@ export default function (props) {
     // let ipcRenderer = require("electron").ipcRenderer;
     // ipcRenderer.invoke("activeSubWindow");
   };
-  return <div id="ModalMask" onClick={maskClick}></div>;
+  let loaded = (e: CustomEvent) => {
+    let proxy = e.detail as Win;
+    proxy.on("closing", () => {
+      Helper.$id("ModalMask").style.display = "none";
+      proxy.destroy();
+    })
+    Helper.$id("ModalMask").style.display = "block";
+  }
+  return <div id="ModalMask" onClick={maskClick} onLoaded={loaded}></div>;
 }

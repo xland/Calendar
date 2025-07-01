@@ -43,7 +43,7 @@ export default function () {
       "pos": "centerScreen",
       url: `http://localhost:8000/IndexJob.html?colorIndex=${colorIndex}&startTime=${startTime.getTime()}`,
     });
-    Helper.$id("ModalMask").style.display = "block";
+    Helper.$id("ModalMask").dispatchEvent(new CustomEvent("loaded", { detail: proxy }));
   };
   let bgLineMouseOver = (e) => {
     let target = e.target as HTMLElement;
