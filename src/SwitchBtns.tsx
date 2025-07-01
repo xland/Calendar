@@ -10,12 +10,13 @@ export default function () {
     let arr = ["ViewDay", "ViewWeek", "ViewMonth"];
     let val = 0;
     for (let i = 0; i < arr.length; i++) {
+      let tar = dom.children[i] as HTMLElement;
       if (arr[i] === name) {
-        (dom.children[i] as HTMLElement).classList.add("selected");
+        tar.classList.add("selected");
         Helper.$id(name).style.zIndex = "20";
         val = i;
       } else {
-        (dom.children[i] as HTMLElement).classList.add("selected");
+        tar.classList.remove("selected");
         Helper.$id(arr[i]).style.zIndex = "0";
       }
     }
