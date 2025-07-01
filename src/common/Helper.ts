@@ -86,9 +86,30 @@ export class Helper {
       }
     }
   }
-  static jobDbClick(e: MouseEvent) {
+  static async jobDbClick(e: MouseEvent) {
     let id = (e.currentTarget as HTMLElement).dataset.id;
-    window.open(`/IndexJob.html?editId=${id}`, "_blank", `{ "title": "修改日程" }`);
+    let proxy = await horse.createWin({
+      resizable: false,
+      maximizable: false,
+      minimizable: false,
+      alwaysOnTop: false,
+      skipTaskbar: false,
+      visible: true,
+      frame: false,
+      shadow: true,
+      title: "修改日程",
+      size: {
+        w: 800,
+        h: 600,
+      },
+      minSize: {
+        w: 250,
+        h: 200,
+      },
+      pos: "centerScreen",
+      url: `http://localhost:8000/IndexJob.html?editId=${id}`,
+    });
+
     Helper.$id("ModalMask").style.display = "block";
   }
   static jobMouseDown(e: MouseEvent) {
@@ -120,12 +141,14 @@ export class Helper {
       } else if (Helper.clickNum === 2) {
         clearTimeout(Helper.clickTimer);
         Helper.clickNum = 0;
-        let id = (e.currentTarget as HTMLElement).dataset.id;
-        window.open(`/IndexJob.html?editId=${id}`, "_blank", `{ "title": "修改日程" }`);
-        Helper.$id("ModalMask").style.display = "block";
+        this.jobDbClick(e);
       }
     } else {
       Helper.showJobMenu(e);
     }
+  }
+  static getGUID() {
+    //@ts-ignore
+    return ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, (c) => (c ^ (crypto.getRandomValues(new Uint8Array(1))[0] & (15 >> (c / 4)))).toString(16));
   }
 }

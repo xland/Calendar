@@ -22,9 +22,6 @@ export default function () {
 
     let hour = parseInt(startHour.split(":")[0]);
     let startTime = new Date(dateObj.year, dateObj.month - 1, dateObj.day, hour, 0, 0, 0);
-    //todo 
-    // window.open(`/IndexJob.html?colorIndex=${colorIndex}&startTime=${startTime.getTime()}`, "_blank", `{ "title": "增加日程" }`);
-
     let proxy = await horse.createWin({
       resizable: false,
       maximizable: false,
@@ -46,8 +43,6 @@ export default function () {
       "pos": "centerScreen",
       url: `http://localhost:8000/IndexJob.html?colorIndex=${colorIndex}&startTime=${startTime.getTime()}`,
     });
-
-
     Helper.$id("ModalMask").style.display = "block";
   };
   let bgLineMouseOver = (e) => {
@@ -93,7 +88,7 @@ export default function () {
     if (job.StartTime === StartTime && job.EndTime === EndTime) {
       return;
     }
-    let sql = `Update Job set StartTime = ${StartTime} ,EndTime = ${EndTime} where id = ${Id}`;
+    let sql = `Update Job set StartTime = ${StartTime} ,EndTime = ${EndTime} where id = '${Id}'`;
     await db.exec(sql);
     dispatchEvent(new Event("refreshView"));
   };
@@ -337,6 +332,7 @@ export default function () {
     if (!job) return;
     onKeyUpUpdate(job);
   };
+
   window.addEventListener("keydown", moveJobByKey);
   window.addEventListener("keyup", onKeyUp);
   eventer.on("dataReady", () => {

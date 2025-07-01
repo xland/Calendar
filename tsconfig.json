@@ -5,5 +5,5 @@
         "moduleResolution": "node",
         "lib": ["ESNext","DOM"]
     },
-    "include": ["src", "global.d.ts"]
+    "include": ["src", "horsejs.d.ts"]
 }

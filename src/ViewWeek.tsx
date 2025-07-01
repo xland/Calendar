@@ -5,7 +5,7 @@ import { eventer } from "./common/eventer";
 import { dataMonth } from "./DataMonth";
 import { Helper } from "./common/Helper";
 export default function () {
-  let addNewJob = (e) => {
+  let addNewJob = async (e) => {
     let target = e.target as HTMLElement;
     if (!target.dataset.index) {
       target = target.parentElement;
@@ -21,7 +21,29 @@ export default function () {
       if (colorIndex > 5) colorIndex = 0;
     }
     let startTime = new Date(dateObj.year, dateObj.month - 1, dateObj.day, 8, 0, 0, 0);
-    window.open(`/IndexJob.html?colorIndex=${colorIndex}&startTime=${startTime.getTime()}`, "_blank", `{ "title": "增加日程" }`);
+    let proxy = await horse.createWin({
+      resizable: false,
+      maximizable: false,
+      minimizable: false,
+      alwaysOnTop: false,
+      skipTaskbar: false,
+      visible: true,
+      frame: false,
+      shadow: true,
+      title: "增加日程",
+      size: {
+        w: 800,
+        h: 600,
+      },
+      minSize: {
+        w: 250,
+        h: 200,
+      },
+      "pos": "centerScreen",
+      url: `http://localhost:8000/IndexJob.html?colorIndex=${colorIndex}&startTime=${startTime.getTime()}`,
+    });
+
+
     Helper.$id("ModalMask").style.display = "block";
   };
   eventer.on("dataReady", () => {

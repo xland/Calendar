@@ -105,7 +105,7 @@ export default function () {
     }
     goToDateView(new Date());
   };
-  eventer.once("dataReady", () => {
+  eventer.on("dataReady", () => {
     let index = dataSetting.setting.ViewDefault;
     if (index === 3) {
       index = dataSetting.setting.ViewVal;

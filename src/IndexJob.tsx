@@ -5,6 +5,7 @@ import IndexJobBox from "./IndexJobBox";
 import ColorGet from "./ColorGet";
 import { ModelJob } from "./model/ModelJob";
 import { Helper } from "./common/Helper";
+import { db } from "./common/db";
 function App(props) {
   let getJob = () => {
     let timeBox = Helper.$id("IndexJobBox").firstElementChild;
@@ -35,20 +36,18 @@ function App(props) {
   };
 
   let save = async () => {
-    // let job = getJob();
-    // let { ipcRenderer } = require("electron");
-    // if (job.Id) {
-    //   let sql = `Update Job set JobInfo = ? ,StartTime = ? ,EndTime = ? where Id = ?`;
-    //   await ipcRenderer.invoke("excuteSQL", sql, job.JobInfo, job.StartTime, job.EndTime, job.Id);
-    // } else {
-    //   let crypto = require("crypto");
-    //   job.Id = crypto.randomUUID();
-    //   let sql = `INSERT INTO Job (Id,JobInfo,StartTime,EndTime,RepeatType,ColorIndex) VALUES (?,?,?,?,?,?)`;
-    //   await ipcRenderer.invoke("excuteSQL", sql, job.Id, job.JobInfo, job.StartTime, job.EndTime, job.RepeatType, job.ColorIndex);
-    // }
-    // let win = window.opener as Window;
-    // win.dispatchEvent(new Event("refreshView"));
-    // window.close();
+    let job = getJob();
+    if (job.Id) {
+      let sql = `Update Job set JobInfo = "${job.JobInfo}",StartTime = ${job.StartTime} ,EndTime = ${job.EndTime} where Id = '${job.Id}'`;
+      await db.exec(sql);
+    } else {
+      job.Id = Helper.getGUID();
+      let sql = `INSERT INTO Job (Id,JobInfo,StartTime,EndTime,RepeatType,ColorIndex) VALUES ('${job.Id}', '${job.JobInfo}', ${job.StartTime}, ${job.EndTime}, ${job.RepeatType}, ${job.ColorIndex})`;
+      await db.exec(sql);
+    }
+    const channel = new BroadcastChannel('winChannel');
+    channel.postMessage('refreshView');
+    horse.win.close();
   };
   return (
     <>
@@ -67,15 +66,15 @@ function App(props) {
 }
 
 document.addEventListener("DOMContentLoaded", async () => {
+  await db.open();
   let url = new URL(window.location.href);
   let editId = url.searchParams.get("editId");
   let job: ModelJob;
   if (editId) {
-    // let { ipcRenderer } = require("electron");
-    // let jobArr: ModelJob[] = await ipcRenderer.invoke("getData", "SELECT * FROM Job WHERE Id = ?", editId);
-    // if (jobArr.length) {
-    //   job = jobArr[0];
-    // }
+    let jobArr: ModelJob[] = await db.exec(`SELECT * FROM Job WHERE Id = '${editId}'`);
+    if (jobArr.length) {
+      job = jobArr[0];
+    }
   } else {
     job = new ModelJob();
     job.StartTime = Number(url.searchParams.get("startTime"));
@@ -97,6 +96,4 @@ document.addEventListener("DOMContentLoaded", async () => {
   });
   let event = new CustomEvent("loaded", { detail: job });
   Helper.$id("IndexJobBox").dispatchEvent(event);
-  // let { ipcRenderer } = require("electron");
-  // ipcRenderer.invoke("changeWindowState", "show");
 });

@@ -23,7 +23,7 @@ export default function (props) {
         window.open(`/IndexJob.html?editId=${id}`, "_blank", `{ title: "修改日程" }`);
         Helper.$id("ModalMask").style.display = "block";
       } else {
-        await db.exec(`delete from Job where id=${id}`);
+        await db.exec(`delete from Job where id='${id}'`);
         dispatchEvent(new Event("refreshView"));
       }
     }
