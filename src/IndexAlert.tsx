@@ -1,14 +1,13 @@
 import React from "./React";
-import "./IndexAlert.scss";
 import TitleBarBtns from "./TitleBarBtns";
 import ColorGet from "./ColorGet";
 import { ModelJob } from "./model/ModelJob";
-import { Helper } from "./common/Helper";
+import { db } from "./common/db";
+import "./IndexAlert.scss";
 function App(props) {
   let job = props.job as ModelJob;
   let save = () => {
-    // let { ipcRenderer } = require("electron");
-    // ipcRenderer.invoke("changeWindowState", "close");
+    horse.win.close()
   };
   return (
     <>
@@ -28,9 +27,7 @@ function App(props) {
 document.addEventListener("DOMContentLoaded", async () => {
   let url = new URL(window.location.href);
   let id = url.searchParams.get("id");
-  // let { ipcRenderer } = require("electron");
-  // let [job]: ModelJob[] = await ipcRenderer.invoke("getData", "SELECT * FROM Job WHERE Id = ?", id);
-  // document.body.style.setProperty("--color", ColorGet(job.ColorIndex));
-  // document.body.appendChild(<App job={job} />);
-  // ipcRenderer.invoke("changeWindowState", "show");
+  let [job]: ModelJob[] = await db.exec(`SELECT * FROM Job WHERE Id = '${id}'`);
+  document.body.style.setProperty("--color", ColorGet(job.ColorIndex));
+  document.body.appendChild(<App job={job} />);
 });
