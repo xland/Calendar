@@ -66,6 +66,16 @@ function App(props) {
 }
 
 document.addEventListener("DOMContentLoaded", async () => {
+  horse.win.on("closing", async (result) => {
+    await horse.win.sendMsg(horse.win.pid, "close");
+    horse.win.destroy();
+  })
+  horse.win.on("msg", async (msg) => {
+    if (msg.data === "flashAndActivate") {
+      await horse.win.flash();
+      await horse.win.activate();
+    }
+  })
   await db.open();
   let url = new URL(window.location.href);
   let editId = url.searchParams.get("editId");

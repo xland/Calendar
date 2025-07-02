@@ -1,22 +1,23 @@
 import React from "./React";
 import "./ModalMask.scss";
 import { Helper } from "./common/Helper";
+import { eventer } from "./common/eventer";
 export default function (props) {
-  // let ipcRenderer = require("electron").ipcRenderer;
-  // ipcRenderer.addListener("modalWindowClosed", () => {
-  //   Helper.$id("ModalMask").style.display = "none";
-  // });
-  let maskClick = () => {
-    // let ipcRenderer = require("electron").ipcRenderer;
-    // ipcRenderer.invoke("activeSubWindow");
+  let tarId: number
+  let maskClick = async () => {
+    debugger;
+    await horse.win.sendMsg(tarId, "flashAndActivate");
   };
   let loaded = (e: CustomEvent) => {
-    let proxy = e.detail as Win;
-    proxy.on("closing", () => {
-      Helper.$id("ModalMask").style.display = "none";
-      proxy.destroy();
-    })
+    tarId = e.detail as number
     Helper.$id("ModalMask").style.display = "block";
   }
+  eventer.on("dataReady", () => {
+    horse.win.on("msg", (msg) => {
+      if (msg.data === "close") {
+        Helper.$id("ModalMask").style.display = "none";
+      }
+    })
+  })
   return <div id="ModalMask" onClick={maskClick} onLoaded={loaded}></div>;
 }
