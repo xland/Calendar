@@ -5,7 +5,6 @@ import { eventer } from "./common/eventer";
 export default function (props) {
   let tarId: number
   let maskClick = async () => {
-    debugger;
     await horse.win.sendMsg(tarId, "flashAndActivate");
   };
   let loaded = (e: CustomEvent) => {
@@ -16,6 +15,8 @@ export default function (props) {
     horse.win.on("msg", (msg) => {
       if (msg.data === "close") {
         Helper.$id("ModalMask").style.display = "none";
+      } else if (msg.data === "closeSave") {
+        dispatchEvent(new Event("refreshView"));
       }
     })
   })

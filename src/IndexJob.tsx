@@ -45,9 +45,8 @@ function App(props) {
       let sql = `INSERT INTO Job (Id,JobInfo,StartTime,EndTime,RepeatType,ColorIndex) VALUES ('${job.Id}', '${job.JobInfo}', ${job.StartTime}, ${job.EndTime}, ${job.RepeatType}, ${job.ColorIndex})`;
       await db.exec(sql);
     }
-    const channel = new BroadcastChannel('winChannel');
-    channel.postMessage('refreshView');
-    horse.win.close();
+    await horse.win.sendMsg(horse.win.pid, "closeSave");
+    horse.win.destroy();
   };
   return (
     <>

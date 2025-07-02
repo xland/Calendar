@@ -1,9 +1,9 @@
 import React from "./React";
 import { eventer } from "./common/eventer";
 import { Helper } from "./common/Helper";
-import "./SmallCalendar.scss";
 import { dataMonthSmall } from "./DataMonthSmall";
 import { dataMonth } from "./DataMonth";
+import "./SmallCalendar.scss";
 
 export default function () {
   let initDataDom = () => {
@@ -36,9 +36,6 @@ export default function () {
       dom.innerHTML = `${dataMonthSmall.curDate.getFullYear()}年${dataMonthSmall.curDate.getMonth() + 1}月`;
     }
   };
-  eventer.on("dataReady", async () => {
-    initDataDom();
-  });
   let goPrevOrNextMonth = async (target: HTMLElement, val: number) => {
     let titleDom = target.parentElement.firstElementChild as HTMLElement;
     let oldMonthIndex = dataMonthSmall.curDate.getMonth();
@@ -68,6 +65,9 @@ export default function () {
     let event = new CustomEvent("gotodateview", { detail: dateObj });
     Helper.$id("SwitchBtns").dispatchEvent(event);
   };
+  eventer.on("dataReady", async () => {
+    initDataDom();
+  });
   return (
     <div id="SmallCalendar">
       <div class="titlebar">

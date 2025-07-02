@@ -9,6 +9,7 @@ class DataMonth {
     let sql = `SELECT * FROM Job WHERE StartTime >= ${startTime} and EndTime <= ${endTime} and RepeatType == 0 order by StartTime asc`;
     let result: ModelJob[] = await db.exec(sql);
     let repeatJobs: ModelJob[] = await db.exec(`SELECT * FROM Job where RepeatType > 0`);
+    debugger;
     let monthStart = new Date(startTime);
     for (let j = 0; j < repeatJobs.length; j++) {
       let job = repeatJobs[j];

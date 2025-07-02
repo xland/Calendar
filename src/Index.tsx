@@ -31,12 +31,10 @@ document.addEventListener("DOMContentLoaded", async () => {
   dataMonthSmall.initFirst();
   await dataSetting.init();
   eventer.emit("dataReady");
-  const channel = new BroadcastChannel('winChannel');
-  channel.onmessage = async (e) => {
-    if (e.data === "refreshView") {
-      await dataMonth.initJobArr();
-      await dataMonthSmall.init();
-      eventer.emit("dataReady");
-    }
-  };
+
+  window.addEventListener("refreshView", async (e) => {
+    await dataMonth.initJobArr();
+    await dataMonthSmall.init();
+    eventer.emit("dataReady");
+  });
 });
