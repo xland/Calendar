@@ -87,8 +87,8 @@ export class Helper {
     }
   }
   static async jobDbClick(e: MouseEvent) {
-    let id = (e.currentTarget as HTMLElement).dataset.id;
-    let proxy = await horse.createWin({
+    let jobId = (e.currentTarget as HTMLElement).dataset.id;
+    let { id } = await horse.win.create({
       resizable: false,
       maximizable: false,
       minimizable: false,
@@ -107,10 +107,9 @@ export class Helper {
         h: 200,
       },
       pos: "centerScreen",
-      url: `http://localhost:8000/IndexJob.html?editId=${id}`,
+      url: `http://localhost:8000/IndexJob.html?editId=${jobId}`,
     });
-
-    Helper.$id("ModalMask").style.display = "block";
+    Helper.$id("ModalMask").dispatchEvent(new CustomEvent("loaded", { detail: id }));
   }
   static jobMouseDown(e: MouseEvent) {
     e.preventDefault();

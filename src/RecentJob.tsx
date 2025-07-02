@@ -11,7 +11,7 @@ export default function () {
     let now = Date.now();
     let beforeSpan = dataSetting.setting.AlertBefore * 60000;
     if (startTime - now - beforeSpan < 2000) {
-      let proxy = await horse.createWin({
+      let { id } = await horse.win.create({
         resizable: false,
         maximizable: false,
         minimizable: false,
@@ -32,11 +32,11 @@ export default function () {
         "pos": "centerScreen",
         url: `http://localhost:8000/IndexAlert.html?id=${id}`,
       });
-      Helper.$id("ModalMask").dispatchEvent(new CustomEvent("loaded", { detail: proxy }));
+      Helper.$id("ModalMask").dispatchEvent(new CustomEvent("loaded", { detail: id }));
       return false;
     }
     timeOutId = setTimeout(async () => {
-      let proxy = await horse.createWin({
+      let { id } = await horse.win.create({
         resizable: false,
         maximizable: false,
         minimizable: false,
@@ -57,7 +57,7 @@ export default function () {
         "pos": "centerScreen",
         url: `http://localhost:8000/IndexAlert.html?id=${id}`,
       });
-      Helper.$id("ModalMask").style.display = "block";
+      Helper.$id("ModalMask").dispatchEvent(new CustomEvent("loaded", { detail: id }));
       await initData();
     }, startTime - now - beforeSpan);
     return true;

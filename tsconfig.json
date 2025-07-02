@@ -5,5 +5,5 @@
         "moduleResolution": "node",
         "lib": ["ESNext","DOM"]
     },
-    "include": ["src", "horsejs.d.ts"]
+    "include": ["src", "D:\\project\\HorseJs\\Script\\horsejs.d.ts"]
 }

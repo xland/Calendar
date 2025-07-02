@@ -22,7 +22,7 @@ export default function () {
 
     let hour = parseInt(startHour.split(":")[0]);
     let startTime = new Date(dateObj.year, dateObj.month - 1, dateObj.day, hour, 0, 0, 0);
-    let proxy = await horse.createWin({
+    let { id } = await horse.win.create({
       resizable: false,
       maximizable: false,
       minimizable: false,
@@ -43,7 +43,7 @@ export default function () {
       "pos": "centerScreen",
       url: `http://localhost:8000/IndexJob.html?colorIndex=${colorIndex}&startTime=${startTime.getTime()}`,
     });
-    Helper.$id("ModalMask").dispatchEvent(new CustomEvent("loaded", { detail: proxy }));
+    Helper.$id("ModalMask").dispatchEvent(new CustomEvent("loaded", { detail: id }));
   };
   let bgLineMouseOver = (e) => {
     let target = e.target as HTMLElement;

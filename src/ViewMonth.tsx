@@ -15,7 +15,7 @@ export default function () {
       if (colorIndex > 5) colorIndex = 0;
     }
     let startTime = new Date(dateObj.year, dateObj.month - 1, dateObj.day, 8, 0, 0, 0);
-    let proxy = await horse.createWin({
+    let { id } = await horse.win.create({
       resizable: false,
       maximizable: false,
       minimizable: false,
@@ -36,7 +36,7 @@ export default function () {
       "pos": "centerScreen",
       url: `http://localhost:8000/IndexJob.html?colorIndex=${colorIndex}&startTime=${startTime.getTime()}`,
     });
-    Helper.$id("ModalMask").style.display = "block";
+    Helper.$id("ModalMask").dispatchEvent(new CustomEvent("loaded", { detail: id }));
   };
   eventer.on("dataReady", () => {
     let container = Helper.$id("ViewMonth").lastElementChild;
