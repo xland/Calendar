@@ -4,3 +4,5 @@
 .vs/
 /dist/
 /addon/build/
+/x64/
+/Calendar/x64/
