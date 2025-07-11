@@ -36,12 +36,12 @@
     <Import Project="$(QtMsBuild)\qt_defaults.props" />
   </ImportGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'" Label="QtSettings">
-    <QtInstall>6.8.3-shared_msvc2022_64</QtInstall>
+    <QtInstall>6.8.3</QtInstall>
     <QtModules>core;gui;widgets</QtModules>
     <QtBuildConfig>debug</QtBuildConfig>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'" Label="QtSettings">
-    <QtInstall>6.9.1_msvc2022_64</QtInstall>
+    <QtInstall>6.8.3</QtInstall>
     <QtModules>core;gui;widgets</QtModules>
     <QtBuildConfig>release</QtBuildConfig>
   </PropertyGroup>
@@ -63,6 +63,9 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
   </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Manifest />
+  </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'" Label="Configuration">
     <ClCompile>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
@@ -92,18 +95,57 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Body.cpp" />
-    <ClCompile Include="TitleBar.cpp" />
+    <ClCompile Include="BtnBase.cpp" />
+    <ClCompile Include="DayBtn.cpp" />
+    <ClCompile Include="MainWindow.cpp" />
+    <ClCompile Include="Menu.cpp" />
+    <ClCompile Include="MenuItem.cpp" />
+    <ClCompile Include="Skin.cpp" />
+    <ClCompile Include="TipInfo.cpp" />
+    <ClCompile Include="Toast.cpp" />
+    <ClCompile Include="Util.cpp" />
+    <ClCompile Include="WeekBar.cpp" />
+    <ClCompile Include="YearBar.cpp" />
+    <ClCompile Include="YearBarBtn.cpp" />
+    <ClCompile Include="YearBarBtnBase.cpp" />
+    <ClCompile Include="YearBarBtnToday.cpp" />
     <QtRcc Include="Calendar.qrc" />
-    <QtMoc Include="Calendar.h" />
-    <ClCompile Include="Calendar.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <QtMoc Include="TitleBar.h" />
+    <Image Include="Res\alipay.jpg" />
+    <Image Include="Res\author.jpg" />
+    <Image Include="Res\logo.ico" />
+    <Image Include="Res\wechat.png" />
   </ItemGroup>
   <ItemGroup>
-    <QtMoc Include="Body.h" />
+    <ResourceCompile Include="Res\Res.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <QtMoc Include="MainWindow.h" />
+    <QtMoc Include="Menu.h" />
+    <QtMoc Include="MenuItem.h" />
+    <QtMoc Include="DayBtn.h" />
+    <QtMoc Include="BtnBase.h" />
+    <ClInclude Include="Res\Res.h" />
+    <QtMoc Include="Toast.h" />
+    <QtMoc Include="TipInfo.h" />
+    <ClInclude Include="Skin.h" />
+    <ClInclude Include="Util.h" />
+    <QtMoc Include="YearBarBtnBase.h" />
+    <QtMoc Include="YearBarBtn.h" />
+    <QtMoc Include="YearBar.h" />
+    <QtMoc Include="WeekBar.h" />
+    <QtMoc Include="YearBarBtnToday.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Font Include="Res\iconfont.ttf" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include=".gitignore" />
+    <None Include="LICENSE" />
+    <None Include="README.md" />
+    <None Include="Todo.md" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">

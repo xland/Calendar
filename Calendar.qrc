@@ -1,4 +1,8 @@
 <RCC>
-    <qresource prefix="Calendar">
+    <qresource prefix="/">
+        <file>Res/alipay.jpg</file>
+        <file>Res/author.jpg</file>
+        <file>Res/iconfont.ttf</file>
+        <file>Res/wechat.png</file>
     </qresource>
 </RCC>
