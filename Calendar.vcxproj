@@ -100,6 +100,7 @@
     <ClCompile Include="MainWindow.cpp" />
     <ClCompile Include="Menu.cpp" />
     <ClCompile Include="MenuItem.cpp" />
+    <ClCompile Include="NongLi.cpp" />
     <ClCompile Include="Skin.cpp" />
     <ClCompile Include="TipInfo.cpp" />
     <ClCompile Include="Toast.cpp" />
@@ -127,6 +128,7 @@
     <QtMoc Include="MenuItem.h" />
     <QtMoc Include="DayBtn.h" />
     <QtMoc Include="BtnBase.h" />
+    <ClInclude Include="NongLi.h" />
     <ClInclude Include="Res\Res.h" />
     <QtMoc Include="Toast.h" />
     <QtMoc Include="TipInfo.h" />

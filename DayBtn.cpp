@@ -11,7 +11,9 @@ DayBtn::DayBtn(const int& index, QWidget* parent) : BtnBase(parent), index{ inde
 {
     int lineNum = index / 7;
     int colNum = index % 7;
-    setGeometry(colNum * 44+14+6*colNum, lineNum * 44+86 + 4 * lineNum, 44, 44);
+    int w = (parent->width() - 20) / 7;
+    int h = 38;
+    setGeometry(colNum * w+10, lineNum * h+78, w, h);
     setMouseTracking(true);
     setCursor(Qt::CursorShape::PointingHandCursor);
     connect(this, &DayBtn::click, this, &DayBtn::onClick);
@@ -28,22 +30,23 @@ void DayBtn::paintEvent(QPaintEvent* event)
     painter.setRenderHint(QPainter::Antialiasing, true);
     painter.setRenderHint(QPainter::TextAntialiasing, true);
     auto skin = Skin::get();
+    auto r = rect().adjusted(1, 2, -1, -2);
     if (isActive) {
         painter.setBrush(skin->dayActive);
         painter.setPen(Qt::NoPen);
-        painter.drawRect(rect());
+        painter.drawRect(r);
     }
     else if (isToday) {
         painter.setBrush(Qt::NoBrush);
         painter.setPen(skin->dayActive);
-        painter.drawEllipse(rect().adjusted(1,1,-1,-1));
+        painter.drawRect(r);
     }
     if (!isActive && isHover && !Menu::get()->isVisible()) {
         painter.setBrush(skin->dayHover);
         painter.setPen(Qt::NoPen);
-        painter.drawEllipse(rect());
+        painter.drawRect(r);
     }
-    auto font = Util::getTextFont(16);
+    auto font = Util::getTextFont(12);
     painter.setFont(*font);
     painter.setBrush(Qt::NoBrush);
     if (isActive) {
@@ -63,7 +66,7 @@ void DayBtn::paintEvent(QPaintEvent* event)
 
     font->setPixelSize(10);
     painter.setFont(*font);
-    textRect.setTop(textRect.top() + 19);
+    textRect.setTop(textRect.top() + 16);
     if (isActive) {
         painter.setPen(QColor(255,255,255));
     }
@@ -79,13 +82,13 @@ void DayBtn::paintEvent(QPaintEvent* event)
     auto x = r1.right() - 11;
     auto y = r1.top() + 14;
 
-    if (isActive) {
-        painter.setPen(QColor(255,255,255));
-    }
-    else {
-        painter.setPen(skin->dayWorking);
-    }
-    painter.drawText(QPoint(x, y), docStatus);
+    //if (isActive) {
+    //    painter.setPen(QColor(255,255,255));
+    //}
+    //else {
+    //    painter.setPen(skin->dayWorking);
+    //}
+    //painter.drawText(QPoint(x, y), docStatus);
 
     if (hasSchdule) {    
         if (isActive) {

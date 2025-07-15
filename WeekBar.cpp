@@ -12,7 +12,7 @@ WeekBar* weekBar;
 WeekBar::WeekBar(QWidget *parent) : QWidget(parent)
 {
 	auto winWidth = parent->width();
-	setGeometry(11, 48, winWidth-22, 28);
+	setGeometry(11, 48, winWidth-22, 24);
 }
 
 WeekBar::~WeekBar()

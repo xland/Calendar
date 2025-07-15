@@ -73,6 +73,9 @@
     <ClCompile Include="BtnBase.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="NongLi.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="YearBarBtnToday.h">
@@ -139,6 +142,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Skin.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="NongLi.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

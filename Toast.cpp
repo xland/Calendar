@@ -54,8 +54,8 @@ void Toast::init()
 	auto width = metrics.horizontalAdvance(text) + 30 + 14;
 	auto height = 40;
 	toast->setGeometry((toast->window()->width() - width) / 2, 22, width, height);
-	toast->show();
-	toast->showTime = QDateTime::currentDateTime().toMSecsSinceEpoch();
+	//toast->show();
+	//toast->showTime = QDateTime::currentDateTime().toMSecsSinceEpoch();
 }
 
 void Toast::showEvent(QShowEvent* event)

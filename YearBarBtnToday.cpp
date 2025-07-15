@@ -21,39 +21,16 @@ void YearBarBtnToday::paintEvent(QPaintEvent* event)
     painter.setRenderHint(QPainter::Antialiasing, true);
     painter.setRenderHint(QPainter::TextAntialiasing, true);
     auto skin = Skin::get();
-    if (isCn) {
-        auto r = rect().adjusted(28, 2, -2, -2);
-        if (isHover) {
-            painter.setBrush(skin->yearBtnHover);
-            painter.setPen(Qt::NoPen);
-            painter.drawEllipse(r);
-        }
-        painter.setBrush(Qt::NoBrush);
-        painter.setPen(skin->yearBtnBorder);
-        painter.drawEllipse(r);
-
-        painter.setPen(skin->yearBtn);
-        painter.setBrush(Qt::NoBrush);
-        auto font = Util::getTextFont(12);
-        painter.setFont(*font);
-        painter.drawText(r, Qt::AlignCenter, "今");
+    auto r = rect();
+    if (isHover) {
+        painter.setBrush(skin->yearBtnHover);
+        painter.setPen(Qt::NoPen);
+        painter.drawRect(r);
     }
-    else {
-        auto r = rect().adjusted(1, 2, -1, -2);
-        if (isHover) {
-            painter.setBrush(skin->yearBtnHover);
-            painter.setPen(Qt::NoPen);
-            painter.drawRoundedRect(r, 10, 10);
-        }
-        painter.setBrush(Qt::NoBrush);
-        painter.setPen(skin->yearBtnBorder);
-        painter.drawRoundedRect(r, 10, 10);
-
-        painter.setPen(skin->yearBtn);
-        painter.setBrush(Qt::NoBrush);
-        auto font = Util::getTextFont(12);
-        painter.setFont(*font);
-        painter.drawText(r, Qt::AlignCenter, "Today");
-    }
+    painter.setPen(skin->yearBtn);
+    painter.setBrush(Qt::NoBrush);
+    auto font = Util::getTextFont(12);
+    painter.setFont(*font);
+    painter.drawText(r, Qt::AlignCenter, "今");
 
 }

@@ -15,22 +15,22 @@ YearBar* yearBar;
 YearBar::YearBar(QWidget *parent) : QWidget(parent)
 {
 	setGeometry(0, 0, 372, 44);
-	leftBtn = new YearBarBtn(0xe709,this);
-	leftBtn->move(80, 12);
-	rightBtn = new YearBarBtn(0xe70e,this);
-	rightBtn->move(240, 12);
+	leftBtn = new YearBarBtn(0xe60e,this);
+	leftBtn->move(204, 12);
+	rightBtn = new YearBarBtn(0xe638,this);
+	rightBtn->move(252, 12);
 	todayBtn = new YearBarBtnToday(this);
-	todayBtn->move(308, 12);
-	connect(leftBtn, &YearBarBtn::enter, this, &YearBar::leftBtnEnter);
-	connect(rightBtn, &YearBarBtn::enter, this, &YearBar::rightBtnEnter);
+	todayBtn->move(320, 12);
+	//connect(leftBtn, &YearBarBtn::enter, this, &YearBar::leftBtnEnter);
+	//connect(rightBtn, &YearBarBtn::enter, this, &YearBar::rightBtnEnter);
 
 	connect(leftBtn, &YearBarBtn::click, this, &YearBar::leftBtnClick);
 	connect(rightBtn, &YearBarBtn::click, this, &YearBar::rightBtnClick);
 	connect(todayBtn, &YearBarBtn::click, this, &YearBar::todayBtnClick);
 
-	connect(leftBtn, &YearBarBtn::leave, this, &YearBar::btnLeave);
-	connect(rightBtn, &YearBarBtn::leave, this, &YearBar::btnLeave);
-	connect(todayBtn, &YearBarBtn::leave, this, &YearBar::btnLeave);
+	//connect(leftBtn, &YearBarBtn::leave, this, &YearBar::btnLeave);
+	//connect(rightBtn, &YearBarBtn::leave, this, &YearBar::btnLeave);
+	//connect(todayBtn, &YearBarBtn::leave, this, &YearBar::btnLeave);
 }
 
 YearBar::~YearBar()

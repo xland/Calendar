@@ -94,7 +94,7 @@ void Skin::initWhite()
 
 	yearBtnTodayHover.setRgb(240, 44, 56, 51);
 
-	week.setRgb(76, 79, 84);
+	week.setRgb(120, 120, 120);
 	day.setRgb(31, 35, 41);
 	lunar.setRgb(76, 79, 84);
 	dayNotCurMonth.setRgb(102, 102, 102);

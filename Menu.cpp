@@ -7,7 +7,7 @@
 #include "Skin.h"
 #include "MainWindow.h"
 
-Menu *menu;
+Menu* menu;
 
 Menu::Menu(QWidget *parent) : BtnBase(parent)
 {
@@ -23,21 +23,20 @@ Menu::~Menu()
 
 void Menu::init()
 {
-	if (!menu)
-	{
+	if (!menu) {
 		menu = new Menu(MainWindow::get());
-		// menu->setData(obj);  //todo
+		//menu->setData(obj);  //todo
 	}
 }
 
-Menu *Menu::get()
+Menu* Menu::get()
 {
 	return menu;
 }
 
-void Menu::setData(const QJsonObject &obj)
+void Menu::setData(const QJsonObject& obj)
 {
-	QVBoxLayout *layout = new QVBoxLayout(this);
+	QVBoxLayout* layout = new QVBoxLayout(this);
 	layout->setSpacing(2);
 	layout->setContentsMargins(4, 4, 4, 4);
 	auto lang = obj["lang"].toObject();
@@ -56,7 +55,7 @@ void Menu::setData(const QJsonObject &obj)
 	setLayout(layout);
 }
 
-void Menu::paintEvent(QPaintEvent *event)
+void Menu::paintEvent(QPaintEvent* event)
 {
 	QPainter painter(this);
 	painter.setRenderHint(QPainter::Antialiasing, true);
@@ -68,13 +67,12 @@ void Menu::paintEvent(QPaintEvent *event)
 
 void Menu::mouseLeave()
 {
-	QTimer::singleShot(600, [this]()
-					   {
-						   // todo
-						   // if (!isHover && !TitleBar::get()->menuBtn->isHover) {
-						   //	menu->hide();
-						   // }
-					   });
+	QTimer::singleShot(600, [this]() {
+		//todo
+		//if (!isHover && !TitleBar::get()->menuBtn->isHover) {
+		//	menu->hide();
+		//}
+	});
 }
 
 void Menu::menuClick0()
@@ -83,10 +81,12 @@ void Menu::menuClick0()
 
 void Menu::menuClick1()
 {
+	
 }
 
 void Menu::menuClick2()
 {
+	
 }
 
 void Menu::menuClick3()

@@ -19,6 +19,7 @@
 #include "DayBtn.h"
 #include "Util.h"
 #include "TipInfo.h"
+#include "NongLi.h"
 
 namespace {
     WNDPROC oldProc;
@@ -203,19 +204,19 @@ void MainWindow::updateData()
     auto x = 100;
     auto y = 100;
     move(x, y);
-    setFixedSize(QSize(372, 380));
+    setFixedSize(QSize(372, 320));
     auto dayArr = Util::getOneMonthDay(QDate::currentDate());
     int i = 0;
     for (auto& dayData:dayArr)
     {
         auto day = new DayBtn(i, this);
         day->day = std::get<0>(dayData);
-        day->lunar = "廿二";
+        day->lunar = NongLi::solar2lunar(day->day.year(), day->day.month(), day->day.day()).iDayCn;
         day->docStatus = "has";
         day->hasSchdule = false;
         day->isActive = false;
         day->isToday = false;
-        day->isCurMonth = true;
+        day->isCurMonth = std::get<1>(dayData);
         dayBtns.append(day);
         i += 1;
 
