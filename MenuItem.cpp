@@ -26,8 +26,7 @@ void MenuItem::paintEvent(QPaintEvent* event)
 
 	painter.setPen(skin->menu);
 	painter.setBrush(Qt::NoBrush);
-	auto font = Util::getTextFont(14);
-	painter.setFont(*font);
+	painter.setFont(Util::getTextFont(14));
 	painter.drawText(QPoint(30, 20), text);
 	painter.setFont(Util::getIconFont(13));
 	painter.drawText(QPoint(10, 20), icon);

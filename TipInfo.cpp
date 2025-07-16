@@ -33,8 +33,7 @@ TipInfo* TipInfo::get()
 void TipInfo::setText(const QString& text)
 {
     this->text = text;
-    auto font = Util::getTextFont(14);
-    QFontMetrics fm(*font);
+    QFontMetrics fm(Util::getTextFont(14));
     int textAdvance = fm.horizontalAdvance(text);
     setFixedSize(textAdvance + 18, 32);
 }
@@ -56,7 +55,6 @@ void TipInfo::paintEvent(QPaintEvent* event)
     painter.drawRoundedRect(rect(), 4, 4);
     painter.setBrush(Qt::NoBrush);
     painter.setPen(skin->tipInfo);
-    auto font = Util::getTextFont(14);
-    painter.setFont(*font);
+    painter.setFont(Util::getTextFont(14));
     painter.drawText(rect(), Qt::AlignCenter, text);
 }

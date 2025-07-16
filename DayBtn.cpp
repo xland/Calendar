@@ -6,14 +6,15 @@
 #include "Skin.h"
 #include "Util.h"
 #include "DayBtn.h"
+#include "DialogSchedule.h"
 
 DayBtn::DayBtn(const int& index, QWidget* parent) : BtnBase(parent), index{ index }
 {
     int lineNum = index / 7;
     int colNum = index % 7;
     int w = (parent->width() - 20) / 7;
-    int h = 38;
-    setGeometry(colNum * w+10, lineNum * h+78, w, h);
+    int h = 40;
+    setGeometry(colNum * w+10, lineNum * h+66, w, h);
     setMouseTracking(true);
     setCursor(Qt::CursorShape::PointingHandCursor);
     connect(this, &DayBtn::click, this, &DayBtn::onClick);
@@ -30,7 +31,8 @@ void DayBtn::paintEvent(QPaintEvent* event)
     painter.setRenderHint(QPainter::Antialiasing, true);
     painter.setRenderHint(QPainter::TextAntialiasing, true);
     auto skin = Skin::get();
-    auto r = rect().adjusted(1, 2, -1, -2);
+    auto r = rect().adjusted(2, 2, -2, -2);
+    auto isToday = day == QDate::currentDate();
     if (isActive) {
         painter.setBrush(skin->dayActive);
         painter.setPen(Qt::NoPen);
@@ -38,7 +40,7 @@ void DayBtn::paintEvent(QPaintEvent* event)
     }
     else if (isToday) {
         painter.setBrush(Qt::NoBrush);
-        painter.setPen(skin->dayActive);
+        painter.setPen(QPen(skin->dayActive,0.5));
         painter.drawRect(r);
     }
     if (!isActive && isHover && !Menu::get()->isVisible()) {
@@ -46,8 +48,8 @@ void DayBtn::paintEvent(QPaintEvent* event)
         painter.setPen(Qt::NoPen);
         painter.drawRect(r);
     }
-    auto font = Util::getTextFont(12);
-    painter.setFont(*font);
+    auto& font = Util::getTextFont(12);
+    painter.setFont(font);
     painter.setBrush(Qt::NoBrush);
     if (isActive) {
         painter.setPen(QColor(255, 255, 255));
@@ -59,13 +61,13 @@ void DayBtn::paintEvent(QPaintEvent* event)
         painter.setPen(isCurMonth ? skin->day : skin->dayNotCurMonth);
     }
     QRect textRect = rect();
-    textRect.setTop(textRect.top() + 4);
+    textRect.setTop(textRect.top() + 5);
     QTextOption option;
     option.setAlignment(Qt::AlignHCenter);
     painter.drawText(textRect, QString::number(day.day()), option);
 
-    font->setPixelSize(10);
-    painter.setFont(*font);
+    font.setPixelSize(10);
+    painter.setFont(font);
     textRect.setTop(textRect.top() + 16);
     if (isActive) {
         painter.setPen(QColor(255,255,255));
@@ -74,7 +76,7 @@ void DayBtn::paintEvent(QPaintEvent* event)
         painter.setPen(skin->dayActive);
     }
     else {
-        painter.setPen(isCurMonth ? skin->lunar : skin->lunarNotCurMonth);
+        painter.setPen(isCurMonth ? skin->day : skin->dayNotCurMonth);
     }
     painter.drawText(textRect, lunar, option);
 
@@ -106,5 +108,8 @@ void DayBtn::paintEvent(QPaintEvent* event)
 
 void DayBtn::onClick()
 {
-    if (Menu::get()->isVisible()) return;
+    auto dialogSchedule = new DialogSchedule(nullptr);
+    dialogSchedule->show();
+    dialogSchedule->activateWindow();
+
 }

@@ -22,7 +22,7 @@ QFont& Util::getIconFont(const int& fontSize)
     return font;
 }
 
-QFont* Util::getTextFont(const int& fontSize)
+QFont& Util::getTextFont(const int& fontSize)
 {
     static QFont font = []() {
         QFont font("Microsoft YaHei");
@@ -31,7 +31,7 @@ QFont* Util::getTextFont(const int& fontSize)
         return font;
         }();
     font.setPixelSize(fontSize);
-    return &font;
+    return font;
 }
 
 

@@ -12,7 +12,7 @@ WeekBar* weekBar;
 WeekBar::WeekBar(QWidget *parent) : QWidget(parent)
 {
 	auto winWidth = parent->width();
-	setGeometry(11, 48, winWidth-22, 24);
+	setGeometry(10, 38, winWidth-18, 24);
 }
 
 WeekBar::~WeekBar()
@@ -32,8 +32,7 @@ void WeekBar::paintEvent(QPaintEvent* event)
 	QPainter painter(this);
 	painter.setRenderHint(QPainter::Antialiasing, true);
 	painter.setRenderHint(QPainter::TextAntialiasing, true);
-	auto font = Util::getTextFont(12);
-	painter.setFont(*font);
+	painter.setFont(Util::getTextFont(12));
 	auto skin = Skin::get();
 	painter.setPen(skin->week);
 	auto w = width() / 7;

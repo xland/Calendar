@@ -43,12 +43,6 @@
     <ClCompile Include="YearBarBtn.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="YearBarBtnBase.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="YearBarBtnToday.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Toast.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -76,11 +70,29 @@
     <ClCompile Include="NongLi.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="DialogSchedule.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="DialogSetting.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ScheduleEdit.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ScheduleBox.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ScheduleList.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ScheduleTab.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ScheduleSearch.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <QtMoc Include="YearBarBtnToday.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
     <QtMoc Include="WeekBar.h">
       <Filter>Header Files</Filter>
     </QtMoc>
@@ -88,9 +100,6 @@
       <Filter>Header Files</Filter>
     </QtMoc>
     <QtMoc Include="YearBarBtn.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
-    <QtMoc Include="YearBarBtnBase.h">
       <Filter>Header Files</Filter>
     </QtMoc>
     <QtMoc Include="Toast.h">
@@ -112,6 +121,27 @@
       <Filter>Header Files</Filter>
     </QtMoc>
     <QtMoc Include="BtnBase.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="DialogSchedule.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="DialogSetting.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="ScheduleEdit.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="ScheduleBox.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="ScheduleList.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="ScheduleTab.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="ScheduleSearch.h">
       <Filter>Header Files</Filter>
     </QtMoc>
   </ItemGroup>

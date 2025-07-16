@@ -17,20 +17,17 @@ class MainWindow : public QMainWindow
 
 public:    
     ~MainWindow();
-    void switchEmbed();
+    void updateData(const QDate& day);
     static RAWINPUT* getRawInput(HRAWINPUT lParam);
     static void init();
     static MainWindow* get();
-    static bool isEmbed();
 public:
     QList<DayBtn*> dayBtns;
     bool isEnter{ false };
 protected:
     void paintEvent(QPaintEvent* event) override;
-    void mousePressEvent(QMouseEvent* event) override;
 private:
     MainWindow(QWidget* parent = nullptr);
-    void updateData();
     void onEmbedMouseMove();
     void onEmbedMousePress();
     void onEmbedLeaveWindow();

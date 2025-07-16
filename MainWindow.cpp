@@ -24,16 +24,21 @@
 namespace {
     WNDPROC oldProc;
     MainWindow* win;
-    bool isEmbeded{ true };
 }
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 {
 	setWindowFlag(Qt::FramelessWindowHint);
     setAttribute(Qt::WA_QuitOnClose, false);
     setAttribute(Qt::WA_TranslucentBackground, true);
-    updateData(); //todo
-    if (isEmbeded) {
-        embed();
+    setFixedSize(QSize(370, 320));
+    auto x = 100;
+    auto y = 100;
+    move(x, y);
+    embed();
+    for (int i = 0; i < 42; i++)
+    {
+        auto day = new DayBtn(i, this);
+        dayBtns.append(day);
     }
 }
 MainWindow::~MainWindow()
@@ -48,25 +53,8 @@ void MainWindow::paintEvent(QPaintEvent* event)
     painter.setBrush(skin->bg);
     painter.setPen(Qt::NoPen);
     painter.drawRoundedRect(rect(), 4, 4);
-}
-
-void MainWindow::mousePressEvent(QMouseEvent* event)
-{
 
 }
-
-void MainWindow::switchEmbed()
-{
-    if (isEmbeded) {
-        auto hwnd = (HWND)winId();
-        SetWindowLongPtr(hwnd, GWLP_WNDPROC, (LONG_PTR)oldProc);
-        SetParent(hwnd, nullptr);
-    }
-    delete win;
-    win = nullptr;
-    isEmbeded = !isEmbeded;
-}
-
 
 void MainWindow::onEmbedMouseMove()
 {
@@ -87,12 +75,12 @@ void MainWindow::onEmbedMouseMove()
 
 void MainWindow::onEmbedMousePress()
 {
-    auto pos = mapFromGlobal(QCursor::pos());
+    auto gPos = QCursor::pos();
+    auto pos = mapFromGlobal(gPos);
     auto child = dynamic_cast<BtnBase*>(childAt(pos));
     if (!child) return;
-    //todo
-    //QMouseEvent e(QEvent::MouseButtonPress, QPointF(0, 0), Qt::LeftButton, Qt::LeftButton, Qt::NoModifier);
-    //child->mousePressEvent(&e);
+    QMouseEvent e(QEvent::MouseButtonPress, QPointF(1, 1), gPos, Qt::LeftButton, Qt::LeftButton, Qt::NoModifier);
+    child->mousePressEvent(&e);
 }
 
 void MainWindow::onEmbedLeaveWindow()
@@ -194,31 +182,21 @@ MainWindow* MainWindow::get()
     return win;
 }
 
-bool MainWindow::isEmbed()
+void MainWindow::updateData(const QDate& day)
 {
-    return isEmbeded;
-}
-
-void MainWindow::updateData()
-{
-    auto x = 100;
-    auto y = 100;
-    move(x, y);
-    setFixedSize(QSize(372, 320));
-    auto dayArr = Util::getOneMonthDay(QDate::currentDate());
+    auto dayArr = Util::getOneMonthDay(day);
+    YearBar::get()->yearMonthLabel->setText(QString("%1年%2月").arg(day.year()).arg(day.month()));
     int i = 0;
     for (auto& dayData:dayArr)
     {
-        auto day = new DayBtn(i, this);
+        auto& day = dayBtns[i];
         day->day = std::get<0>(dayData);
         day->lunar = NongLi::solar2lunar(day->day.year(), day->day.month(), day->day.day()).iDayCn;
         day->docStatus = "has";
         day->hasSchdule = false;
         day->isActive = false;
-        day->isToday = false;
         day->isCurMonth = std::get<1>(dayData);
-        dayBtns.append(day);
+        day->update();
         i += 1;
-
     }
 }

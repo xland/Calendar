@@ -97,10 +97,17 @@
   <ItemGroup>
     <ClCompile Include="BtnBase.cpp" />
     <ClCompile Include="DayBtn.cpp" />
+    <ClCompile Include="DialogSchedule.cpp" />
+    <ClCompile Include="DialogSetting.cpp" />
     <ClCompile Include="MainWindow.cpp" />
     <ClCompile Include="Menu.cpp" />
     <ClCompile Include="MenuItem.cpp" />
     <ClCompile Include="NongLi.cpp" />
+    <ClCompile Include="ScheduleEdit.cpp" />
+    <ClCompile Include="ScheduleBox.cpp" />
+    <ClCompile Include="ScheduleList.cpp" />
+    <ClCompile Include="ScheduleSearch.cpp" />
+    <ClCompile Include="ScheduleTab.cpp" />
     <ClCompile Include="Skin.cpp" />
     <ClCompile Include="TipInfo.cpp" />
     <ClCompile Include="Toast.cpp" />
@@ -108,8 +115,6 @@
     <ClCompile Include="WeekBar.cpp" />
     <ClCompile Include="YearBar.cpp" />
     <ClCompile Include="YearBarBtn.cpp" />
-    <ClCompile Include="YearBarBtnBase.cpp" />
-    <ClCompile Include="YearBarBtnToday.cpp" />
     <QtRcc Include="Calendar.qrc" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
@@ -128,17 +133,22 @@
     <QtMoc Include="MenuItem.h" />
     <QtMoc Include="DayBtn.h" />
     <QtMoc Include="BtnBase.h" />
+    <QtMoc Include="DialogSchedule.h" />
+    <QtMoc Include="DialogSetting.h" />
     <ClInclude Include="NongLi.h" />
     <ClInclude Include="Res\Res.h" />
     <QtMoc Include="Toast.h" />
     <QtMoc Include="TipInfo.h" />
+    <QtMoc Include="ScheduleEdit.h" />
+    <QtMoc Include="ScheduleBox.h" />
+    <QtMoc Include="ScheduleList.h" />
+    <QtMoc Include="ScheduleTab.h" />
+    <QtMoc Include="ScheduleSearch.h" />
     <ClInclude Include="Skin.h" />
     <ClInclude Include="Util.h" />
-    <QtMoc Include="YearBarBtnBase.h" />
     <QtMoc Include="YearBarBtn.h" />
     <QtMoc Include="YearBar.h" />
     <QtMoc Include="WeekBar.h" />
-    <QtMoc Include="YearBarBtnToday.h" />
   </ItemGroup>
   <ItemGroup>
     <Font Include="Res\iconfont.ttf" />

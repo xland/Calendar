@@ -1,16 +1,19 @@
 #pragma once
-#include <QMouseEvent>
+
 #include <QWidget>
+#include <QPainter>
 
 #include "BtnBase.h"
-class YearBarBtn : public BtnBase
+
+class ScheduleTab : public BtnBase
 {
 	Q_OBJECT
+
 public:
-	YearBarBtn(const uint& code, QWidget *parent = nullptr);
-	~YearBarBtn();
+	ScheduleTab(QWidget *parent = nullptr);
+	~ScheduleTab();
 protected:
 	void paintEvent(QPaintEvent* event) override;
 private:
-	uint code;
 };
+

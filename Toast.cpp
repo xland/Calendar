@@ -49,8 +49,7 @@ void Toast::init()
 		toast->code = 0xe74f;
 	}
 	toast->text = text;
-	auto font = Util::getTextFont(14);
-	QFontMetrics metrics(*font);
+	QFontMetrics metrics(Util::getTextFont(14));
 	auto width = metrics.horizontalAdvance(text) + 30 + 14;
 	auto height = 40;
 	toast->setGeometry((toast->window()->width() - width) / 2, 22, width, height);
@@ -74,9 +73,9 @@ void Toast::paintEvent(QPaintEvent* event)
 	p.setRenderHint(QPainter::Antialiasing);
 	p.setRenderHint(QPainter::TextAntialiasing, true);
 
-	auto font = Util::getTextFont(14);
-	QFontMetrics metrics(*font);
-	p.setFont(*font);
+	auto& font = Util::getTextFont(14);
+	QFontMetrics metrics(font);
+	p.setFont(font);
 	p.setBrush(Qt::NoBrush);
 	p.setPen(color); 
 	p.setBrush(bg);

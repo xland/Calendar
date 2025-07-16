@@ -17,7 +17,6 @@ public:
 	QString docStatus;
 	bool hasSchdule;
 	bool isActive;
-	bool isToday;
 	bool isCurMonth;
 protected:
 	void paintEvent(QPaintEvent* event) override;

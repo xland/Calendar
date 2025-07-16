@@ -1,5 +1,6 @@
 ﻿#include <QRect>
 #include <QPainter>
+#include <QHBoxLayout>
 
 #include "Menu.h"
 #include "MainWindow.h"
@@ -8,29 +9,33 @@
 #include "Skin.h"
 #include "YearBar.h"
 #include "Toast.h"
+#include "DayBtn.h"
 
 YearBar* yearBar;
 
 
 YearBar::YearBar(QWidget *parent) : QWidget(parent)
 {
-	setGeometry(0, 0, 372, 44);
-	leftBtn = new YearBarBtn(0xe60e,this);
-	leftBtn->move(204, 12);
-	rightBtn = new YearBarBtn(0xe638,this);
-	rightBtn->move(252, 12);
-	todayBtn = new YearBarBtnToday(this);
-	todayBtn->move(320, 12);
-	//connect(leftBtn, &YearBarBtn::enter, this, &YearBar::leftBtnEnter);
-	//connect(rightBtn, &YearBarBtn::enter, this, &YearBar::rightBtnEnter);
+	setGeometry(0, 0, 372, 40);
+	QHBoxLayout* layout = new QHBoxLayout(this);
+	layout->setContentsMargins(22, 0, 18, 0);
+	yearMonthLabel = new QLabel(this);
+	layout->addWidget(yearMonthLabel);
+	layout->addStretch();
+
+	leftBtn = new YearBarBtn(0xe60e, this);
+	rightBtn = new YearBarBtn(0xe638, this);
+	todayBtn = new YearBarBtn(0xe667, this);
+	settingBtn = new YearBarBtn(0xe643, this);
+	layout->addWidget(leftBtn);
+	layout->addWidget(rightBtn);
+	layout->addWidget(todayBtn);
+	layout->addWidget(settingBtn);
+	setLayout(layout);
 
 	connect(leftBtn, &YearBarBtn::click, this, &YearBar::leftBtnClick);
 	connect(rightBtn, &YearBarBtn::click, this, &YearBar::rightBtnClick);
 	connect(todayBtn, &YearBarBtn::click, this, &YearBar::todayBtnClick);
-
-	//connect(leftBtn, &YearBarBtn::leave, this, &YearBar::btnLeave);
-	//connect(rightBtn, &YearBarBtn::leave, this, &YearBar::btnLeave);
-	//connect(todayBtn, &YearBarBtn::leave, this, &YearBar::btnLeave);
 }
 
 YearBar::~YearBar()
@@ -43,11 +48,12 @@ void YearBar::init()
 	if (!yearBar) {
 		yearBar = new YearBar(MainWindow::get());
 	}
-	yearBar->leftTip = "上月";
-	yearBar->rightTip = "下月";
 	yearBar->activeDateMonth =  "";
-	yearBar->todayBtn->isCn = true;
 	yearBar->show();
+}
+
+YearBar* YearBar::get() {
+	return yearBar;
 }
 
 void YearBar::paintEvent(QPaintEvent* event)
@@ -55,43 +61,39 @@ void YearBar::paintEvent(QPaintEvent* event)
 	QPainter painter(this);
 	painter.setRenderHint(QPainter::Antialiasing, true);
 	painter.setRenderHint(QPainter::TextAntialiasing, true);
-	auto font = Util::getTextFont(20);
-	painter.setFont(*font);
+	painter.setFont(Util::getTextFont(20));
 	auto skin = Skin::get();
 	painter.setPen(skin->year);
 	painter.drawText(rect(), Qt::AlignCenter, activeDateMonth);
 }
 
-void YearBar::leftBtnEnter()
-{
-	auto tipObj = TipInfo::get();
-	tipObj->setText(leftTip);
-	tipObj->showInfo(QPoint(78, 26));
-}
-
-void YearBar::rightBtnEnter()
-{
-	if (Menu::get()->isVisible()) return;
-	auto tipObj = TipInfo::get();
-	tipObj->setText(rightTip);
-	tipObj->showInfo(QPoint(238, 26));
-}
 
 void YearBar::leftBtnClick()
 {
-
+	switchMonth(-1);
 }
 
 void YearBar::rightBtnClick()
 {
+	switchMonth(1);
 }
 
 void YearBar::todayBtnClick()
 {
-
+	auto win = (MainWindow*)parent();
+	win->updateData(QDate::currentDate());
 }
 
-void YearBar::btnLeave()
+void YearBar::switchMonth(const int& val)
 {
-	TipInfo::get()->hide();
+	auto win = (MainWindow*)parent();
+	QDate day;
+	for (auto& btn : win->dayBtns)
+	{
+		if (btn->isCurMonth) {
+			day = btn->day.addMonths(val);
+			break;
+		}
+	}
+	win->updateData(day);
 }

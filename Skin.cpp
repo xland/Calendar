@@ -63,9 +63,7 @@ void Skin::initBlack()
 
 	week.setRgb(210, 211, 212);
 	day.setRgb(255, 255, 255);
-	lunar.setRgb(210, 211, 212);
 	dayNotCurMonth.setRgb(165, 167, 169);
-	lunarNotCurMonth.setRgb(165, 167, 169);
 	dot.setRgb(165, 167, 169);
 	dayHover.setRgb(255, 255, 255, 90);
 
@@ -90,15 +88,13 @@ void Skin::initWhite()
 	year.setRgb(31, 35, 41);
 	yearBtnHover.setRgb(255, 255, 255, 76);
 	yearBtnBorder.setRgb(121, 123, 127);
-	yearBtn.setRgb(76, 79, 84);
+	yearBtn.setRgb(90, 90, 90);
 
 	yearBtnTodayHover.setRgb(240, 44, 56, 51);
 
 	week.setRgb(120, 120, 120);
 	day.setRgb(31, 35, 41);
-	lunar.setRgb(76, 79, 84);
 	dayNotCurMonth.setRgb(102, 102, 102);
-	lunarNotCurMonth.setRgb(102, 102, 102);
 	dot.setRgb(102, 102, 102);
 	dayHover.setRgb(255, 255, 255, 128);
 
