@@ -103,6 +103,8 @@
     <ClCompile Include="Menu.cpp" />
     <ClCompile Include="MenuItem.cpp" />
     <ClCompile Include="NongLi.cpp" />
+    <ClCompile Include="RepeatSelection.cpp" />
+    <ClCompile Include="RepeatSelectionBtn.cpp" />
     <ClCompile Include="ScheduleEdit.cpp" />
     <ClCompile Include="ScheduleBox.cpp" />
     <ClCompile Include="ScheduleList.cpp" />
@@ -136,6 +138,8 @@
     <QtMoc Include="DialogSchedule.h" />
     <QtMoc Include="DialogSetting.h" />
     <ClInclude Include="NongLi.h" />
+    <QtMoc Include="RepeatSelection.h" />
+    <QtMoc Include="RepeatSelectionBtn.h" />
     <ClInclude Include="Res\Res.h" />
     <QtMoc Include="Toast.h" />
     <QtMoc Include="TipInfo.h" />

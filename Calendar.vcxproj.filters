@@ -91,6 +91,12 @@
     <ClCompile Include="ScheduleSearch.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="RepeatSelection.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="RepeatSelectionBtn.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="WeekBar.h">
@@ -142,6 +148,12 @@
       <Filter>Header Files</Filter>
     </QtMoc>
     <QtMoc Include="ScheduleSearch.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="RepeatSelection.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="RepeatSelectionBtn.h">
       <Filter>Header Files</Filter>
     </QtMoc>
   </ItemGroup>

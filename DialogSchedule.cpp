@@ -8,10 +8,13 @@
 
 DialogSchedule::DialogSchedule(QWidget *parent) : QWidget(parent)
 {
+    setObjectName("DialogSchedule");
+    setStyleSheet("#DialogSchedule{background:#ffffff;}");
 	setWindowModality(Qt::ApplicationModal);
 	setAttribute(Qt::WA_DeleteOnClose);
     resize(800, 600);        
     QSplitter* splitter = new QSplitter(Qt::Horizontal, this);
+    splitter->setStyleSheet("QSplitter::handle { background-color:rgb(200,220,240);}");
     splitter->setContentsMargins(0, 0, 0, 0);
     auto box = new ScheduleBox(splitter);
     auto editor = new ScheduleEdit(splitter);

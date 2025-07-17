@@ -11,5 +11,6 @@ public:
 	~ScheduleEdit();
 
 private:
+	void save();
 };
 
