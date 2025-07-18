@@ -4,7 +4,11 @@
 #include <QPlainTextEdit>
 #include <QComboBox>
 #include <QLabel>
+#include <QSqlQuery>
+#include <QUuid>
+#include <QTimeEdit>
 
+#include "DateTimePicker.h"
 #include "ScheduleEdit.h"
 #include "Util.h"
 #include "RepeatSelection.h"
@@ -14,31 +18,19 @@ ScheduleEdit::ScheduleEdit(QWidget *parent) : QWidget(parent)
     setObjectName("scheduleEdit");
     setStyleSheet("QWidget{background:#ffffff;}");
     QVBoxLayout* layout = new QVBoxLayout(this);
-    layout->setContentsMargins(12, 8, 8, 8);
+    layout->setContentsMargins(12,12, 12, 12);
     layout->setSpacing(6);
-
     auto rs = new RepeatSelection();
     layout->addWidget(rs);
 
-//    QComboBox* comboBox = new QComboBox();
-//    comboBox->addItem("不重复");
-//    comboBox->addItem("每天");
-//    comboBox->addItem("每个工作日");
-//    comboBox->addItem("每周一");
-//    comboBox->addItem("每月第12天");
-//    comboBox->addItem("每年12月12日");
-//    comboBox->setCurrentIndex(0);
-//    comboBox->setStyleSheet("QComboBox{color:#666666;font-size:14px;padding: 1px 15px 1px 3px;border:1px solid rgba(228,228,228,1);border-radius:5px 5px 0px 0px;}"
-//"QComboBox::drop-down{subcontrol-origin:padding;subcontrol-position:top right;width:15px;border:none;}"
-//"QComboBox QAbstractItemView::item{height:36px;color:#666666;padding-left:9px;background-color:#FFFFFF;}"
-//"QComboBox QAbstractItemView::item:hover{background-color:#409CE1; color:#ffffff; }"
-//"QComboBox QAbstractItemView::item:selected{background-color:#409CE1; color:#ffffff; }");
-//    selectLayout->addWidget(comboBox);
-//    selectLayout->addStretch();
-//    layout->addWidget(selectBox);
+    auto dateTimePicker = new DateTimePicker();
+    layout->addWidget(dateTimePicker);
 
 
-
+    auto label = new QLabel("日程内容：");
+    label->setFixedHeight(28);
+    label->setStyleSheet("font-size:13px;");
+    layout->addWidget(label);
     QPlainTextEdit* plainTextEdit = new QPlainTextEdit(this);
     QTextBlockFormat blockFormat;
     blockFormat.setLineHeight(26, QTextBlockFormat::FixedHeight);
@@ -48,21 +40,34 @@ ScheduleEdit::ScheduleEdit(QWidget *parent) : QWidget(parent)
     cursor.clearSelection();
     plainTextEdit->setTextCursor(cursor);
     plainTextEdit->document()->setDefaultFont(Util::getTextFont(14));
-    plainTextEdit->setPlaceholderText("请输入日程内容");
     plainTextEdit->setStyleSheet("line-height:36px;");
     layout->addWidget(plainTextEdit);
 
     auto btnBox = new QWidget();
-    btnBox->setStyleSheet("background:#ffffff;");
     auto btnLayout = new QHBoxLayout(btnBox);
     btnLayout->setContentsMargins(0, 0, 0, 0);
+    btnLayout->setSpacing(12);
     btnLayout->addStretch();
-    QPushButton* addButton = new QPushButton("保存");
-    addButton->setFixedSize(80, 30);
-    btnLayout->addWidget(addButton);
+
+    QString btnStyle{ "QPushButton {background-color:#5D6B99; color:#ffffff; border: none; border-radius: 3px; padding: 6px;font-size:13px; }"
+"QPushButton:hover { background-color: #3B4F81;}"
+"QPushButton:pressed { background-color:#5D6B99;}" };
+
+    QPushButton* addBtn = new QPushButton("增加日程");
+    addBtn->setCursor(Qt::PointingHandCursor);
+    addBtn->setStyleSheet(btnStyle);
+    addBtn->setFixedSize(80, 30);
+    btnLayout->addWidget(addBtn);
+
+    QPushButton* editBtn = new QPushButton("修改日程");
+    editBtn->setCursor(Qt::PointingHandCursor);
+    editBtn->setStyleSheet(btnStyle);
+    editBtn->setFixedSize(80, 30);
+    btnLayout->addWidget(editBtn);
 
     layout->addWidget(btnBox);
-    QObject::connect(addButton, &QPushButton::clicked, this, &ScheduleEdit::save);
+    QObject::connect(editBtn, &QPushButton::clicked, this, &ScheduleEdit::save);
+    QObject::connect(addBtn, &QPushButton::clicked, this, &ScheduleEdit::save);
     setLayout(layout);
 }
 
@@ -73,5 +78,15 @@ ScheduleEdit::~ScheduleEdit()
 
 void ScheduleEdit::save()
 {
+    QSqlQuery query;
+    query.prepare("INSERT INTO Job (Id, JobInfo, StartTime, EndTime, RepeatType) VALUES (?, ?, ?, ?, ?)");
+    auto uuid = QUuid::createUuid().toString().mid(1, 36);
+    query.addBindValue(uuid);
+    query.addBindValue("Sample Job");    // JobInfo
+    query.addBindValue(123); // StartTime
+    query.addBindValue(456); // EndTime
+    query.addBindValue(1);         // RepeatType
+    auto flag = query.exec();
+
 }
 

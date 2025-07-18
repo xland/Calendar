@@ -1,5 +1,5 @@
 #pragma once
-
+#include <QDate>
 #include <QWidget>
 
 class DialogSchedule : public QWidget
@@ -7,9 +7,9 @@ class DialogSchedule : public QWidget
 	Q_OBJECT
 
 public:
-	DialogSchedule(QWidget *parent = nullptr);
+	DialogSchedule(const QDate& day, QWidget *parent = nullptr);
 	~DialogSchedule();
-
+	QDate curDay;
 private:
 };
 

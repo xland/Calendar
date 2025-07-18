@@ -37,12 +37,12 @@
   </ImportGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'" Label="QtSettings">
     <QtInstall>6.8.3</QtInstall>
-    <QtModules>core;gui;widgets</QtModules>
+    <QtModules>core;gui;widgets;sql</QtModules>
     <QtBuildConfig>debug</QtBuildConfig>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'" Label="QtSettings">
     <QtInstall>6.8.3</QtInstall>
-    <QtModules>core;gui;widgets</QtModules>
+    <QtModules>core;gui;widgets;sql</QtModules>
     <QtBuildConfig>release</QtBuildConfig>
   </PropertyGroup>
   <Target Name="QtMsBuildNotFound" BeforeTargets="CustomBuild;ClCompile" Condition="!Exists('$(QtMsBuild)\qt.targets') or !Exists('$(QtMsBuild)\qt.props')">
@@ -96,7 +96,9 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="BtnBase.cpp" />
+    <ClCompile Include="DateTimePicker.cpp" />
     <ClCompile Include="DayBtn.cpp" />
+    <ClCompile Include="Db.cpp" />
     <ClCompile Include="DialogSchedule.cpp" />
     <ClCompile Include="DialogSetting.cpp" />
     <ClCompile Include="MainWindow.cpp" />
@@ -137,6 +139,8 @@
     <QtMoc Include="BtnBase.h" />
     <QtMoc Include="DialogSchedule.h" />
     <QtMoc Include="DialogSetting.h" />
+    <QtMoc Include="Db.h" />
+    <QtMoc Include="DateTimePicker.h" />
     <ClInclude Include="NongLi.h" />
     <QtMoc Include="RepeatSelection.h" />
     <QtMoc Include="RepeatSelectionBtn.h" />

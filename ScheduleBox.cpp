@@ -10,7 +10,7 @@
 
 ScheduleBox::ScheduleBox(QWidget *parent) : QWidget(parent)
 {
-	setMinimumWidth(180);
+	setMinimumWidth(220);
 
 	QVBoxLayout* layout = new QVBoxLayout(this);
 	layout->setContentsMargins(0, 0, 0, 0);

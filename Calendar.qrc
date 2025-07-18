@@ -4,5 +4,6 @@
         <file>Res/author.jpg</file>
         <file>Res/iconfont.ttf</file>
         <file>Res/wechat.png</file>
+        <file>Res/logo.ico</file>
     </qresource>
 </RCC>

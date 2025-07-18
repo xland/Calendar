@@ -2,7 +2,6 @@
 #include <QPainter>
 #include <QJsonArray>
 
-#include "Menu.h"
 #include "Skin.h"
 #include "Util.h"
 #include "DayBtn.h"
@@ -43,7 +42,7 @@ void DayBtn::paintEvent(QPaintEvent* event)
         painter.setPen(QPen(skin->dayActive,0.5));
         painter.drawRect(r);
     }
-    if (!isActive && isHover && !Menu::get()->isVisible()) {
+    if (!isActive && isHover) {
         painter.setBrush(skin->dayHover);
         painter.setPen(Qt::NoPen);
         painter.drawRect(r);
@@ -108,7 +107,7 @@ void DayBtn::paintEvent(QPaintEvent* event)
 
 void DayBtn::onClick()
 {
-    auto dialogSchedule = new DialogSchedule(nullptr);
+    auto dialogSchedule = new DialogSchedule(day);
     dialogSchedule->show();
     dialogSchedule->activateWindow();
 

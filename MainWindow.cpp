@@ -27,7 +27,7 @@ namespace {
 }
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 {
-	setWindowFlag(Qt::FramelessWindowHint);
+	setWindowFlags(Qt::Tool | Qt::FramelessWindowHint);
     setAttribute(Qt::WA_QuitOnClose, false);
     setAttribute(Qt::WA_TranslucentBackground, true);
     setFixedSize(QSize(370, 320));

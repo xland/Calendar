@@ -97,6 +97,12 @@
     <ClCompile Include="RepeatSelectionBtn.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Db.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="DateTimePicker.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="WeekBar.h">
@@ -154,6 +160,12 @@
       <Filter>Header Files</Filter>
     </QtMoc>
     <QtMoc Include="RepeatSelectionBtn.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="Db.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="DateTimePicker.h">
       <Filter>Header Files</Filter>
     </QtMoc>
   </ItemGroup>

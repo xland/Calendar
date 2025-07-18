@@ -23,7 +23,7 @@ void ScheduleTab::paintEvent(QPaintEvent* event)
     painter.setRenderHint(QPainter::Antialiasing, true);
     painter.setBrush(QColor(200, 220, 240));
     painter.setPen(Qt::NoPen);
-    painter.drawRect(rect());
+    painter.drawRect(rect().adjusted(0,0,2,0));
 
     painter.setBrush(QColor(255, 255, 255));
     painter.setFont(Util::getTextFont(13));
@@ -32,7 +32,7 @@ void ScheduleTab::paintEvent(QPaintEvent* event)
         painter.setBrush(Qt::NoBrush);
         painter.setPen(QColor(30, 30, 30));
         painter.drawText(curRect, Qt::AlignCenter, "当日日程");
-        painter.setPen(hoverIndex == 1 ? QColor(30, 30, 30) : QColor(60, 80, 120));
+        painter.setPen(hoverIndex == 1 ? QColor(30, 30, 30) : QColor(120, 120, 120));
         painter.drawText(allRect, Qt::AlignCenter, "全部日程");
     }
     else {
@@ -40,7 +40,7 @@ void ScheduleTab::paintEvent(QPaintEvent* event)
         painter.setBrush(Qt::NoBrush);
         painter.setPen(QColor(30, 30, 30));
         painter.drawText(allRect, Qt::AlignCenter, "全部日程");
-        painter.setPen(hoverIndex == 0 ? QColor(30, 30, 30) : QColor(60, 80, 120));
+        painter.setPen(hoverIndex == 0 ? QColor(30, 30, 30) : QColor(120, 120, 120));
         painter.drawText(curRect, Qt::AlignCenter, "当日日程");
     }
 }
@@ -70,6 +70,10 @@ void ScheduleTab::mouseMoveEvent(QMouseEvent* event)
 void ScheduleTab::leaveEvent(QEvent* event)
 {
     unsetCursor();
+    if (hoverIndex != -1) {
+        hoverIndex = -1;
+        update();
+    }
 }
 
 void ScheduleTab::mousePressEvent(QMouseEvent* event)

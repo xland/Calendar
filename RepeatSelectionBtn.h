@@ -9,10 +9,10 @@ class RepeatSelectionBtn : public BtnBase
 public:
 	RepeatSelectionBtn(const int& val, QWidget *parent = nullptr);
 	~RepeatSelectionBtn();
+	QString labelStr;
+	int val;
 protected:
 	void paintEvent(QPaintEvent* event) override;
 private:
-	QString labelStr;
-	int val;
 };
 

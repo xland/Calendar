@@ -28,7 +28,6 @@ RepeatSelectionBtn::RepeatSelectionBtn(const int& val, QWidget* parent) : BtnBas
 		setFixedWidth(100);
 		labelStr = "每年12月18日";
 	}
-	
 }
 
 RepeatSelectionBtn::~RepeatSelectionBtn()
@@ -46,9 +45,10 @@ void RepeatSelectionBtn::paintEvent(QPaintEvent* event)
 	if (val == p->selectedVal) {
 		painter.drawText(0, 12, QChar(0xe72d));
 	}
-	else {
-		painter.drawText(0, 12, QChar(0xe6b6));
+	else if(!isHover) {
+		painter.setPen(QColor(100, 100, 100));
 	}
+	painter.drawText(0, 12, QChar(0xe6b6));
 	painter.setFont(Util::getTextFont(13));
 	painter.drawText(16, 12, labelStr);
 }
