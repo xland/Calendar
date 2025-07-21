@@ -1,6 +1,10 @@
 #pragma once
-
+#include <QPlainTextEdit>
+#include <QDateTimeEdit>
 #include <QWidget>
+#include <QVBoxLayout>
+
+#include "RepeatSelection.h"
 
 class ScheduleEdit : public QWidget
 {
@@ -12,5 +16,11 @@ public:
 
 private:
 	void save();
+	void initDateEdit(QVBoxLayout* layout);
+	void initTextEdit(QVBoxLayout* layout);
+	void initBtns(QVBoxLayout* layout);
+	QPlainTextEdit* plainTextEdit;
+	QDateTimeEdit* dateTimeEdit;
+	RepeatSelection* repeatSelection;
 };
 

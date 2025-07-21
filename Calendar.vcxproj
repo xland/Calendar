@@ -96,25 +96,23 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="BtnBase.cpp" />
-    <ClCompile Include="DateTimePicker.cpp" />
     <ClCompile Include="DayBtn.cpp" />
     <ClCompile Include="Db.cpp" />
     <ClCompile Include="DialogSchedule.cpp" />
     <ClCompile Include="DialogSetting.cpp" />
+    <ClCompile Include="Eventer.cpp" />
     <ClCompile Include="MainWindow.cpp" />
-    <ClCompile Include="Menu.cpp" />
-    <ClCompile Include="MenuItem.cpp" />
     <ClCompile Include="NongLi.cpp" />
     <ClCompile Include="RepeatSelection.cpp" />
     <ClCompile Include="RepeatSelectionBtn.cpp" />
     <ClCompile Include="ScheduleEdit.cpp" />
     <ClCompile Include="ScheduleBox.cpp" />
     <ClCompile Include="ScheduleList.cpp" />
+    <ClCompile Include="ScheduleListItem.cpp" />
+    <ClCompile Include="ScheduleModel.cpp" />
     <ClCompile Include="ScheduleSearch.cpp" />
     <ClCompile Include="ScheduleTab.cpp" />
     <ClCompile Include="Skin.cpp" />
-    <ClCompile Include="TipInfo.cpp" />
-    <ClCompile Include="Toast.cpp" />
     <ClCompile Include="Util.cpp" />
     <ClCompile Include="WeekBar.cpp" />
     <ClCompile Include="YearBar.cpp" />
@@ -124,6 +122,7 @@
   </ItemGroup>
   <ItemGroup>
     <Image Include="Res\alipay.jpg" />
+    <Image Include="Res\arrowdown.png" />
     <Image Include="Res\author.jpg" />
     <Image Include="Res\logo.ico" />
     <Image Include="Res\wechat.png" />
@@ -133,25 +132,23 @@
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="MainWindow.h" />
-    <QtMoc Include="Menu.h" />
-    <QtMoc Include="MenuItem.h" />
     <QtMoc Include="DayBtn.h" />
     <QtMoc Include="BtnBase.h" />
     <QtMoc Include="DialogSchedule.h" />
     <QtMoc Include="DialogSetting.h" />
     <QtMoc Include="Db.h" />
-    <QtMoc Include="DateTimePicker.h" />
+    <QtMoc Include="Eventer.h" />
     <ClInclude Include="NongLi.h" />
     <QtMoc Include="RepeatSelection.h" />
     <QtMoc Include="RepeatSelectionBtn.h" />
     <ClInclude Include="Res\Res.h" />
-    <QtMoc Include="Toast.h" />
-    <QtMoc Include="TipInfo.h" />
     <QtMoc Include="ScheduleEdit.h" />
     <QtMoc Include="ScheduleBox.h" />
     <QtMoc Include="ScheduleList.h" />
     <QtMoc Include="ScheduleTab.h" />
     <QtMoc Include="ScheduleSearch.h" />
+    <QtMoc Include="ScheduleListItem.h" />
+    <QtMoc Include="ScheduleModel.h" />
     <ClInclude Include="Skin.h" />
     <ClInclude Include="Util.h" />
     <QtMoc Include="YearBarBtn.h" />

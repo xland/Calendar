@@ -6,11 +6,13 @@
 #include "WeekBar.h"
 #include "DayBtn.h"
 #include "Db.h"
+#include "Eventer.h"
 
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
     a.setQuitOnLastWindowClosed(false);
+    Eventer::init();
     Db::init();
     Skin::init();
     MainWindow::init();

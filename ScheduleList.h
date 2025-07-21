@@ -1,5 +1,5 @@
 #pragma once
-
+#include <QVBoxLayout>
 #include <QScrollArea>
 
 class ScheduleList : public QScrollArea
@@ -9,7 +9,9 @@ class ScheduleList : public QScrollArea
 public:
 	ScheduleList(QWidget *parent = nullptr);
 	~ScheduleList();
-
+	void refreshData();
 private:
+	void itemClick();
+	QVBoxLayout* contentLayout;
 };
 

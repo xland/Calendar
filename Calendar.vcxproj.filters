@@ -43,22 +43,10 @@
     <ClCompile Include="YearBarBtn.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Toast.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="MainWindow.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Menu.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="MenuItem.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Skin.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="TipInfo.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="DayBtn.cpp">
@@ -100,7 +88,13 @@
     <ClCompile Include="Db.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="DateTimePicker.cpp">
+    <ClCompile Include="ScheduleListItem.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Eventer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ScheduleModel.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -114,19 +108,7 @@
     <QtMoc Include="YearBarBtn.h">
       <Filter>Header Files</Filter>
     </QtMoc>
-    <QtMoc Include="Toast.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
-    <QtMoc Include="TipInfo.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
     <QtMoc Include="MainWindow.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
-    <QtMoc Include="Menu.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
-    <QtMoc Include="MenuItem.h">
       <Filter>Header Files</Filter>
     </QtMoc>
     <QtMoc Include="DayBtn.h">
@@ -165,7 +147,13 @@
     <QtMoc Include="Db.h">
       <Filter>Header Files</Filter>
     </QtMoc>
-    <QtMoc Include="DateTimePicker.h">
+    <QtMoc Include="ScheduleListItem.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="Eventer.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="ScheduleModel.h">
       <Filter>Header Files</Filter>
     </QtMoc>
   </ItemGroup>
@@ -180,6 +168,9 @@
       <Filter>Resource Files</Filter>
     </Image>
     <Image Include="Res\alipay.jpg">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Res\arrowdown.png">
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>
