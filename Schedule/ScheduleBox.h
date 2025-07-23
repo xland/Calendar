@@ -2,6 +2,10 @@
 
 #include <QWidget>
 
+#include "ScheduleList.h"
+#include "ScheduleTab.h"
+#include "ScheduleSearch.h"
+
 class ScheduleBox : public QWidget
 {
 	Q_OBJECT
@@ -9,7 +13,9 @@ class ScheduleBox : public QWidget
 public:
 	ScheduleBox(QWidget *parent = nullptr);
 	~ScheduleBox();
-
+	ScheduleList* list;
+	ScheduleTab* tabs;
+	ScheduleSearch* searchBox;
 private:
 };
 

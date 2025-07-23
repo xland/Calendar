@@ -3,9 +3,9 @@
 #include <QJsonArray>
 
 #include "Skin.h"
-#include "Util.h"
 #include "DayBtn.h"
-#include "DialogSchedule.h"
+#include "../Util.h"
+#include "../Schedule/DialogSchedule.h"
 
 DayBtn::DayBtn(const int& index, QWidget* parent) : BtnBase(parent), index{ index }
 {

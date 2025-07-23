@@ -5,7 +5,7 @@
 #include <QEvent>
 #include <QMouseEvent>
 
-#include "BtnBase.h"
+#include "../BtnBase.h"
 
 class ScheduleTab : public QWidget
 {
@@ -21,6 +21,7 @@ protected:
 	void leaveEvent(QEvent* event) override;
 	void mousePressEvent(QMouseEvent* event) override;
 private:
+	void addNew();
 	int rw{ 80 };
 	int hoverIndex{ -1 };
 };

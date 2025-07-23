@@ -18,7 +18,6 @@
 #include "WeekBar.h"
 #include "DayBtn.h"
 #include "Util.h"
-#include "TipInfo.h"
 #include "NongLi.h"
 
 namespace {

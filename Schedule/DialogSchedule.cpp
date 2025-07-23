@@ -8,7 +8,7 @@
 
 DialogSchedule::DialogSchedule(const QDate& day, QWidget *parent) : QWidget(parent),curDay{day}
 {
-    setWindowIcon(QIcon(":/Res/logo.ico"));
+    setWindowIcon(QIcon(":/logo.ico"));
     setObjectName("DialogSchedule");
     setStyleSheet("#DialogSchedule{background:#ffffff;}");
 	setWindowModality(Qt::ApplicationModal);
@@ -25,6 +25,8 @@ DialogSchedule::DialogSchedule(const QDate& day, QWidget *parent) : QWidget(pare
     mainLayout->addWidget(splitter);
     setLayout(mainLayout);
     setWindowTitle(QString("%1年%2月%3日的日程").arg(day.year()).arg(day.month()).arg(day.day()));
+
+    box->list->refreshData("refreshData",nullptr);
 }
 
 DialogSchedule::~DialogSchedule()

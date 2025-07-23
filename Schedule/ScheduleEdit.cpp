@@ -24,6 +24,7 @@ ScheduleEdit::ScheduleEdit(QWidget *parent) : QWidget(parent)
     initTextEdit(layout);
     initBtns(layout);    
     setLayout(layout);
+    connect(Eventer::get(), &Eventer::globalEvent, this, &ScheduleEdit::updateData);
 }
 
 ScheduleEdit::~ScheduleEdit()
@@ -89,12 +90,6 @@ void ScheduleEdit::initBtns(QVBoxLayout* layout)
 "QPushButton:hover { background-color: #3B4F81;}"
 "QPushButton:pressed { background-color:#5D6B99;}" };
 
-    QPushButton* addBtn = new QPushButton("增加日程");
-    addBtn->setCursor(Qt::PointingHandCursor);
-    addBtn->setStyleSheet(btnStyle);
-    addBtn->setFixedSize(80, 30);
-    btnLayout->addWidget(addBtn);
-
     QPushButton* editBtn = new QPushButton("修改日程");
     editBtn->setCursor(Qt::PointingHandCursor);
     editBtn->setStyleSheet(btnStyle);
@@ -103,20 +98,34 @@ void ScheduleEdit::initBtns(QVBoxLayout* layout)
 
     layout->addWidget(btnBox);
     QObject::connect(editBtn, &QPushButton::clicked, this, &ScheduleEdit::save);
-    QObject::connect(addBtn, &QPushButton::clicked, this, &ScheduleEdit::save);
+}
+
+void ScheduleEdit::updateData(const QString& eventName, const QObject* model)
+{
+    if (eventName != "updateData") return;
+    data = (ScheduleModel*)model;
+    plainTextEdit->setPlainText(data->JobInfo);
+    QDateTime restoredDateTime = QDateTime::fromSecsSinceEpoch(data->StartTime);
+    dateTimeEdit->setDateTime(restoredDateTime);
+    repeatSelection->selectedVal = data->RepeatType;
+    repeatSelection->update();
 }
 
 void ScheduleEdit::save()
 {
     QDateTime dateTime = dateTimeEdit->dateTime();
     long long timestamp = dateTime.toSecsSinceEpoch();
+
+    data->JobInfo = plainTextEdit->toPlainText();
+    data->StartTime = timestamp;
+    data->RepeatType = repeatSelection->selectedVal;
+
     QSqlQuery query;
-    query.prepare("INSERT INTO Job (Id, JobInfo, StartTime, RepeatType) VALUES (?, ?, ?, ?)");
-    auto uuid = QUuid::createUuid().toString().mid(1, 36);
-    query.addBindValue(uuid);
-    query.addBindValue(plainTextEdit->toPlainText());    // JobInfo
-    query.addBindValue(timestamp); // StartTime
-    query.addBindValue(repeatSelection->selectedVal);         // RepeatType
+    query.prepare("UPDATE Job SET JobInfo = ?, StartTime = ?, RepeatType = ? WHERE Id = ?;");
+    query.addBindValue(data->JobInfo);    // JobInfo
+    query.addBindValue(data->StartTime); // StartTime
+    query.addBindValue(data->RepeatType);   // RepeatType
+    query.addBindValue(data->Id);
     auto flag = query.exec();
-    Eventer::get()->fire("refreshData", nullptr);
+    Eventer::get()->fire("refreshData", data);
 }

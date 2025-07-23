@@ -1,9 +1,12 @@
 ﻿#include <QVBoxLayout>
 #include <QSqlQuery>
 #include <QSqlError>
+#include <QList>
+
 #include "ScheduleList.h"
 #include "ScheduleListItem.h"
 #include "Eventer.h"
+#include "../Data/Schedules.h"
 
 ScheduleList::ScheduleList(QWidget *parent) : QScrollArea(parent)
 {
@@ -12,7 +15,7 @@ ScheduleList::ScheduleList(QWidget *parent) : QScrollArea(parent)
     setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     setStyleSheet(R"(QScrollArea{border: none; background: #ffffff;}
 QScrollBar:vertical{border: none; background: transparent; /* 滚动条背景颜色 */
-    width: 6px;/* 滚动条宽度 */ margin: 0px 0px 0px 0px;}
+width: 6px;/* 滚动条宽度 */ margin: 0px 0px 0px 0px;}
 QScrollBar::handle:vertical { background: #dddddd; /* 滑块颜色 */
     min-height: 20px;/* 滑块最小高度 */ border-radius: 0px;  /* 圆角 */}
 QScrollBar::handle:vertical:hover { background: #cccccc; /* 鼠标悬停时的滑块颜色 */ }
@@ -26,43 +29,38 @@ QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical { background: none;
     contentLayout = new QVBoxLayout(contentWidget);
     contentLayout->setContentsMargins(0,0,0,0);
     contentLayout->setSpacing(0);
-    //auto item = new QLabel("测试测试测试");
-    //contentLayout->addWidget(item);
     setWidget(contentWidget);
     setWidgetResizable(true);
-    refreshData();
-
     QObject::connect(Eventer::get(), &Eventer::globalEvent, this,&ScheduleList::refreshData);
 }
 
 ScheduleList::~ScheduleList()
 {}
 
-void ScheduleList::refreshData()
+void ScheduleList::refreshData(const QString& eventName, const QObject* data)
 {
+    if (eventName != "refreshData") return; //todo
     QLayoutItem* child;
     while ((child = contentLayout->takeAt(0)) != nullptr) {
         delete child->widget();
         delete child;
     }
-
-    QSqlQuery query;
-    query.prepare("SELECT * FROM Job");
-
-    if (!query.exec()) {
-        qDebug() << "Query failed:" << query.lastError();
-        return;
-    }
-
-    while (query.next()) {
-        auto m = new ScheduleModel(query,this);
-        auto item = new ScheduleListItem(m);
+    auto& list = Schedules::get()->data;
+    QObject* tar{ nullptr };
+    for (size_t i = 0; i < list.size(); i++)
+    {
+        auto item = new ScheduleListItem(list[i]);
         connect(item, &ScheduleListItem::click, this, &ScheduleList::itemClick);
         contentLayout->addWidget(item);
+        if (!tar) {
+            tar = item->model;
+            item->isSelected = true;
+        }
     }
     contentLayout->addStretch();
     contentLayout->update();
     contentLayout->activate();
+    Eventer::get()->fire("updateData", tar);
 }
 
 void ScheduleList::itemClick()

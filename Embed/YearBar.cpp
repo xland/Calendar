@@ -2,13 +2,10 @@
 #include <QPainter>
 #include <QHBoxLayout>
 
-#include "Menu.h"
 #include "MainWindow.h"
-#include "TipInfo.h"
 #include "Util.h"
 #include "Skin.h"
 #include "YearBar.h"
-#include "Toast.h"
 #include "DayBtn.h"
 
 YearBar* yearBar;

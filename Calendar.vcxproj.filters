@@ -23,7 +23,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <QtRcc Include="Calendar.qrc">
+    <QtRcc Include="Res\Calendar.qrc">
       <Filter>Resource Files</Filter>
     </QtRcc>
   </ItemGroup>
@@ -34,126 +34,132 @@
     <ClCompile Include="Util.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="WeekBar.cpp">
+    <ClCompile Include="Embed\WeekBar.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="YearBar.cpp">
+    <ClCompile Include="Embed\YearBar.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="YearBarBtn.cpp">
+    <ClCompile Include="Embed\YearBarBtn.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="MainWindow.cpp">
+    <ClCompile Include="Embed\MainWindow.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Skin.cpp">
+    <ClCompile Include="Embed\Skin.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="DayBtn.cpp">
+    <ClCompile Include="Embed\DayBtn.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="BtnBase.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="NongLi.cpp">
+    <ClCompile Include="Embed\NongLi.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="DialogSchedule.cpp">
+    <ClCompile Include="Schedule\DialogSchedule.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="DialogSetting.cpp">
+    <ClCompile Include="Setting\DialogSetting.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ScheduleEdit.cpp">
+    <ClCompile Include="Schedule\ScheduleEdit.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ScheduleBox.cpp">
+    <ClCompile Include="Schedule\ScheduleBox.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ScheduleList.cpp">
+    <ClCompile Include="Schedule\ScheduleList.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ScheduleTab.cpp">
+    <ClCompile Include="Schedule\ScheduleTab.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ScheduleSearch.cpp">
+    <ClCompile Include="Schedule\ScheduleSearch.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="RepeatSelection.cpp">
+    <ClCompile Include="Schedule\RepeatSelection.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="RepeatSelectionBtn.cpp">
+    <ClCompile Include="Schedule\RepeatSelectionBtn.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Db.cpp">
+    <ClCompile Include="Data\Db.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ScheduleListItem.cpp">
+    <ClCompile Include="Schedule\ScheduleListItem.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Eventer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ScheduleModel.cpp">
+    <ClCompile Include="Data\ScheduleModel.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Data\Schedules.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <QtMoc Include="WeekBar.h">
+    <QtMoc Include="Embed\WeekBar.h">
       <Filter>Header Files</Filter>
     </QtMoc>
-    <QtMoc Include="YearBar.h">
+    <QtMoc Include="Embed\YearBar.h">
       <Filter>Header Files</Filter>
     </QtMoc>
-    <QtMoc Include="YearBarBtn.h">
+    <QtMoc Include="Embed\YearBarBtn.h">
       <Filter>Header Files</Filter>
     </QtMoc>
-    <QtMoc Include="MainWindow.h">
+    <QtMoc Include="Embed\MainWindow.h">
       <Filter>Header Files</Filter>
     </QtMoc>
-    <QtMoc Include="DayBtn.h">
+    <QtMoc Include="Embed\DayBtn.h">
       <Filter>Header Files</Filter>
     </QtMoc>
     <QtMoc Include="BtnBase.h">
       <Filter>Header Files</Filter>
     </QtMoc>
-    <QtMoc Include="DialogSchedule.h">
+    <QtMoc Include="Schedule\DialogSchedule.h">
       <Filter>Header Files</Filter>
     </QtMoc>
-    <QtMoc Include="DialogSetting.h">
+    <QtMoc Include="Setting\DialogSetting.h">
       <Filter>Header Files</Filter>
     </QtMoc>
-    <QtMoc Include="ScheduleEdit.h">
+    <QtMoc Include="Schedule\ScheduleEdit.h">
       <Filter>Header Files</Filter>
     </QtMoc>
-    <QtMoc Include="ScheduleBox.h">
+    <QtMoc Include="Schedule\ScheduleBox.h">
       <Filter>Header Files</Filter>
     </QtMoc>
-    <QtMoc Include="ScheduleList.h">
+    <QtMoc Include="Schedule\ScheduleList.h">
       <Filter>Header Files</Filter>
     </QtMoc>
-    <QtMoc Include="ScheduleTab.h">
+    <QtMoc Include="Schedule\ScheduleTab.h">
       <Filter>Header Files</Filter>
     </QtMoc>
-    <QtMoc Include="ScheduleSearch.h">
+    <QtMoc Include="Schedule\ScheduleSearch.h">
       <Filter>Header Files</Filter>
     </QtMoc>
-    <QtMoc Include="RepeatSelection.h">
+    <QtMoc Include="Schedule\RepeatSelection.h">
       <Filter>Header Files</Filter>
     </QtMoc>
-    <QtMoc Include="RepeatSelectionBtn.h">
+    <QtMoc Include="Schedule\RepeatSelectionBtn.h">
       <Filter>Header Files</Filter>
     </QtMoc>
-    <QtMoc Include="Db.h">
+    <QtMoc Include="Data\Db.h">
       <Filter>Header Files</Filter>
     </QtMoc>
-    <QtMoc Include="ScheduleListItem.h">
+    <QtMoc Include="Schedule\ScheduleListItem.h">
       <Filter>Header Files</Filter>
     </QtMoc>
     <QtMoc Include="Eventer.h">
       <Filter>Header Files</Filter>
     </QtMoc>
-    <QtMoc Include="ScheduleModel.h">
+    <QtMoc Include="Data\ScheduleModel.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="Data\Schedules.h">
       <Filter>Header Files</Filter>
     </QtMoc>
   </ItemGroup>
@@ -186,10 +192,10 @@
     <ClInclude Include="Util.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Skin.h">
+    <ClInclude Include="Embed\Skin.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="NongLi.h">
+    <ClInclude Include="Embed\NongLi.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -197,7 +203,7 @@
     <Font Include="Res\iconfont.ttf" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Todo.md" />
+    <None Include="Doc\Todo.md" />
     <None Include="README.md" />
     <None Include="LICENSE" />
     <None Include=".gitignore" />

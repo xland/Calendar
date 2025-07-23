@@ -15,5 +15,6 @@ protected:
 	void paintEvent(QPaintEvent* event) override;
 private:
 	QLineEdit* input;
+	int h{ 32 };
 };
 

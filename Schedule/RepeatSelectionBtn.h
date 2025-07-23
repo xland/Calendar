@@ -1,6 +1,6 @@
 #pragma once
 #include <QPainter>
-#include "BtnBase.h"
+#include "../BtnBase.h"
 
 class RepeatSelectionBtn : public BtnBase
 {

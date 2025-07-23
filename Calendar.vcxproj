@@ -60,8 +60,12 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <OutDir>$(SolutionDir)build\$(Configuration)\</OutDir>
+    <IntDir>build\temp\$(Configuration)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <OutDir>$(SolutionDir)build\$(Configuration)\</OutDir>
+    <IntDir>build\temp\$(Configuration)\</IntDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <Manifest />
@@ -96,28 +100,29 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="BtnBase.cpp" />
-    <ClCompile Include="DayBtn.cpp" />
-    <ClCompile Include="Db.cpp" />
-    <ClCompile Include="DialogSchedule.cpp" />
-    <ClCompile Include="DialogSetting.cpp" />
+    <ClCompile Include="Data\Schedules.cpp" />
+    <ClCompile Include="Embed\DayBtn.cpp" />
+    <ClCompile Include="Data\Db.cpp" />
+    <ClCompile Include="Schedule\DialogSchedule.cpp" />
+    <ClCompile Include="Setting\DialogSetting.cpp" />
     <ClCompile Include="Eventer.cpp" />
-    <ClCompile Include="MainWindow.cpp" />
-    <ClCompile Include="NongLi.cpp" />
-    <ClCompile Include="RepeatSelection.cpp" />
-    <ClCompile Include="RepeatSelectionBtn.cpp" />
-    <ClCompile Include="ScheduleEdit.cpp" />
-    <ClCompile Include="ScheduleBox.cpp" />
-    <ClCompile Include="ScheduleList.cpp" />
-    <ClCompile Include="ScheduleListItem.cpp" />
-    <ClCompile Include="ScheduleModel.cpp" />
-    <ClCompile Include="ScheduleSearch.cpp" />
-    <ClCompile Include="ScheduleTab.cpp" />
-    <ClCompile Include="Skin.cpp" />
+    <ClCompile Include="Embed\MainWindow.cpp" />
+    <ClCompile Include="Embed\NongLi.cpp" />
+    <ClCompile Include="Schedule\RepeatSelection.cpp" />
+    <ClCompile Include="Schedule\RepeatSelectionBtn.cpp" />
+    <ClCompile Include="Schedule\ScheduleEdit.cpp" />
+    <ClCompile Include="Schedule\ScheduleBox.cpp" />
+    <ClCompile Include="Schedule\ScheduleList.cpp" />
+    <ClCompile Include="Schedule\ScheduleListItem.cpp" />
+    <ClCompile Include="Data\ScheduleModel.cpp" />
+    <ClCompile Include="Schedule\ScheduleSearch.cpp" />
+    <ClCompile Include="Schedule\ScheduleTab.cpp" />
+    <ClCompile Include="Embed\Skin.cpp" />
     <ClCompile Include="Util.cpp" />
-    <ClCompile Include="WeekBar.cpp" />
-    <ClCompile Include="YearBar.cpp" />
-    <ClCompile Include="YearBarBtn.cpp" />
-    <QtRcc Include="Calendar.qrc" />
+    <ClCompile Include="Embed\WeekBar.cpp" />
+    <ClCompile Include="Embed\YearBar.cpp" />
+    <ClCompile Include="Embed\YearBarBtn.cpp" />
+    <QtRcc Include="Res\Calendar.qrc" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -131,29 +136,30 @@
     <ResourceCompile Include="Res\Res.rc" />
   </ItemGroup>
   <ItemGroup>
-    <QtMoc Include="MainWindow.h" />
-    <QtMoc Include="DayBtn.h" />
+    <QtMoc Include="Embed\MainWindow.h" />
+    <QtMoc Include="Embed\DayBtn.h" />
     <QtMoc Include="BtnBase.h" />
-    <QtMoc Include="DialogSchedule.h" />
-    <QtMoc Include="DialogSetting.h" />
-    <QtMoc Include="Db.h" />
+    <QtMoc Include="Schedule\DialogSchedule.h" />
+    <QtMoc Include="Setting\DialogSetting.h" />
+    <QtMoc Include="Data\Db.h" />
     <QtMoc Include="Eventer.h" />
-    <ClInclude Include="NongLi.h" />
-    <QtMoc Include="RepeatSelection.h" />
-    <QtMoc Include="RepeatSelectionBtn.h" />
+    <QtMoc Include="Data\Schedules.h" />
+    <ClInclude Include="Embed\NongLi.h" />
+    <QtMoc Include="Schedule\RepeatSelection.h" />
+    <QtMoc Include="Schedule\RepeatSelectionBtn.h" />
     <ClInclude Include="Res\Res.h" />
-    <QtMoc Include="ScheduleEdit.h" />
-    <QtMoc Include="ScheduleBox.h" />
-    <QtMoc Include="ScheduleList.h" />
-    <QtMoc Include="ScheduleTab.h" />
-    <QtMoc Include="ScheduleSearch.h" />
-    <QtMoc Include="ScheduleListItem.h" />
-    <QtMoc Include="ScheduleModel.h" />
-    <ClInclude Include="Skin.h" />
+    <QtMoc Include="Schedule\ScheduleEdit.h" />
+    <QtMoc Include="Schedule\ScheduleBox.h" />
+    <QtMoc Include="Schedule\ScheduleList.h" />
+    <QtMoc Include="Schedule\ScheduleTab.h" />
+    <QtMoc Include="Schedule\ScheduleSearch.h" />
+    <QtMoc Include="Schedule\ScheduleListItem.h" />
+    <QtMoc Include="Data\ScheduleModel.h" />
+    <ClInclude Include="Embed\Skin.h" />
     <ClInclude Include="Util.h" />
-    <QtMoc Include="YearBarBtn.h" />
-    <QtMoc Include="YearBar.h" />
-    <QtMoc Include="WeekBar.h" />
+    <QtMoc Include="Embed\YearBarBtn.h" />
+    <QtMoc Include="Embed\YearBar.h" />
+    <QtMoc Include="Embed\WeekBar.h" />
   </ItemGroup>
   <ItemGroup>
     <Font Include="Res\iconfont.ttf" />
@@ -162,7 +168,7 @@
     <None Include=".gitignore" />
     <None Include="LICENSE" />
     <None Include="README.md" />
-    <None Include="Todo.md" />
+    <None Include="Doc\Todo.md" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">

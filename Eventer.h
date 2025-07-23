@@ -13,6 +13,6 @@ public:
 	static Eventer* get();
 	static void fire(const QString& eventName, const QObject* data);
 signals:
-	void globalEvent(QString type, const QObject* data);
+	void globalEvent(const QString& eventName, const QObject* data);
 };
 

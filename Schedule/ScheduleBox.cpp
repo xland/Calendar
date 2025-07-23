@@ -4,9 +4,6 @@
 #include <QLineEdit>
 #include <QLabel>
 #include "ScheduleBox.h"
-#include "ScheduleList.h"
-#include "ScheduleTab.h"
-#include "ScheduleSearch.h"
 
 ScheduleBox::ScheduleBox(QWidget *parent) : QWidget(parent)
 {
@@ -15,12 +12,12 @@ ScheduleBox::ScheduleBox(QWidget *parent) : QWidget(parent)
 	QVBoxLayout* layout = new QVBoxLayout(this);
 	layout->setContentsMargins(0, 0, 0, 0);
 	layout->setSpacing(0);
-    auto tabs = new ScheduleTab();    
+    tabs = new ScheduleTab();    
     layout->addWidget(tabs);
-    auto searchBox = new ScheduleSearch();
+    searchBox = new ScheduleSearch();
     layout->addWidget(searchBox);
-    auto sc = new ScheduleList(this);
-    layout->addWidget(sc);
+    list = new ScheduleList(this);
+    layout->addWidget(list);
 }
 
 ScheduleBox::~ScheduleBox()

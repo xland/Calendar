@@ -1,11 +1,13 @@
 ﻿#include "ScheduleListItem.h"
 #include "Util.h"
-#include "ScheduleModel.h"
+#include "../Data/ScheduleModel.h"
+#include "Eventer.h"
 
-ScheduleListItem::ScheduleListItem(ScheduleModel* model, QWidget *parent) : QWidget(parent), model{ model }
+ScheduleListItem::ScheduleListItem(ScheduleModel* model, QWidget* parent) : QWidget(parent), model{model}
 {
 	setFixedHeight(28);
 	setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
+	setCursor(Qt::PointingHandCursor);
 }
 
 ScheduleListItem::~ScheduleListItem()
@@ -57,6 +59,7 @@ void ScheduleListItem::leaveEvent(QEvent* event)
 void ScheduleListItem::mousePressEvent(QMouseEvent* event)
 {
 	isSelected = !isSelected;
+	Eventer::get()->fire("updateData", model);
 	update();
 	emit click();
 }

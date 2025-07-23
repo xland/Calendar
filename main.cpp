@@ -1,11 +1,12 @@
 #include <QtWidgets/QApplication>
-#include "MainWindow.h"
+#include "Embed\MainWindow.h"
 #include "Util.h"
-#include "Skin.h"
-#include "YearBar.h"
-#include "WeekBar.h"
-#include "DayBtn.h"
-#include "Db.h"
+#include "Embed/Skin.h"
+#include "Embed/YearBar.h"
+#include "Embed/WeekBar.h"
+#include "Embed/DayBtn.h"
+#include "Data/Db.h"
+#include "Data/Schedules.h"
 #include "Eventer.h"
 
 int main(int argc, char *argv[])
@@ -14,6 +15,7 @@ int main(int argc, char *argv[])
     a.setQuitOnLastWindowClosed(false);
     Eventer::init();
     Db::init();
+    Schedules::init();
     Skin::init();
     MainWindow::init();
     YearBar::init();

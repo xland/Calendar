@@ -4,6 +4,7 @@
 #include <QWidget>
 #include <QVBoxLayout>
 
+#include "../Data/ScheduleModel.h"
 #include "RepeatSelection.h"
 
 class ScheduleEdit : public QWidget
@@ -19,8 +20,10 @@ private:
 	void initDateEdit(QVBoxLayout* layout);
 	void initTextEdit(QVBoxLayout* layout);
 	void initBtns(QVBoxLayout* layout);
+	void updateData(const QString& eventName, const QObject* model);
 	QPlainTextEdit* plainTextEdit;
 	QDateTimeEdit* dateTimeEdit;
 	RepeatSelection* repeatSelection;
+	ScheduleModel* data;
 };
 

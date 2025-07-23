@@ -8,6 +8,7 @@ class ScheduleModel  : public QObject
 
 public:
 	ScheduleModel(const QSqlQuery& query,QObject *parent);
+	ScheduleModel(const QString& JobInfo,const long long& StartTime,const int& RepeatType, QObject* parent);
 	~ScheduleModel();
 	QString Id;
 	QString JobInfo;

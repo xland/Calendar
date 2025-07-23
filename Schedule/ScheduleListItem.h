@@ -1,7 +1,7 @@
 #pragma once
 #include <QPainter>
 #include <QWidget>
-#include "ScheduleModel.h"
+#include "../Data/ScheduleModel.h"
 class ScheduleListItem : public QWidget
 {
 	Q_OBJECT
@@ -10,6 +10,7 @@ public:
 	ScheduleListItem(ScheduleModel* model, QWidget *parent = nullptr);
 	~ScheduleListItem();
 	bool isSelected{ false };
+	ScheduleModel* model{ nullptr };
 protected:
 	void paintEvent(QPaintEvent* event) override;
 	void enterEvent(QEnterEvent* event) override;
@@ -18,7 +19,6 @@ protected:
 signals:
 	void click();
 private:
-	ScheduleModel* model{ nullptr };
 	bool isHover{ false };
 };
 
