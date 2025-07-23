@@ -9,16 +9,18 @@ class ScheduleListItem : public QWidget
 public:
 	ScheduleListItem(ScheduleModel* model, QWidget *parent = nullptr);
 	~ScheduleListItem();
-	bool isSelected{ false };
 	ScheduleModel* model{ nullptr };
 protected:
 	void paintEvent(QPaintEvent* event) override;
 	void enterEvent(QEnterEvent* event) override;
 	void leaveEvent(QEvent* event) override;
+	void mouseMoveEvent(QMouseEvent* event) override;
 	void mousePressEvent(QMouseEvent* event) override;
+	void showEvent(QShowEvent* event) override;
 signals:
 	void click();
 private:
 	bool isHover{ false };
+	bool isHoverDel{ false };
 };
 

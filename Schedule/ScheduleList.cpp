@@ -13,67 +13,57 @@ ScheduleList::ScheduleList(QWidget *parent) : QScrollArea(parent)
     setFrameShape(QFrame::NoFrame);
     setVerticalScrollBarPolicy(Qt::ScrollBarAsNeeded);
     setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-    setStyleSheet(R"(QScrollArea{border: none; background: #ffffff;}
-QScrollBar:vertical{border: none; background: transparent; /* 滚动条背景颜色 */
-width: 6px;/* 滚动条宽度 */ margin: 0px 0px 0px 0px;}
-QScrollBar::handle:vertical { background: #dddddd; /* 滑块颜色 */
-    min-height: 20px;/* 滑块最小高度 */ border-radius: 0px;  /* 圆角 */}
-QScrollBar::handle:vertical:hover { background: #cccccc; /* 鼠标悬停时的滑块颜色 */ }
-QScrollBar::add-line:vertical, QScrollBar::sub-line:vertical { height: 0px; /* 移除上下箭头 */ background: none; }
-QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical { background: none; /* 滑块上下区域的背景 */ })");
-
-
+    setStyleSheet("QScrollArea{border:none;background:#ffffff;}"
+        "QScrollBar:vertical{border:none; background:transparent;width:6px;margin:0px 0px 0px 0px;}" /* 滚动条背景颜色与宽度 */
+        "QScrollBar::handle:vertical{background:#dddddd;min-height:20px;border-radius:0px;}" /* 滑块颜色 滑块最小高度 */
+        "QScrollBar::handle:vertical:hover{background:#cccccc;}" /* 鼠标悬停时的滑块颜色 */
+        "QScrollBar::add-line:vertical,QScrollBar::sub-line:vertical{height:0px;background:none;}"/* 移除上下箭头 */ 
+        "QScrollBar::add-page:vertical,QScrollBar::sub-page:vertical{background:none;})"); /* 滑块上下区域的背景 */
     auto contentWidget = new QWidget(this);
-    contentWidget->setStyleSheet("background: #ffffff;");
+    contentWidget->setStyleSheet("background:#ffffff;");
     contentWidget->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-    contentLayout = new QVBoxLayout(contentWidget);
-    contentLayout->setContentsMargins(0,0,0,0);
-    contentLayout->setSpacing(0);
+    layout = new QVBoxLayout(contentWidget);
+    layout->setContentsMargins(0,0,0,0);
+    layout->setSpacing(0);
     setWidget(contentWidget);
     setWidgetResizable(true);
-    QObject::connect(Eventer::get(), &Eventer::globalEvent, this,&ScheduleList::refreshData);
+    QObject::connect(Eventer::get(), &Eventer::schedulesChange, this,&ScheduleList::refreshData);
+    refreshData();
 }
 
 ScheduleList::~ScheduleList()
 {}
 
-void ScheduleList::refreshData(const QString& eventName, const QObject* data)
+void ScheduleList::refreshData()
 {
-    if (eventName != "refreshData") return; //todo
     QLayoutItem* child;
-    while ((child = contentLayout->takeAt(0)) != nullptr) {
+    while ((child = layout->takeAt(0)) != nullptr) {
         delete child->widget();
         delete child;
     }
     auto& list = Schedules::get()->data;
-    QObject* tar{ nullptr };
     for (size_t i = 0; i < list.size(); i++)
     {
         auto item = new ScheduleListItem(list[i]);
         connect(item, &ScheduleListItem::click, this, &ScheduleList::itemClick);
-        contentLayout->addWidget(item);
-        if (!tar) {
-            tar = item->model;
-            item->isSelected = true;
-        }
+        layout->addWidget(item);
     }
-    contentLayout->addStretch();
-    contentLayout->update();
-    contentLayout->activate();
-    Eventer::get()->fire("updateData", tar);
+    layout->addStretch();
+    layout->update();
+    layout->activate();
 }
 
 void ScheduleList::itemClick()
 {
     auto tar = sender();
-    for (int i = 0; i < contentLayout->count(); ++i) {
-        QLayoutItem* childItem = contentLayout->itemAt(i);
+    for (int i = 0; i < layout->count(); ++i) {
+        QLayoutItem* childItem = layout->itemAt(i);
         if (!childItem) continue; 
          auto item = qobject_cast<ScheduleListItem*>(childItem->widget());
          if (!item) continue;
          if (item != sender()) {
-             if (item->isSelected != false) {
-                 item->isSelected = false;
+             if (item->model->isSelected != false) {
+                 item->model->isSelected = false;
                  item->update();
              }
          }

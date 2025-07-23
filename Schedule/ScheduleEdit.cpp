@@ -11,6 +11,7 @@
 #include "ScheduleEdit.h"
 #include "Util.h"
 #include "Eventer.h"
+#include "../Data/Schedules.h"
 
 ScheduleEdit::ScheduleEdit(QWidget *parent) : QWidget(parent)
 {
@@ -24,15 +25,14 @@ ScheduleEdit::ScheduleEdit(QWidget *parent) : QWidget(parent)
     initTextEdit(layout);
     initBtns(layout);    
     setLayout(layout);
-    connect(Eventer::get(), &Eventer::globalEvent, this, &ScheduleEdit::updateData);
+    QObject::connect(Eventer::get(), &Eventer::schedulesChange, this, &ScheduleEdit::updateData);
+    updateData();
 }
 
 ScheduleEdit::~ScheduleEdit()
 {
 
 }
-
-
 
 void ScheduleEdit::initDateEdit(QVBoxLayout* layout)
 {
@@ -52,7 +52,7 @@ void ScheduleEdit::initDateEdit(QVBoxLayout* layout)
     dateTimeEdit->setFixedWidth(160);
     // 设置显示格式
     dateTimeEdit->setDisplayFormat("yyyy-MM-dd HH:mm:ss");
-    dateTimeEdit->setStyleSheet(R"(QDateTimeEdit{border: 1px solid gray;border-radius: 0px;}QCalendarWidget{border: 2px solid red;})");
+    dateTimeEdit->setStyleSheet(R"(QDateTimeEdit{border:1px solid gray;border-radius:0px;}QCalendarWidget{border:2px solid red;})");
     dateTimeLayout->addWidget(dateTimeEdit);
     dateTimeLayout->addStretch();
     layout->addWidget(dateTimePicker);
@@ -100,10 +100,9 @@ void ScheduleEdit::initBtns(QVBoxLayout* layout)
     QObject::connect(editBtn, &QPushButton::clicked, this, &ScheduleEdit::save);
 }
 
-void ScheduleEdit::updateData(const QString& eventName, const QObject* model)
+void ScheduleEdit::updateData()
 {
-    if (eventName != "updateData") return;
-    data = (ScheduleModel*)model;
+    data = Schedules::get()->getSelectedData();
     plainTextEdit->setPlainText(data->JobInfo);
     QDateTime restoredDateTime = QDateTime::fromSecsSinceEpoch(data->StartTime);
     dateTimeEdit->setDateTime(restoredDateTime);
@@ -115,17 +114,8 @@ void ScheduleEdit::save()
 {
     QDateTime dateTime = dateTimeEdit->dateTime();
     long long timestamp = dateTime.toSecsSinceEpoch();
-
     data->JobInfo = plainTextEdit->toPlainText();
     data->StartTime = timestamp;
     data->RepeatType = repeatSelection->selectedVal;
-
-    QSqlQuery query;
-    query.prepare("UPDATE Job SET JobInfo = ?, StartTime = ?, RepeatType = ? WHERE Id = ?;");
-    query.addBindValue(data->JobInfo);    // JobInfo
-    query.addBindValue(data->StartTime); // StartTime
-    query.addBindValue(data->RepeatType);   // RepeatType
-    query.addBindValue(data->Id);
-    auto flag = query.exec();
-    Eventer::get()->fire("refreshData", data);
+    Schedules::get()->editData(data);
 }

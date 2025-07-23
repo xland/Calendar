@@ -20,8 +20,3 @@ Eventer* Eventer::get()
 {
 	return eventer;
 }
-
-void Eventer::fire(const QString& eventName, const QObject* data)
-{
-	eventer->emit globalEvent(eventName, data);
-}

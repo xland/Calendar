@@ -15,7 +15,7 @@ DialogSchedule::DialogSchedule(const QDate& day, QWidget *parent) : QWidget(pare
 	setAttribute(Qt::WA_DeleteOnClose);
     resize(900, 600);        
     QSplitter* splitter = new QSplitter(Qt::Horizontal, this);
-    splitter->setStyleSheet("QSplitter::handle{ background-color:rgb(200,220,240);}");
+    splitter->setStyleSheet("QSplitter::handle{background-color:rgb(200,220,240);}");
     splitter->setContentsMargins(0, 0, 0, 0);
     splitter->setChildrenCollapsible(false);
     auto box = new ScheduleBox(splitter);
@@ -25,8 +25,6 @@ DialogSchedule::DialogSchedule(const QDate& day, QWidget *parent) : QWidget(pare
     mainLayout->addWidget(splitter);
     setLayout(mainLayout);
     setWindowTitle(QString("%1年%2月%3日的日程").arg(day.year()).arg(day.month()).arg(day.day()));
-
-    box->list->refreshData("refreshData",nullptr);
 }
 
 DialogSchedule::~DialogSchedule()

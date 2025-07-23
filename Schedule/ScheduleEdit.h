@@ -14,13 +14,13 @@ class ScheduleEdit : public QWidget
 public:
 	ScheduleEdit(QWidget *parent = nullptr);
 	~ScheduleEdit();
+	void updateData();
 
 private:
 	void save();
 	void initDateEdit(QVBoxLayout* layout);
 	void initTextEdit(QVBoxLayout* layout);
 	void initBtns(QVBoxLayout* layout);
-	void updateData(const QString& eventName, const QObject* model);
 	QPlainTextEdit* plainTextEdit;
 	QDateTimeEdit* dateTimeEdit;
 	RepeatSelection* repeatSelection;

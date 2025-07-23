@@ -9,9 +9,9 @@ class ScheduleList : public QScrollArea
 public:
 	ScheduleList(QWidget *parent = nullptr);
 	~ScheduleList();
-	void refreshData(const QString& eventName,const QObject* data);
+	void refreshData();
 private:
 	void itemClick();
-	QVBoxLayout* contentLayout;
+	QVBoxLayout* layout;
 };
 
