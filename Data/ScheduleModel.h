@@ -14,7 +14,5 @@ public:
 	QString JobInfo;
 	long long StartTime;
 	int RepeatType;
-
-	bool isSelected{ false };
 };
 

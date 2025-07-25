@@ -14,7 +14,6 @@ public:
 	int index;
 	QDate day;
 	QString lunar;
-	QString docStatus;
 	bool hasSchdule;
 	bool isActive;
 	bool isCurMonth;

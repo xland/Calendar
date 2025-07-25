@@ -19,6 +19,7 @@
 #include "DayBtn.h"
 #include "Util.h"
 #include "NongLi.h"
+#include "../Data/Schedules.h"
 
 namespace {
     WNDPROC oldProc;
@@ -46,13 +47,12 @@ MainWindow::~MainWindow()
 
 void MainWindow::paintEvent(QPaintEvent* event)
 {
-    QPainter painter(this);
-    painter.setRenderHint(QPainter::Antialiasing, true);
+    QPainter p(this);
+    p.setRenderHint(QPainter::Antialiasing, true);
     auto skin = Skin::get();
-    painter.setBrush(skin->bg);
-    painter.setPen(Qt::NoPen);
-    painter.drawRoundedRect(rect(), 4, 4);
-
+    p.setBrush(skin->bg);
+    p.setPen(Qt::NoPen);
+    p.drawRoundedRect(rect(), 4, 4);    
 }
 
 void MainWindow::onEmbedMouseMove()
@@ -98,21 +98,17 @@ void MainWindow::embed()
     auto workerW = Util::getWorkerW();
     auto hwnd = (HWND)winId();
     SetParent(hwnd, workerW);
-    //QTimer::singleShot(1000, [hwnd]() {
-        RAWINPUTDEVICE rids[1];
-        rids[0].usUsagePage = 0x01;
-        rids[0].usUsage = 0x02;
-        rids[0].dwFlags = 0x00000100;
-        rids[0].hwndTarget = hwnd;
-        RegisterRawInputDevices(rids, 1, sizeof(rids[0]));
-        oldProc = (WNDPROC)SetWindowLongPtr(hwnd, GWLP_WNDPROC, (LONG_PTR)MainWindow::processMsg);
-    //});
-
+    RAWINPUTDEVICE rids[1];
+    rids[0].usUsagePage = 0x01;
+    rids[0].usUsage = 0x02;
+    rids[0].dwFlags = 0x00000100;
+    rids[0].hwndTarget = hwnd;
+    RegisterRawInputDevices(rids, 1, sizeof(rids[0]));
+    oldProc = (WNDPROC)SetWindowLongPtr(hwnd, GWLP_WNDPROC, (LONG_PTR)MainWindow::processMsg);
 }
 
 LRESULT CALLBACK MainWindow::processMsg(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
-    //auto win = (MainWindow*)QApplication::topLevelWidgets().first();  //  || !win 
     if (uMsg != WM_INPUT ) {
         return CallWindowProc(oldProc, hWnd, uMsg, wParam, lParam);
     }
@@ -120,8 +116,7 @@ LRESULT CALLBACK MainWindow::processMsg(HWND hWnd, UINT uMsg, WPARAM wParam, LPA
     GetCursorPos(&globalPos);
     RECT rect;
     GetWindowRect(hWnd, &rect);
-    if (globalPos.x < rect.left || globalPos.y < rect.top ||
-        globalPos.x > rect.right || globalPos.y > rect.bottom) {
+    if (globalPos.x < rect.left || globalPos.y < rect.top || globalPos.x > rect.right || globalPos.y > rect.bottom) {
         win->onEmbedLeaveWindow();
         return CallWindowProc(oldProc, hWnd, uMsg, wParam, lParam);
     }
@@ -129,9 +124,7 @@ LRESULT CALLBACK MainWindow::processMsg(HWND hWnd, UINT uMsg, WPARAM wParam, LPA
     HWND hwnd = WindowFromPoint(globalPos);
     WCHAR className[28];
     int len = GetClassName(hwnd, className, 28);
-    if ((lstrcmp(TEXT("SysListView32"), className) != 0) &&
-        (lstrcmp(TEXT("WorkerW"), className) != 0) &&
-        (lstrcmp(TEXT("Progman"), className) != 0)) {
+    if ((lstrcmp(TEXT("SysListView32"), className) != 0) && (lstrcmp(TEXT("WorkerW"), className) != 0) && (lstrcmp(TEXT("Progman"), className) != 0)) {
         win->onEmbedLeaveWindow();
         return CallWindowProc(oldProc, hWnd, uMsg, wParam, lParam);
     }
@@ -147,16 +140,16 @@ LRESULT CALLBACK MainWindow::processMsg(HWND hWnd, UINT uMsg, WPARAM wParam, LPA
         else {
             switch (rawMouse.ulButtons)
             {
-            case RI_MOUSE_LEFT_BUTTON_DOWN:
-            {
-                win->onEmbedMousePress();
-                break;
-            }
-            default:
-            {
-                win->onEmbedMouseMove();
-                break;
-            }
+                case RI_MOUSE_LEFT_BUTTON_DOWN:
+                {
+                    win->onEmbedMousePress();
+                    break;
+                }
+                default:
+                {
+                    win->onEmbedMouseMove();
+                    break;
+                }
             }
         }
     }
@@ -174,6 +167,9 @@ void MainWindow::init()
 {
     win = new MainWindow();
     win->show();
+    YearBar::init();
+    WeekBar::init();
+    win->updateData(QDate::currentDate());
 }
 
 MainWindow* MainWindow::get()
@@ -191,8 +187,7 @@ void MainWindow::updateData(const QDate& day)
         auto& day = dayBtns[i];
         day->day = std::get<0>(dayData);
         day->lunar = NongLi::solar2lunar(day->day.year(), day->day.month(), day->day.day()).iDayCn;
-        day->docStatus = "has";
-        day->hasSchdule = false;
+        day->hasSchdule = Schedules::get()->hasSchedule(day->day);
         day->isActive = false;
         day->isCurMonth = std::get<1>(dayData);
         day->update();

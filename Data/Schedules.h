@@ -11,10 +11,13 @@ class Schedules  : public QObject
 public:
 	Schedules(QObject *parent);
 	~Schedules();
-	void addData(const QString& JobInfo, const long long& StartTime, const int& RepeatType);
-	void delData(ScheduleModel* item);
+	void delData(const QString& id);
 	void editData(ScheduleModel* data);
-	ScheduleModel* getSelectedData();
+	void addData(ScheduleModel* data);
+	ScheduleModel* getData(const QString& id);
+	bool hasSchedule(const QDate& day);
+	QList<ScheduleModel*> getData(const QDate& startD, const QDate& endD);
+	QList<ScheduleModel*> getDataAll();
 	static void init();
 	static Schedules* get();
 	QList<ScheduleModel*> data;

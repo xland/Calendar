@@ -5,7 +5,7 @@
 #include "Skin.h"
 #include "DayBtn.h"
 #include "../Util.h"
-#include "../Schedule/DialogSchedule.h"
+#include "../Schedule/DialogList.h"
 
 DayBtn::DayBtn(const int& index, QWidget* parent) : BtnBase(parent), index{ index }
 {
@@ -30,7 +30,7 @@ void DayBtn::paintEvent(QPaintEvent* event)
     painter.setRenderHint(QPainter::Antialiasing, true);
     painter.setRenderHint(QPainter::TextAntialiasing, true);
     auto skin = Skin::get();
-    auto r = rect().adjusted(2, 2, -2, -2);
+    auto r = rect().adjusted(1,1,-1,-1);
     auto isToday = day == QDate::currentDate();
     if (isActive) {
         painter.setBrush(skin->dayActive);
@@ -39,7 +39,7 @@ void DayBtn::paintEvent(QPaintEvent* event)
     }
     else if (isToday) {
         painter.setBrush(Qt::NoBrush);
-        painter.setPen(QPen(skin->dayActive,0.5));
+        painter.setPen(QPen(QColor(180, 60, 80),0.5));
         painter.drawRect(r);
     }
     if (!isActive && isHover) {
@@ -79,35 +79,25 @@ void DayBtn::paintEvent(QPaintEvent* event)
     }
     painter.drawText(textRect, lunar, option);
 
-    QRect r1 = rect();
-    auto x = r1.right() - 11;
-    auto y = r1.top() + 14;
-
-    //if (isActive) {
-    //    painter.setPen(QColor(255,255,255));
-    //}
-    //else {
-    //    painter.setPen(skin->dayWorking);
-    //}
-    //painter.drawText(QPoint(x, y), docStatus);
-
     if (hasSchdule) {    
-        if (isActive) {
-            painter.setBrush(QColor(255, 255, 255));
+        if (!isToday) {
+            painter.setBrush(Qt::NoBrush);
+            painter.setPen(QPen(QColor(140, 140, 140), 0.5));
+            painter.drawRect(r);
         }
-        else {
-            painter.setBrush(skin->dot);
-        }
+        painter.setBrush(QColor(180, 60, 80));
         painter.setPen(Qt::NoPen);
-        
-        QRect r2(textRect.width() / 2 - 2, textRect.bottom() - 6, 4, 4);
-        painter.drawEllipse(r2);
+        auto tr = r.bottomRight();
+        tr.setY(tr.y() + 1); tr.setX(tr.x() + 1);
+        QPolygon polygon;
+        polygon << tr << QPoint(tr.x()-8,tr.y()) << QPoint(tr.x(), tr.y()-8);
+        painter.drawPolygon(polygon);
     }
 }
 
 void DayBtn::onClick()
 {
-    auto dialogSchedule = new DialogSchedule(day);
+    auto dialogSchedule = new DialogList(day);
     dialogSchedule->show();
     dialogSchedule->activateWindow();
 

@@ -1,31 +1,34 @@
 #pragma once
+
+#include <QWidget>
 #include <QPlainTextEdit>
 #include <QDateTimeEdit>
-#include <QWidget>
 #include <QVBoxLayout>
 #include <QPushButton>
 
-#include "../Data/ScheduleModel.h"
 #include "RepeatSelection.h"
+#include "../Data/ScheduleModel.h"
 
-class ScheduleEdit : public QWidget
+class DialogEdit : public QWidget
 {
 	Q_OBJECT
 
 public:
-	ScheduleEdit(QWidget *parent = nullptr);
-	~ScheduleEdit();
-	void updateData();
-
+	DialogEdit(const QString& id,QWidget *parent = nullptr);
+	~DialogEdit();
+protected:
+	void showEvent(QShowEvent* event) override;
 private:
-	void save();
 	void initDateEdit(QVBoxLayout* layout);
 	void initTextEdit(QVBoxLayout* layout);
 	void initBtns(QVBoxLayout* layout);
+	void initData(const QString& id);
+	void btnClick();
+	QString title;
 	QPlainTextEdit* plainTextEdit;
 	QDateTimeEdit* dateTimeEdit;
 	RepeatSelection* repeatSelection;
-	ScheduleModel* data;
 	QPushButton* btn;
+	ScheduleModel* data;
 };
 

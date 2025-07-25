@@ -5,7 +5,7 @@
 #include "BtnBase.h"
 #include "Util.h"
 
-RepeatSelection::RepeatSelection(QWidget *parent) : QWidget(parent)
+RepeatSelection::RepeatSelection(const int& val, QWidget *parent) : QWidget(parent), selectedVal{val}
 {
     auto layout = new QHBoxLayout(this);
     layout->setContentsMargins(0, 0, 0, 0);
@@ -25,13 +25,13 @@ RepeatSelection::RepeatSelection(QWidget *parent) : QWidget(parent)
     auto rsb3 = new RepeatSelectionBtn(3);
     connect(rsb3, &BtnBase::click, this, &RepeatSelection::selectionChanged);
     layout->addWidget(rsb3);
-    auto rsb4 = new RepeatSelectionBtn(4);
+    rsb4 = new RepeatSelectionBtn(4);
     connect(rsb4, &BtnBase::click, this, &RepeatSelection::selectionChanged);
     layout->addWidget(rsb4);
-    auto rsb5 = new RepeatSelectionBtn(5);
+    rsb5 = new RepeatSelectionBtn(5);
     connect(rsb5, &BtnBase::click, this, &RepeatSelection::selectionChanged);
     layout->addWidget(rsb5);
-    auto rsb6 = new RepeatSelectionBtn(6);
+    rsb6 = new RepeatSelectionBtn(6);
     connect(rsb6, &BtnBase::click, this, &RepeatSelection::selectionChanged);
     layout->addWidget(rsb6);
     layout->addStretch();
@@ -40,6 +40,14 @@ RepeatSelection::RepeatSelection(QWidget *parent) : QWidget(parent)
 RepeatSelection::~RepeatSelection()
 {
 
+}
+
+void RepeatSelection::changeDate(const QDate& date)
+{
+    QString days[] = { "一", "二", "三", "四","五","六","日" };
+    rsb4->labelStr = QString("每周%1").arg(days[date.dayOfWeek() - 1]);
+    rsb5->labelStr = QString("每月第%1天").arg(date.day());
+    rsb6->labelStr = QString("每年%1月%2日").arg(QString::number(date.month()).trimmed(), QString::number(date.day()).trimmed());
 }
 
 void RepeatSelection::selectionChanged()

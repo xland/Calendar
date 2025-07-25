@@ -103,7 +103,8 @@
     <ClCompile Include="Data\Schedules.cpp" />
     <ClCompile Include="Embed\DayBtn.cpp" />
     <ClCompile Include="Data\Db.cpp" />
-    <ClCompile Include="Schedule\DialogSchedule.cpp" />
+    <ClCompile Include="Schedule\DialogEdit.cpp" />
+    <ClCompile Include="Schedule\DialogList.cpp" />
     <ClCompile Include="Setting\DialogSetting.cpp" />
     <ClCompile Include="Eventer.cpp" />
     <ClCompile Include="Embed\MainWindow.cpp" />
@@ -139,7 +140,7 @@
     <QtMoc Include="Embed\MainWindow.h" />
     <QtMoc Include="Embed\DayBtn.h" />
     <QtMoc Include="BtnBase.h" />
-    <QtMoc Include="Schedule\DialogSchedule.h" />
+    <QtMoc Include="Schedule\DialogList.h" />
     <QtMoc Include="Setting\DialogSetting.h" />
     <QtMoc Include="Data\Db.h" />
     <QtMoc Include="Eventer.h" />
@@ -156,6 +157,7 @@
     <QtMoc Include="Schedule\ScheduleListItem.h" />
     <QtMoc Include="Data\ScheduleModel.h" />
     <ClInclude Include="Embed\Skin.h" />
+    <QtMoc Include="Schedule\DialogEdit.h" />
     <ClInclude Include="Util.h" />
     <QtMoc Include="Embed\YearBarBtn.h" />
     <QtMoc Include="Embed\YearBar.h" />

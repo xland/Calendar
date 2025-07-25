@@ -6,6 +6,9 @@
 #include "ScheduleList.h"
 #include "ScheduleListItem.h"
 #include "Eventer.h"
+#include "ScheduleTab.h"
+#include "ScheduleBox.h"
+#include "DialogList.h"
 #include "../Data/Schedules.h"
 
 ScheduleList::ScheduleList(QWidget *parent) : QScrollArea(parent)
@@ -36,37 +39,50 @@ ScheduleList::~ScheduleList()
 
 void ScheduleList::refreshData()
 {
+    /*auto box = (ScheduleBox*)parent();
     QLayoutItem* child;
     while ((child = layout->takeAt(0)) != nullptr) {
         delete child->widget();
         delete child;
     }
-    auto& list = Schedules::get()->data;
-    for (size_t i = 0; i < list.size(); i++)
-    {
-        auto item = new ScheduleListItem(list[i]);
-        connect(item, &ScheduleListItem::click, this, &ScheduleList::itemClick);
-        layout->addWidget(item);
+    if (box->tabs->isCurDayTab) {
+        auto p = (DialogList*)topLevelWidget();
+        auto list = Schedules::get()->getSchedulesByDay(p->curDay);
+        for (uint i = 0; i < list.size(); i++)
+        {
+            auto item = new ScheduleListItem(list[i]);
+            connect(item, &ScheduleListItem::click, this, &ScheduleList::itemClick);
+            layout->addWidget(item);
+        }
+    }
+    else {
+        auto& list = Schedules::get()->data;
+        for (uint i = 0; i < list.size(); i++)
+        {
+            auto item = new ScheduleListItem(list[i]);
+            connect(item, &ScheduleListItem::click, this, &ScheduleList::itemClick);
+            layout->addWidget(item);
+        }
     }
     layout->addStretch();
     layout->update();
-    layout->activate();
+    layout->activate();*/
 }
 
 void ScheduleList::itemClick()
 {
-    auto tar = sender();
-    for (int i = 0; i < layout->count(); ++i) {
-        QLayoutItem* childItem = layout->itemAt(i);
-        if (!childItem) continue; 
-         auto item = qobject_cast<ScheduleListItem*>(childItem->widget());
-         if (!item) continue;
-         if (item != sender()) {
-             if (item->model->isSelected != false) {
-                 item->model->isSelected = false;
-                 item->update();
-             }
-         }
-    }
+    //auto tar = sender();
+    //for (int i = 0; i < layout->count(); ++i) {
+    //    QLayoutItem* childItem = layout->itemAt(i);
+    //    if (!childItem) continue; 
+    //     auto item = qobject_cast<ScheduleListItem*>(childItem->widget());
+    //     if (!item) continue;
+    //     if (item != sender()) {
+    //         if (item->model->isSelected != false) {
+    //             item->model->isSelected = false;
+    //             item->update();
+    //         }
+    //     }
+    //}
 }
 

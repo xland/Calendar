@@ -58,7 +58,7 @@
     <ClCompile Include="Embed\NongLi.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Schedule\DialogSchedule.cpp">
+    <ClCompile Include="Schedule\DialogList.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Setting\DialogSetting.cpp">
@@ -100,6 +100,9 @@
     <ClCompile Include="Data\Schedules.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Schedule\DialogEdit.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="Embed\WeekBar.h">
@@ -120,7 +123,7 @@
     <QtMoc Include="BtnBase.h">
       <Filter>Header Files</Filter>
     </QtMoc>
-    <QtMoc Include="Schedule\DialogSchedule.h">
+    <QtMoc Include="Schedule\DialogList.h">
       <Filter>Header Files</Filter>
     </QtMoc>
     <QtMoc Include="Setting\DialogSetting.h">
@@ -160,6 +163,9 @@
       <Filter>Header Files</Filter>
     </QtMoc>
     <QtMoc Include="Data\Schedules.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="Schedule\DialogEdit.h">
       <Filter>Header Files</Filter>
     </QtMoc>
   </ItemGroup>

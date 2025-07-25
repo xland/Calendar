@@ -6,7 +6,7 @@
 #include "ScheduleTab.h"
 #include "Util.h"
 #include "Eventer.h"
-#include "DialogSchedule.h"
+#include "DialogList.h"
 #include "../Data/ScheduleModel.h"
 #include "../Data/Schedules.h"
 
@@ -102,10 +102,12 @@ void ScheduleTab::mousePressEvent(QMouseEvent* event)
     if (isCurDayTab && hoverIndex == 1) {
         isCurDayTab = false;
         update();
+        emit Eventer::get()->schedulesChange();
     }
     else if (!isCurDayTab && hoverIndex == 0) {
         isCurDayTab = true;
         update();
+        emit Eventer::get()->schedulesChange();
     }
     else if (hoverIndex == 2) {
         addNew();
@@ -114,9 +116,10 @@ void ScheduleTab::mousePressEvent(QMouseEvent* event)
 
 void ScheduleTab::addNew()
 {
-    auto p = (DialogSchedule*)topLevelWidget();
-    QDateTime dateTime(p->curDay,QTime::currentTime());
-    long long timestamp = dateTime.toSecsSinceEpoch();
-    Schedules::get()->addData("日程内容......", timestamp, 0);
+    //auto p = (DialogList*)topLevelWidget();
+    //QDateTime dateTime(p->curDay,QTime::currentTime());
+    //long long timestamp = dateTime.toSecsSinceEpoch();
+    //Schedules::get()->cancelSelecte();
+    //emit Eventer::get()->schedulesChange();
 }
 

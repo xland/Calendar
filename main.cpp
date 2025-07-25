@@ -18,8 +18,5 @@ int main(int argc, char *argv[])
     Schedules::init();
     Skin::init();
     MainWindow::init();
-    YearBar::init();
-    WeekBar::init();
-    MainWindow::get()->updateData(QDate::currentDate());
     return a.exec();
 }
