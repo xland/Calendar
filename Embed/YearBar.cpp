@@ -4,11 +4,8 @@
 
 #include "MainWindow.h"
 #include "Util.h"
-#include "Skin.h"
 #include "YearBar.h"
 #include "DayBtn.h"
-
-YearBar* yearBar;
 
 
 YearBar::YearBar(QWidget *parent) : QWidget(parent)
@@ -37,20 +34,6 @@ YearBar::YearBar(QWidget *parent) : QWidget(parent)
 
 YearBar::~YearBar()
 {
-	yearBar = nullptr;
-}
-
-void YearBar::init()
-{
-	if (!yearBar) {
-		yearBar = new YearBar(MainWindow::get());
-	}
-	yearBar->activeDateMonth =  "";
-	yearBar->show();
-}
-
-YearBar* YearBar::get() {
-	return yearBar;
 }
 
 void YearBar::paintEvent(QPaintEvent* event)
@@ -59,8 +42,7 @@ void YearBar::paintEvent(QPaintEvent* event)
 	painter.setRenderHint(QPainter::Antialiasing, true);
 	painter.setRenderHint(QPainter::TextAntialiasing, true);
 	painter.setFont(Util::getTextFont(20));
-	auto skin = Skin::get();
-	painter.setPen(skin->year);
+	painter.setPen(QColor(31, 35, 41));
 	painter.drawText(rect(), Qt::AlignCenter, activeDateMonth);
 }
 

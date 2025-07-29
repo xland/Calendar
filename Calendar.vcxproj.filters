@@ -46,9 +46,6 @@
     <ClCompile Include="Embed\MainWindow.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Embed\Skin.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Embed\DayBtn.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -196,9 +193,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Util.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Embed\Skin.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Embed\NongLi.h">

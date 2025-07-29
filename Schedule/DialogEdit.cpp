@@ -7,7 +7,7 @@
 #include "../Util.h"
 #include "../Eventer.h"
 
-DialogEdit::DialogEdit(const QString& id, QWidget *parent) : QWidget(parent)
+DialogEdit::DialogEdit(const QString& id,const QDate& date,QWidget *parent) : QWidget(parent),date{date}
 {
 	setWindowIcon(QIcon(":/logo.ico"));
 	setObjectName("DialogEdit");
@@ -103,7 +103,7 @@ void DialogEdit::initData(const QString& id)
 {
     if (id.isEmpty()) {
         title = "增加日程";
-        auto dt = QDateTime::currentDateTime().toSecsSinceEpoch();
+        auto dt = QDateTime(date,QTime(9,0,0)).toSecsSinceEpoch();
         data = new ScheduleModel("日程内容...",dt,0,this);
     }
     else {
@@ -121,6 +121,9 @@ void DialogEdit::btnClick()
     data->RepeatType = repeatSelection->selectedVal;
     if (title == "增加日程") {
         Schedules::get()->addData(data);
+    }
+    else {
+        Schedules::get()->editData(data);
     }
     emit Eventer::get()->schedulesChange();
     close();

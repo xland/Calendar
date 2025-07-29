@@ -1,5 +1,5 @@
 #pragma once
-#include <QDate>
+#include <QDateTime>
 #include <QWidget>
 #include <QLabel>
 #include <QLineEdit>
@@ -15,7 +15,8 @@ class DialogList : public QWidget
 public:
 	DialogList(const QDate& day, QWidget *parent = nullptr);
 	~DialogList();
-	QDate curDay;
+	QDateTime startTime;
+	QDateTime endTime;
 	QLineEdit* input;
 protected:
 	void showEvent(QShowEvent* event) override;

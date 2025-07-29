@@ -3,14 +3,9 @@
 #include <QtWidgets/QMainWindow>
 #include <QJsonObject>
 
-class TitleBar;
 class YearBar;
 class WeekBar;
 class DayBtn;
-class SwitchBtn;
-class ListBar;
-class ListContent;
-class TipInfo;
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
@@ -34,5 +29,6 @@ private:
     void embed();
     static LRESULT CALLBACK processMsg(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 private:
-    
+    YearBar* yearBar;
+    WeekBar* weekBar;
 };

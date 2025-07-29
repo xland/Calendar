@@ -14,7 +14,7 @@ class DialogEdit : public QWidget
 	Q_OBJECT
 
 public:
-	DialogEdit(const QString& id,QWidget *parent = nullptr);
+	DialogEdit(const QString& id, const QDate& date, QWidget *parent = nullptr);
 	~DialogEdit();
 protected:
 	void showEvent(QShowEvent* event) override;
@@ -30,5 +30,6 @@ private:
 	RepeatSelection* repeatSelection;
 	QPushButton* btn;
 	ScheduleModel* data;
+	QDate date;
 };
 

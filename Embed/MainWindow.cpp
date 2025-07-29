@@ -6,12 +6,12 @@
 #include <QPaintEvent>
 #include <QPainter>
 #include <QDebug>
+#include <QScreen>
 #include <QWindow>
 #include <QEvent>
 #include <QTimer>
 #include <QApplication>
 
-#include "Skin.h"
 #include "MainWindow.h"
 #include "BtnBase.h"
 #include "YearBar.h"
@@ -31,15 +31,14 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     setAttribute(Qt::WA_QuitOnClose, false);
     setAttribute(Qt::WA_TranslucentBackground, true);
     setFixedSize(QSize(370, 320));
-    auto x = 100;
-    auto y = 100;
-    move(x, y);
-    embed();
+    yearBar = new YearBar(this);
+    weekBar = new WeekBar(this);
     for (int i = 0; i < 42; i++)
     {
         auto day = new DayBtn(i, this);
         dayBtns.append(day);
     }
+    embed();
 }
 MainWindow::~MainWindow()
 {
@@ -49,8 +48,7 @@ void MainWindow::paintEvent(QPaintEvent* event)
 {
     QPainter p(this);
     p.setRenderHint(QPainter::Antialiasing, true);
-    auto skin = Skin::get();
-    p.setBrush(skin->bg);
+    p.setBrush(QColor(255,255,255,153));
     p.setPen(Qt::NoPen);
     p.drawRoundedRect(rect(), 4, 4);    
 }
@@ -95,6 +93,8 @@ void MainWindow::onEmbedLeaveWindow()
 
 void MainWindow::embed()
 {
+    auto pos = screen()->geometry().topRight();
+    move(pos.x()-width()-80,pos.y()+80);
     auto workerW = Util::getWorkerW();
     auto hwnd = (HWND)winId();
     SetParent(hwnd, workerW);
@@ -167,8 +167,6 @@ void MainWindow::init()
 {
     win = new MainWindow();
     win->show();
-    YearBar::init();
-    WeekBar::init();
     win->updateData(QDate::currentDate());
 }
 
@@ -180,15 +178,18 @@ MainWindow* MainWindow::get()
 void MainWindow::updateData(const QDate& day)
 {
     auto dayArr = Util::getOneMonthDay(day);
-    YearBar::get()->yearMonthLabel->setText(QString("%1年%2月").arg(day.year()).arg(day.month()));
+    yearBar->yearMonthLabel->setText(QString("%1年%2月").arg(day.year()).arg(day.month()));
+    auto schedules = Schedules::get();
+    auto data = schedules->getDataAll();
+    auto curDay = QDate::currentDate();
     int i = 0;
     for (auto& dayData:dayArr)
     {
         auto& day = dayBtns[i];
         day->day = std::get<0>(dayData);
         day->lunar = NongLi::solar2lunar(day->day.year(), day->day.month(), day->day.day()).iDayCn;
-        day->hasSchdule = Schedules::get()->hasSchedule(day->day);
-        day->isActive = false;
+        day->hasSchdule = schedules->hasSchedule(day->day,data);
+        day->isToday = (day->day == curDay);
         day->isCurMonth = std::get<1>(dayData);
         day->update();
         i += 1;

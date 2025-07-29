@@ -8,9 +8,8 @@ class YearBar : public QWidget
 {
 	Q_OBJECT
 public:
+	YearBar(QWidget* parent = nullptr);
 	~YearBar();
-	static void init();
-	static YearBar* get();
 	QLabel* yearMonthLabel;
 protected:
 	void paintEvent(QPaintEvent* event) override;
@@ -20,7 +19,6 @@ private:
 	void todayBtnClick();
 	void switchMonth(const int& val);
 private:
-	YearBar(QWidget* parent = nullptr);
 	YearBarBtn* leftBtn;
 	YearBarBtn* rightBtn;
 	YearBarBtn* todayBtn;

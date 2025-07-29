@@ -19,39 +19,14 @@ Schedules::~Schedules()
 {
 
 }
-void Schedules::initData()
-{
-    QSqlQuery query;
-    query.prepare("SELECT * FROM Job order by StartTime desc;");
-    if (!query.exec()) {
-        qDebug() << "Query failed:" << query.lastError();
-        return;
-    }
-    while (query.next()) {
-        auto model = new ScheduleModel(this);
-        model->Id = query.value("Id").toString();
-        model->JobInfo = query.value("JobInfo").toString();
-        model->StartTime = query.value("StartTime").toLongLong();
-        model->RepeatType = query.value("RepeatType").toInt();
-        data.append(model);
-    }
-}
 
 
 void Schedules::delData(const QString& id)
 {
-    for (int i = data.size() - 1; i >= 0; --i)
-    {
-        if (data[i]->Id == id) {
-            QSqlQuery query;
-            query.prepare("DELETE FROM Job WHERE Id = ?;");
-            query.addBindValue(id);
-            auto flag = query.exec();
-            delete data[i];
-            data.removeAt(i);
-            break;
-        }
-    }
+    QSqlQuery query;
+    query.prepare("DELETE FROM Job WHERE Id = ?;");
+    query.addBindValue(id);
+    auto flag = query.exec();
 }
 
 void Schedules::editData(ScheduleModel* data)
@@ -63,7 +38,6 @@ void Schedules::editData(ScheduleModel* data)
     query.addBindValue(data->RepeatType);   // RepeatType
     query.addBindValue(data->Id);
     auto flag = query.exec();
-    emit Eventer::get()->schedulesChange();
 }
 
 void Schedules::addData(ScheduleModel* d)
@@ -75,26 +49,34 @@ void Schedules::addData(ScheduleModel* d)
     query.addBindValue(d->StartTime);  // StartTime
     query.addBindValue(d->RepeatType); // RepeatType
     auto flag = query.exec();
-    data.insert(0, d);
 }
 
 ScheduleModel* Schedules::getData(const QString& id)
 {
-    for (int i = 0; i < data.size(); i++)
-    {
-        if (data[i]->Id == id) {
-            return data[i];
-        }
+    QList<ScheduleModel*> data;
+    QSqlQuery query;
+    query.prepare("SELECT * FROM Job where Id = ?;");
+    query.addBindValue(id);
+    if (!query.exec()) {
+        qDebug() << "Query failed:" << query.lastError();
+        return nullptr;
+    }
+    if (query.next()) {
+        auto model = new ScheduleModel(this);
+        model->Id = query.value("Id").toString();
+        model->JobInfo = query.value("JobInfo").toString();
+        model->StartTime = query.value("StartTime").toLongLong();
+        model->RepeatType = query.value("RepeatType").toInt();
+        return model;
     }
     return nullptr;
 }
 
 
-bool Schedules::hasSchedule(const QDate& day)
+bool Schedules::hasSchedule(const QDate& day,const QList<ScheduleModel*>& data)
 {
     auto start = QDateTime(day, QTime(0, 0, 0));
     auto end = QDateTime(day, QTime(23, 59, 59, 999));
-
     for (int i = 0; i < data.size(); i++)
     {
         if (data[i]->RepeatType == 0) { //不重复
@@ -139,7 +121,7 @@ bool Schedules::hasSchedule(const QDate& day)
     return false;
 }
 
-QList<ScheduleModel*> Schedules::getData(const QDate& startD, const QDate& endD)
+QList<ScheduleModel*> Schedules::getData(const QDate& startD, const QDate& endD,const QString& keyword)
 {
     auto data = getDataAll();
     QList<ScheduleModel*> list;
@@ -147,6 +129,9 @@ QList<ScheduleModel*> Schedules::getData(const QDate& startD, const QDate& endD)
     auto end = QDateTime(endD, QTime(23, 59, 59, 999));
     for (int i = 0; i < data.size(); i++)
     {
+        if (!keyword.isEmpty() && !data[i]->JobInfo.contains(keyword)) {
+            continue;
+        }
         if (data[i]->RepeatType == 0) { //不重复
             if (start.toSecsSinceEpoch() <= data[i]->StartTime && data[i]->StartTime <= end.toSecsSinceEpoch()) {
                 list.append(data[i]);
@@ -232,14 +217,20 @@ QList<ScheduleModel*> Schedules::getDataAll()
     return data;
 }
 
+ScheduleModel* Schedules::getRecentData(const QList<ScheduleModel*>& data) 
+{
+
+}
+
 void Schedules::init() 
 {
     schedules = new Schedules(qApp);
-    schedules->initData();
 }
 Schedules* Schedules::get() 
 {
     return schedules;
 }
+
+
 
 

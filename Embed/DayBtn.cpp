@@ -2,7 +2,6 @@
 #include <QPainter>
 #include <QJsonArray>
 
-#include "Skin.h"
 #include "DayBtn.h"
 #include "../Util.h"
 #include "../Schedule/DialogList.h"
@@ -29,36 +28,25 @@ void DayBtn::paintEvent(QPaintEvent* event)
     QPainter painter(this);
     painter.setRenderHint(QPainter::Antialiasing, true);
     painter.setRenderHint(QPainter::TextAntialiasing, true);
-    auto skin = Skin::get();
     auto r = rect().adjusted(1,1,-1,-1);
-    auto isToday = day == QDate::currentDate();
-    if (isActive) {
-        painter.setBrush(skin->dayActive);
+    if (isHover) {
+        painter.setBrush(QColor(255, 255, 255, 128));
         painter.setPen(Qt::NoPen);
         painter.drawRect(r);
     }
-    else if (isToday) {
+    if (isToday) {
         painter.setBrush(Qt::NoBrush);
         painter.setPen(QPen(QColor(180, 60, 80),0.5));
         painter.drawRect(r);
+        painter.setPen(QColor(240, 44, 56));
     }
-    if (!isActive && isHover) {
-        painter.setBrush(skin->dayHover);
-        painter.setPen(Qt::NoPen);
-        painter.drawRect(r);
+    else {
+        painter.setPen(isCurMonth ? QColor(31, 35, 41) : QColor(102, 102, 102));
     }
+
     auto& font = Util::getTextFont(12);
     painter.setFont(font);
     painter.setBrush(Qt::NoBrush);
-    if (isActive) {
-        painter.setPen(QColor(255, 255, 255));
-    }
-    else if (isToday) {
-        painter.setPen(skin->dayActive);
-    }
-    else {
-        painter.setPen(isCurMonth ? skin->day : skin->dayNotCurMonth);
-    }
     QRect textRect = rect();
     textRect.setTop(textRect.top() + 5);
     QTextOption option;
@@ -68,15 +56,6 @@ void DayBtn::paintEvent(QPaintEvent* event)
     font.setPixelSize(10);
     painter.setFont(font);
     textRect.setTop(textRect.top() + 16);
-    if (isActive) {
-        painter.setPen(QColor(255,255,255));
-    }
-    else if (isToday) {
-        painter.setPen(skin->dayActive);
-    }
-    else {
-        painter.setPen(isCurMonth ? skin->day : skin->dayNotCurMonth);
-    }
     painter.drawText(textRect, lunar, option);
 
     if (hasSchdule) {    
@@ -100,5 +79,4 @@ void DayBtn::onClick()
     auto dialogSchedule = new DialogList(day);
     dialogSchedule->show();
     dialogSchedule->activateWindow();
-
 }

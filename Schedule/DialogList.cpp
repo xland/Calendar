@@ -10,7 +10,8 @@
 #include "../Data/Schedules.h"
 #include "../Eventer.h"
 
-DialogList::DialogList(const QDate& day, QWidget *parent) : QWidget(parent),curDay{day}
+DialogList::DialogList(const QDate& day, QWidget *parent) : QWidget(parent),
+startTime{ QDateTime(day,QTime(0,0,0)) }, endTime{ QDateTime(day,QTime(23,59,59,999)) }
 {
     setWindowIcon(QIcon(":/logo.ico"));
     setObjectName("DialogList");
@@ -53,7 +54,7 @@ void DialogList::initSearchBar(QVBoxLayout* layout)
     calendar1->setCalendarPopup(true);
     calendar1->setFixedSize(100, 26);
     calendar1->setStyleSheet(calendarStyle);
-    calendar1->setDate(QDate(2000, 12, 12));
+    calendar1->setDate(startTime.date());
     searchLayout->addWidget(calendar1);
     searchLayout->addSpacing(30);
 
@@ -65,8 +66,7 @@ void DialogList::initSearchBar(QVBoxLayout* layout)
     calendar2->setCalendarPopup(true);
     calendar2->setStyleSheet(calendarStyle);
     calendar2->setFixedSize(100,26);
-
-    calendar2->setDate(QDate(2066, 12, 12));
+    calendar2->setDate(endTime.date());
     searchLayout->addWidget(calendar2);
     searchLayout->addSpacing(30);
 
@@ -77,6 +77,7 @@ void DialogList::initSearchBar(QVBoxLayout* layout)
     input = new QLineEdit();
     input->setStyleSheet(R"(QLineEdit{border:1px solid gray;border-radius:0px;padding-left:4px;pandding-right:4px;})");
     input->setFixedSize(160,26);
+    connect(input, &QLineEdit::returnPressed, this, [this](){ initTableRows(); });
     searchLayout->addWidget(input);
     searchLayout->addSpacing(8);
 
@@ -86,6 +87,7 @@ void DialogList::initSearchBar(QVBoxLayout* layout)
     btn1->setCursor(Qt::PointingHandCursor);
     btn1->setStyleSheet(btnStyle.arg("#5D6B99").arg("#3B4F81"));
     btn1->setFixedSize(80, 26);
+    connect(btn1, &QPushButton::clicked, [this](){ initTableRows(); });
     searchLayout->addWidget(btn1);
     searchLayout->addSpacing(8);
     searchLayout->addStretch();
@@ -93,7 +95,7 @@ void DialogList::initSearchBar(QVBoxLayout* layout)
     btn2->setCursor(Qt::PointingHandCursor);
     btn2->setStyleSheet(btnStyle.arg("#267F00").arg("#166F00"));
     btn2->setFixedSize(80, 26);
-    connect(btn2, &QPushButton::clicked, []() {(new DialogEdit(QString()))->show();});
+    connect(btn2, &QPushButton::clicked, [this]() {(new DialogEdit(QString(),startTime.date()))->show();});
     searchLayout->addWidget(btn2);
     layout->addWidget(searchBar);
 }
@@ -113,8 +115,7 @@ void DialogList::initList(QVBoxLayout* layout)
     table->horizontalHeader()->setSectionsClickable(false);
     table->verticalHeader()->setSectionsClickable(false);
     table->setStyleSheet(R"(QTableView{gridline-color:#CCD5F0;border: 1px solid #CCD5F0;}QTableView::item{padding:0px;margin:0px;border:none;} 
-QHeaderView::section{background-color:#CCD5F0; color: black; padding: 3px;}
-)");
+QHeaderView::section{background-color:transparent;})");
     table->setHorizontalHeaderLabels(QStringList() << "日程内容" << "日程类型" << "开始时间" << "操作");   
     initTableRows();
     layout->addWidget(table);
@@ -129,7 +130,7 @@ void DialogList::initTableRows()
         }
     }
     table->clearContents();
-    auto data = Schedules::get()->getData(calendar1->date(),calendar2->date());
+    auto data = Schedules::get()->getData(calendar1->date(),calendar2->date(), input->text().trimmed());
     table->setRowCount(data.size());
     for (int row = 0; row < data.size(); ++row) {
         auto st = QDateTime::fromSecsSinceEpoch(data[row]->StartTime);
@@ -176,7 +177,7 @@ void DialogList::delBtnClick(const QString& id)
 
 void DialogList::editBtnClick(const QString& id)
 {
-   auto de = new DialogEdit(id);
+   auto de = new DialogEdit(id,QDate::currentDate());//第二个参数没用
    de->show();
 }
 

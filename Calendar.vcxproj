@@ -118,7 +118,6 @@
     <ClCompile Include="Data\ScheduleModel.cpp" />
     <ClCompile Include="Schedule\ScheduleSearch.cpp" />
     <ClCompile Include="Schedule\ScheduleTab.cpp" />
-    <ClCompile Include="Embed\Skin.cpp" />
     <ClCompile Include="Util.cpp" />
     <ClCompile Include="Embed\WeekBar.cpp" />
     <ClCompile Include="Embed\YearBar.cpp" />
@@ -156,7 +155,6 @@
     <QtMoc Include="Schedule\ScheduleSearch.h" />
     <QtMoc Include="Schedule\ScheduleListItem.h" />
     <QtMoc Include="Data\ScheduleModel.h" />
-    <ClInclude Include="Embed\Skin.h" />
     <QtMoc Include="Schedule\DialogEdit.h" />
     <ClInclude Include="Util.h" />
     <QtMoc Include="Embed\YearBarBtn.h" />

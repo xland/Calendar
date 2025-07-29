@@ -9,11 +9,10 @@ class WeekBar : public QWidget
 {
 	Q_OBJECT
 public:
+	WeekBar(QWidget* parent = nullptr);
 	~WeekBar();
-	static void init();
 protected:
 	void paintEvent(QPaintEvent* event) override;
 private:
-	WeekBar(QWidget* parent = nullptr);
 	QList<QString> list{ "一","二","三","四","五","六","日" };
 };
