@@ -12,7 +12,6 @@ class MainWindow : public QMainWindow
 
 public:    
     ~MainWindow();
-    void updateData(const QDate& day);
     static RAWINPUT* getRawInput(HRAWINPUT lParam);
     static void init();
     static MainWindow* get();

@@ -1,15 +1,11 @@
-﻿#include <QFont>
-#include <QFontDatabase>
-#include <Windows.h>
+﻿#include <Windows.h>
 #include <windowsx.h>
 #include <QVBoxLayout>
 #include <QPaintEvent>
 #include <QPainter>
-#include <QDebug>
 #include <QScreen>
 #include <QWindow>
 #include <QEvent>
-#include <QTimer>
 #include <QApplication>
 
 #include "MainWindow.h"
@@ -18,8 +14,8 @@
 #include "WeekBar.h"
 #include "DayBtn.h"
 #include "Util.h"
-#include "NongLi.h"
 #include "../Data/Schedules.h"
+#include "../Data/TickTock.h"
 
 namespace {
     WNDPROC oldProc;
@@ -167,31 +163,10 @@ void MainWindow::init()
 {
     win = new MainWindow();
     win->show();
-    win->updateData(QDate::currentDate());
+    //TickTock::get()->start();
 }
 
 MainWindow* MainWindow::get()
 {
     return win;
-}
-
-void MainWindow::updateData(const QDate& day)
-{
-    auto dayArr = Util::getOneMonthDay(day);
-    yearBar->yearMonthLabel->setText(QString("%1年%2月").arg(day.year()).arg(day.month()));
-    auto schedules = Schedules::get();
-    auto data = schedules->getDataAll();
-    auto curDay = QDate::currentDate();
-    int i = 0;
-    for (auto& dayData:dayArr)
-    {
-        auto& day = dayBtns[i];
-        day->day = std::get<0>(dayData);
-        day->lunar = NongLi::solar2lunar(day->day.year(), day->day.month(), day->day.day()).iDayCn;
-        day->hasSchdule = schedules->hasSchedule(day->day,data);
-        day->isToday = (day->day == curDay);
-        day->isCurMonth = std::get<1>(dayData);
-        day->update();
-        i += 1;
-    }
 }

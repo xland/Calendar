@@ -12,11 +12,6 @@ public:
 	~DayBtn();
 public:
 	int index;
-	QDate day;
-	QString lunar;
-	bool hasSchdule;
-	bool isCurMonth;
-	bool isToday{false};
 protected:
 	void paintEvent(QPaintEvent* event) override;
 private:

@@ -5,7 +5,6 @@
 #include "RepeatSelectionBtn.h"
 #include "../Data/Schedules.h"
 #include "../Util.h"
-#include "../Eventer.h"
 
 DialogEdit::DialogEdit(const QString& id,const QDate& date,QWidget *parent) : QWidget(parent),date{date}
 {
@@ -16,14 +15,14 @@ DialogEdit::DialogEdit(const QString& id,const QDate& date,QWidget *parent) : QW
 	setAttribute(Qt::WA_DeleteOnClose);
     setWindowFlags(windowFlags() & ~Qt::WindowMaximizeButtonHint);
     setFixedSize(600, 500);
-    initData(id);
-    setWindowTitle(title);
-
 	QVBoxLayout* layout = new QVBoxLayout(this);
 	layout->setContentsMargins(12, 12, 12, 12);
 	layout->setSpacing(6);
+
+    initData(id);
+    setWindowTitle(title);
 	repeatSelection = new RepeatSelection(data->RepeatType);
-    repeatSelection->changeDate(QDateTime::fromSecsSinceEpoch(data->StartTime).date());
+    repeatSelection->changeDate(QDateTime::fromSecsSinceEpoch(data->FirstTime).date());
 	layout->addWidget(repeatSelection);
 	initDateEdit(layout);
 	initTextEdit(layout);
@@ -51,7 +50,7 @@ void DialogEdit::initDateEdit(QVBoxLayout* layout)
     label->setStyleSheet("font-size:13px;");
     dateTimeLayout->addWidget(label);
     dateTimeEdit = new QDateTimeEdit();
-    dateTimeEdit->setDateTime(QDateTime::fromSecsSinceEpoch(data->StartTime));
+    dateTimeEdit->setDateTime(QDateTime::fromSecsSinceEpoch(data->FirstTime));
     dateTimeEdit->setCalendarPopup(true);
     dateTimeEdit->setFixedWidth(160);
     dateTimeEdit->setDisplayFormat("yyyy-MM-dd HH:mm:ss");
@@ -68,7 +67,7 @@ void DialogEdit::initTextEdit(QVBoxLayout* layout)
     label->setStyleSheet("font-size:13px;");
     layout->addWidget(label);
     plainTextEdit = new QPlainTextEdit(this);
-    plainTextEdit->setPlainText(data->JobInfo);
+    plainTextEdit->setPlainText(data->Schedule);
     QTextBlockFormat blockFormat;
     blockFormat.setLineHeight(26, QTextBlockFormat::FixedHeight);
     QTextCursor cursor = plainTextEdit->textCursor();
@@ -103,8 +102,9 @@ void DialogEdit::initData(const QString& id)
 {
     if (id.isEmpty()) {
         title = "增加日程";
-        auto dt = QDateTime(date,QTime(9,0,0)).toSecsSinceEpoch();
-        data = new ScheduleModel("日程内容...",dt,0,this);
+        data = new ScheduleModel(Schedules::get());
+        data->FirstTime = QDateTime(date, QTime(9, 0, 0)).toSecsSinceEpoch();
+        data->Schedule = "日程内容...";
     }
     else {
         title = "修改日程";
@@ -114,17 +114,22 @@ void DialogEdit::initData(const QString& id)
 
 void DialogEdit::btnClick()
 {
-    QDateTime dateTime = dateTimeEdit->dateTime();
-    long long st = dateTime.toSecsSinceEpoch();
-    data->JobInfo = plainTextEdit->toPlainText();
-    data->StartTime = st;
+    QDateTime dt = dateTimeEdit->dateTime();
+    QDateTime curDt = QDateTime::currentDateTime();
+    data->Schedule = plainTextEdit->toPlainText();
     data->RepeatType = repeatSelection->selectedVal;
+    data->CreateTime = curDt.toSecsSinceEpoch();
+    data->FirstTime = dt.toSecsSinceEpoch();
+    data->UpcomingTime = data->FirstTime;
+    Schedules::get()->setUpcomingTime(data);
+    if (data->RepeatType == 1) {
+        data->IsExpire = data->FirstTime < data->CreateTime;
+    }
     if (title == "增加日程") {
         Schedules::get()->addData(data);
     }
     else {
         Schedules::get()->editData(data);
     }
-    emit Eventer::get()->schedulesChange();
     close();
 }

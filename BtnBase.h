@@ -1,5 +1,5 @@
 #pragma once
-
+#include <QMouseEvent>
 #include <QWidget>
 
 class BtnBase : public QWidget

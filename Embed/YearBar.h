@@ -10,18 +10,18 @@ class YearBar : public QWidget
 public:
 	YearBar(QWidget* parent = nullptr);
 	~YearBar();
-	QLabel* yearMonthLabel;
 protected:
 	void paintEvent(QPaintEvent* event) override;
 private:
 	void leftBtnClick();
 	void rightBtnClick();
 	void todayBtnClick();
-	void switchMonth(const int& val);
+	void setYearMonthText(const QDate& date);
 private:
 	YearBarBtn* leftBtn;
 	YearBarBtn* rightBtn;
 	YearBarBtn* todayBtn;
 	YearBarBtn* settingBtn;
 	QString activeDateMonth;
+	QLabel* yearMonthLabel;
 };

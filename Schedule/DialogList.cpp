@@ -4,11 +4,8 @@
 #include <QHeaderView>
 
 #include "DialogList.h"
-#include "ScheduleBox.h"
-#include "ScheduleEdit.h"
 #include "DialogEdit.h"
 #include "../Data/Schedules.h"
-#include "../Eventer.h"
 
 DialogList::DialogList(const QDate& day, QWidget *parent) : QWidget(parent),
 startTime{ QDateTime(day,QTime(0,0,0)) }, endTime{ QDateTime(day,QTime(23,59,59,999)) }
@@ -25,7 +22,7 @@ startTime{ QDateTime(day,QTime(0,0,0)) }, endTime{ QDateTime(day,QTime(23,59,59,
     layout->setSpacing(12);
     initSearchBar(layout);
     initList(layout);
-    connect(Eventer::get(), &Eventer::schedulesChange, this, &DialogList::initTableRows);
+    connect(Schedules::get(), &Schedules::scheduleChanged, this, &DialogList::initTableRows);
 }
 
 DialogList::~DialogList()
@@ -133,8 +130,8 @@ void DialogList::initTableRows()
     auto data = Schedules::get()->getData(calendar1->date(),calendar2->date(), input->text().trimmed());
     table->setRowCount(data.size());
     for (int row = 0; row < data.size(); ++row) {
-        auto st = QDateTime::fromSecsSinceEpoch(data[row]->StartTime);
-        table->setItem(row, 0, new QTableWidgetItem(data[row]->JobInfo));
+        auto st = QDateTime::fromSecsSinceEpoch(data[row]->FirstTime);
+        table->setItem(row, 0, new QTableWidgetItem(data[row]->Schedule));
         table->setItem(row, 1, new QTableWidgetItem(getTypeStr(data[row]->RepeatType, st.date())));
         table->setItem(row, 2, new QTableWidgetItem(st.toString("yyyy-MM-dd hh:mm:ss")));
         initRowBtns(row, data[row]->Id);

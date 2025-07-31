@@ -13,27 +13,31 @@ RepeatSelection::RepeatSelection(const int& val, QWidget *parent) : QWidget(pare
     auto label = new QLabel("重复类型：");
     label->setStyleSheet("font-size:13px;");
     layout->addWidget(label);
-    auto rsb = new RepeatSelectionBtn(0);
-    connect(rsb, &BtnBase::click, this, &RepeatSelection::selectionChanged);
-    layout->addWidget(rsb);
+
     auto rsb1 = new RepeatSelectionBtn(1);
     connect(rsb1, &BtnBase::click, this, &RepeatSelection::selectionChanged);
     layout->addWidget(rsb1);
+
     auto rsb2 = new RepeatSelectionBtn(2);
     connect(rsb2, &BtnBase::click, this, &RepeatSelection::selectionChanged);
     layout->addWidget(rsb2);
+
     auto rsb3 = new RepeatSelectionBtn(3);
     connect(rsb3, &BtnBase::click, this, &RepeatSelection::selectionChanged);
     layout->addWidget(rsb3);
+
     rsb4 = new RepeatSelectionBtn(4);
     connect(rsb4, &BtnBase::click, this, &RepeatSelection::selectionChanged);
     layout->addWidget(rsb4);
+
     rsb5 = new RepeatSelectionBtn(5);
     connect(rsb5, &BtnBase::click, this, &RepeatSelection::selectionChanged);
     layout->addWidget(rsb5);
+
     rsb6 = new RepeatSelectionBtn(6);
     connect(rsb6, &BtnBase::click, this, &RepeatSelection::selectionChanged);
     layout->addWidget(rsb6);
+
     layout->addStretch();
 }
 

@@ -58,9 +58,9 @@ void Db::initDb()
     if (!dbExists) {
         QSqlQuery query;
         auto flag = query.exec("PRAGMA journal_mode = WAL;");
-        flag = query.exec("CREATE TABLE Job(Id VARCHAR2(36) NOT NULL ON CONFLICT FAIL UNIQUE ON CONFLICT FAIL,JobInfo TEXT,RepeatType INT,StartTime BIGINT);");
-        flag = query.exec("CREATE INDEX JobInfo_Index ON Job(JobInfo);");
-        flag = query.exec("CREATE TABLE Setting(ViewDefault INT DEFAULT 0, ViewVal Int, LangDefault INT DEFAULT 0, SkinDefault INT DEFAULT 0, AlertBefore INT);");
+        flag = query.exec("CREATE TABLE Schedule(Id VARCHAR2(36) NOT NULL ON CONFLICT FAIL UNIQUE ON CONFLICT FAIL,Schedule TEXT,IsExpire INT,RepeatType INT,CreateTime BIGINT,FirstTime BIGINT,UpcomingTime BIGINT,Year INT,Month INT,Day INT,Time INT);");
+        flag = query.exec("CREATE INDEX Schedule_Index ON Job(Schedule);");
+        flag = query.exec("CREATE TABLE Setting(ViewDefault INT DEFAULT 0, ViewVal INT, LangDefault INT DEFAULT 0, SkinDefault INT DEFAULT 0, AlertBefore INT);");
         flag = query.exec("INSERT INTO Setting(ViewDefault, ViewVal, LangDefault, SkinDefault, AlertBefore) VALUES (0, 0, 0, 0, 5);");
     }
 }

@@ -4,29 +4,26 @@
 
 RepeatSelectionBtn::RepeatSelectionBtn(const int& val, QWidget* parent) : BtnBase(parent), val{val}
 { 
-	if (val == 0) {
+	if (val == 1) {
 		setFixedWidth(66);
 		labelStr = "不重复";
 	}
-	else if (val == 1) {
+	else if (val == 2) {
 		setFixedWidth(52);
 		labelStr = "每天";
 	}
-	else if (val == 2) {
+	else if (val == 3) {
 		setFixedWidth(90);
 		labelStr = "每个工作日";
 	}
-	else if (val == 3) {
-		setFixedWidth(66);
-		labelStr = "每周五";
-	}
 	else if (val == 4) {
-		setFixedWidth(90);
-		labelStr = "每月第3天";
+		setFixedWidth(66);
 	}
 	else if (val == 5) {
+		setFixedWidth(90);
+	}
+	else if (val == 6) {
 		setFixedWidth(100);
-		labelStr = "每年12月18日";
 	}
 }
 

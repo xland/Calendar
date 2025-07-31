@@ -3,6 +3,7 @@
 #include <QTimer>
 #include <QObject>
 
+class ScheduleModel;
 class TickTock  : public QObject
 {
 	Q_OBJECT

@@ -1,18 +1,24 @@
 #pragma once
-#include <QSqlQuery>
 #include <QObject>
-
+#include <QSqlQuery>
 class ScheduleModel  : public QObject
 {
 	Q_OBJECT
 
 public:
 	ScheduleModel(QObject* parent);
-	ScheduleModel(const QString& JobInfo,const long long& StartTime,const int& RepeatType, QObject* parent);
+	ScheduleModel(QSqlQuery& query,QObject* parent);
 	~ScheduleModel();
 	QString Id;
-	QString JobInfo;
-	long long StartTime;
-	int RepeatType;
+	QString Schedule;
+	int RepeatType{1};
+	qint64 CreateTime;
+	qint64 FirstTime;
+	qint64 UpcomingTime;
+	bool IsExpire{ false };
+	int Year;
+	int Month;
+	int Day;
+	int Time;
 };
 

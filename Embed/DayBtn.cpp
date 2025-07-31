@@ -5,6 +5,9 @@
 #include "DayBtn.h"
 #include "../Util.h"
 #include "../Schedule/DialogList.h"
+#include "../Schedule/DialogEdit.h"
+#include "../Data/DateModel.h"
+#include "../Data/Dates.h"
 
 DayBtn::DayBtn(const int& index, QWidget* parent) : BtnBase(parent), index{ index }
 {
@@ -16,6 +19,7 @@ DayBtn::DayBtn(const int& index, QWidget* parent) : BtnBase(parent), index{ inde
     setMouseTracking(true);
     setCursor(Qt::CursorShape::PointingHandCursor);
     connect(this, &DayBtn::click, this, &DayBtn::onClick);
+    connect(Dates::get(), &Dates::datesChanged, this, [this]() {update(); });
 }
 
 DayBtn::~DayBtn()
@@ -25,6 +29,7 @@ DayBtn::~DayBtn()
 
 void DayBtn::paintEvent(QPaintEvent* event)
 {
+    auto date = Dates::get()->dates[index];
     QPainter painter(this);
     painter.setRenderHint(QPainter::Antialiasing, true);
     painter.setRenderHint(QPainter::TextAntialiasing, true);
@@ -34,14 +39,14 @@ void DayBtn::paintEvent(QPaintEvent* event)
         painter.setPen(Qt::NoPen);
         painter.drawRect(r);
     }
-    if (isToday) {
+    if (date->isToday) {
         painter.setBrush(Qt::NoBrush);
         painter.setPen(QPen(QColor(180, 60, 80),0.5));
         painter.drawRect(r);
         painter.setPen(QColor(240, 44, 56));
     }
     else {
-        painter.setPen(isCurMonth ? QColor(31, 35, 41) : QColor(102, 102, 102));
+        painter.setPen(date->isCurMonth ? QColor(31, 35, 41) : QColor(102, 102, 102));
     }
 
     auto& font = Util::getTextFont(12);
@@ -51,15 +56,15 @@ void DayBtn::paintEvent(QPaintEvent* event)
     textRect.setTop(textRect.top() + 5);
     QTextOption option;
     option.setAlignment(Qt::AlignHCenter);
-    painter.drawText(textRect, QString::number(day.day()), option);
+    painter.drawText(textRect, QString::number(date->date.day()), option);
 
     font.setPixelSize(10);
     painter.setFont(font);
     textRect.setTop(textRect.top() + 16);
-    painter.drawText(textRect, lunar, option);
+    painter.drawText(textRect, date->lunar, option);
 
-    if (hasSchdule) {    
-        if (!isToday) {
+    if (date->hasSchedule) {
+        if (!date->isToday) {
             painter.setBrush(Qt::NoBrush);
             painter.setPen(QPen(QColor(140, 140, 140), 0.5));
             painter.drawRect(r);
@@ -76,7 +81,15 @@ void DayBtn::paintEvent(QPaintEvent* event)
 
 void DayBtn::onClick()
 {
-    auto dialogSchedule = new DialogList(day);
-    dialogSchedule->show();
-    dialogSchedule->activateWindow();
+    auto date = Dates::get()->dates[index];
+    if (date->hasSchedule) {
+        auto dialogSchedule = new DialogList(date->date);
+        dialogSchedule->show();
+        dialogSchedule->activateWindow();
+    }
+    else {
+        auto dialogEdit = new DialogEdit("", date->date);
+        dialogEdit->show();
+        dialogEdit->activateWindow();
+    }
 }

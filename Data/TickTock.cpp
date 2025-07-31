@@ -1,4 +1,8 @@
+﻿#include <QMessageBox>
+
 #include "TickTock.h"
+#include "ScheduleModel.h"
+#include "Schedules.h"
 
 TickTock* tickTock;
 
@@ -27,9 +31,11 @@ TickTock* TickTock::get()
 }
 
 void TickTock::start() {
-
+	timer->start(1 * 1000);
 }
+
 void TickTock::timeout()
 {
+	QMessageBox::information(nullptr, "标题", "这是一条信息内容");
 }
 

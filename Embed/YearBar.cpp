@@ -2,10 +2,11 @@
 #include <QPainter>
 #include <QHBoxLayout>
 
-#include "MainWindow.h"
 #include "Util.h"
 #include "YearBar.h"
 #include "DayBtn.h"
+#include "../Data/Dates.h"
+#include "../Data/DateModel.h"
 
 
 YearBar::YearBar(QWidget *parent) : QWidget(parent)
@@ -15,6 +16,7 @@ YearBar::YearBar(QWidget *parent) : QWidget(parent)
 	layout->setContentsMargins(22, 0, 18, 0);
 	yearMonthLabel = new QLabel(this);
 	layout->addWidget(yearMonthLabel);
+	setYearMonthText(QDate::currentDate());
 	layout->addStretch();
 
 	leftBtn = new YearBarBtn(0xe60e, this);
@@ -30,6 +32,7 @@ YearBar::YearBar(QWidget *parent) : QWidget(parent)
 	connect(leftBtn, &YearBarBtn::click, this, &YearBar::leftBtnClick);
 	connect(rightBtn, &YearBarBtn::click, this, &YearBar::rightBtnClick);
 	connect(todayBtn, &YearBarBtn::click, this, &YearBar::todayBtnClick);
+	connect(Dates::get(), &Dates::datesChanged, this, [this]() {setYearMonthText(Dates::get()->dates[21]->date); });
 }
 
 YearBar::~YearBar()
@@ -49,30 +52,23 @@ void YearBar::paintEvent(QPaintEvent* event)
 
 void YearBar::leftBtnClick()
 {
-	switchMonth(-1);
+	auto date = Dates::get()->dates[21];
+	Dates::get()->initOneMonthDate(date->date.addMonths(-1));
 }
 
 void YearBar::rightBtnClick()
 {
-	switchMonth(1);
+	auto date = Dates::get()->dates[21];
+	Dates::get()->initOneMonthDate(date->date.addMonths(1));
 }
 
 void YearBar::todayBtnClick()
 {
-	auto win = (MainWindow*)parent();
-	win->updateData(QDate::currentDate());
+	Dates::get()->initOneMonthDate(QDate::currentDate());
 }
 
-void YearBar::switchMonth(const int& val)
+void YearBar::setYearMonthText(const QDate& date)
 {
-	auto win = (MainWindow*)parent();
-	QDate day;
-	for (auto& btn : win->dayBtns)
-	{
-		if (btn->isCurMonth) {
-			day = btn->day.addMonths(val);
-			break;
-		}
-	}
-	win->updateData(day);
+	auto text = QString("%1年%2月").arg(date.year()).arg(date.month());
+	yearMonthLabel->setText(text);
 }
