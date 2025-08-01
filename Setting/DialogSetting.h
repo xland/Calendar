@@ -1,5 +1,5 @@
 #pragma once
-
+#include <QHBoxLayout>
 #include <QWidget>
 
 class DialogSetting : public QWidget
@@ -11,5 +11,6 @@ public:
 	~DialogSetting();
 
 private:
+	void menuChanged(QString menuText);
 };
 

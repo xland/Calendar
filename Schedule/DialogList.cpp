@@ -168,7 +168,7 @@ void DialogList::initRowBtns(const int& row, const QString& id)
 
 void DialogList::delBtnClick(const QString& id)
 {
-    Schedules::get()->delData(id);
+    ScheduleModel::del(id);
     initTableRows();
 }
 

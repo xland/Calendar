@@ -102,18 +102,19 @@ void DialogEdit::initData(const QString& id)
 {
     if (id.isEmpty()) {
         title = "增加日程";
-        data = new ScheduleModel(Schedules::get());
+        data = new ScheduleModel();
         data->FirstTime = QDateTime(date, QTime(9, 0, 0)).toSecsSinceEpoch();
         data->Schedule = "日程内容...";
     }
     else {
         title = "修改日程";
-        data = Schedules::get()->getData(id);
+        data = new ScheduleModel(id);
     }
 }
 
 void DialogEdit::btnClick()
 {
+    auto schedules = Schedules::get();
     QDateTime dt = dateTimeEdit->dateTime();
     QDateTime curDt = QDateTime::currentDateTime();
     data->Schedule = plainTextEdit->toPlainText();
@@ -121,15 +122,15 @@ void DialogEdit::btnClick()
     data->CreateTime = curDt.toSecsSinceEpoch();
     data->FirstTime = dt.toSecsSinceEpoch();
     data->UpcomingTime = data->FirstTime;
-    Schedules::get()->setUpcomingTime(data);
+    data->setUpcomingTime();
     if (data->RepeatType == 1) {
         data->IsExpire = data->FirstTime < data->CreateTime;
     }
     if (title == "增加日程") {
-        Schedules::get()->addData(data);
+        data->insert();
     }
     else {
-        Schedules::get()->editData(data);
+        data->update();
     }
     close();
 }

@@ -28,7 +28,9 @@ Dates* Dates::get()
 {
     return ins;
 }
-
+void Dates::refresh() {
+    ins->initOneMonthDate(ins->dates[21]->date);
+}
 void Dates::initOneMonthDate(const QDate& tarDate)
 {
     int year = tarDate.year();

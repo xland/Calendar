@@ -7,6 +7,7 @@
 #include "DayBtn.h"
 #include "../Data/Dates.h"
 #include "../Data/DateModel.h"
+#include "../Setting/DialogSetting.h"
 
 
 YearBar::YearBar(QWidget *parent) : QWidget(parent)
@@ -32,6 +33,7 @@ YearBar::YearBar(QWidget *parent) : QWidget(parent)
 	connect(leftBtn, &YearBarBtn::click, this, &YearBar::leftBtnClick);
 	connect(rightBtn, &YearBarBtn::click, this, &YearBar::rightBtnClick);
 	connect(todayBtn, &YearBarBtn::click, this, &YearBar::todayBtnClick);
+	connect(settingBtn, &YearBarBtn::click, this, &YearBar::settingBtnClick);
 	connect(Dates::get(), &Dates::datesChanged, this, [this]() {setYearMonthText(Dates::get()->dates[21]->date); });
 }
 
@@ -65,6 +67,13 @@ void YearBar::rightBtnClick()
 void YearBar::todayBtnClick()
 {
 	Dates::get()->initOneMonthDate(QDate::currentDate());
+}
+
+void YearBar::settingBtnClick()
+{
+	auto setting = new DialogSetting();
+	setting->show();
+	setting->activateWindow();
 }
 
 void YearBar::setYearMonthText(const QDate& date)

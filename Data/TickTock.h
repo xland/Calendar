@@ -12,6 +12,7 @@ public:
 	TickTock(QObject *parent);
 	~TickTock();
 	void start();
+	static void reset();
 	static void init();
 	static TickTock* get();
 private:

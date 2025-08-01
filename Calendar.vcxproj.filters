@@ -88,6 +88,27 @@
     <ClCompile Include="Data\Dates.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Setting\Menu.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Setting\About.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Setting\MenuItem.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Embed\Flash.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Setting\Author.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Setting\Donate.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Setting\Setting.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="Embed\WeekBar.h">
@@ -141,6 +162,27 @@
     <QtMoc Include="Data\Dates.h">
       <Filter>Header Files</Filter>
     </QtMoc>
+    <QtMoc Include="Setting\Menu.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="Setting\About.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="Setting\MenuItem.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="Embed\Flash.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="Setting\Author.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="Setting\Donate.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="Setting\Setting.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
   </ItemGroup>
   <ItemGroup>
     <Image Include="Res\logo.ico">
@@ -153,9 +195,6 @@
       <Filter>Resource Files</Filter>
     </Image>
     <Image Include="Res\alipay.jpg">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="Res\arrowdown.png">
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>

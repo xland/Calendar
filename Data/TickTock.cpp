@@ -1,4 +1,5 @@
 ﻿#include <QMessageBox>
+#include <QDateTime>
 
 #include "TickTock.h"
 #include "ScheduleModel.h"
@@ -31,11 +32,33 @@ TickTock* TickTock::get()
 }
 
 void TickTock::start() {
-	timer->start(1 * 1000);
+	auto data = Schedules::get()->getRecentData(1);
+	if (data.count() <= 0) return;
+	auto now = QDateTime::currentDateTime().toSecsSinceEpoch();
+	auto tickCount = data[0]->UpcomingTime - now - 5*60; //提前5分钟
+	if (tickCount < 0) tickCount = 0;
+	QVariant var;
+	var.setValue(data[0]);
+	timer->setProperty("data", var);
+	timer->start(tickCount * 1000); //此处不能为负值，如果是负值的话，将不会马上触发回调事件
 }
-
+void TickTock::reset() {
+	tickTock->timer->stop();
+	auto item = tickTock->timer->property("data").value<ScheduleModel*>();
+	if (item) {
+		item->deleteLater();
+	}	
+	tickTock->start();
+}
 void TickTock::timeout()
 {
-	QMessageBox::information(nullptr, "标题", "这是一条信息内容");
+	auto item = timer->property("data").value<ScheduleModel*>();
+	if (item) {
+		item->IsExpire = true;
+		item->update();
+		QMessageBox::information(nullptr, "日程即将到期", item->Schedule);
+		item->deleteLater();
+	}
+	start();
 }
 

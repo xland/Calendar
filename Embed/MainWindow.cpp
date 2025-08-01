@@ -163,7 +163,7 @@ void MainWindow::init()
 {
     win = new MainWindow();
     win->show();
-    //TickTock::get()->start();
+    TickTock::get()->start();
 }
 
 MainWindow* MainWindow::get()

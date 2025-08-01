@@ -106,14 +106,21 @@
     <ClCompile Include="Data\TickTock.cpp" />
     <ClCompile Include="Embed\DayBtn.cpp" />
     <ClCompile Include="Data\Db.cpp" />
+    <ClCompile Include="Embed\Flash.cpp" />
     <ClCompile Include="Schedule\DialogEdit.cpp" />
     <ClCompile Include="Schedule\DialogList.cpp" />
+    <ClCompile Include="Setting\About.cpp" />
+    <ClCompile Include="Setting\Author.cpp" />
     <ClCompile Include="Setting\DialogSetting.cpp" />
     <ClCompile Include="Embed\MainWindow.cpp" />
     <ClCompile Include="Data\NongLi.cpp" />
     <ClCompile Include="Schedule\RepeatSelection.cpp" />
     <ClCompile Include="Schedule\RepeatSelectionBtn.cpp" />
     <ClCompile Include="Data\ScheduleModel.cpp" />
+    <ClCompile Include="Setting\Donate.cpp" />
+    <ClCompile Include="Setting\Menu.cpp" />
+    <ClCompile Include="Setting\MenuItem.cpp" />
+    <ClCompile Include="Setting\Setting.cpp" />
     <ClCompile Include="Util.cpp" />
     <ClCompile Include="Embed\WeekBar.cpp" />
     <ClCompile Include="Embed\YearBar.cpp" />
@@ -123,7 +130,6 @@
   </ItemGroup>
   <ItemGroup>
     <Image Include="Res\alipay.jpg" />
-    <Image Include="Res\arrowdown.png" />
     <Image Include="Res\author.jpg" />
     <Image Include="Res\logo.ico" />
     <Image Include="Res\wechat.png" />
@@ -145,9 +151,16 @@
     <ClInclude Include="Data\NongLi.h" />
     <QtMoc Include="Schedule\RepeatSelection.h" />
     <QtMoc Include="Schedule\RepeatSelectionBtn.h" />
+    <QtMoc Include="Embed\Flash.h" />
     <ClInclude Include="Res\Res.h" />
     <QtMoc Include="Data\ScheduleModel.h" />
     <QtMoc Include="Schedule\DialogEdit.h" />
+    <QtMoc Include="Setting\Menu.h" />
+    <QtMoc Include="Setting\About.h" />
+    <QtMoc Include="Setting\MenuItem.h" />
+    <QtMoc Include="Setting\Author.h" />
+    <QtMoc Include="Setting\Donate.h" />
+    <QtMoc Include="Setting\Setting.h" />
     <ClInclude Include="Util.h" />
     <QtMoc Include="Embed\YearBarBtn.h" />
     <QtMoc Include="Embed\YearBar.h" />

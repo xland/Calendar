@@ -19,7 +19,7 @@ DayBtn::DayBtn(const int& index, QWidget* parent) : BtnBase(parent), index{ inde
     setMouseTracking(true);
     setCursor(Qt::CursorShape::PointingHandCursor);
     connect(this, &DayBtn::click, this, &DayBtn::onClick);
-    connect(Dates::get(), &Dates::datesChanged, this, [this]() {update(); });
+    connect(Dates::get(), &Dates::datesChanged, this, [this]() {update();});
 }
 
 DayBtn::~DayBtn()

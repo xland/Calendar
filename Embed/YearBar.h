@@ -16,6 +16,7 @@ private:
 	void leftBtnClick();
 	void rightBtnClick();
 	void todayBtnClick();
+	void settingBtnClick();
 	void setYearMonthText(const QDate& date);
 private:
 	YearBarBtn* leftBtn;

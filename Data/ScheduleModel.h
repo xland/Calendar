@@ -6,9 +6,16 @@ class ScheduleModel  : public QObject
 	Q_OBJECT
 
 public:
-	ScheduleModel(QObject* parent);
-	ScheduleModel(QSqlQuery& query,QObject* parent);
+	ScheduleModel(QObject* parent = nullptr);
+	ScheduleModel(QSqlQuery& query,QObject* parent = nullptr);
+	ScheduleModel(const QString& id, QObject* parent = nullptr);
 	~ScheduleModel();
+	void insert();
+	void update();
+	void del();
+	static void del(const QString& id);
+	void setUpcomingTime();
+public:
 	QString Id;
 	QString Schedule;
 	int RepeatType{1};
@@ -20,5 +27,7 @@ public:
 	int Month;
 	int Day;
 	int Time;
+private:
+	void initByQuery(QSqlQuery& query);
 };
 
