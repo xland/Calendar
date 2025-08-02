@@ -10,7 +10,7 @@ Menu::Menu(QWidget *parent) : QWidget(parent)
     setPalette(pal);
     setAutoFillBackground(true);
 
-    setFixedWidth(160);
+    setFixedWidth(120);
     setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Preferred);
     QVBoxLayout* layout = new QVBoxLayout(this);
     layout->setContentsMargins(0, 0, 0, 0);

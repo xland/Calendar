@@ -5,12 +5,14 @@
 #include "Util.h"
 #include "YearBar.h"
 #include "DayBtn.h"
+#include "../BtnBase.h"
 #include "../Data/Dates.h"
 #include "../Data/DateModel.h"
 #include "../Setting/DialogSetting.h"
+#include "Moving.h"
 
 
-YearBar::YearBar(QWidget *parent) : QWidget(parent)
+YearBar::YearBar(QWidget *parent) : BtnBase(parent)
 {
 	setGeometry(0, 0, 372, 40);
 	QHBoxLayout* layout = new QHBoxLayout(this);
@@ -80,4 +82,12 @@ void YearBar::setYearMonthText(const QDate& date)
 {
 	auto text = QString("%1年%2月").arg(date.year()).arg(date.month());
 	yearMonthLabel->setText(text);
+}
+
+void YearBar::mousePressEvent(QMouseEvent* event)
+{
+	auto moving = new Moving();
+	moving->move(topLevelWidget()->pos());
+	moving->setFixedSize(topLevelWidget()->size());
+	moving->show();
 }

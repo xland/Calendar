@@ -19,7 +19,8 @@ public:
     QList<DayBtn*> dayBtns;
     bool isEnter{ false };
 protected:
-    void paintEvent(QPaintEvent* event) override;
+    void paintEvent(QPaintEvent* event) override; 
+    void moveEvent(QMoveEvent* event) override;
 private:
     MainWindow(QWidget* parent = nullptr);
     void onEmbedMouseMove();

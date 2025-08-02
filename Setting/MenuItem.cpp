@@ -3,7 +3,7 @@
 
 MenuItem::MenuItem(const QString& text, bool isSelected, QWidget* parent) : BtnBase(parent), text{ text }, isSelected{isSelected}
 {
-	setFixedHeight(32);
+	setFixedHeight(30);
 	setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);
 }
 

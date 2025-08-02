@@ -4,7 +4,8 @@
 #include <QLabel>
 #include "YearBarBtn.h"
 
-class YearBar : public QWidget
+class BtnBase;
+class YearBar : public BtnBase
 {
 	Q_OBJECT
 public:
@@ -18,6 +19,7 @@ private:
 	void todayBtnClick();
 	void settingBtnClick();
 	void setYearMonthText(const QDate& date);
+	void mousePressEvent(QMouseEvent* event) override;
 private:
 	YearBarBtn* leftBtn;
 	YearBarBtn* rightBtn;

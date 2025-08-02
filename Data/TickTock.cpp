@@ -4,6 +4,7 @@
 #include "TickTock.h"
 #include "ScheduleModel.h"
 #include "Schedules.h"
+#include "../Data/SettingModel.h"
 
 TickTock* tickTock;
 
@@ -35,7 +36,7 @@ void TickTock::start() {
 	auto data = Schedules::get()->getRecentData(1);
 	if (data.count() <= 0) return;
 	auto now = QDateTime::currentDateTime().toSecsSinceEpoch();
-	auto tickCount = data[0]->UpcomingTime - now - 5*60; //提前5分钟
+	auto tickCount = data[0]->UpcomingTime - now - SettingModel::get()->AlertBefore; //提前5分钟
 	if (tickCount < 0) tickCount = 0;
 	QVariant var;
 	var.setValue(data[0]);

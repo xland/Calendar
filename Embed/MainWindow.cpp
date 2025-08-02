@@ -16,6 +16,7 @@
 #include "Util.h"
 #include "../Data/Schedules.h"
 #include "../Data/TickTock.h"
+#include "../Data/SettingModel.h"
 
 namespace {
     WNDPROC oldProc;
@@ -39,6 +40,17 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 MainWindow::~MainWindow()
 {
 }
+void MainWindow::init()
+{
+    win = new MainWindow();
+    win->show();
+    TickTock::get()->start();
+}
+
+MainWindow* MainWindow::get()
+{
+    return win;
+}
 
 void MainWindow::paintEvent(QPaintEvent* event)
 {
@@ -47,6 +59,15 @@ void MainWindow::paintEvent(QPaintEvent* event)
     p.setBrush(QColor(255,255,255,153));
     p.setPen(Qt::NoPen);
     p.drawRoundedRect(rect(), 4, 4);    
+}
+
+void MainWindow::moveEvent(QMoveEvent* event)
+{
+    QMainWindow::moveEvent(event);
+    auto setting = SettingModel::get();
+    if (setting->X != pos().x() && setting->Y != pos().y()) {
+        SettingModel::get()->updatePos(pos());
+    }    
 }
 
 void MainWindow::onEmbedMouseMove()
@@ -89,8 +110,14 @@ void MainWindow::onEmbedLeaveWindow()
 
 void MainWindow::embed()
 {
-    auto pos = screen()->geometry().topRight();
-    move(pos.x()-width()-80,pos.y()+80);
+    auto setting = SettingModel::get();
+    if (setting->X == 999999 && setting->Y == 999999) {
+        auto pos = screen()->geometry().topRight();
+        move(pos.x() - width() - 80, pos.y() + 80);
+    }
+    else {
+        move(setting->X, setting->Y);
+    }
     auto workerW = Util::getWorkerW();
     auto hwnd = (HWND)winId();
     SetParent(hwnd, workerW);
@@ -159,14 +186,4 @@ RAWINPUT* MainWindow::getRawInput(HRAWINPUT lParam) {
     return (RAWINPUT*)lpb;
 }
 
-void MainWindow::init()
-{
-    win = new MainWindow();
-    win->show();
-    TickTock::get()->start();
-}
 
-MainWindow* MainWindow::get()
-{
-    return win;
-}

@@ -109,6 +109,12 @@
     <ClCompile Include="Setting\Setting.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Embed\Moving.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Data\SettingModel.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="Embed\WeekBar.h">
@@ -181,6 +187,12 @@
       <Filter>Header Files</Filter>
     </QtMoc>
     <QtMoc Include="Setting\Setting.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="Embed\Moving.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="Data\SettingModel.h">
       <Filter>Header Files</Filter>
     </QtMoc>
   </ItemGroup>

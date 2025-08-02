@@ -23,7 +23,6 @@ void Flash::paintEvent(QPaintEvent* event)
 	QPainter p(this);
 	p.setRenderHint(QPainter::Antialiasing, true);
 	p.setRenderHint(QPainter::TextAntialiasing, true);
-	p.setPen(Qt::NoPen);
 	p.setPen(QColor(108, 142, 191));
 	p.setBrush(QColor(218, 232, 252,200));
 	auto r = rect().adjusted(1, 80, -1, -1);

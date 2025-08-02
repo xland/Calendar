@@ -103,10 +103,12 @@
     <ClCompile Include="Data\DateModel.cpp" />
     <ClCompile Include="Data\Dates.cpp" />
     <ClCompile Include="Data\Schedules.cpp" />
+    <ClCompile Include="Data\SettingModel.cpp" />
     <ClCompile Include="Data\TickTock.cpp" />
     <ClCompile Include="Embed\DayBtn.cpp" />
     <ClCompile Include="Data\Db.cpp" />
     <ClCompile Include="Embed\Flash.cpp" />
+    <ClCompile Include="Embed\Moving.cpp" />
     <ClCompile Include="Schedule\DialogEdit.cpp" />
     <ClCompile Include="Schedule\DialogList.cpp" />
     <ClCompile Include="Setting\About.cpp" />
@@ -152,6 +154,8 @@
     <QtMoc Include="Schedule\RepeatSelection.h" />
     <QtMoc Include="Schedule\RepeatSelectionBtn.h" />
     <QtMoc Include="Embed\Flash.h" />
+    <QtMoc Include="Embed\Moving.h" />
+    <QtMoc Include="Data\SettingModel.h" />
     <ClInclude Include="Res\Res.h" />
     <QtMoc Include="Data\ScheduleModel.h" />
     <QtMoc Include="Schedule\DialogEdit.h" />
