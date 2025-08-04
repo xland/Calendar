@@ -90,3 +90,15 @@ QVector<std::tuple<QDate, bool>> Util::getOneMonthDay(const QDate& tarDate)
 
     return result;
 }
+
+QString Util::getTimeStr(const qint64 timespan)
+{
+    qint64 days = timespan / 86400;
+    if (days > 0) return QString("日程将于 %1 天后发生").arg(days);
+    qint64 hours = timespan / 3600;
+    if (hours > 0) return QString("日程将于 %1 小时后发生").arg(hours);
+    qint64 minutes = timespan / 60;
+    if (minutes > 0) return QString("日程将于 %1 分钟 %2 秒后发生").arg(minutes).arg(timespan % 60);
+    if (timespan > 0) return QString("日程将于 %1 秒后发生").arg(timespan);
+    else return QString("日程已发生");
+}

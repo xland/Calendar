@@ -105,6 +105,7 @@
     <ClCompile Include="Data\Schedules.cpp" />
     <ClCompile Include="Data\SettingModel.cpp" />
     <ClCompile Include="Data\TickTock.cpp" />
+    <ClCompile Include="Embed\Alert.cpp" />
     <ClCompile Include="Embed\DayBtn.cpp" />
     <ClCompile Include="Data\Db.cpp" />
     <ClCompile Include="Embed\Flash.cpp" />
@@ -156,6 +157,7 @@
     <QtMoc Include="Embed\Flash.h" />
     <QtMoc Include="Embed\Moving.h" />
     <QtMoc Include="Data\SettingModel.h" />
+    <QtMoc Include="Embed\Alert.h" />
     <ClInclude Include="Res\Res.h" />
     <QtMoc Include="Data\ScheduleModel.h" />
     <QtMoc Include="Schedule\DialogEdit.h" />

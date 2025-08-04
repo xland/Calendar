@@ -1,5 +1,5 @@
 #pragma once
-
+#include <QSpinBox>
 #include <QWidget>
 
 class Setting : public QWidget
@@ -11,5 +11,7 @@ public:
 	~Setting();
 
 private:
+	void saveBtnClick();
+	QSpinBox* input;
 };
 

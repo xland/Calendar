@@ -5,8 +5,9 @@
 #include "ScheduleModel.h"
 #include "Schedules.h"
 #include "../Data/SettingModel.h"
+#include "../Embed/Alert.h"
 
-TickTock* tickTock;
+static TickTock* tickTock;
 
 TickTock::TickTock(QObject *parent) : QObject(parent)
 {
@@ -36,7 +37,7 @@ void TickTock::start() {
 	auto data = Schedules::get()->getRecentData(1);
 	if (data.count() <= 0) return;
 	auto now = QDateTime::currentDateTime().toSecsSinceEpoch();
-	auto tickCount = data[0]->UpcomingTime - now - SettingModel::get()->AlertBefore; //提前5分钟
+	auto tickCount = data[0]->UpcomingTime - now - SettingModel::get()->AlertBefore*60; //提前5分钟
 	if (tickCount < 0) tickCount = 0;
 	QVariant var;
 	var.setValue(data[0]);
@@ -57,8 +58,12 @@ void TickTock::timeout()
 	if (item) {
 		item->IsExpire = true;
 		item->update();
-		QMessageBox::information(nullptr, "日程即将到期", item->Schedule);
+		auto alert = new Alert(item->Id);
+		alert->show();
 		item->deleteLater();
+		QVariant var;
+		var.setValue(nullptr);
+		timer->setProperty("data", var);
 	}
 	start();
 }

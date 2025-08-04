@@ -12,6 +12,7 @@ public:
 	static void init();
 	static SettingModel* get();
 	void updatePos(const QPoint& pos);
+	void updateSetting();
 public:
 	int X, Y, AlertBefore;
 };

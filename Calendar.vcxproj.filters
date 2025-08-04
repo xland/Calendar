@@ -115,6 +115,9 @@
     <ClCompile Include="Data\SettingModel.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Embed\Alert.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="Embed\WeekBar.h">
@@ -193,6 +196,9 @@
       <Filter>Header Files</Filter>
     </QtMoc>
     <QtMoc Include="Data\SettingModel.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="Embed\Alert.h">
       <Filter>Header Files</Filter>
     </QtMoc>
   </ItemGroup>

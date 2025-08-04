@@ -13,10 +13,12 @@
 #include "YearBar.h"
 #include "WeekBar.h"
 #include "DayBtn.h"
-#include "Util.h"
+#include "Alert.h"
+#include "../Util.h"
 #include "../Data/Schedules.h"
 #include "../Data/TickTock.h"
 #include "../Data/SettingModel.h"
+
 
 namespace {
     WNDPROC oldProc;

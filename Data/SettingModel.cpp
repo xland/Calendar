@@ -2,6 +2,7 @@
 #include <QSqlError>
 #include <QSqlQuery>
 #include "SettingModel.h"
+#include "TickTock.h"
 
 SettingModel* setting;
 
@@ -40,5 +41,16 @@ void SettingModel::updatePos(const QPoint& pos)
     if (!query.exec()) {
         qDebug() << "Query failed:" << query.lastError();
     }
+}
+
+void SettingModel::updateSetting()
+{
+    QSqlQuery query;
+    query.prepare("UPDATE Setting SET AlertBefore=?");
+    query.addBindValue(AlertBefore);
+    if (!query.exec()) {
+        qDebug() << "Query failed:" << query.lastError();
+    }
+    TickTock::get()->reset();
 }
 

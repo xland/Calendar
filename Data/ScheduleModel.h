@@ -15,6 +15,7 @@ public:
 	void del();
 	static void del(const QString& id);
 	void setUpcomingTime();
+	void setNextTime();
 public:
 	QString Id;
 	QString Schedule;

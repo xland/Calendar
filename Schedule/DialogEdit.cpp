@@ -95,7 +95,7 @@ void DialogEdit::initBtns(QVBoxLayout* layout)
     btnLayout->addWidget(btn);
 
     layout->addWidget(btnBox);
-    QObject::connect(btn, &QPushButton::clicked, this, &DialogEdit::btnClick);
+    connect(btn, &QPushButton::clicked, this, &DialogEdit::btnClick);
 }
 
 void DialogEdit::initData(const QString& id)

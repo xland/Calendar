@@ -21,6 +21,9 @@ bool singleAppCheck() {
 int main(int argc, char *argv[])
 {
     QApplication app(argc, argv);
+    app.setStyleSheet("QLabel{font-size:13px;}"
+        "QPlainTextEdit{line-height:36px;padding:5px;}"
+    );
     if (!singleAppCheck()) {
         return 0;
     }

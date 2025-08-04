@@ -135,9 +135,3 @@ void Schedules::updateUpcomingSchedule()
         data->update();
     }
 }
-
-
-
-
-
-

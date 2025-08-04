@@ -1,4 +1,6 @@
-﻿#include "Flash.h"
+﻿#include <QTimer>
+
+#include "Flash.h"
 #include "../Util.h"
 
 Flash::Flash(QWidget *parent) : QWidget(parent)
@@ -11,11 +13,20 @@ Flash::Flash(QWidget *parent) : QWidget(parent)
 	setFixedSize(500, 200);
 	setWindowTitle("日程");
 	setCursor(Qt::PointingHandCursor);
+
+	auto timer = new QTimer(this);
+	timer->setSingleShot(true);
+	connect(timer, &QTimer::timeout, this, &Flash::timeout);
+	timer->start(6000); //6秒后自动关闭
 }
 
 Flash::~Flash()
 {
 
+}
+
+void Flash::timeout() {
+	close();
 }
 
 void Flash::paintEvent(QPaintEvent* event) 
@@ -48,6 +59,6 @@ void Flash::init()
 
 void Flash::mousePressEvent(QMouseEvent* event)
 {
-	this->close();
+	close();
 }
 
