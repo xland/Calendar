@@ -12,6 +12,7 @@ public:
 
 private:
 	void saveBtnClick();
-	QSpinBox* input;
+	QSpinBox* inputAlertBefore;
+	QSpinBox* inputUpcomingNum;
 };
 

@@ -68,8 +68,8 @@ void Db::initDb()
         auto flag = query.exec("PRAGMA journal_mode = WAL;");
         flag = query.exec("CREATE TABLE Schedule(Id VARCHAR2(36) NOT NULL ON CONFLICT FAIL UNIQUE ON CONFLICT FAIL,Schedule TEXT,IsExpire INT,RepeatType INT,CreateTime BIGINT,FirstTime BIGINT,UpcomingTime BIGINT,Year INT,Month INT,Day INT,Time INT);");
         flag = query.exec("CREATE INDEX Schedule_Index ON Job(Schedule);");
-        flag = query.exec("CREATE TABLE Setting(X INT,Y INT,AlertBefore INT);");
-        flag = query.exec("INSERT INTO Setting(X,Y,AlertBefore) VALUES (999999,999999,300);");
+        flag = query.exec("CREATE TABLE Setting(X INT,Y INT,AlertBefore INT,UpcomingNum INT);");
+        flag = query.exec("INSERT INTO Setting(X,Y,AlertBefore,UpcomingNum) VALUES (999999,999999,5,3);");
     }
 }
 

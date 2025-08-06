@@ -14,6 +14,8 @@
 #include "WeekBar.h"
 #include "DayBtn.h"
 #include "Alert.h"
+#include "UpcomingItem.h"
+#include "Upcomings.h"
 #include "../Util.h"
 #include "../Data/Schedules.h"
 #include "../Data/TickTock.h"
@@ -29,14 +31,13 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 	setWindowFlags(Qt::Tool | Qt::FramelessWindowHint);
     setAttribute(Qt::WA_QuitOnClose, false);
     setAttribute(Qt::WA_TranslucentBackground, true);
-    setFixedSize(QSize(370, 320));
-    yearBar = new YearBar(this);
-    weekBar = new WeekBar(this);
+    upcomings = new Upcomings(this);
     for (int i = 0; i < 42; i++)
     {
-        auto day = new DayBtn(i, this);
-        dayBtns.append(day);
+        dayBtns.append(new DayBtn(i, this));
     }
+    yearBar = new YearBar(this);
+    weekBar = new WeekBar(this);
     embed();
 }
 MainWindow::~MainWindow()
@@ -60,7 +61,7 @@ void MainWindow::paintEvent(QPaintEvent* event)
     p.setRenderHint(QPainter::Antialiasing, true);
     p.setBrush(QColor(255,255,255,153));
     p.setPen(Qt::NoPen);
-    p.drawRoundedRect(rect(), 4, 4);    
+    p.drawRoundedRect(rect(), 4, 4);
 }
 
 void MainWindow::moveEvent(QMoveEvent* event)
@@ -76,7 +77,6 @@ void MainWindow::onEmbedMouseMove()
 {
     auto pos = mapFromGlobal(QCursor::pos());
     auto children = findChildren<BtnBase*>();
-    auto flag1{ false };
     for (auto& child:children)
     {
         auto rect = QRect(child->mapTo(this, QPoint(0, 0)), child->size());;
@@ -187,5 +187,3 @@ RAWINPUT* MainWindow::getRawInput(HRAWINPUT lParam) {
     GetRawInputData((HRAWINPUT)lParam, RID_INPUT, lpb, &dwSize, sizeof(RAWINPUTHEADER));
     return (RAWINPUT*)lpb;
 }
-
-

@@ -1,11 +1,14 @@
 #pragma once
 #include "Windows.h"
 #include <QtWidgets/QMainWindow>
-#include <QJsonObject>
+#include <QList>
+#include <QTimer>
 
 class YearBar;
 class WeekBar;
+class Upcomings;
 class DayBtn;
+class UpcomingItem;
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
@@ -31,4 +34,5 @@ private:
 private:
     YearBar* yearBar;
     WeekBar* weekBar;
+    Upcomings* upcomings;
 };

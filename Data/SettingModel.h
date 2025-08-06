@@ -13,7 +13,9 @@ public:
 	static SettingModel* get();
 	void updatePos(const QPoint& pos);
 	void updateSetting();
+signals:
+	void settingChanged();
 public:
-	int X, Y, AlertBefore;
+	int X, Y, AlertBefore, UpcomingNum{3};
 };
 

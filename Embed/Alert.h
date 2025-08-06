@@ -1,12 +1,12 @@
 ﻿#pragma once
 
-#include <QWidget>
+#include <QDialog>
 #include <QPainter>
 #include <QLabel>
 #include <QTimer>
 #include "../Data/ScheduleModel.h"
 
-class Alert : public QWidget
+class Alert : public QDialog
 {
 	Q_OBJECT
 
@@ -17,9 +17,12 @@ protected:
 private:
 	void okBtnClick();
 	void timeout();
+	void modelChange();
+	void removeTimer();
 private: 
 	ScheduleModel* model;
 	QLabel* remainTimeText;
 	QTimer* timer;
+	QString Id;
 };
 

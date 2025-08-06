@@ -13,6 +13,7 @@ Dates::Dates(QObject *parent) : QObject(parent)
         dates.append(new DateModel(this));
     }
     initOneMonthDate(QDate::currentDate());
+    connect(Schedules::get(), &Schedules::scheduleChanged, this, &Dates::refresh);
 }
 
 Dates::~Dates()

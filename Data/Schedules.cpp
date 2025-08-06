@@ -8,6 +8,7 @@
 #include "Schedules.h"
 #include "ScheduleModel.h"
 #include "../Schedule/DialogList.h"
+#include "../Embed/Alert.h"
 
 Schedules* schedules{nullptr};
 
@@ -75,13 +76,30 @@ QList<ScheduleModel*> Schedules::getData(const QDate& startD, const QDate& endD,
     return list;
 }
 
-QList<ScheduleModel*> Schedules::getRecentData(const int& count)
+QList<ScheduleModel*> Schedules::getUpcomingData(const int& count)
 {
     QList<ScheduleModel*> list;
     QSqlQuery query;
     query.prepare("SELECT * FROM Schedule where IsExpire = 0 AND UpcomingTime > ? order by UpcomingTime ASC LIMIT ?");
     auto now = QDateTime::currentDateTime().toSecsSinceEpoch();
     query.addBindValue(now);
+    query.addBindValue(count);
+    if (!query.exec()) {
+        qDebug() << "Query failed:" << query.lastError();
+        return list;
+    }
+    while (query.next()) {
+        auto data = new ScheduleModel(query);
+        list.append(data);
+    }
+    return list;
+}
+
+QList<ScheduleModel*> Schedules::getUpcomingData(const int& count, qint64 time) {
+    QList<ScheduleModel*> list;
+    QSqlQuery query;
+    query.prepare("SELECT * FROM Schedule where IsExpire = 0 AND UpcomingTime > ? order by UpcomingTime ASC LIMIT ?");
+    query.addBindValue(time);
     query.addBindValue(count);
     if (!query.exec()) {
         qDebug() << "Query failed:" << query.lastError();
@@ -126,7 +144,8 @@ void Schedules::updateUpcomingSchedule()
     while(query.next()) {
         auto data = new ScheduleModel(query);     
         if (reply == QMessageBox::Yes) {
-            QMessageBox::information(nullptr, "日程提醒", data->Schedule);
+            Alert alert(data->Id);
+            alert.exec();
         }
         data->setUpcomingTime();
         if (data->RepeatType == 1) {

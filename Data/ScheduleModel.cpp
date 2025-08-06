@@ -4,6 +4,7 @@
 #include "ScheduleModel.h"
 #include "Dates.h"
 #include "TickTock.h"
+#include "Schedules.h"
 
 ScheduleModel::ScheduleModel(QObject* parent) : QObject(parent), Id{ QUuid::createUuid().toString().mid(1, 36) }
 {
@@ -50,8 +51,8 @@ void ScheduleModel::insert()
     if (!query.exec()) {
         qDebug() << "Query failed:" << query.lastError();
     }
-    Dates::refresh();
-    TickTock::reset();
+    emit Schedules::get()->scheduleChanged();
+    Dates::get()->refresh();
 }
 
 void ScheduleModel::update()
@@ -71,8 +72,8 @@ void ScheduleModel::update()
     if (!query.exec()) {
         qDebug() << "Query failed:" << query.lastError();
     }
-    Dates::refresh();
-    TickTock::reset();
+    emit Schedules::get()->scheduleChanged();
+    Dates::get()->refresh();
 }
 
 void ScheduleModel::del()
@@ -83,8 +84,8 @@ void ScheduleModel::del()
     if (!query.exec()) {
         qDebug() << "Query failed:" << query.lastError();
     }
-    Dates::refresh();
-    TickTock::reset();
+    emit Schedules::get()->scheduleChanged();
+    Dates::get()->refresh();
 }
 
 void ScheduleModel::del(const QString& id)
@@ -95,11 +96,9 @@ void ScheduleModel::del(const QString& id)
     if (!query.exec()) {
         qDebug() << "Query failed:" << query.lastError();
     }
-    Dates::refresh();
-    TickTock::reset();
+    emit Schedules::get()->scheduleChanged();
+    Dates::get()->refresh();
 }
-
-
 
 void ScheduleModel::setUpcomingTime()
 {
@@ -174,7 +173,7 @@ void ScheduleModel::setUpcomingTime()
             }
         }
         else if (dt.time() < curDt.time()) {
-            tempDt = tempDt.addDays(27);
+            tempDt = tempDt.addDays(26);
             for (int i = 0; i < 61; i++) //逐一找下一天，不会超过两个月
             {
                 tempDt = tempDt.addDays(1);
@@ -235,7 +234,7 @@ void ScheduleModel::setNextTime() {
     }
     else if (RepeatType == 5) { //每月第几天
         auto dayDt = dt.date().day();
-        auto tempDt = curDt.date().addDays(27);
+        auto tempDt = curDt.date().addDays(26);
         for (int i = 1; i < 61; i++) //逐一找下一天，不会超过两个月
         {
             tempDt = tempDt.addDays(1);

@@ -118,6 +118,12 @@
     <ClCompile Include="Embed\Alert.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Embed\UpcomingItem.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Embed\Upcomings.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="Embed\WeekBar.h">
@@ -199,6 +205,12 @@
       <Filter>Header Files</Filter>
     </QtMoc>
     <QtMoc Include="Embed\Alert.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="Embed\UpcomingItem.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="Embed\Upcomings.h">
       <Filter>Header Files</Filter>
     </QtMoc>
   </ItemGroup>

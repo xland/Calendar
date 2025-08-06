@@ -46,11 +46,12 @@ void SettingModel::updatePos(const QPoint& pos)
 void SettingModel::updateSetting()
 {
     QSqlQuery query;
-    query.prepare("UPDATE Setting SET AlertBefore=?");
+    query.prepare("UPDATE Setting SET AlertBefore=?,UpcomingNum=?");
     query.addBindValue(AlertBefore);
+    query.addBindValue(UpcomingNum);
     if (!query.exec()) {
         qDebug() << "Query failed:" << query.lastError();
     }
-    TickTock::get()->reset();
+    emit settingChanged();
 }
 

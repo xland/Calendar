@@ -16,7 +16,8 @@ public:
 	static Schedules* get();
 	bool hasSchedule(const QDate& date);
 	QList<ScheduleModel*> getData(const QDate& startD, const QDate& endD, const QString& keyword="");
-	QList<ScheduleModel*> getRecentData(const int& count);
+	QList<ScheduleModel*> getUpcomingData(const int& count);
+	QList<ScheduleModel*> getUpcomingData(const int& count,qint64 time);
 signals:
 	void scheduleChanged();
 private:

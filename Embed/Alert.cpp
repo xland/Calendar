@@ -4,11 +4,12 @@
 #include <QPushButton>
 #include <QPlainTextEdit>
 
-#include "../Util.h"
 #include "Alert.h"
+#include "../Util.h"
 #include "../Data/ScheduleModel.h"
+#include "../Data/Schedules.h"
 
-Alert::Alert(const QString& modelId, QWidget* parent) : QWidget(parent)
+Alert::Alert(const QString& modelId, QWidget* parent) : QDialog(parent),Id{modelId}
 { 
 	setWindowIcon(QIcon(":/logo.ico"));
 	setWindowModality(Qt::ApplicationModal);
@@ -45,28 +46,43 @@ Alert::Alert(const QString& modelId, QWidget* parent) : QWidget(parent)
 		l->setContentsMargins(0, 0, 0, 0);
 		l->setSpacing(0);
 
-		
 		remainTimeText = new QLabel();
 		l->addWidget(remainTimeText);
 		l->addSpacing(12); //用于控制窗口最小尺寸
 
 		l->addStretch();
-		QString btnStyle{ "QPushButton{background-color:#5D6B99;color:#ffffff;border:none;border-radius:3px;padding:6px;font-size:13px;}"
-"QPushButton:hover{background-color:#3B4F81;} QPushButton:pressed{background-color:#5D6B99;}" };
-		auto btn = new QPushButton("知道了");
+		QString btnStyle{ "QPushButton{background-color:%1;color:#ffffff;border:none;border-radius:3px;padding:6px;font-size:13px;}"
+"QPushButton:hover{background-color:%2;} QPushButton:pressed{background-color:%1;}" };
+		auto btn = new QPushButton("知道了，不再提醒");
 		btn->setCursor(Qt::PointingHandCursor);
-		btn->setStyleSheet(btnStyle);
-		btn->setFixedSize(80, 30);
+		btn->setStyleSheet(btnStyle.arg("#5D6B99").arg("#3B4F81"));
+		btn->setFixedSize(136, 30);
 		l->addWidget(btn);
 
+		l->addSpacing(12);
+		auto btn2 = new QPushButton("取消");
+		btn2->setCursor(Qt::PointingHandCursor);
+		btn2->setStyleSheet(btnStyle.arg("#5D6B99").arg("#3B4F81"));
+		btn2->setFixedSize(58, 30);
+		l->addWidget(btn2);
+
 		connect(btn, &QPushButton::clicked, this, &Alert::okBtnClick);
+		connect(btn2, &QPushButton::clicked, this, &Alert::close);
 		layout->addWidget(box);
 	}
 	timeout();
+	connect(Schedules::get(), &Schedules::scheduleChanged, this, &Alert::modelChange);
 }
 
 Alert::~Alert()
 {
+}
+
+void Alert::modelChange() {
+	removeTimer();
+	delete model;
+	model = new ScheduleModel(Id, this);
+	timeout();
 }
 
 void Alert::okBtnClick()
@@ -76,19 +92,30 @@ void Alert::okBtnClick()
 	model->update();
 	close();
 }
+void Alert::removeTimer() {
+	if (timer) {
+		timer->stop();
+		delete timer;
+		timer = nullptr;
+	}
+}
 void Alert::timeout() {
 	auto timespan = model->UpcomingTime - QDateTime::currentDateTime().toSecsSinceEpoch();
 	auto str = Util::getTimeStr(timespan);
-	remainTimeText->setText(str);
+	remainTimeText->setText(QString("日程到期时间：%1").arg(str));
 	if (timespan <= 0) {
-		if (timer) {
-			timer->stop();
-			timer->deleteLater();
-		}
+		removeTimer();
 	}
-	else if(!timer) {
-		timer = new QTimer(this);
-		connect(timer, &QTimer::timeout, this, &Alert::timeout);
-		timer->start(1000);
+	else {
+		if (!timer) {
+			timer = new QTimer(this);
+			connect(timer, &QTimer::timeout, this, &Alert::timeout);
+		}
+		if (str.endsWith("秒")) {
+			timer->start(1000);
+		}
+		else {
+			timer->start(60000);
+		}
 	}
 }

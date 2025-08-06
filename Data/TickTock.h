@@ -12,11 +12,12 @@ public:
 	TickTock(QObject *parent);
 	~TickTock();
 	void start();
-	static void reset();
 	static void init();
 	static TickTock* get();
 private:
+	void reset();
 	void timeout();
 	QTimer* timer;
+	ScheduleModel* model;
 };
 

@@ -13,11 +13,12 @@ public:
 	~Dates();
 	static void init();
 	static Dates* get();
-	static void refresh();
 	void initOneMonthDate(const QDate& tarDate);
+	void refresh();
 signals:
 	void datesChanged();
 public:
 	QList<DateModel*> dates;
+private:
 };
 

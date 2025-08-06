@@ -110,6 +110,8 @@
     <ClCompile Include="Data\Db.cpp" />
     <ClCompile Include="Embed\Flash.cpp" />
     <ClCompile Include="Embed\Moving.cpp" />
+    <ClCompile Include="Embed\UpcomingItem.cpp" />
+    <ClCompile Include="Embed\Upcomings.cpp" />
     <ClCompile Include="Schedule\DialogEdit.cpp" />
     <ClCompile Include="Schedule\DialogList.cpp" />
     <ClCompile Include="Setting\About.cpp" />
@@ -158,6 +160,8 @@
     <QtMoc Include="Embed\Moving.h" />
     <QtMoc Include="Data\SettingModel.h" />
     <QtMoc Include="Embed\Alert.h" />
+    <QtMoc Include="Embed\UpcomingItem.h" />
+    <QtMoc Include="Embed\Upcomings.h" />
     <ClInclude Include="Res\Res.h" />
     <QtMoc Include="Data\ScheduleModel.h" />
     <QtMoc Include="Schedule\DialogEdit.h" />

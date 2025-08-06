@@ -12,5 +12,6 @@ public:
 	static HWND getWorkerW();
 	static QVector<std::tuple<QDate, bool>> getOneMonthDay(const QDate& tarDate);
 	static QString getTimeStr(const qint64 timespan);
+	static QString getBtnStyle();
 };
 
