@@ -1,9 +1,3 @@
-/node_modules/
-/dev/*.*
-/prod/
-.vs/
-/dist/
-/addon/build/
-/x64/
-/Calendar/x64/
-/build/
+/.idea/
+/bin/
+/obj/
