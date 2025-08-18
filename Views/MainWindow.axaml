@@ -1,13 +1,11 @@
 <Window xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:vm="using:Calendar.ViewModels"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:models="clr-namespace:Calendar.Models"
+        xmlns:views="clr-namespace:Calendar.Views"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="Calendar.Views.MainWindow"
-        x:DataType="vm:MainWindowViewModel"
-        Icon="/Assets/avalonia-logo.ico"
+        Icon="/Assets/logo.ico"
         Width="370" Height="328" 
         MaxWidth="370" MaxHeight="328"
         MinWidth="370" MinHeight="328"
@@ -17,28 +15,11 @@
         CanResize="False"
         WindowStartupLocation="CenterScreen"
         Title="Calendar">
-
-    <Design.DataContext>
-        <!-- This only sets the DataContext for the previewer in an IDE,
-             to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
-        <vm:MainWindowViewModel/>
-    </Design.DataContext>
-    
-    <Border BorderBrush="#000000" BorderThickness="1" Background="#AA000000">
-        <ItemsControl ItemsSource="{Binding Buttons}">
-            <ItemsControl.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <UniformGrid Rows="6" Columns="7"/>
-                </ItemsPanelTemplate>
-            </ItemsControl.ItemsPanel>
-
-            <ItemsControl.ItemTemplate>
-                <DataTemplate x:DataType="models:DateModel">
-                    <Button Content="{Binding Date}" 
-                            Command="{Binding Command}" 
-                            Margin="4"/>
-                </DataTemplate>
-            </ItemsControl.ItemTemplate>
-        </ItemsControl>
+    <Border BorderBrush="#000000" BorderThickness="1" Background="#AA000000" CornerRadius="6" Padding="6">
+        <StackPanel Orientation="Vertical">
+            <views:Header></views:Header>
+            <views:WeekHeader></views:WeekHeader>
+            <views:DateBox></views:DateBox>
+        </StackPanel>
     </Border>
 </Window>
