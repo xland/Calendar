@@ -4,5 +4,8 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="Calendar.Views.UpcomingBox">
-    
+    <StackPanel Orientation="Vertical" HorizontalAlignment="Stretch" VerticalAlignment="Center">
+        <TextBlock HorizontalAlignment="Center"/>
+        <TextBlock HorizontalAlignment="Center" FontSize="10" Foreground="Gray"/>
+    </StackPanel>
 </UserControl>

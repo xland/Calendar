@@ -2,27 +2,60 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             Height="30"
+             Height="40"
              mc:Ignorable="d" x:Class="Calendar.Views.Header">
         <UserControl.Styles>
             <Style Selector="Button.Icon">
-                    <Setter Property="Width" Value="28"/>
-                    <Setter Property="Height" Value="26"/>
-                    <Setter Property="Margin" Value="0"></Setter>
-                    <Setter Property="Padding" Value="0"></Setter>
-                    <Setter Property="HorizontalContentAlignment" Value="Center"/>
-                    <Setter Property="VerticalContentAlignment" Value="Center"/>
-                    <Setter Property="FontFamily" Value="{StaticResource IconFont}"/>
-                    <Setter Property="Foreground" Value="Black"/>
-                    <Setter Property="FontSize" Value="14"/>
-                    <Setter Property="Background" Value="Transparent"></Setter>
-                    <Setter Property="CornerRadius" Value="2"></Setter>
+                <Setter Property="Width" Value="28"/>
+                <Setter Property="Height" Value="26"/>
+                <Setter Property="Margin" Value="0"></Setter>
+                <Setter Property="Padding" Value="0"></Setter>
+                <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                <Setter Property="VerticalContentAlignment" Value="Center"/>
+                <Setter Property="FontFamily" Value="{StaticResource IconFont}"/>
+                <Setter Property="Foreground" Value="#888"/>
+                <Setter Property="FontSize" Value="13"/>
+                <Setter Property="Background" Value="Transparent"></Setter>
+                <Setter Property="CornerRadius" Value="2"></Setter>
             </Style>
             <Style Selector="Button.Icon:hover">
                 <Setter Property="Background" Value="#EEEEEE"/>
+                <Setter Property="Foreground" Value="#333"/>
             </Style>
+            <Style Selector="Button.Icon:pressed">
+                <Setter Property="Background" Value="#EEEEEE"/>
+                <Setter Property="Foreground" Value="#333"/>
+            </Style>
+            
+            
+            <Style Selector="Button.Icon">
+                <Setter Property="Width" Value="28"/>
+                <Setter Property="Height" Value="26"/>
+                <Setter Property="Padding" Value="0"/>
+                <Setter Property="Background" Value="Transparent"/>
+                <Setter Property="Template">
+                    <ControlTemplate>
+                        <Border x:Name="border" Background="{TemplateBinding Background}" CornerRadius="2">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter>
+            </Style>
+
+            <Style Selector="Button.Icon:pointerover">
+                <Setter Property="Background" Value="#EEEEEE"/>
+                <Setter Property="Foreground" Value="#333"/>
+            </Style>
+
+            <Style Selector="Button.Icon:pressed">
+                <Setter Property="Background" Value="#EEEEEE"/>
+                <Setter Property="Foreground" Value="#333"/>
+            </Style>
+            
+            
+            
         </UserControl.Styles>
-    <Grid Background="#ffffff">
+    <Grid x:Name="HeaderGrid" Background="Transparent">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="Auto"/>
@@ -32,11 +65,12 @@
             <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="Auto"/>
         </Grid.ColumnDefinitions>
-        <TextBlock Grid.Column="0"  Text="2025年8月18日" VerticalAlignment="Center" Margin="0 0 8 0"></TextBlock>
+        <TextBlock Grid.Column="0"  Text="2025年8月18日" VerticalAlignment="Center"  Padding="16 0 12 0"></TextBlock>
         <TextBlock Grid.Column="1" Text="润六月廿五" VerticalAlignment="Center"></TextBlock>
+        <Border Background="Transparent" Grid.Column="2"/>
         <Button Grid.Column="3"  Classes="Icon" Content="&#xe667;" />
-        <Button Grid.Column="4"  Classes="Icon" Content="&#xe60e;" />
-        <Button Grid.Column="5"  Classes="Icon" Content="&#xe638;" />
-        <Button Grid.Column="6"  Classes="Icon" Content="&#xe643;" />
+        <Button Grid.Column="4"  Classes="Icon" Content="&#xe60e;" Click="OnPreBtnClick" />
+        <Button Grid.Column="5"  Classes="Icon" Content="&#xe638;" Click="OnNextBtnClick" />
+        <Button Grid.Column="6"  Classes="Icon" Content="&#xe643;" Margin="0 0 12 0" />
     </Grid>
 </UserControl>

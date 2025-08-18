@@ -15,11 +15,15 @@
         CanResize="False"
         WindowStartupLocation="CenterScreen"
         Title="Calendar">
-    <Border BorderBrush="#000000" BorderThickness="1" Background="#AA000000" CornerRadius="6" Padding="6">
+    <Border BorderBrush="#66000000" BorderThickness="0.6" Background="#CCFFFFFF" CornerRadius="6" Padding="0">
         <StackPanel Orientation="Vertical">
             <views:Header></views:Header>
-            <views:WeekHeader></views:WeekHeader>
-            <views:DateBox></views:DateBox>
+            <Border  Padding="8 0 8 0">
+                <StackPanel>
+                    <views:WeekHeader></views:WeekHeader>
+                    <views:DateBox></views:DateBox>
+                </StackPanel>
+            </Border>
             <views:UpcomingBox></views:UpcomingBox>
         </StackPanel>
     </Border>

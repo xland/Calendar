@@ -4,8 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:models="clr-namespace:Calendar.Models"
              xmlns:vm="clr-namespace:Calendar.ViewModels"
-             mc:Ignorable="d" Background="#FFFFFF"
-             x:DataType="vm:MainWindowViewModel"
+             mc:Ignorable="d" x:DataType="vm:MainWindowViewModel"
              x:Class="Calendar.Views.DateBox">
     <UserControl.Styles>
         <Style Selector="Button.DateBtn">
@@ -37,7 +36,7 @@
                         VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
                         VerticalContentAlignment="Center" HorizontalContentAlignment="Center">
                     <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
-                        <TextBlock Text="{Binding Date}" HorizontalAlignment="Center"/>
+                        <TextBlock Text="{Binding Date.Day}"   HorizontalAlignment="Center"/>
                         <TextBlock Text="{Binding Lunar}" HorizontalAlignment="Center" FontSize="10" Foreground="Gray"/>
                     </StackPanel>
                 </Button>
