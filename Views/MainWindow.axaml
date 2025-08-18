@@ -20,6 +20,7 @@
             <views:Header></views:Header>
             <views:WeekHeader></views:WeekHeader>
             <views:DateBox></views:DateBox>
+            <views:UpcomingBox></views:UpcomingBox>
         </StackPanel>
     </Border>
 </Window>

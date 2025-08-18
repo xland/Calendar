@@ -4,20 +4,43 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:models="clr-namespace:Calendar.Models"
              xmlns:vm="clr-namespace:Calendar.ViewModels"
-             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             mc:Ignorable="d" Background="#FFFFFF"
              x:DataType="vm:MainWindowViewModel"
              x:Class="Calendar.Views.DateBox">
+    <UserControl.Styles>
+        <Style Selector="Button.DateBtn">
+            <Setter Property="Height" Value="40"/>
+            <Setter Property="Margin" Value="0"></Setter>
+            <Setter Property="Padding" Value="0"></Setter>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="FontFamily" Value="{StaticResource IconFont}"/>
+            <Setter Property="Foreground" Value="Black"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Background" Value="Transparent"></Setter>
+            <Setter Property="CornerRadius" Value="2"></Setter>
+        </Style>
+        <Style Selector="Button.Icon:hover">
+            <Setter Property="Background" Value="#EEEEEE"/>
+        </Style>
+    </UserControl.Styles>
     <ItemsControl ItemsSource="{Binding Buttons}">
         <ItemsControl.ItemsPanel>
             <ItemsPanelTemplate>
-                <UniformGrid Rows="6" Columns="7"/>
+                <UniformGrid Rows="6" Columns="7" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
             </ItemsPanelTemplate>
         </ItemsControl.ItemsPanel>
         <ItemsControl.ItemTemplate>
             <DataTemplate x:DataType="models:DateModel">
-                <Button Content="{Binding Date}" 
+                <Button Classes="DateBtn"
                         Command="{Binding Command}" 
-                        Margin="4"/>
+                        VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
+                        VerticalContentAlignment="Center" HorizontalContentAlignment="Center">
+                    <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <TextBlock Text="{Binding Date}" HorizontalAlignment="Center"/>
+                        <TextBlock Text="{Binding Lunar}" HorizontalAlignment="Center" FontSize="10" Foreground="Gray"/>
+                    </StackPanel>
+                </Button>
             </DataTemplate>
         </ItemsControl.ItemTemplate>
     </ItemsControl>
