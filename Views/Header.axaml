@@ -4,57 +4,43 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              Height="40"
              mc:Ignorable="d" x:Class="Calendar.Views.Header">
-        <UserControl.Styles>
-            <Style Selector="Button.Icon">
-                <Setter Property="Width" Value="28"/>
-                <Setter Property="Height" Value="26"/>
-                <Setter Property="Margin" Value="0"></Setter>
-                <Setter Property="Padding" Value="0"></Setter>
-                <Setter Property="HorizontalContentAlignment" Value="Center"/>
-                <Setter Property="VerticalContentAlignment" Value="Center"/>
-                <Setter Property="FontFamily" Value="{StaticResource IconFont}"/>
-                <Setter Property="Foreground" Value="#888"/>
-                <Setter Property="FontSize" Value="13"/>
-                <Setter Property="Background" Value="Transparent"></Setter>
-                <Setter Property="CornerRadius" Value="2"></Setter>
-            </Style>
-            <Style Selector="Button.Icon:hover">
-                <Setter Property="Background" Value="#EEEEEE"/>
-                <Setter Property="Foreground" Value="#333"/>
-            </Style>
-            <Style Selector="Button.Icon:pressed">
-                <Setter Property="Background" Value="#EEEEEE"/>
-                <Setter Property="Foreground" Value="#333"/>
-            </Style>
-            
-            
-            <Style Selector="Button.Icon">
-                <Setter Property="Width" Value="28"/>
-                <Setter Property="Height" Value="26"/>
-                <Setter Property="Padding" Value="0"/>
-                <Setter Property="Background" Value="Transparent"/>
-                <Setter Property="Template">
-                    <ControlTemplate>
-                        <Border x:Name="border" Background="{TemplateBinding Background}" CornerRadius="2">
-                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                        </Border>
-                    </ControlTemplate>
-                </Setter>
-            </Style>
+    <UserControl.Styles>
+        <Style Selector="Button.Icon">
+            <Setter Property="Width" Value="28"/>
+            <Setter Property="Height" Value="26"/>
+            <Setter Property="Padding" Value="0"/>
+            <Setter Property="Margin" Value="0"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="FontFamily" Value="{StaticResource IconFont}"/>
+            <Setter Property="Foreground" Value="#888"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="CornerRadius" Value="2"/>
+            <Setter Property="Template">
+                <ControlTemplate>
+                    <Border Background="{TemplateBinding Background}" CornerRadius="2">
+                        <ContentPresenter
+                            HorizontalAlignment="Center" 
+                            VerticalAlignment="Center"
+                            RecognizesAccessKey="True"
+                            Content="{TemplateBinding Content}"
+                            ContentTemplate="{TemplateBinding ContentTemplate}"
+                            FontFamily="{TemplateBinding FontFamily}"
+                            FontSize="{TemplateBinding FontSize}"
+                            Foreground="{TemplateBinding Foreground}" />
+                    </Border>
+                </ControlTemplate>
+            </Setter>
+        </Style>
 
-            <Style Selector="Button.Icon:pointerover">
-                <Setter Property="Background" Value="#EEEEEE"/>
-                <Setter Property="Foreground" Value="#333"/>
-            </Style>
-
-            <Style Selector="Button.Icon:pressed">
-                <Setter Property="Background" Value="#EEEEEE"/>
-                <Setter Property="Foreground" Value="#333"/>
-            </Style>
-            
-            
-            
-        </UserControl.Styles>
+        <Style Selector="Button.Icon:pointerover">
+            <Setter Property="Background" Value="#EEEEEE"/>
+            <Setter Property="Foreground" Value="#333"/>
+        </Style>
+        <Style Selector="Button.Icon:pressed">
+            <Setter Property="Background" Value="#EEEEEE"/>
+            <Setter Property="Foreground" Value="#333"/>
+        </Style>
+    </UserControl.Styles>
     <Grid x:Name="HeaderGrid" Background="Transparent">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"/>

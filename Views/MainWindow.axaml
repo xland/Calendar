@@ -6,9 +6,9 @@
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="Calendar.Views.MainWindow"
         Icon="/Assets/logo.ico"
-        Width="370" Height="328" 
-        MaxWidth="370" MaxHeight="328"
-        MinWidth="370" MinHeight="328"
+        Width="370" Height="388" 
+        MaxWidth="370" MaxHeight="388"
+        MinWidth="370" MinHeight="388"
         Background="Transparent"
         TransparencyLevelHint="Transparent"
         SystemDecorations="None"
@@ -25,6 +25,7 @@
                 </StackPanel>
             </Border>
             <views:UpcomingBox></views:UpcomingBox>
+            <views:Btn Content="Click Me!" Background="Aqua" Click="Button_Click"/>
         </StackPanel>
     </Border>
 </Window>
