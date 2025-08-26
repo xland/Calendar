@@ -33,6 +33,7 @@ public class BtnIcon: ContentControl
     {
         // 启用鼠标交互
         // [!Toggles the visual state based on interaction!]
+        Cursor = new Cursor(StandardCursorType.Hand);
         _isPointerOver = false;
         _isPressed = false;
         Background = NormalColor;
