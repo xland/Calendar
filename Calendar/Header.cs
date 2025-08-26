@@ -45,7 +45,7 @@ public class Header:UserControl
         Grid.SetColumn(border, 2);
         grid.Children.Add(border);
 
-        var scb = new SolidColorBrush(Avalonia.Media.Color.Parse("#ddd"));
+        var scb = new SolidColorBrush(Avalonia.Media.Color.Parse("#eee"));
         var todayBtn = new BtnIcon
         {
             Content = "\uE667",

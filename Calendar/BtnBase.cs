@@ -8,7 +8,7 @@ using Avalonia.Media;
 
 namespace Calendar;
 
-public class BtnBase:UserControl
+public class BtnBase:ContentControl
 {
     public SolidColorBrush HoveredColor { get; set; }  = new SolidColorBrush(Colors.Transparent);
     public SolidColorBrush PressedColor { get; set; }  = new SolidColorBrush(Colors.Transparent);
