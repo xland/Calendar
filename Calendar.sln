@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Calendar", "Calendar.csproj", "{BD3D11DE-B43F-4123-AB10-67CA3764252E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Calendar", "Calendar\Calendar.csproj", "{68338DBD-D0A9-432F-9573-348EBC514A87}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -8,9 +8,9 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{BD3D11DE-B43F-4123-AB10-67CA3764252E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{BD3D11DE-B43F-4123-AB10-67CA3764252E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{BD3D11DE-B43F-4123-AB10-67CA3764252E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{BD3D11DE-B43F-4123-AB10-67CA3764252E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{68338DBD-D0A9-432F-9573-348EBC514A87}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{68338DBD-D0A9-432F-9573-348EBC514A87}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{68338DBD-D0A9-432F-9573-348EBC514A87}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{68338DBD-D0A9-432F-9573-348EBC514A87}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
