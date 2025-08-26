@@ -1,8 +1,11 @@
 using System;
 using Avalonia;
 using Avalonia.Controls;
+using Avalonia.Input;
+using Avalonia.Interactivity;
 using Avalonia.Layout;
 using Avalonia.Media;
+using Avalonia.VisualTree;
 
 namespace Calendar;
 
@@ -11,6 +14,7 @@ public class Header:UserControl
     public Header()
     {
         Height = 40;
+        Background = new SolidColorBrush(Colors.Transparent);
         var grid = new Grid();
         grid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
         grid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
@@ -89,5 +93,17 @@ public class Header:UserControl
         
         
         Content = grid;
+
+        PointerPressed += OnPointerPressed;
+    }
+    
+    private void OnPointerPressed(object? sender, PointerPressedEventArgs e)
+    {
+        if (!e.GetCurrentPoint(this).Properties.IsLeftButtonPressed)
+        {
+            return;
+        }
+        var window = this.FindAncestorOfType<Window>();
+        window?.BeginMoveDrag(e);
     }
 }
