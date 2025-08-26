@@ -33,9 +33,13 @@ public class MainWindow: Window
         {
             Orientation = Orientation.Vertical
         };
-        border.Child = stackPanel;
         var header = new Header();
         stackPanel.Children.Add(header);
+        
+        var dateBox = new DateBox();
+        stackPanel.Children.Add(dateBox);
+        
+        border.Child = stackPanel;
         Content = border;
     }
 }
