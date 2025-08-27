@@ -12,6 +12,7 @@ public class MainWindow: Window
     public MainWindow()
     {
         Title = "Calendar";
+        ShowInTaskbar = false;
         Icon = new WindowIcon(AssetLoader.Open(new Uri("avares://Calendar/Res/logo.ico")));
         Width = 370; Height = 380;
         MaxWidth = 370; MaxHeight = 380;

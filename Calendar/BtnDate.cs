@@ -49,13 +49,16 @@ public class BtnDate:BtnBase
     private static readonly SolidColorBrush HasScheduleColor = new SolidColorBrush(Colors.Red);
     private static readonly ChineseLunisolarCalendar ChineseDate = new ChineseLunisolarCalendar();
     private static readonly List<Point> Points = [new Point(0, 0), new Point(6, 0), new Point(6, 6)];
+    private static readonly Thickness MarginIns = new Thickness(1);
+    private static readonly Thickness BorderIns = new Thickness(0.5);
+    private static readonly SolidColorBrush BorderColor = new SolidColorBrush(new Color(200, 200, 200, 200));
     public BtnDate()
     {
         VerticalAlignment = VerticalAlignment.Stretch;
         HorizontalAlignment = HorizontalAlignment.Stretch;
         Height = 40;
         Background = BgColor;
-        Margin = new Thickness(0.5, 0.5, 0.5, 0.5);
+        Margin = MarginIns;
 
         var grid = new Grid
         {
@@ -65,8 +68,8 @@ public class BtnDate:BtnBase
 
         var border = new Border
         {
-            BorderThickness = new Thickness(0.5),
-            BorderBrush = new SolidColorBrush(new Color(200, 200, 200, 200)),
+            BorderThickness = BorderIns,
+            BorderBrush = BorderColor,
             Child = new Polygon
             {
                 Points = Points,

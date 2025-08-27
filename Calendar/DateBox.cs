@@ -4,6 +4,7 @@ using System.Globalization;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.Primitives;
+using Avalonia.Interactivity;
 using Avalonia.Media;
 
 namespace Calendar;
@@ -26,6 +27,7 @@ public class DateBox:UserControl
                 HoveredColor = scb,
                 PressedColor =  scb,
             };
+            btn.Click += OnBtnDateClick;
             btns.Add(btn);
             ug.Children.Add(btn);
         }
@@ -83,5 +85,11 @@ public class DateBox:UserControl
             }
         }
     }
-    
+
+    private void OnBtnDateClick(object sender, RoutedEventArgs e)
+    {
+        //Db.Instance.Exec("Select * from Schedule");
+        var sl = new ScheduleList();
+        sl.Show();
+    }
 }
