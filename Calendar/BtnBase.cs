@@ -28,8 +28,6 @@ public class BtnBase:ContentControl
         Cursor = new Cursor(StandardCursorType.Hand);
         BorderThickness = new Thickness(0);
         CornerRadius = new CornerRadius(0);
-        HorizontalContentAlignment = Avalonia.Layout.HorizontalAlignment.Center;
-        VerticalContentAlignment = Avalonia.Layout.VerticalAlignment.Center;
         
         PointerEntered += OnPointerEntered;
         PointerExited += OnPointerExited;

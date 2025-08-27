@@ -13,9 +13,9 @@ public class MainWindow: Window
     {
         Title = "Calendar";
         Icon = new WindowIcon(AssetLoader.Open(new Uri("avares://Calendar/Res/logo.ico")));
-        Width = 370; Height = 300;
-        MaxWidth = 370; MaxHeight = 300;
-        MinHeight = 370; MinHeight = 300;
+        Width = 370; Height = 380;
+        MaxWidth = 370; MaxHeight = 380;
+        MinWidth = 370; MinHeight = 380;
         Background = new SolidColorBrush(Colors.Transparent);
         SystemDecorations = SystemDecorations.None;
         CanResize = false;
@@ -35,6 +35,9 @@ public class MainWindow: Window
         };
         var header = new Header();
         stackPanel.Children.Add(header);
+        
+        var week = new Week();
+        stackPanel.Children.Add(week);
         
         var dateBox = new DateBox();
         stackPanel.Children.Add(dateBox);

@@ -9,12 +9,12 @@ using Avalonia.VisualTree;
 
 namespace Calendar;
 
-public class Header:UserControl
+public class Header:ContentControl
 {
     public Header()
     {
         Height = 40;
-        Background = new SolidColorBrush(Colors.Transparent);
+        Background = new SolidColorBrush(new Color(60, 180, 180, 180));
         var grid = new Grid();
         grid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
         grid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
@@ -45,7 +45,7 @@ public class Header:UserControl
         Grid.SetColumn(border, 2);
         grid.Children.Add(border);
 
-        var scb = new SolidColorBrush(Avalonia.Media.Color.Parse("#eee"));
+        var scb = new SolidColorBrush(new Color(120, 200, 200, 200));
         var todayBtn = new BtnIcon
         {
             Content = "\uE667",
@@ -53,6 +53,8 @@ public class Header:UserControl
             Height = 26,
             HoveredColor = scb,
             PressedColor =  scb,
+            HorizontalContentAlignment = Avalonia.Layout.HorizontalAlignment.Center,
+            VerticalContentAlignment = Avalonia.Layout.VerticalAlignment.Center,
         };
         Grid.SetColumn(todayBtn, 3);
         grid.Children.Add(todayBtn);
@@ -64,6 +66,8 @@ public class Header:UserControl
             Height = 26,
             HoveredColor = scb,
             PressedColor =  scb,
+            HorizontalContentAlignment = Avalonia.Layout.HorizontalAlignment.Center,
+            VerticalContentAlignment = Avalonia.Layout.VerticalAlignment.Center,
         };
         Grid.SetColumn(leftBtn, 4);
         grid.Children.Add(leftBtn);
@@ -75,6 +79,8 @@ public class Header:UserControl
             Height = 26,
             HoveredColor = scb,
             PressedColor =  scb,
+            HorizontalContentAlignment = Avalonia.Layout.HorizontalAlignment.Center,
+            VerticalContentAlignment = Avalonia.Layout.VerticalAlignment.Center,
         };
         Grid.SetColumn(rightBtn, 5);
         grid.Children.Add(rightBtn);
@@ -87,6 +93,8 @@ public class Header:UserControl
             HoveredColor = scb,
             PressedColor =  scb,
             Margin = new Thickness(0, 0, 12, 0),
+            HorizontalContentAlignment = Avalonia.Layout.HorizontalAlignment.Center,
+            VerticalContentAlignment = Avalonia.Layout.VerticalAlignment.Center,
         };
         Grid.SetColumn(settingBtn, 6);
         grid.Children.Add(settingBtn);
