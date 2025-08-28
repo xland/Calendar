@@ -13,10 +13,10 @@ public class ScheduleWindow: Window
         Title = "日程列表";
         Icon = new WindowIcon(AssetLoader.Open(new Uri("avares://Calendar/Res/logo.ico")));
         WindowStartupLocation = WindowStartupLocation.CenterScreen;
-        Width = 800; Height = 500;
+        Width = 900; Height = 600;
         var grid = new Grid();
         grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(220) });
-        grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1)});
+        grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(3)});
         grid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Star });
 
         var left = new ScheduleList
@@ -31,18 +31,15 @@ public class ScheduleWindow: Window
             Background = new SolidColorBrush(new Color(255, 122, 122, 222)),
             ResizeBehavior = GridResizeBehavior.PreviousAndNext,
             ResizeDirection = GridResizeDirection.Columns,
-            HorizontalAlignment = HorizontalAlignment.Stretch,
-            VerticalAlignment = VerticalAlignment.Stretch
+            MaxWidth = 3,
+            MinWidth = 3,
         };
         Grid.SetColumn(spliter, 1);
         grid.Children.Add(spliter);
-        
-        var border2 = new Border
-        {
-            Background = new SolidColorBrush(new Color(255,122,222,122)),
-        };
-        Grid.SetColumn(border2, 2);
-        grid.Children.Add(border2);
+
+        var right = new ScheduleEditor();
+        Grid.SetColumn(right, 2);
+        grid.Children.Add(right);
         
         Content = grid;
     }
