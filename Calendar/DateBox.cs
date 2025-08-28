@@ -9,7 +9,7 @@ using Avalonia.Media;
 
 namespace Calendar;
 
-public class DateBox:UserControl
+public class DateBox:ContentControl
 {
     public List<BtnDate> btns = new List<BtnDate>();
     
@@ -89,7 +89,7 @@ public class DateBox:UserControl
     private void OnBtnDateClick(object sender, RoutedEventArgs e)
     {
         //Db.Instance.Exec("Select * from Schedule");
-        var sl = new ScheduleEdit();
+        var sl = new ScheduleWindow();
         sl.Show();
     }
 }

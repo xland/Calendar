@@ -6,25 +6,25 @@ using Avalonia.Platform;
 
 namespace Calendar;
 
-public class ScheduleEdit: Window
+public class ScheduleWindow: Window
 {
-    public ScheduleEdit()
+    public ScheduleWindow()
     {
         Title = "日程列表";
         Icon = new WindowIcon(AssetLoader.Open(new Uri("avares://Calendar/Res/logo.ico")));
         WindowStartupLocation = WindowStartupLocation.CenterScreen;
         Width = 800; Height = 500;
         var grid = new Grid();
-        grid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Star });
+        grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(220) });
         grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1)});
         grid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Star });
-        
-        var border = new Border
+
+        var left = new ScheduleList
         {
-            Background = new SolidColorBrush(new Color(255,122,222,222)),
+            HorizontalAlignment = HorizontalAlignment.Stretch
         };
-        Grid.SetColumn(border, 0);
-        grid.Children.Add(border);
+        Grid.SetColumn(left, 0);
+        grid.Children.Add(left);
 
         var spliter = new GridSplitter
         {
