@@ -89,7 +89,7 @@ public class DateBox:UserControl
     private void OnBtnDateClick(object sender, RoutedEventArgs e)
     {
         //Db.Instance.Exec("Select * from Schedule");
-        var sl = new ScheduleList();
+        var sl = new ScheduleEdit();
         sl.Show();
     }
 }
