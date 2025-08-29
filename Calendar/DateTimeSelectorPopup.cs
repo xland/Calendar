@@ -1,11 +1,6 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using Avalonia;
 using Avalonia.Controls;
-using Avalonia.Controls.Primitives;
-using Avalonia.Input;
-using Avalonia.Layout;
 using Avalonia.Media;
 
 namespace Calendar;
@@ -25,20 +20,12 @@ public class DateTimeSelectorPopup:ContentControl
             _selectedTime = value;
         }
     }
-    private List<Border> years = new  List<Border>();
-    private List<Border> months = new  List<Border>();
-    private List<Border> dates = new  List<Border>();
-    private List<Border> hours = new  List<Border>();
-    private List<Border> minutes = new  List<Border>();
-    private List<Border> seconds = new  List<Border>();
     private Grid grid;
     public DateTimeSelectorPopup(DateTime selectedTime)
     {
         _selectedTime = selectedTime;
         Width = 280;
         Height = 250;
-        PointerWheelChanged += OnPointerWheelChanged;
-        PointerMoved += OnPointerMoved;
         initGrid();
         initItem();
         
@@ -55,201 +42,119 @@ public class DateTimeSelectorPopup:ContentControl
         Content = border;
 
         grid = new Grid();
-        grid.ColumnDefinitions.AddRange(
-            Enumerable.Range(0, 6).Select(_ => new ColumnDefinition { Width = GridLength.Star })
-        );
-        grid.RowDefinitions.AddRange(
-            Enumerable.Range(0, 7).Select(_ => new RowDefinition { Height = GridLength.Star })
-        );
+        grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(68) });
+        grid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Star });
+        grid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Star });
+        grid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Star });
+        grid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Star });
+        grid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Star });
         border.Child = grid;
     }
 
-    private void setYearItem(bool isWheelUp)
-    {
-        if (isWheelUp)
-        {
-            SelectedTime = _selectedTime.AddYears(-1);
-        }
-        else
-        {
-            SelectedTime = _selectedTime.AddYears(1);
-        }
-        
-    }
     
     private void initItem()
     {
-        for (int i = 0; i < 7; i++)
+        for (int i = 0; i < 6; i++)
         {
-            var year = _selectedTime.Year + i - 3;
-            var text = new TextBlock
-            {
-                Text = year.ToString()+"年",
-                VerticalAlignment = VerticalAlignment.Center,
-                TextAlignment = TextAlignment.Center,
-            };
-            var b = new Border
-            {
-                Child = text,
-                HorizontalAlignment = HorizontalAlignment.Stretch,
-                VerticalAlignment = VerticalAlignment.Stretch,
-                BorderThickness = new  Thickness(0,0,1,0),
-                BorderBrush = new SolidColorBrush(new Color(255,200,200,200)),
-                Background = i == 3?new SolidColorBrush(new Color(255,230,240,250)):new SolidColorBrush(Colors.Transparent),
-            };
-            years.Add(b);
-            Grid.SetColumn(b, 0);
-            Grid.SetRow(b,i);
-            grid.Children.Add(b); 
-        }
-        
-        for (int i = 0; i < 7; i++)
-        {
-            var text = new TextBlock
-            {
-                VerticalAlignment = VerticalAlignment.Center,
-                TextAlignment = TextAlignment.Center,
-            };
-            var b = new Border
-            {
-                Child = text,
-                HorizontalAlignment = HorizontalAlignment.Stretch,
-                VerticalAlignment = VerticalAlignment.Stretch,
-                BorderThickness = new  Thickness(0,0,1,0),
-                BorderBrush = new SolidColorBrush(new Color(255,200,200,200)),
-                Background = i == 3?new SolidColorBrush(new Color(255,230,240,250)):new SolidColorBrush(Colors.Transparent),
-            };
-            months.Add(b);
-            Grid.SetColumn(b, 1);
-            Grid.SetRow(b,i);
-            grid.Children.Add(b); 
-        }
-        
-        
-        for (int i = 0; i < 7; i++)
-        {
-            var text = new TextBlock
-            {
-                VerticalAlignment = VerticalAlignment.Center,
-                TextAlignment = TextAlignment.Center,
-            };
-            var b = new Border
-            {
-                Child = text,
-                HorizontalAlignment = HorizontalAlignment.Stretch,
-                VerticalAlignment = VerticalAlignment.Stretch,
-                BorderThickness = new  Thickness(0,0,1,0),
-                BorderBrush = new SolidColorBrush(new Color(255,200,200,200)),
-                Background = i == 3?new SolidColorBrush(new Color(255,230,240,250)):new SolidColorBrush(Colors.Transparent),
-            };
-            dates.Add(b);
-            Grid.SetColumn(b, 2);
-            Grid.SetRow(b,i);
-            grid.Children.Add(b); 
-        }
-        
-        for (int i = 0; i < 7; i++)
-        {
-            var text = new TextBlock
-            {
-                VerticalAlignment = VerticalAlignment.Center,
-                TextAlignment = TextAlignment.Center,
-            };
-            var b = new Border
-            {
-                Child = text,
-                HorizontalAlignment = HorizontalAlignment.Stretch,
-                VerticalAlignment = VerticalAlignment.Stretch,
-                BorderThickness = new  Thickness(0,0,1,0),
-                BorderBrush = new SolidColorBrush(new Color(255,200,200,200)),
-                Background = i == 3?new SolidColorBrush(new Color(255,230,240,250)):new SolidColorBrush(Colors.Transparent),
-            };
-            hours.Add(b);
-            Grid.SetColumn(b, 3);
-            Grid.SetRow(b,i);
-            grid.Children.Add(b); 
-        }
-        
-        for (int i = 0; i < 7; i++)
-        {
-            var text = new TextBlock
-            {
-                VerticalAlignment = VerticalAlignment.Center,
-                TextAlignment = TextAlignment.Center,
-            };
-            var b = new Border
-            {
-                Child = text,
-                HorizontalAlignment = HorizontalAlignment.Stretch,
-                VerticalAlignment = VerticalAlignment.Stretch,
-                BorderThickness = new  Thickness(0,0,1,0),
-                BorderBrush = new SolidColorBrush(new Color(255,200,200,200)),
-                Background = i == 3?new SolidColorBrush(new Color(255,230,240,250)):new SolidColorBrush(Colors.Transparent),
-            };
-            minutes.Add(b);
-            Grid.SetColumn(b, 4);
-            Grid.SetRow(b,i);
-            grid.Children.Add(b); 
-        }
-        
-        for (int i = 0; i < 7; i++)
-        {
-            var text = new TextBlock
-            {
-                VerticalAlignment = VerticalAlignment.Center,
-                TextAlignment = TextAlignment.Center,
-            };
-            var b = new Border
-            {
-                Child = text,
-                HorizontalAlignment = HorizontalAlignment.Stretch,
-                VerticalAlignment = VerticalAlignment.Stretch, 
-                Background = i == 3?new SolidColorBrush(new Color(255,230,240,250)):new SolidColorBrush(Colors.Transparent),
-            };
-            seconds.Add(b);
-            Grid.SetColumn(b, 5);
-            Grid.SetRow(b,i);
-            grid.Children.Add(b); 
+            var dtspc = new DateTimeSelectorPopupColumn(i);
+            dtspc.SetDateTime(_selectedTime);
+            Grid.SetColumn(dtspc, i);
+            grid.Children.Add(dtspc);
         }
     }
-
-    private void OnPointerWheelChanged(object? sender, PointerWheelEventArgs e)
+    public void setDateTimeByWheel(int columnIndex,int addVal)
     {
-        var pos = e.GetPosition(this);
-        var indexX = (int) (pos.X / (this.Width / 6));
-        var indexY = (int) (pos.Y / (this.Height / 7));
-        if (indexX == 0)
+        if (columnIndex == 0)
         {
-            years[indexY].Background = new SolidColorBrush(new Color(255,220,220,220));
-            setYearItem(e.Delta.Y > 0);
+            SetYear(addVal);
         }
-        e.Handled = true;
-    }
-
-    private void OnPointerMoved(object? sender, PointerEventArgs e)
-    {
-        var pos = e.GetPosition(this);
-        var indexY = (int) (pos.Y / (this.Height / 7));
-        if(indexY == 3 ) return;
-        var indexX = (int) (pos.X / (this.Width / 6));
-        if (indexX == 0)
+        else if (columnIndex == 1)
         {
-            for (int i = 0; i < 7; i++)
+            SetMonth(addVal);  
+        }
+        else if (columnIndex == 2)
+        {
+            SetDay(addVal);
+        }
+        else if (columnIndex == 3)
+        {
+            SelectedTime = SelectedTime.AddHours(addVal);
+        }
+        else if (columnIndex == 4)
+        {
+            SelectedTime = SelectedTime.AddMinutes(addVal);
+        }
+        else if (columnIndex == 5)
+        {
+            SelectedTime = SelectedTime.AddSeconds(addVal);
+        }
+        if(columnIndex < 3)
+        {
+            for(var i = 0; i < 3; i++)
             {
-                if (i == 3)
-                {
-                    years[i].Background = new SolidColorBrush(new Color(255,230,240,250));
-                }
-                else if (i == indexY)
-                {
-                    years[i].Background = new SolidColorBrush(new Color(255,220,220,220));
-                }
-                else
-                {
-                    years[i].Background = new SolidColorBrush(new Color(255,255,255,255));
-                }
+                var column = grid.Children[i] as DateTimeSelectorPopupColumn;
+                column.SetDateTime(SelectedTime);
             }
         }
-        e.Handled = true;
+        else
+        {
+            var column = grid.Children[columnIndex] as DateTimeSelectorPopupColumn;
+            column.SetDateTime(SelectedTime);
+        }
     }
+
+    public void SetYear(int addVal)
+    {
+        if (SelectedTime.Year == 1970 && addVal == -1) return;
+        if (SelectedTime.Year == 2999 && addVal == 1) return;
+        SelectedTime = SelectedTime.AddYears(addVal);
+    }
+    public void SetMonth(int addVal)
+    {
+        if (SelectedTime.Month == 12 && addVal == 1)
+        {
+            SelectedTime = new DateTime(SelectedTime.Year, 1, SelectedTime.Day,
+                SelectedTime.Hour, SelectedTime.Minute, SelectedTime.Second);
+        }
+        else if (SelectedTime.Month == 1 && addVal == -1)
+        {
+            SelectedTime = new DateTime(SelectedTime.Year, 12, SelectedTime.Day,
+                SelectedTime.Hour, SelectedTime.Minute, SelectedTime.Second);
+        }
+        else
+        {
+            SelectedTime = SelectedTime.AddMonths(addVal);
+        }
+    }
+    public void SetDay(int addVal)
+    {
+        var days = DateTime.DaysInMonth(SelectedTime.Year, SelectedTime.Month);
+        if (SelectedTime.Day == days && addVal == 1)
+        {
+            SelectedTime = new DateTime(SelectedTime.Year, SelectedTime.Month, 1,
+                SelectedTime.Hour, SelectedTime.Minute, SelectedTime.Second);
+        }
+        else if (SelectedTime.Day == 1 && addVal == -1)
+        {
+            SelectedTime = new DateTime(SelectedTime.Year, SelectedTime.Month, days,
+                SelectedTime.Hour, SelectedTime.Minute, SelectedTime.Second);
+        }
+        else
+        {
+            SelectedTime = SelectedTime.AddDays(addVal);
+        }
+    }
+    public void SetHour(int hour)
+    {
+
+    }
+    public void SetMinute(int minute)
+    {
+
+    }
+    public void SetSecond(int second)
+    {
+
+    }
+
 }
