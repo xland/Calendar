@@ -2,6 +2,7 @@ using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Layout;
 using Avalonia.Media;
+using Avalonia.Styling;
 
 namespace Calendar;
 
@@ -76,10 +77,17 @@ public class ScheduleEditor:ContentControl
             HorizontalAlignment = HorizontalAlignment.Stretch,
             AcceptsReturn = true,
             LineHeight = 24,
-            TextWrapping = TextWrapping.Wrap,
+            TextWrapping = TextWrapping.Wrap
         };
+        textEdit.GotFocus += TextEdit_GotFocus;
         Grid.SetColumn(textEdit, 1);
         sp2.Children.Add(textEdit); //第三行
+    }
+
+    private void TextEdit_GotFocus(object? sender, Avalonia.Input.GotFocusEventArgs e)
+    {
+        var tb = sender as TextBox;
+        tb.BorderBrush = new SolidColorBrush(new Color(255, 200, 200, 200));
     }
 
     private void initBtns()

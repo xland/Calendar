@@ -6,6 +6,17 @@
 
     <Application.Styles>
         <FluentTheme />
+		<Style Selector="TextBox">
+			<Setter Property="BorderBrush" Value="#dddddd"/>
+			<Setter Property="BorderThickness" Value="1" />
+			<Style Selector="^:focus">
+				<Setter Property="BorderBrush" Value="Red"/>
+				<Style Selector="^ /template/ Border#PART_BorderElement">
+					<Setter Property="BorderBrush" Value="#aaaaaa"/>
+					<Setter Property="BorderThickness" Value="1" />
+				</Style>
+			</Style>
+		</Style>
     </Application.Styles>
      <Application.Resources>
          <FontFamily x:Key="IconFont">avares://Calendar/Res/iconfont.ttf#iconfont</FontFamily>
