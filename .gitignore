@@ -1,4 +1,2 @@
 /.vs/
-/Calendar/bin/
-/Calendar/obj/
-/packages/
+**/x64/**
