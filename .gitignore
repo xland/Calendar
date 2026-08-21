@@ -1,2 +1,9 @@
-/.vs/
+**/.vs/**
+*.TMP
+*.log
+/enc_temp_folder/
+Res.aps
+/x64/
+/Translator/x64/
+/Translator/Translator/x64/
 **/x64/**
